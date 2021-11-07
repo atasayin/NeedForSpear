@@ -7,24 +7,28 @@ import javax.swing.JFrame;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.GridLayout;
 import javax.swing.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 
-public class Playground extends JFrame {
+public class Playground extends JFrame implements Drawable {
 	
-	public static final int HEIGHT = 600;
-	public static final int WIDTH = 900;
+	public static int h;
+	public static int w;
 	public static int TIMER_SPEED = 100;
 	
 	static JFrame frame;
 	static JButton startButton;
 
-	public static PaddleController pc;
-	
-	public static void main(String[] args) {
+	private static PaddleController pc;
+
+
+	public Playground(PaddleController paddleCont, int h, int w) {
+		this.h =h;
+		this.w = w;
+		this.pc = paddleCont;
+
 		frame = init();
 		frame.setLocationRelativeTo(null);
 		//GridLayout layout = new GridLayout(5, 3);
@@ -34,13 +38,19 @@ public class Playground extends JFrame {
 
 		frame.add(panel);
 		frame.setVisible(true);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Graphics g = frame.getGraphics();
 
 		startButton.setFocusable(false);
 		startButton.addActionListener(e -> {
-			pc = new PaddleController(WIDTH, HEIGHT, g);
 			startButton.setVisible(false);
+
+			int leng = pc.getPaddle().getLength();
+			int thick = pc.getPaddle().getThickness();
+			int x = pc.getPaddle().getX();
+			int y = pc.getPaddle().getY();
+
+			Drawable.drawRec(g,x,y,leng,thick);
+
 			KeyHandler handler = new KeyHandler();
 			frame.addKeyListener(handler);
 			panel.addKeyListener(handler);
@@ -53,8 +63,8 @@ public class Playground extends JFrame {
 		JFrame frame = new JFrame("NeedForSpear");
 		//frame.setLayout(new GridLayout(5, 3));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(WIDTH, HEIGHT);
-		frame.setVisible(true);
+		frame.setSize(w, h);
+		//frame.setVisible(true);
 		return frame;
 	}
 
