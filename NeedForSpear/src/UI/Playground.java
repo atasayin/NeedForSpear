@@ -1,4 +1,6 @@
-package UI;
+package NeedForSpear.src.UI;
+
+import NeedForSpear.src.domain.*;
 
 import javax.swing.JPanel;
 import javax.swing.JFrame;
@@ -7,14 +9,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.util.EventListener;
-
-import domain.*;
 
 
 public class Playground extends JFrame {
@@ -26,7 +22,6 @@ public class Playground extends JFrame {
 	static JFrame frame;
 	static JButton startButton;
 
-	
 	public static PaddleController pc;
 	
 	public static void main(String[] args) {
@@ -36,44 +31,21 @@ public class Playground extends JFrame {
 		JPanel panel = new JPanel();
 		startButton = new JButton("Start the Game");
 		panel.add(startButton);
-		
+
 		frame.add(panel);
 		frame.setVisible(true);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Graphics g = frame.getGraphics();
-		
-		
-		startButton.addActionListener(new ActionListener() {
 
-			public void actionPerformed(ActionEvent e) {
-				pc = new PaddleController(WIDTH, HEIGHT, g);
-				startButton.setVisible(false);
-				KeyHandler handler = new KeyHandler(); 
-				frame.addKeyListener(handler);
-				panel.addKeyListener(handler);
-				
+		startButton.setFocusable(false);
+		startButton.addActionListener(e -> {
+			pc = new PaddleController(WIDTH, HEIGHT, g);
+			startButton.setVisible(false);
+			KeyHandler handler = new KeyHandler();
+			frame.addKeyListener(handler);
+			panel.addKeyListener(handler);
 
-			}
-			
-		} );
-		
-		KeyHandler handler = new KeyHandler(); 
-		panel.addKeyListener(handler);
-
-		frame.addKeyListener(handler);
-		
-		/*
-		 * {
-		 * 
-		 * public void keyPressed(KeyEvent e) { int key = e.getKeyCode();
-		 * System.out.println(key); if (key == KeyEvent.VK_RIGHT) {
-		 * System.out.println("yayy"); pc.move(1); } else if (key == KeyEvent.VK_LEFT) {
-		 * pc.move(2); } else if (key == KeyEvent.VK_DOWN && key == KeyEvent.VK_RIGHT) {
-		 * pc.move(3); } else if (key == KeyEvent.VK_DOWN && key == KeyEvent.VK_LEFT) {
-		 * pc.move(4); } } });
-		 */
-		System.out.println("ddddddddddd");
-		
+		});
 		
 	}
 
@@ -89,29 +61,30 @@ public class Playground extends JFrame {
 	private static class KeyHandler extends KeyAdapter {
 		@Override 
 		public void keyPressed(KeyEvent event) {
+			Graphics g = frame.getGraphics();
 			int key = event.getKeyCode();
 			System.out.println(key);
-			 if (key == KeyEvent.VK_RIGHT) {
-				 System.out.println("yayy");
-			        pc.move(1);
-			    } else if (key == KeyEvent.VK_LEFT) {
-			        pc.move(2);
-			    } else if (key == KeyEvent.VK_DOWN && key == KeyEvent.VK_RIGHT) {
-			    	pc.move(3);
-			    } else if (key == KeyEvent.VK_DOWN && key == KeyEvent.VK_LEFT) {
-			    	pc.move(4);
-			    }
+			if (key == KeyEvent.VK_RIGHT) {
+				System.out.println("yayy");
+				pc.move(1, g);
+			} else if (key == KeyEvent.VK_LEFT) {
+				pc.move(2, g);
+			} else if (key == KeyEvent.VK_DOWN && key == KeyEvent.VK_RIGHT) {
+				pc.move(3, g);
+			} else if (key == KeyEvent.VK_DOWN && key == KeyEvent.VK_LEFT) {
+				pc.move(4, g);
 			}
+		}
 	}
-	
+
 	public void paint(Graphics graphics) {
 		super.paint(graphics);
-		
+
 		graphics.setColor(Color.YELLOW);
 		graphics.fillRect(100, 100, 120, 10);
 		graphics.drawRect(0, 0, 1009, 620);
 
 	}
-	
-	
+
+
 }
