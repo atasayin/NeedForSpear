@@ -3,7 +3,7 @@ package domain;
 public abstract class Obstacle {
 	
 	public PosVector pos;
-	public float speed;
+	public boolean is_rotating;
 	public int health;
 	public DestroyBehaviour destroyBehaviour;
 	
@@ -11,8 +11,8 @@ public abstract class Obstacle {
 	
 	public Obstacle(int xPos, int yPos, float L, int health) {
 		this.pos = new PosVector(xPos, yPos);
-		this.speed = L/4;
 		this.health = health;
+		this.is_rotating = false;
 	}
 	
 	

@@ -46,4 +46,9 @@ public class BallController {
     public void reflectFromHorizontal() {
         this.yVelocity *= -1;
     }
+
+
+    public PosVector getBallVelocity() {
+        return new PosVector(this.xVelocity, this.yVelocity);
+    }
 }
