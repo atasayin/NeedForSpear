@@ -1,4 +1,5 @@
 package domain;
+import java.lang.Math;
 
 public class PosVector {
 	private int x;
@@ -7,6 +8,21 @@ public class PosVector {
 	public PosVector(int x, int y) {
 		this.x = x;
 		this.y = y;
+	}
+
+
+	// Vector Addition
+	public void addVector(PosVector vec) {
+		this.setX( this.getX() + vec.getX() );
+		this.setY( this.getY() + vec.getY() );
+	}
+
+	// To rotate the obstacles, we will need to get the angle between current pos and the center of the circle
+	public double getTheta(PosVector center){
+		double dy = center.getY() - this.getY();
+		double dx = center.getX() - this.getX();
+		double theta = Math.atan(dy/dx);
+		return theta;
 	}
 
 	public int getX() {
