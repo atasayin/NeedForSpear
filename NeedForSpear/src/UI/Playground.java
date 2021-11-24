@@ -5,8 +5,7 @@ import NeedForSpear.src.domain.*;
 import javax.swing.JPanel;
 import javax.swing.JFrame;
 
-import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.*;
 import javax.swing.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -48,8 +47,15 @@ public class Playground extends JFrame implements Drawable {
 			int thick = pc.getPaddle().getThickness();
 			int x = pc.getPaddle().getX();
 			int y = pc.getPaddle().getY();
+			Graphics2D g2d = (Graphics2D) g;
 
-			Drawable.drawRec(g,x,y,leng,thick);
+			g2d.drawRect(x,y,leng,thick);
+			g.drawRect(250,250,200,200);
+			g2d.fillRect(x,y,leng,thick);
+			System.out.println(x);
+			System.out.println(y);
+			System.out.println(leng);
+			System.out.println(thick);
 
 			KeyHandler handler = new KeyHandler();
 			frame.addKeyListener(handler);
@@ -76,13 +82,13 @@ public class Playground extends JFrame implements Drawable {
 			System.out.println(key);
 			if (key == KeyEvent.VK_RIGHT) {
 				System.out.println("yayy");
-				pc.move(1, g);
+				pc.move(1);
 			} else if (key == KeyEvent.VK_LEFT) {
-				pc.move(2, g);
+				pc.move(2);
 			} else if (key == KeyEvent.VK_DOWN && key == KeyEvent.VK_RIGHT) {
-				pc.move(3, g);
+				pc.move(3);
 			} else if (key == KeyEvent.VK_DOWN && key == KeyEvent.VK_LEFT) {
-				pc.move(4, g);
+				pc.move(4);
 			}
 		}
 	}

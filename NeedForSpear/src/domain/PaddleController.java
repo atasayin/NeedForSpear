@@ -16,7 +16,7 @@ public class PaddleController {
 		return this.paddle;
 	}
 
-	public void move(int d, Graphics g) {
+	public void move(int d) {
 		if(d==1) {
 			if(paddle.x <= fw - paddle.length) {
 				paddle.x += paddle.length/2;
