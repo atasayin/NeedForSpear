@@ -1,9 +1,10 @@
-package domain;
+package NeedForSpear.src.domain;
 
-import java.awt.*;
+import NeedForSpear.src.UI.Drawable;
+
 import java.awt.Graphics;
 
-public class Paddle implements Drawable {
+public class Paddle  {
 	int length;
 	int thickness;
 	int x;
@@ -15,10 +16,13 @@ public class Paddle implements Drawable {
 		this.x = (fWidth - length)/2;
 		this.y = fHeight - (this.thickness * 4);
 	}
-	
-	public void draw(Graphics g) {
-		g.fillRect(x, y, length, thickness);
-	}
-	
-	
+
+	public int getLength() { return this.length; }
+
+	public int getThickness() { return this.thickness; }
+
+	public int getX() { return this.x; }
+
+	public int getY() { return this.y; }
+
 }

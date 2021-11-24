@@ -1,4 +1,4 @@
-package domain;
+package NeedForSpear.src.domain;
 import java.awt.Graphics;
 
 public class PaddleController {
@@ -6,13 +6,16 @@ public class PaddleController {
 	int fw;
 	int fh;
 	
-	public PaddleController(int w, int h, Graphics g) {
+	public PaddleController(int w, int h){
 		paddle = new Paddle(w, h);
 		this.fw = w;
 		this.fh = h;
-		paddle.draw(g);
 	}
-	
+
+	public Paddle getPaddle(){
+		return this.paddle;
+	}
+
 	public void move(int d) {
 		if(d==1) {
 			if(paddle.x <= fw - paddle.length) {
