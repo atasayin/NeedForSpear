@@ -1,17 +1,21 @@
-package domain;
+package domain.obstacle;
+
+import domain.DomainObject;
+import domain.strategy.DestroyBehaviour;
+import util.PosVector;
 
 public abstract class Obstacle extends DomainObject {
 	
-	public domain.PosVector pos;
+	public PosVector pos;
 	public boolean is_rotating;
 	public int health;
-	public domain.DestroyBehaviour destroyBehaviour;
+	public DestroyBehaviour destroyBehaviour;
 	protected String type;
 
 	
 	
 	public Obstacle(int xPos, int yPos, float L, int health) {
-		this.pos = new domain.PosVector(xPos, yPos);
+		this.pos = new PosVector(xPos, yPos);
 		this.health = health;
 		this.is_rotating = false;
 	}
@@ -19,7 +23,7 @@ public abstract class Obstacle extends DomainObject {
 		return this.type;
 	}
 
-	public domain.PosVector getPosVector() {
+	public PosVector getPosVector() {
 		return this.pos;
 	}
 	

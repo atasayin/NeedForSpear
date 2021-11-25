@@ -17,7 +17,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import domain.KeyboardController;
 import domain.* ;
+import domain.obstacle.Obstacle;
 
 
 @SuppressWarnings("serial")
@@ -59,6 +61,7 @@ public class RunModeScreen extends JPanel implements ActionListener, KeyListener
         // TODO Auto-generated method stub
         if (d instanceof Obstacle) {
             SimpleObstacleView.getInstance().draw(g2d, d);
+        }
     }
 
     @Override
@@ -226,8 +229,8 @@ public class RunModeScreen extends JPanel implements ActionListener, KeyListener
 
     @Override
     public void keyReleased(KeyEvent e) {
-        // TODO Auto-generated method stub
-        kc.released(player.getShooter());
+            // TODO Auto-generated method stub
+            kc.released(player.getShooter());
     }
 
     public RunModeScreen() {
@@ -251,4 +254,6 @@ public class RunModeScreen extends JPanel implements ActionListener, KeyListener
     private static final int INFO_REFRESH_PERIOD = 3000;
 
 }
+
+
 }

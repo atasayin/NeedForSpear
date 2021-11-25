@@ -1,4 +1,6 @@
-package domain;
+package domain.obstacle;
+
+import domain.strategy.GiftObstacleDestroyBehaviour;
 
 import java.util.ArrayList;
 

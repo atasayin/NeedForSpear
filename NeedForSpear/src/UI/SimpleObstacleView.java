@@ -1,8 +1,7 @@
 package UI;
 
-
-
-import domain.PosVector;
+import domain.obstacle.Obstacle;
+import util.PosVector;
 
 
 import javax.imageio.ImageIO;

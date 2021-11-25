@@ -1,5 +1,7 @@
 package domain;
 
+import util.PosVector;
+
 public class GameState {
     public PosVector ballPos, paddlePos, ballVelocity;
     public Layout layout;

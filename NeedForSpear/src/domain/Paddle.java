@@ -1,5 +1,7 @@
 package domain;
 
+import util.PosVector;
+
 public class Paddle extends DomainObject{
 	public static final int FRAME_WIDTH = 900;
 	public static final int FRAME_HEIGHT = 600;

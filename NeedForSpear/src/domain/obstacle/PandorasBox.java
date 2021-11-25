@@ -1,4 +1,6 @@
-package domain;
+package domain.obstacle;
+
+import domain.strategy.ExplosiveDestroyBehaviour;
 
 import java.util.ArrayList;
 

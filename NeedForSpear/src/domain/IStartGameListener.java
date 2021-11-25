@@ -1,5 +1,5 @@
 package domain;
 
-public interface StartGameListener {
+public interface IStartGameListener {
         void onClickStartButton();
 }
