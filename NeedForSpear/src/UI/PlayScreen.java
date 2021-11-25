@@ -20,7 +20,6 @@ public class PlayScreen implements IRunListener {
         initializeOuterFrameSettings(screenWidth, screenHeight);
         openRunModeScreen();
         openStatisticsScreen(statisticsWidth, screenHeight);
-
     }
 
     public PlayScreen() {

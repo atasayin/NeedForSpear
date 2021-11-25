@@ -45,8 +45,8 @@ public class Playground extends JFrame implements Drawable {
 
 			int leng = pc.getPaddle().getLength();
 			int thick = pc.getPaddle().getThickness();
-			int x = pc.getPaddle().getX();
-			int y = pc.getPaddle().getY();
+			int x = pc.getPaddle().getPosVector().x;
+			int y = pc.getPaddle().getPosVector().y;
 			Graphics2D g2d = (Graphics2D) g;
 
 			g2d.drawRect(x,y,leng,thick);

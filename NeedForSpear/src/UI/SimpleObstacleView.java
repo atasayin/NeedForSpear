@@ -89,7 +89,7 @@ public class SimpleObstacleView  implements Drawable {
             }
 
             // getting the location
-            PosVector pos = obs.getLocation();
+            PosVector pos = obs.getPosVector();
 
             // drawing the component
             g2d.drawImage(bi, pos.getX(), pos.getY(), null);

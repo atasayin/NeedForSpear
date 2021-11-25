@@ -19,7 +19,7 @@ public abstract class Obstacle extends DomainObject {
 		return this.type;
 	}
 
-	public domain.PosVector getLocation() {
+	public domain.PosVector getPosVector() {
 		return this.pos;
 	}
 	

@@ -2,8 +2,8 @@ package domain;
 import java.lang.Math;
 
 public class PosVector {
-	private int x;
-	private int y;
+	public int x;
+	public int y;
 
 	public PosVector(int x, int y) {
 		this.x = x;

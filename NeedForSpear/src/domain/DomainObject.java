@@ -1,10 +1,8 @@
 package domain;
 
-        import java.util.ArrayList;
-
 public abstract class DomainObject {
 
-    protected domain.PosVector pos;
+    protected PosVector posVector;
     protected int dx;
     protected int dy;
     protected boolean isWidthHeightTaken = false;
@@ -25,16 +23,16 @@ public abstract class DomainObject {
     }
 
     public void updatePosition() {
-        pos.setX(pos.getX() + dx);
-        pos.setY(pos.getY() + dy);
+        posVector.setX(posVector.getX() + dx);
+        posVector.setY(posVector.getY() + dy);
     }
 
-    public domain.PosVector getLocation() {
-        return pos;
+    public PosVector getPosVector() {
+        return posVector;
     }
 
-    public void setLoc(domain.PosVector pos) {
-        this.pos = pos;
+    public void setLoc(PosVector pos) {
+        this.posVector = pos;
     }
 
     public int getDx() {
@@ -52,7 +50,7 @@ public abstract class DomainObject {
 
     @Override
     public String toString() {
-        return String.format("Domain Object with Loc: %s%n", this.getLocation().toString());
+        return String.format("Domain Object with Loc: %s%n", this.getPosVector().toString());
     }
 
     public boolean isWidthHeightTaken() {
@@ -89,5 +87,5 @@ public abstract class DomainObject {
      *
      */
 
-    public abstract ArrayList<String> makeList();
+    //public abstract ArrayList<String> makeList();
 }

@@ -1,6 +1,6 @@
 package domain;
 
 public interface StatsScreenButtonListener {
-    public void onStatScreenButtonClick(String buttonType, int type);
+    void onStatScreenButtonClick(String buttonType, int type);
 }
 
