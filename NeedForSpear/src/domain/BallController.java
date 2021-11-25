@@ -1,13 +1,13 @@
 package domain;
 
 public class BallController {
-    public Ball ball;
+    public domain.Ball ball;
     public int gravity;
     public int yVelocity, xVelocity;
 
     // Two constructors for the controller, we will be using whichever is more useful.
     public BallController() {
-        this.ball = new Ball();
+        this.ball = new domain.Ball();
         this.gravity = 0;
         this.xVelocity = 0;
         this.yVelocity = 0;
@@ -17,7 +17,7 @@ public class BallController {
         this.xVelocity = xVelocity;
         this.yVelocity = yVelocity;
         this.gravity = gravity;
-        this.ball = new Ball();
+        this.ball = new domain.Ball();
     }
 
     //Game handler will delegate the controller to update the velocity
@@ -29,7 +29,7 @@ public class BallController {
     // Game handler commands the ball controller to update the position
     // This method takes the ball position and screen dimensions from the GameState, updates it according to the velocity,
     // and returns it.
-    public PosVector updatePosition(PosVector ballPos) {
+    public domain.PosVector updatePosition(domain.PosVector ballPos) {
         ballPos.setX( ballPos.getX() + this.xVelocity );
         ballPos.setY( ballPos.getY() + this.yVelocity );
         return ballPos;
@@ -48,7 +48,7 @@ public class BallController {
     }
 
 
-    public PosVector getBallVelocity() {
-        return new PosVector(this.xVelocity, this.yVelocity);
+    public domain.PosVector getBallVelocity() {
+        return new domain.PosVector(this.xVelocity, this.yVelocity);
     }
 }

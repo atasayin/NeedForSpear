@@ -1,4 +1,4 @@
-package NeedForSpear.src.domain;
+package domain;
 
 public interface StartGameListener {
         void onClickStartButton();

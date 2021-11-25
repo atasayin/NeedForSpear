@@ -1,6 +1,5 @@
-package NeedForSpear.src.domain;
+package domain;
 
-import NeedForSpear.src.UI.Drawable;
 
 import java.awt.Graphics;
 

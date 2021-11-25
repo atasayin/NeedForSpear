@@ -1,15 +1,15 @@
 package domain;
 
+
+
 import java.awt.*;
 
-public class Ball implements Drawable {
+public class Ball   {
     int radius;
 
     public Ball(){
 
     }
-
-    public void draw(Graphics g){ }
 
 }
 

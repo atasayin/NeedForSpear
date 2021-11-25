@@ -1,4 +1,4 @@
-package NeedForSpear.src.domain;
+package domain;
 
 import NeedForSpear.src.UI.Playground;
 

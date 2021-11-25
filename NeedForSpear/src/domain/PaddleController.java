@@ -1,4 +1,4 @@
-package NeedForSpear.src.domain;
+package domain;
 import java.awt.Graphics;
 
 public class PaddleController {

@@ -1,6 +1,6 @@
-package NeedForSpear.src.UI;
+package UI;
 
-import NeedForSpear.src.domain.*;
+import domain.*;
 
 import javax.swing.JPanel;
 import javax.swing.JFrame;
@@ -72,6 +72,11 @@ public class Playground extends JFrame implements Drawable {
 		frame.setSize(w, h);
 		//frame.setVisible(true);
 		return frame;
+	}
+
+	@Override
+	public void draw(Graphics2D g2d, DomainObject domainObject) {
+
 	}
 
 	private static class KeyHandler extends KeyAdapter {
