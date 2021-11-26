@@ -13,7 +13,7 @@ public class WallMaria extends Obstacle {
 		this.type = "WallMaria";
 	}
 
-	@Override
+
 	public ArrayList<String> makeList() {
 		return null;
 	}

@@ -9,9 +9,10 @@ public class GiftOfUranus extends Obstacle {
 	public GiftOfUranus(int xPos, int yPos, float L, int health) {
 		super(xPos, yPos, L, health);
 		this.destroyBehaviour = new GiftObstacleDestroyBehaviour();
+		this.type = "GiftOfUranus";
 	}
 
-	@Override
+
 	public ArrayList<String> makeList() {
 		return null;
 	}

@@ -10,7 +10,7 @@ import domain.*;
 public class PlayScreen implements IRunListener {
     static JFrame jf;
 
-    StatisticsScreen statisticsPanel;
+    //StatisticsScreen statisticsPanel;
     RunModeScreen screen;
 
     public void onClickEvent(HashMap<String, Double> runSettings, String username) {
@@ -19,11 +19,11 @@ public class PlayScreen implements IRunListener {
         int statisticsWidth = runSettings.get("statisticsWidth").intValue();
         initializeOuterFrameSettings(screenWidth, screenHeight);
         openRunModeScreen();
-        openStatisticsScreen(statisticsWidth, screenHeight);
+        //openStatisticsScreen(statisticsWidth, screenHeight);
     }
 
     public PlayScreen() {
-        statisticsPanel = new StatisticsScreen();
+        //statisticsPanel = new StatisticsScreen();
     }
 
     private void initializeOuterFrameSettings(int screenWidth, int screenHeight) {
@@ -48,7 +48,7 @@ public class PlayScreen implements IRunListener {
 
         jf.dispose();
     }
-
+    /*
     private void openStatisticsScreen(int statisticsWidth, int statisticsHeight) {
         // create statisticsPanel
         jf.add(statisticsPanel, BorderLayout.LINE_END);
@@ -59,4 +59,6 @@ public class PlayScreen implements IRunListener {
         return statisticsPanel;
     }
 
+
+     */
 }

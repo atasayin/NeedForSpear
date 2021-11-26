@@ -8,7 +8,8 @@ import java.util.TimerTask;
 public class Game implements IRunListener {
 
     String gameStatus;
-    public domain.GameState gameState;
+    public GameState gameState;
+    public PlayerState playerState;
     public Client client;
     static Game instance;
     private Timer game_Timer;
@@ -17,12 +18,13 @@ public class Game implements IRunListener {
 
     private Game() {
         gameState = new GameState();
+        playerState = new PlayerState();
         game_Timer = new Timer();
         game_Timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 // TODO Auto-generated method stub
-                gameState.decreaseTime();
+                //gameState.decreaseTime();
             }
         }, 0, 1000);
 
@@ -41,7 +43,7 @@ public class Game implements IRunListener {
             @Override
             public void run() {
                 // TODO Auto-generated method stub
-                gameState.decreaseTime();
+                //gameState.decreaseTime();
             }
         }, 0, 200);
     }
@@ -51,21 +53,15 @@ public class Game implements IRunListener {
     }
 
     public void loadGame(String type) {
-        client = new Client(type);
-        client.loadGame(gameState.players.get(0).player_state.getAtom_inventory(),
-                gameState.players.get(0).player_state.getPowerup_inventory(), gameState.moleculeCounts);
+        client = new Client();
+        client.loadGame(gameState.players.get(0).getPlayerState().getAbilities(), gameState.ObstacleCounts);
 
     }
 
     public void saveGame(Player player, String type) {
-        client = new Client(type);
-        ArrayList<ArrayList<String>> list = new ArrayList<ArrayList<String>>();
-        for (DomainObject a : gameState.getDomainObjectArr()) {
-            list.add(a.makeList());
-        }
-        list.add(gameState.players.get(0).getShooter().makeList());
-        client.saveGame(list, 30, gameState.players.get(0).player_state.getAtom_inventory(),
-                gameState.players.get(0).player_state.getPowerup_inventory(), gameState.moleculeCounts);
+        client = new Client();
+        client.saveGame(player.getUserName(),gameState.players.get(0).getPlayerState().getScore(),
+                gameState.players.get(0).getPlayerState().getChance_points() ,gameState.players.get(0).getPlayerState().getAbilities(),gameState.ObstacleCounts);
     }
 
     @Override
@@ -77,7 +73,7 @@ public class Game implements IRunListener {
 
     private void initializeGame(HashMap<String, Double> startParameters, String username) {
 
-        gameState.initializeGameState(startParameters, username);
+        gameState.initializeGameState(gameState.layout);
     }
 
     public ArrayList<DomainObject> getDomainObjectArr() {

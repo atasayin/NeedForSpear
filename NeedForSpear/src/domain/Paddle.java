@@ -1,6 +1,6 @@
 package domain;
 
-import util.PosVector;
+import domain.util.PosVector;
 
 public class Paddle extends DomainObject{
 	public static final int FRAME_WIDTH = 900;
@@ -32,6 +32,8 @@ public class Paddle extends DomainObject{
 	public double getAngle() { return this.angle; }
 
 	public void setAngle(double angle) { this.angle = angle; }
+
+	public PosVector getPosVector() { return this.posVector; }
 
 	@Override
 	public void updatePosition() {

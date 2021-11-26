@@ -1,7 +1,7 @@
 package domain;
 
 import domain.obstacle.Obstacle;
-import util.PosVector;
+import domain.util.PosVector;
 
 import java.util.HashMap;
 
@@ -61,6 +61,7 @@ public class Layout {
     }
 
     // Changes type of the obstacle.
+ /*
     void changeTypeObstacle(Obstacle obstacle, newType){
 
     }
@@ -75,8 +76,10 @@ public class Layout {
 
 
     }
+
+  */
     // Removes a obstacle from Layout.
-    void removeObstacle(obstacle){
+    void removeObstacle(Obstacle obstacle){
 
 
     }

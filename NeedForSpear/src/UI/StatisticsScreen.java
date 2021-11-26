@@ -1,3 +1,4 @@
+/*
 package UI;
 
 
@@ -307,3 +308,5 @@ public class StatisticsScreen extends JPanel implements InventoryListener, TimeL
 
     }
 }
+
+ */

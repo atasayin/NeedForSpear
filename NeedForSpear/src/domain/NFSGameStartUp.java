@@ -2,11 +2,12 @@ package domain;
 
 import UI.PlayScreen;
 import UI.Playground;
+import domain.controller.PaddleController;
 
 import javax.swing.*;
 
 public class NFSGameStartUp {
-    //private static Playground playground;
+    private static Playground playground;
     private static PaddleController pc;
 
     public static final int HEIGHT = 600;

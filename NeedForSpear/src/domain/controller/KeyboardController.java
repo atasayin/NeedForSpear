@@ -1,6 +1,7 @@
 package domain.controller;
 
-import domain.Game;
+import domain.*;
+
 
 public class KeyboardController {
 
@@ -9,44 +10,34 @@ public class KeyboardController {
 
         switch (input) {
             case 37: // left
-                ((Shooter) obj).setSpeed(-Game.UNITLENGTH_L / 10, 0); // to preserve aesthetics
+                PaddleController.move(1);
                 return false;
             case 39: // right
-                ((Shooter) obj).setSpeed(Game.UNITLENGTH_L / 10, 0); // to preserve aesthetics
+                PaddleController.move(2);
                 return false;
             case 65: // rotate counter-clockwise
-                ((Shooter) obj).updateAngle(input);
+                PaddleController.move(3);
                 return false;
             case 68: // rotate clockwise
-                ((Shooter) obj).updateAngle(input);
+                PaddleController.move(4);
                 return false;
-            case 32: // space character
-                ((Shooter) obj).shoot();
-                return false;
-            case 67: // c
-                ((Shooter) obj).change();
-                return false;
-            case 66: // b
-                isBlender = true;
+            case 32: // rotate clockwise
+
                 return false;
             case 83: // s
                 Game currentGame = Game.getInstance();
-                currentGame.saveGame(currentGame.getPlayers().get(0), Game.getInstance().gameState.saveType);
+                //SAVE SETTINGS
                 return false;
             case 76: // l
                 Game currentGame1 = Game.getInstance();
-                currentGame1.loadGame(Game.getInstance().gameState.saveType);
+                //LOAD SETTINGS
                 return false;
             default:
                 return false;
         }
-
-
-    return true;
     }
 
 
-
-
-
+    public void released(Paddle paddle) {
+    }
 }

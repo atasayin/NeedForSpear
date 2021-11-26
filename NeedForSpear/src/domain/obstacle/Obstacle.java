@@ -2,7 +2,7 @@ package domain.obstacle;
 
 import domain.DomainObject;
 import domain.strategy.DestroyBehaviour;
-import util.PosVector;
+import domain.util.PosVector;
 
 public abstract class Obstacle extends DomainObject {
 	
@@ -10,7 +10,7 @@ public abstract class Obstacle extends DomainObject {
 	public boolean is_rotating;
 	public int health;
 	public DestroyBehaviour destroyBehaviour;
-	protected String type;
+	protected static String type;
 
 	
 	
@@ -20,7 +20,7 @@ public abstract class Obstacle extends DomainObject {
 		this.is_rotating = false;
 	}
 	public static String getType() {
-		return this.type;
+		return type;
 	}
 
 	public PosVector getPosVector() {

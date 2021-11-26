@@ -10,10 +10,12 @@ public class PandorasBox extends Obstacle {
 		super(xPos, yPos, L, health);
 		this.destroyBehaviour = new ExplosiveDestroyBehaviour();
 		this.is_rotating = true;
+		this.type = "PandorasBox";
 	}
 
-	@Override
+
 	public ArrayList<String> makeList() {
+
 		return null;
 	}
 }

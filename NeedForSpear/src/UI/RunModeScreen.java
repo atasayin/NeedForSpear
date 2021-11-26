@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-import domain.KeyboardController;
+import domain.controller.KeyboardController;
 import domain.* ;
 import domain.obstacle.Obstacle;
 
@@ -45,18 +45,18 @@ public class RunModeScreen extends JPanel implements ActionListener, KeyListener
 
         }
 
-        drawShooter(g2d, player.getShooter());
+        //drawBall(g2d, player.getShooter());
         g2d.setTransform(old);
         int textWidth = g.getFontMetrics().stringWidth(infoString);
         g2d.drawString(infoString, this.getWidth() / 2 - textWidth / 2, 20);
     }
-
+    /*
     private void drawShooter(Graphics2D g2d, Shooter d) {
         // TODO Auto-generated method stub
         ShooterView.getInstance().draw(g2d, d);
 
     }
-
+    */
     private void drawComponent(Graphics2D g2d, DomainObject d) {
         // TODO Auto-generated method stub
         if (d instanceof Obstacle) {
@@ -68,11 +68,11 @@ public class RunModeScreen extends JPanel implements ActionListener, KeyListener
     public void actionPerformed(ActionEvent e) {
         // TODO Auto-generated method stub
         gameOverCheck();
-        Game.getInstance().gameState.checkCollisions();
+        //Game.getInstance().gameState.checkCollisions();
         update();
         repaint();
-        dropObjects();
-        Game.getInstance().gameState.removeObjectsIfOutsideScreen();
+        //dropObjects();
+        //Game.getInstance().gameState.removeObjectsIfOutsideScreen();
         infoRefreshCount += TIMER_SPEED;
         if (infoRefreshCount >= INFO_REFRESH_PERIOD) {
             infoString = "";
@@ -103,18 +103,16 @@ public class RunModeScreen extends JPanel implements ActionListener, KeyListener
         double t = Game.getInstance().gameState.getTime();
         if (t <= 0)
             gameOver("time");
-        if (Game.getInstance().getPlayers().get(0).getPlayerState().getHealth_points() <= 0)
+        if (Game.getInstance().getPlayers().get(0).getPlayerState().getChance_points() <= 0)
             gameOver("health");
-        if (checkInventoryIsOut(Game.getInstance().getPlayers().get(0).getPlayerState().getAtom_inventory()))
-            gameOver("inventory");
-        if (checkDomainObjectsAreOut(Game.getInstance().gameState.getMoleculeCount()) && checkMoleculeOnScreen())
+        if (checkDomainObjectsAreOut(Game.getInstance().gameState.ObstacleCounts) && checkObstacleOnScreen())
             gameOver("domain");
 
     }
 
-    private boolean checkMoleculeOnScreen() {
+    private boolean checkObstacleOnScreen() {
         for (DomainObject d : Game.getInstance().getDomainObjectArr()) {
-            if (d instanceof Molecule) {
+            if (d instanceof Obstacle) {
                 return false;
             }
         }
@@ -154,16 +152,19 @@ public class RunModeScreen extends JPanel implements ActionListener, KeyListener
         }
     }
 
+  /*
     private void dropObjects() {
         Game.getInstance().gameState.addAvailableDomainObjects(TIMER_SPEED);
     }
+
+   */
 
     public void update() {
         for (DomainObject domainObject : Game.getInstance().getDomainObjectArr()) {
             domainObject.updatePosition();
             domainObject.updateAngle();
         }
-        player.getShooter().updatePosition();
+        Game.getInstance().gameState.updatePaddlePosition();
     }
 
     @Override
@@ -198,7 +199,7 @@ public class RunModeScreen extends JPanel implements ActionListener, KeyListener
             case 83: // s: save
                 if (!tm.isRunning()) {
                     infoString = "Game Saved.";
-                    kc.getInput(input, player.getShooter()); // only works if game was paused
+                    kc.getInput(input, Game.getInstance().gameState.getPC().getPaddle()); // only works if game was paused
                     return;
                 } else {
                     infoString = "Press \"Pause\" Button before saving.";
@@ -207,10 +208,10 @@ public class RunModeScreen extends JPanel implements ActionListener, KeyListener
             case 76: // l: load
                 if (!tm.isRunning()) {
                     infoString = "Game Loaded.";
-                    kc.getInput(input, player.getShooter());
+                    kc.getInput(input, Game.getInstance().gameState.getPC().getPaddle());
                     tm.restart();// only works if game was paused
                     Game.getInstance().gameState.isRunning = true;
-                    Game.getInstance().getPlayers().get(0).player_state.notifyAllInventoryListeners("all");
+                    Game.getInstance().getPlayers().get(0).getPlayerState().notifyAllInventoryListeners("all");
                     return;
                 } else {
                     infoString = "Press \"Pause\" Button before loading.";
@@ -219,7 +220,7 @@ public class RunModeScreen extends JPanel implements ActionListener, KeyListener
             default:
         }
 
-        if (kc.getInput(input, player.getShooter())) { // when returns true restart
+        if (kc.getInput(input, Game.getInstance().gameState.getPC().getPaddle())) { // when returns true restart
             tm.restart();
             Game.getInstance().gameState.isRunning = true;
 
@@ -230,7 +231,7 @@ public class RunModeScreen extends JPanel implements ActionListener, KeyListener
     @Override
     public void keyReleased(KeyEvent e) {
             // TODO Auto-generated method stub
-            kc.released(player.getShooter());
+            kc.released(Game.getInstance().gameState.getPC().getPaddle());
     }
 
     public RunModeScreen() {
@@ -256,4 +257,4 @@ public class RunModeScreen extends JPanel implements ActionListener, KeyListener
 }
 
 
-}
+
