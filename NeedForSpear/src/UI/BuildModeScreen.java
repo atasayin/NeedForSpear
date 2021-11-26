@@ -1,152 +1,131 @@
 package UI;
 
-import domain.IStartGameListener;
-import domain.controller.LayoutController;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class BuildModeScreen extends JPanel implements ActionListener, MouseListener {
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
+import domain.*;
 
-    static final int SIMPLE_COUNT = 75;
-    static final int FIRM_COUNT = 10;
-    static final int EXPLOSIVE_COUNT = 5;
-    static final int GIFT_COUNT = 10;
+
+@SuppressWarnings("serial")
+public class BuildModeScreen extends JFrame {
+
 
     static final int SCREEN_WIDTH = 1368;
     static final int SCREEN_HEIGHT = 766;
+    static final int UNITLENGTH_L = (int) (SCREEN_HEIGHT * 0.1 + 0.5); // 10% of game height
+    static final int STATISTICS_SCREEN_WIDTH = 200;
 
-    private JTextField simpleObstacleCount;
-    private JTextField firmObstacleCount;
-    private JTextField explosiveObstacleCount;
-    private JTextField giftObstacleCount;
+    static final String SAVE_METHOD_1 = "Database";
+    static final String SAVE_METHOD_2 = "Local";
 
+
+    private JTextField username;
     private JButton gameStart;
 
-    private HashMap<String, Double> obstacleSettings;
-    private List<IStartGameListener> runModeListeners = new ArrayList<>();
+    private HashMap<String, Integer> runSettings;
+    private List<IRunListener> runModeListeners = new ArrayList<>();
 
-    private static final int TIMER_SPEED = 10;
-
-    Timer timer = new Timer(TIMER_SPEED, this);
-
-    LayoutController lc = new LayoutController();
-
-    public void setObstacleSettings() {
-        HashMap<String, Double> obstacleSettings = new HashMap<String, Double>();
-
-        obstacleSettings.put("simpleObstacleCount", Double.parseDouble(simpleObstacleCount.getText()));
-        obstacleSettings.put("firmObstacleCount", Double.parseDouble(firmObstacleCount.getText()));
-        obstacleSettings.put("explosiveObstacleCount", Double.parseDouble(explosiveObstacleCount.getText()));
-        obstacleSettings.put("giftObstacleCount", Double.parseDouble(giftObstacleCount.getText()));
-
-        this.obstacleSettings = obstacleSettings;
+    public void addListener(IRunListener listener) {
+        runModeListeners.add(listener);
     }
+
+    public void removeListener(IRunListener listener) {
+        runModeListeners.remove(listener);
+    }
+
+    public void setRunSettings() {
+        HashMap<String, Integer> runSettings = new HashMap<String, Integer>();
+
+        runSettings.put("screenHeight", (int) SCREEN_HEIGHT);
+        runSettings.put("screenWidth", (int) SCREEN_WIDTH);
+
+        this.runSettings = runSettings;
+    }
+
+    private double isStationaryOrRotating(JRadioButton radiobtn, JRadioButton childRadiobtn) {
+        if (radiobtn.isSelected()) {
+            if (childRadiobtn.isSelected()) {
+                return 1.0;
+            } else {
+                return 0.0;
+            }
+        } else {
+            return -1.0;
+        }
+    }
+
 
     public BuildModeScreen() {
         initializeBuildScreen();
-        add(initializeObstacleSettingsPanel());
+        add(initializeGameObjectPanel());
+        add(initializeGameSettingsPanel());
+        add(runGamePanel(this));
     }
 
-    // Initial Build Mode Screen and the timer
-    public void initializeBuildScreen()  {
-        this.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
-        this.setFocusable(true);
-        timer.start();
+    private void initializeBuildScreen() {
+        this.setLayout(new GridLayout(3, 0));
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setSize(500, 1000);
     }
 
-    // UI Panel of Obstacle Settings
-    private JPanel initializeObstacleSettingsPanel(){
-        GridLayout gameObjLayout = new GridLayout(4, 3); // #Type of obstacles
+    private JPanel initializeGameObjectPanel() {
+        GridLayout gameObjLayout = new GridLayout(6, 2);
         JPanel GameObjectPanel = new JPanel(gameObjLayout);
 
-        // Text Fields
-        simpleObstacleCount = new JTextField(Integer.toString(SIMPLE_COUNT), 30);
-        firmObstacleCount = new JTextField(Integer.toString(FIRM_COUNT), 30);
-        explosiveObstacleCount = new JTextField(Integer.toString(EXPLOSIVE_COUNT), 30);
-        giftObstacleCount = new JTextField(Integer.toString(GIFT_COUNT), 30);
+        username = new JTextField("User Kelebisler", 30);
 
-        // Simple Obstacle Row
-        GameObjectPanel.add(new JLabel(new ImageIcon("assets/simple.png")));
-        GameObjectPanel.add(new JLabel("Number of simple obstacles"));
-        GameObjectPanel.add(simpleObstacleCount);
+        GameObjectPanel.add(new JLabel("Number of Obstacle"));
 
-        // Firm Obstacle Row
-        GameObjectPanel.add(new JLabel(new ImageIcon("assets/firm.png")));
-        GameObjectPanel.add(new JLabel("Number of firm obstacles"));
-        GameObjectPanel.add(firmObstacleCount);
-
-        // Explosive Obstacle Row
-        GameObjectPanel.add(new JLabel(new ImageIcon("assets/explosive.png")));
-        GameObjectPanel.add(new JLabel("Number of explosive obstacles"));
-        GameObjectPanel.add(explosiveObstacleCount);
-
-        // Gift Obstacle Row
-        GameObjectPanel.add(new JLabel(new ImageIcon("assets/gift.png")));
-        GameObjectPanel.add(new JLabel("Number of gift obstacles"));
-        GameObjectPanel.add(giftObstacleCount);
-
+        GameObjectPanel.add(new JLabel("Username:"));
+        GameObjectPanel.add(username);
         return GameObjectPanel;
+    }
+
+    private JPanel initializeGameSettingsPanel() {
+        GridLayout varLayout = new GridLayout(5, 3);
+        JPanel GameSettingsPanel = new JPanel(varLayout);
+
+        return GameSettingsPanel;
 
     }
 
-    // Get random Layout after the obstacle settings
-    private void getRandomLayout(){
+    private JPanel runGamePanel(JFrame frame) {
+        GridLayout panelLayout = new GridLayout(3, 0);
+        JPanel runGamePanel = new JPanel(panelLayout);
+        gameStart = new JButton("Click to start the game!");
+        gameStart.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
+                setRunSettings();
+                notifyButtonisClickedListeners();
 
+            }
+        });
 
-
+        runGamePanel.add(gameStart);
+        return runGamePanel;
     }
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        Graphics2D g2d = (Graphics2D) g;
+    public void notifyButtonisClickedListeners() {
+        System.out.println("ALL LISTENERS ARE NOTIFIED THAT THE BUTTON IS CLICKED \n\n\n");
 
-
+        for (IRunListener listener : runModeListeners) {
+            listener.onClickEvent(this.runSettings, username.getText());
+        }
+        this.setVisible(false);
+        this.dispose();
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-    }
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        int xMouse = e.getX();
-        int yMouse = e.getY();
-
-
-
-
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-
-    }
 }

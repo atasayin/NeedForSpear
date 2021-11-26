@@ -75,7 +75,7 @@ public class PlayerState  implements IRunListener{
     }
 
     @Override
-    public void onClickEvent(HashMap<String, Double> runSettings, String username) {
+    public void onClickEvent(HashMap<String, Integer> runSettings, String username) {
         initializeInventory(abilities, 0);
         notifyAllInventoryListeners("all");
 

@@ -8,11 +8,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
-import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -30,7 +28,8 @@ public class RunModeScreen extends JPanel implements ActionListener, KeyListener
     String infoString = "";
     int infoRefreshCount;
     KeyboardController kc = new KeyboardController();
-    Player player = Game.getInstance().getPlayers().get(0);
+    Game game = Game.getInstance();
+
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -45,18 +44,25 @@ public class RunModeScreen extends JPanel implements ActionListener, KeyListener
 
         }
 
+        drawPaddle(g2d, Game.getInstance().PC.getPaddle());
+
         //drawBall(g2d, player.getShooter());
         g2d.setTransform(old);
         int textWidth = g.getFontMetrics().stringWidth(infoString);
         g2d.drawString(infoString, this.getWidth() / 2 - textWidth / 2, 20);
     }
-    /*
-    private void drawShooter(Graphics2D g2d, Shooter d) {
+
+    private void drawObstacle(Graphics2D g2d, Obstacle d) {
         // TODO Auto-generated method stub
-        ShooterView.getInstance().draw(g2d, d);
+        SimpleObstacleView.getInstance().draw(g2d, d);
 
     }
-    */
+    private void drawPaddle(Graphics2D g2d, Paddle d) {
+        // TODO Auto-generated method stub
+        SimplePaddleView.getInstance().draw(g2d, d);
+
+    }
+
     private void drawComponent(Graphics2D g2d, DomainObject d) {
         // TODO Auto-generated method stub
         if (d instanceof Obstacle) {
@@ -183,13 +189,6 @@ public class RunModeScreen extends JPanel implements ActionListener, KeyListener
                 tm.stop();
                 Game.getInstance().gameState.isRunning = false;
                 return;
-            case 66: // b: blender (do not return)
-                infoString = "Blend Mode";
-                repaint();
-                tm.stop();
-                Game.getInstance().gameState.isRunning = false;
-                infoRefreshCount = INFO_REFRESH_PERIOD;
-                break;
             case 82: // r: resume
                 infoString = "Game Resumed.";
                 tm.restart();
@@ -238,6 +237,7 @@ public class RunModeScreen extends JPanel implements ActionListener, KeyListener
         this.setSize(1366, 768);
         try {
             initializeRunModeScreen();
+
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -247,8 +247,10 @@ public class RunModeScreen extends JPanel implements ActionListener, KeyListener
 
     public void initializeRunModeScreen() throws IOException {
         this.setFocusable(true);
-        img = ImageIO.read(new File("src/assets/kuvid_bc.png"));
+        //img = ImageIO.read(new File("src/assets/space.png"));
         tm.start();
+
+
     }
 
     private static final int TIMER_SPEED = 10;

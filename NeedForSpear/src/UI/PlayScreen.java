@@ -13,10 +13,10 @@ public class PlayScreen implements IRunListener {
     //StatisticsScreen statisticsPanel;
     RunModeScreen screen;
 
-    public void onClickEvent(HashMap<String, Double> runSettings, String username) {
+    public void onClickEvent(HashMap<String, Integer> runSettings, String username) {
         int screenWidth = runSettings.get("screenWidth").intValue();
         int screenHeight = runSettings.get("screenHeight").intValue();
-        int statisticsWidth = runSettings.get("statisticsWidth").intValue();
+        //int statisticsWidth = runSettings.get("statisticsWidth").intValue();
         initializeOuterFrameSettings(screenWidth, screenHeight);
         openRunModeScreen();
         //openStatisticsScreen(statisticsWidth, screenHeight);

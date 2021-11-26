@@ -1,8 +1,12 @@
 package domain;
+import domain.controller.PaddleController;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import static java.lang.System.*;
 
 
 public class Game implements IRunListener {
@@ -13,8 +17,9 @@ public class Game implements IRunListener {
     public Client client;
     static Game instance;
     private Timer game_Timer;
+    public PaddleController PC;
 
-    public static int UNITLENGTH_L;
+    public static int UNITLENGTH_L = 1;
 
     private Game() {
         gameState = new GameState();
@@ -65,15 +70,17 @@ public class Game implements IRunListener {
     }
 
     @Override
-    public void onClickEvent(HashMap<String, Double> startParameters, String username) {
+    public void onClickEvent(HashMap<String, Integer> startParameters, String username) {
         // TODO Auto-generated method stub
         initializeGame(startParameters, username);
-        Game.UNITLENGTH_L = startParameters.get("unitLengthL").intValue();
+        //PC = new PaddleController(startParameters.get("width"),startParameters.get("height"));
+        PC = new PaddleController(100,20);
+        System.out.println("Paddle created " + PC.toString());
     }
 
-    private void initializeGame(HashMap<String, Double> startParameters, String username) {
+    private void initializeGame(HashMap<String, Integer> startParameters, String username) {
 
-        gameState.initializeGameState(gameState.layout);
+        //gameState.initializeGameState(gameState.layout);
     }
 
     public ArrayList<DomainObject> getDomainObjectArr() {
