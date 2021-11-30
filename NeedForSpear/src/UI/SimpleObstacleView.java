@@ -72,7 +72,7 @@ public class SimpleObstacleView  implements Drawable {
         }
 
         @Override
-        public void draw(Graphics2D g2d, DomainObject object) {
+        public void draw(Graphics2D g2d, DomainObject object, int w, int h) {
             Obstacle obs = (Obstacle) object;
             String type = Obstacle.getType();
             BufferedImage bi;

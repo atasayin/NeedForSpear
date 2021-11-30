@@ -21,7 +21,7 @@ import domain.obstacle.Obstacle;
 
 
 @SuppressWarnings("serial")
-public class RunModeScreen extends JPanel implements ActionListener, KeyListener {
+public class RunGameObjects extends JPanel implements ActionListener, KeyListener {
 
     Timer tm = new Timer(TIMER_SPEED, this);
     BufferedImage img; // background
@@ -30,6 +30,22 @@ public class RunModeScreen extends JPanel implements ActionListener, KeyListener
     KeyboardController kc = new KeyboardController();
     Game game = Game.getInstance();
 
+    public static int frame_width;
+    public static int frame_height;
+
+
+    public RunGameObjects(int width, int height) {
+        this.frame_width = width;
+        this.frame_height = height;
+        try {
+            initializeRunModeScreen();
+
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+    }
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -44,7 +60,7 @@ public class RunModeScreen extends JPanel implements ActionListener, KeyListener
 
         }
 
-        drawPaddle(g2d, Game.getInstance().PC.getPaddle());
+        drawPaddle(g2d, Game.getInstance().PC.getPaddle(), frame_width, frame_height);
 
         //drawBall(g2d, player.getShooter());
         g2d.setTransform(old);
@@ -54,30 +70,28 @@ public class RunModeScreen extends JPanel implements ActionListener, KeyListener
 
     private void drawObstacle(Graphics2D g2d, Obstacle d) {
         // TODO Auto-generated method stub
-        SimpleObstacleView.getInstance().draw(g2d, d);
+        SimpleObstacleView.getInstance().draw(g2d, d, frame_width, frame_height);
 
     }
-    private void drawPaddle(Graphics2D g2d, Paddle d) {
+    private void drawPaddle(Graphics2D g2d, Paddle d, int width, int height) {
         // TODO Auto-generated method stub
-        SimplePaddleView.getInstance().draw(g2d, d);
+        SimplePaddleView.getInstance().draw(g2d, d, width, height);
 
     }
 
     private void drawComponent(Graphics2D g2d, DomainObject d) {
         // TODO Auto-generated method stub
         if (d instanceof Obstacle) {
-            SimpleObstacleView.getInstance().draw(g2d, d);
+            SimpleObstacleView.getInstance().draw(g2d, d, frame_width, frame_height);
         }
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         // TODO Auto-generated method stub
-        //gameOverCheck();
         //Game.getInstance().gameState.checkCollisions();
         update();
         repaint();
-        //dropObjects();
         //Game.getInstance().gameState.removeObjectsIfOutsideScreen();
         infoRefreshCount += TIMER_SPEED;
         if (infoRefreshCount >= INFO_REFRESH_PERIOD) {
@@ -87,83 +101,6 @@ public class RunModeScreen extends JPanel implements ActionListener, KeyListener
 
     }
 
-    private boolean checkInventoryIsOut(HashMap<Integer, Integer> inventory) {
-        if (inventory.size() == 0)
-            return false;
-        if (inventory.get(1) == 0 && inventory.get(2) == 0 && inventory.get(3) == 0 && inventory.get(4) == 0)
-            return true;
-        return false;
-    }
-
-    private boolean checkDomainObjectsAreOut(HashMap<Integer, Integer> inventory) {
-
-        if (inventory.size() != 0) {
-            if (inventory.get(1) == 0 && inventory.get(2) == 0 && inventory.get(3) == 0 && inventory.get(4) == 0)
-                return true;
-        }
-        return false;
-    }
-
-    public void gameOverCheck() {
-
-        double t = Game.getInstance().gameState.getTime();
-        if (t <= 0)
-            gameOver("time");
-        if (Game.getInstance().getPlayers().get(0).getPlayerState().getChance_points() <= 0)
-            gameOver("health");
-        if (checkDomainObjectsAreOut(Game.getInstance().gameState.ObstacleCounts) && checkObstacleOnScreen())
-            gameOver("domain");
-
-    }
-
-    private boolean checkObstacleOnScreen() {
-        for (DomainObject d : Game.getInstance().getDomainObjectArr()) {
-            if (d instanceof Obstacle) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private void gameOver(String reason) {
-        tm.stop();
-        Game.getInstance().cancelTime();
-        Object[] options = { "OK" };
-        String message;
-        switch (reason) {
-            case "time":
-                message = "Time is up!";
-                break;
-            case "health":
-                message = "You are dead.";
-                break;
-            case "inventory":
-                message = "Out of atoms!";
-                break;
-            case "domain":
-                message = "Out of molecules.";
-                break;
-            default:
-                message = "Time is up!";
-                break;
-        }
-
-        int input = JOptionPane.showOptionDialog(null,
-                "Score " + String.format("%.2f", Game.getInstance().getPlayers().get(0).getPlayerState().getScore()),
-                "GameOver: " + message, JOptionPane.ERROR_MESSAGE, JOptionPane.QUESTION_MESSAGE, null, options,
-                options[0]);
-
-        if (input == JOptionPane.OK_OPTION || input == JOptionPane.CLOSED_OPTION) {
-            PlayScreen.GameOver();
-        }
-    }
-
-  /*
-    private void dropObjects() {
-        Game.getInstance().gameState.addAvailableDomainObjects(TIMER_SPEED);
-    }
-
-   */
 
     public void update() {
         for (DomainObject domainObject : Game.getInstance().getDomainObjectArr()) {
@@ -233,23 +170,9 @@ public class RunModeScreen extends JPanel implements ActionListener, KeyListener
             kc.released(Game.getInstance().gameState.getPC().getPaddle());
     }
 
-    public RunModeScreen() {
-        this.setSize(1366, 768);
-        try {
-            initializeRunModeScreen();
-
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-    }
-
     public void initializeRunModeScreen() throws IOException {
         this.setFocusable(true);
-        //img = ImageIO.read(new File("src/assets/space.png"));
         tm.start();
-
 
     }
 

@@ -2,7 +2,7 @@ package domain;
 
 import UI.BuildModeScreen;
 
-import UI.PlayScreen;
+import UI.Playground;
 
 import javax.swing.*;
 
@@ -13,7 +13,7 @@ public class Main {
     public static void main(String arr[]) {
 
         //main JFrame
-        PlayScreen nfs = new PlayScreen();
+        Playground nfs = new Playground();
 
         //starts with the build mode screen
         buildMode = new BuildModeScreen();

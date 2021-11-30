@@ -35,14 +35,11 @@ public class SimplePaddleView implements Drawable {
 
     private void fillImgs() throws IOException{
         // TODO Auto-generated method stub
-        String path = "./assets/paddle1.png";
         try {
             paddle_img = ImageIO.read(this.getClass().getResource("../assets/paddle1.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //paddle_img = ImageIO.read(new File("/Users/beyzanurcoban/Desktop/lectures/Fall2021/comp302/2021_302_noncompers/NeedForSpear/src/asset/paddle1.png"));
-        //paddle_img = ImageIO.read(new File("../assets/paddle1.png"));
 
         // scale to unit length L
         Image scaled = paddle_img.getScaledInstance(100, 10,
@@ -63,12 +60,12 @@ public class SimplePaddleView implements Drawable {
     }
 
     @Override
-    public void draw(Graphics2D g2d, DomainObject domainObject) {
+    public void draw(Graphics2D g2d, DomainObject domainObject, int width, int height) {
         // TODO Auto-generated method stub
         Paddle paddle = (Paddle) domainObject;
 
         //g2d.drawImage(paddle_img, paddle.getPosVector().getX(), paddle.getPosVector().getY(), null);
-        g2d.drawImage(paddle_img, 80, 80, null);
+        g2d.drawImage(paddle_img, (width-paddle.getLength())/2, (height-paddle.getThickness()-20), null);
 
     }
 

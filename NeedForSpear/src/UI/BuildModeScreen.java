@@ -23,9 +23,9 @@ import domain.*;
 public class BuildModeScreen extends JFrame {
 
 
-    static final int SCREEN_WIDTH = 1368;
-    static final int SCREEN_HEIGHT = 766;
-    static final int UNITLENGTH_L = (int) (SCREEN_HEIGHT * 0.1 + 0.5); // 10% of game height
+    static final int FRAME_WIDTH = 1368;
+    static final int FRAME_HEIGHT = 766;
+    static final int UNITLENGTH_L = (int) (FRAME_HEIGHT * 0.1 + 0.5); // 10% of game height
     static final int STATISTICS_SCREEN_WIDTH = 200;
 
     static final String SAVE_METHOD_1 = "Database";
@@ -49,8 +49,8 @@ public class BuildModeScreen extends JFrame {
     public void setRunSettings() {
         HashMap<String, Integer> runSettings = new HashMap<String, Integer>();
 
-        runSettings.put("screenHeight", (int) SCREEN_HEIGHT);
-        runSettings.put("screenWidth", (int) SCREEN_WIDTH);
+        runSettings.put("screenWidth", (int) FRAME_WIDTH);
+        runSettings.put("screenHeight", (int) FRAME_HEIGHT);
 
         this.runSettings = runSettings;
     }
@@ -79,6 +79,7 @@ public class BuildModeScreen extends JFrame {
         this.setLayout(new GridLayout(3, 0));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(500, 1000);
+        this.setLocationRelativeTo(null);
     }
 
     private JPanel initializeGameObjectPanel() {
