@@ -32,6 +32,7 @@ public class SimplePaddleView implements Drawable {
         return instance;
     }
 
+
     private void fillImgs() throws IOException{
         // TODO Auto-generated method stub
         System.out.println(new File("/UI.assets/paddle1.png").getPath());
