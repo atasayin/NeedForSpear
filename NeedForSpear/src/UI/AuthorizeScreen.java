@@ -34,7 +34,7 @@ public class AuthorizeScreen extends JFrame {
         GridLayout logoLayout = new GridLayout(1, 1);
         JPanel logoPanel = new JPanel(logoLayout);
 
-        ImageIcon imageIcon = new ImageIcon("UI/assets/simpleball.png");
+        ImageIcon imageIcon = new ImageIcon("assets/simpleball.png");
         gameImage = new JLabel(imageIcon);
         logoPanel.add(gameImage);
         return logoPanel;

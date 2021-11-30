@@ -38,10 +38,10 @@ public class SimpleObstacleView  implements Drawable {
         }
 
         private void fillImgs() throws IOException {
-            simple_obs_img = ImageIO.read(new File("src/UI.assets/simpleball.png"));
-            //beta_img = ImageIO.read(new File("src/UI.assets/atoms/beta.png"));
-            //gamma_img = ImageIO.read(new File("src/UI.assets/atoms/gamma.png"));
-            //sigma_img = ImageIO.read(new File("src/UI.assets/atoms/sigma.png"));
+            simple_obs_img = ImageIO.read(new File("src/assets/simpleball.png"));
+            //beta_img = ImageIO.read(new File("src/assets/atoms/beta.png"));
+            //gamma_img = ImageIO.read(new File("src/assets/atoms/gamma.png"));
+            //sigma_img = ImageIO.read(new File("src/assets/atoms/sigma.png"));
 
             //int obs_size = (int) (Game.UNITLENGTH_L * 0.6);
             int obs_size = (int) (25 * 0.6);

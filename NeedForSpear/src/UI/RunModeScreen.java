@@ -73,7 +73,7 @@ public class RunModeScreen extends JPanel implements ActionListener, KeyListener
     @Override
     public void actionPerformed(ActionEvent e) {
         // TODO Auto-generated method stub
-        gameOverCheck();
+        //gameOverCheck();
         //Game.getInstance().gameState.checkCollisions();
         update();
         repaint();
@@ -247,7 +247,7 @@ public class RunModeScreen extends JPanel implements ActionListener, KeyListener
 
     public void initializeRunModeScreen() throws IOException {
         this.setFocusable(true);
-        //img = ImageIO.read(new File("src/UI.assets/space.png"));
+        //img = ImageIO.read(new File("src/assets/space.png"));
         tm.start();
 
 
