@@ -12,8 +12,7 @@ public abstract class Obstacle extends DomainObject {
 	public DestroyBehaviour destroyBehaviour;
 	protected static String type;
 
-	
-	
+
 	public Obstacle(int xPos, int yPos, float L, int health) {
 		this.pos = new PosVector(xPos, yPos);
 		this.health = health;

@@ -1,12 +1,16 @@
 package domain;
 
 import domain.obstacle.Obstacle;
+import domain.obstacle.WallMaria;
 import domain.util.PosVector;
+import javafx.geometry.Pos;
 
 import java.util.HashMap;
 
 public class Layout {
     // Represents the locations and types of the objects in the game.
+
+    /////////////////////////////////////////////////////////////////////////////////////
 
     // Total number of Simple Obstacles(Wall Maria)
     public int simpleObstacleCount;
@@ -26,6 +30,22 @@ public class Layout {
     // Holds the center of circles of the paths that some obstacles move in
     public static HashMap<Obstacle, PosVector> obstacle_centers;
 
+    // 2D bool array
+    public boolean[][] isAvailable;
+
+    // Layout width
+    public int layoutWidth;
+
+    // Layout heigth
+    public int layoutHeight
+
+    /////////////////////////////////////////////////////////////////////////////////////
+
+    public Layout(int layoutWidth, int layoutHeight){
+        isAvailable = new boolean[layoutWidth][layoutHeight];
+        setLayout();
+    }
+
     // This method is called once the map is build to save the centers of the obstacles.
     public void buildCenterMap() {
         for (Obstacle obs : obstacle_positions.keySet()){
@@ -34,6 +54,7 @@ public class Layout {
             }
         }
     }
+
     // Returns positions of all current obstacles.
     HashMap<Obstacle, PosVector> getObstacle_positions() { return obstacle_positions; }
 
@@ -59,6 +80,35 @@ public class Layout {
     public void setGiftObstacleCount(int giftObstacleCount) {
         this.giftObstacleCount = giftObstacleCount;
     }
+
+    //
+    public void setLayout(){
+
+        // bir o bir o bir o bir o
+        for (int i = 0; i < simpleObstacleCount; i ++) {
+            PosVector pos;
+
+            WallMaria wm = new WallMaria();
+        }
+
+        for (int i = 0; i < firmObstacleCount; i ++) {
+
+        }
+
+        for (int i = 0; i < explosiveObstacleCount; i ++) {
+
+        }
+
+        for (int i = 0; i < giftObstacleCount; i ++) {
+
+        }
+
+
+    }
+
+    //
+    public
+
 
     // Changes type of the obstacle.
  /*

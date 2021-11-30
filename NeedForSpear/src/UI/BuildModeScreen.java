@@ -1,7 +1,7 @@
 package UI;
 
 
-import java.awt.GridLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -11,6 +11,7 @@ import java.util.List;
 import javax.swing.*;
 
 import domain.*;
+import domain.controller.LayoutController;
 
 
 @SuppressWarnings("serial")
@@ -34,11 +35,22 @@ public class BuildModeScreen extends JFrame {
     private JTextField giftObstacle;
 
     private JButton gameStart;
+    private JButton obstacleButton;
 
     private HashMap<String, Integer> obstacleSettings;
 
     private HashMap<String, Integer> runSettings;
     private List<IRunListener> runModeListeners = new ArrayList<>();
+
+    // Layout
+    Layout layout;
+
+    // Layout Controller
+    LayoutController lc = new LayoutController();
+
+    // Game
+    Game game = Game.getInstance();
+
 
 
     /////////////////////////////////////////////////////////////////////////////////////
@@ -73,19 +85,19 @@ public class BuildModeScreen extends JFrame {
 
     public BuildModeScreen() {
         initializeBuildScreen();
-        add(initializeGameObjectPanel());
-        add(initializeGameSettingsPanel());
+        add(initializeObstacleSettingsPanel());
+        add(initializeLayoutPanel());
         add(runGamePanel(this));
     }
 
     private void initializeBuildScreen() {
         this.setLayout(new GridLayout(3, 0));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(500, 1000);
+        this.setSize(FRAME_WIDTH, FRAME_HEIGHT);
         this.setLocationRelativeTo(null);
     }
     private JPanel initializeObstacleSettingsPanel(){
-        GridLayout gameObjLayout = new GridLayout(4, 3); // #Type of obstacles
+        GridLayout gameObjLayout = new GridLayout(5, 1); // #Type of obstacles + Button
         JPanel GameObjectPanel = new JPanel(gameObjLayout);
 
         // Text Fields
@@ -95,53 +107,54 @@ public class BuildModeScreen extends JFrame {
         giftObstacle = new JTextField(Integer.toString(GIFT_COUNT), 30);
 
         // Simple Obstacle Row
-        GameObjectPanel.add(new JLabel(new ImageIcon("assets/simple.png")));
+        //GameObjectPanel.add(new JLabel(new ImageIcon("../assets/simple.png")));
         GameObjectPanel.add(new JLabel("Number of simple obstacles"));
         GameObjectPanel.add(simpleObstacle);
 
         // Firm Obstacle Row
-        GameObjectPanel.add(new JLabel(new ImageIcon("assets/firm.png")));
+        //GameObjectPanel.add(new JLabel(new ImageIcon("../assets/firm.png")));
         GameObjectPanel.add(new JLabel("Number of firm obstacles"));
         GameObjectPanel.add(firmObstacle);
 
         // Explosive Obstacle Row
-        GameObjectPanel.add(new JLabel(new ImageIcon("assets/explosive.png")));
+        //GameObjectPanel.add(new JLabel(new ImageIcon("../assets/explosive.png")));
         GameObjectPanel.add(new JLabel("Number of explosive obstacles"));
         GameObjectPanel.add(explosiveObstacle);
 
         // Gift Obstacle Row
-        GameObjectPanel.add(new JLabel(new ImageIcon("assets/gift.png")));
+        //GameObjectPanel.add(new JLabel(new ImageIcon("../assets/gift.png")));
         GameObjectPanel.add(new JLabel("Number of gift obstacles"));
         GameObjectPanel.add(giftObstacle);
 
+        // Obstacle Button
+        obstacleButton = new JButton("Set Obstacles");
+        obstacleButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
+                setObstacleSettings();
+                getRandomLayout();
+                //notifyButtonisClickedListeners();
+
+            }
+        });
+
+        GameObjectPanel.add(obstacleButton);
+
         return GameObjectPanel;
 
     }
 
-
-    private JPanel initializeGameObjectPanel() {
-        GridLayout gameObjLayout = new GridLayout(6, 2);
-        JPanel GameObjectPanel = new JPanel(gameObjLayout);
-
-        username = new JTextField("User Kelebisler", 30);
-
-        GameObjectPanel.add(new JLabel("Number of Obstacle"));
-
-        GameObjectPanel.add(new JLabel("Username:"));
-        GameObjectPanel.add(username);
-        return GameObjectPanel;
-    }
 
     // Get random Layout after the obstacle settings
     private void getRandomLayout(){
 
 
-
     }
 
-    private JPanel initializeGameSettingsPanel() {
+    private JPanel initializeLayoutPanel() {
         GridLayout varLayout = new GridLayout(5, 3);
         JPanel GameSettingsPanel = new JPanel(varLayout);
+
+        GameSettingsPanel.setBackground(Color.YELLOW);
 
         return GameSettingsPanel;
 
@@ -168,7 +181,7 @@ public class BuildModeScreen extends JFrame {
 
         for (IRunListener listener : runModeListeners) {
             System.out.println(listener);
-            listener.onClickEvent(this.runSettings, username.getText());
+            listener.onClickEvent(this.runSettings, "sds");
         }
         this.setVisible(false);
         this.dispose();
