@@ -1,27 +1,24 @@
 package UI;
 
 import domain.DomainObject;
-import domain.Game;
 import domain.Paddle;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
 
-public class SimplePaddleView implements Drawable {
+public class PaddleView implements Drawable {
 
     BufferedImage paddle_img;
-    static SimplePaddleView instance;
+    static PaddleView instance;
 
-    private SimplePaddleView() {
+    private PaddleView() {
     }
 
-    public static SimplePaddleView getInstance() {
+    public static PaddleView getInstance() {
         if (instance == null) {
-            instance = new SimplePaddleView();
+            instance = new PaddleView();
             try {
                 instance.fillImgs();
             } catch (IOException e) {

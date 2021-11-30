@@ -9,9 +9,7 @@ import java.awt.event.KeyListener;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.HashMap;
 
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -75,7 +73,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
     }
     private void drawPaddle(Graphics2D g2d, Paddle d, int width, int height) {
         // TODO Auto-generated method stub
-        SimplePaddleView.getInstance().draw(g2d, d, width, height);
+        PaddleView.getInstance().draw(g2d, d, width, height);
 
     }
 
