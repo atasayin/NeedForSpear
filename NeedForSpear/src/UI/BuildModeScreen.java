@@ -8,28 +8,40 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
+import javax.swing.*;
+
 import domain.*;
 
 
 @SuppressWarnings("serial")
 public class BuildModeScreen extends JFrame {
 
+    /////////////////////////////////////////////////////////////////////////////////////
+
+    // Frame Parameters
     static final int FRAME_WIDTH = 1368;
     static final int FRAME_HEIGHT = 766;
 
-    private JTextField username;
+    // Obstacles
+    static final int SIMPLE_COUNT = 75;
+    static final int FIRM_COUNT = 10;
+    static final int EXPLOSIVE_COUNT = 5;
+    static final int GIFT_COUNT = 10;
+
+    private JTextField simpleObstacle;
+    private JTextField firmObstacle;
+    private JTextField explosiveObstacle;
+    private JTextField giftObstacle;
+
     private JButton gameStart;
+
+    private HashMap<String, Integer> obstacleSettings;
 
     private HashMap<String, Integer> runSettings;
     private List<IRunListener> runModeListeners = new ArrayList<>();
+
+
+    /////////////////////////////////////////////////////////////////////////////////////
 
     public void addListener(IRunListener listener) {
         runModeListeners.add(listener);
@@ -48,6 +60,16 @@ public class BuildModeScreen extends JFrame {
         this.runSettings = runSettings;
     }
 
+    public void setObstacleSettings() {
+        HashMap<String, Integer> obstacleSettings = new HashMap<String, Integer>();
+
+        obstacleSettings.put("simpleObstacleCount", Integer.parseInt(simpleObstacle.getText()));
+        obstacleSettings.put("firmObstacleCount", Integer.parseInt(firmObstacle.getText()));
+        obstacleSettings.put("explosiveObstacleCount", Integer.parseInt(explosiveObstacle.getText()));
+        obstacleSettings.put("giftObstacleCount", Integer.parseInt(giftObstacle.getText()));
+
+        this.obstacleSettings = obstacleSettings;
+    }
 
     public BuildModeScreen() {
         initializeBuildScreen();
@@ -62,6 +84,40 @@ public class BuildModeScreen extends JFrame {
         this.setSize(500, 1000);
         this.setLocationRelativeTo(null);
     }
+    private JPanel initializeObstacleSettingsPanel(){
+        GridLayout gameObjLayout = new GridLayout(4, 3); // #Type of obstacles
+        JPanel GameObjectPanel = new JPanel(gameObjLayout);
+
+        // Text Fields
+        simpleObstacle = new JTextField(Integer.toString(SIMPLE_COUNT), 30);
+        firmObstacle = new JTextField(Integer.toString(FIRM_COUNT), 30);
+        explosiveObstacle = new JTextField(Integer.toString(EXPLOSIVE_COUNT), 30);
+        giftObstacle = new JTextField(Integer.toString(GIFT_COUNT), 30);
+
+        // Simple Obstacle Row
+        GameObjectPanel.add(new JLabel(new ImageIcon("assets/simple.png")));
+        GameObjectPanel.add(new JLabel("Number of simple obstacles"));
+        GameObjectPanel.add(simpleObstacle);
+
+        // Firm Obstacle Row
+        GameObjectPanel.add(new JLabel(new ImageIcon("assets/firm.png")));
+        GameObjectPanel.add(new JLabel("Number of firm obstacles"));
+        GameObjectPanel.add(firmObstacle);
+
+        // Explosive Obstacle Row
+        GameObjectPanel.add(new JLabel(new ImageIcon("assets/explosive.png")));
+        GameObjectPanel.add(new JLabel("Number of explosive obstacles"));
+        GameObjectPanel.add(explosiveObstacle);
+
+        // Gift Obstacle Row
+        GameObjectPanel.add(new JLabel(new ImageIcon("assets/gift.png")));
+        GameObjectPanel.add(new JLabel("Number of gift obstacles"));
+        GameObjectPanel.add(giftObstacle);
+
+        return GameObjectPanel;
+
+    }
+
 
     private JPanel initializeGameObjectPanel() {
         GridLayout gameObjLayout = new GridLayout(6, 2);
@@ -74,6 +130,13 @@ public class BuildModeScreen extends JFrame {
         GameObjectPanel.add(new JLabel("Username:"));
         GameObjectPanel.add(username);
         return GameObjectPanel;
+    }
+
+    // Get random Layout after the obstacle settings
+    private void getRandomLayout(){
+
+
+
     }
 
     private JPanel initializeGameSettingsPanel() {
