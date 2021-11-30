@@ -58,7 +58,7 @@ public class StatisticsScreen extends JPanel implements InventoryListener, TimeL
         JPanel powerupPanel = initializePowerupCounts();
         JPanel atomPanel = initializeAtomCounts();
         JPanel shieldPanel = initializeShieldCounts();
-        JLabel blenderIcon = createScaledIcon("src/assets/mixer.png");
+        JLabel blenderIcon = createScaledIcon("src/UI.assets/mixer.png");
         this.add(scorePanel);
         this.add(powerupPanel);
         this.add(blenderIcon);
@@ -69,9 +69,9 @@ public class StatisticsScreen extends JPanel implements InventoryListener, TimeL
     private JPanel initializeScoreAndHealth() {
         JPanel scoreAndHealthPanel = new JPanel();
         scoreAndHealthPanel.setLayout(new GridLayout(3,2));
-        JLabel scoreIcon = new JLabel(new ImageIcon("src/assets/score.png"));
-        JLabel timeIcon = new JLabel(new ImageIcon("src/assets/timer.png"));
-        JLabel healthIcon = new JLabel(new ImageIcon("src/assets/health.png"));
+        JLabel scoreIcon = new JLabel(new ImageIcon("src/UI.assets/score.png"));
+        JLabel timeIcon = new JLabel(new ImageIcon("src/UI.assets/timer.png"));
+        JLabel healthIcon = new JLabel(new ImageIcon("src/UI.assets/health.png"));
 
         score = new JLabel("score");
         health = new JLabel("100");
@@ -155,10 +155,10 @@ public class StatisticsScreen extends JPanel implements InventoryListener, TimeL
         // TODO Auto-generated method stub
         JPanel powerupPanel = new JPanel();
         powerupPanel.setLayout(new GridLayout(4,2));
-        JLabel alphaIcon = createScaledIcon("src/assets/powerups/+alpha-b.png");
-        JLabel betaIcon = createScaledIcon("src/assets/powerups/+beta-b.png");
-        JLabel gammaIcon = createScaledIcon("src/assets/powerups/+gamma-b.png");
-        JLabel sigmaIcon = createScaledIcon("src/assets/powerups/+sigma-b.png");
+        JLabel alphaIcon = createScaledIcon("src/UI.assets/powerups/+alpha-b.png");
+        JLabel betaIcon = createScaledIcon("src/UI.assets/powerups/+beta-b.png");
+        JLabel gammaIcon = createScaledIcon("src/UI.assets/powerups/+gamma-b.png");
+        JLabel sigmaIcon = createScaledIcon("src/UI.assets/powerups/+sigma-b.png");
         sigmaPowerupCount = new JLabel("sigmaPowerup");
         betaPowerupCount = new JLabel("betaPowerup");
         gammaPowerupCount = new JLabel("gammaPowerup");
@@ -205,10 +205,10 @@ public class StatisticsScreen extends JPanel implements InventoryListener, TimeL
         // TODO Auto-generated method stub
         atomPanel = new JPanel();
         atomPanel.setLayout(new GridLayout(4,2));
-        JLabel alphaIcon = new JLabel(new ImageIcon("src/assets/atoms/alpha.png"));
-        JLabel gammaIcon = new JLabel(new ImageIcon("src/assets/atoms/gamma.png"));
-        JLabel betaIcon = new JLabel(new ImageIcon("src/assets/atoms/beta.png"));
-        JLabel sigmaIcon = new JLabel(new ImageIcon("src/assets/atoms/sigma.png"));
+        JLabel alphaIcon = new JLabel(new ImageIcon("src/UI.assets/atoms/alpha.png"));
+        JLabel gammaIcon = new JLabel(new ImageIcon("src/UI.assets/atoms/gamma.png"));
+        JLabel betaIcon = new JLabel(new ImageIcon("src/UI.assets/atoms/beta.png"));
+        JLabel sigmaIcon = new JLabel(new ImageIcon("src/UI.assets/atoms/sigma.png"));
 
         sigma = new JLabel("100");
         beta = new JLabel("100");

@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 public class SimplePaddleView implements Drawable {
 
@@ -31,9 +32,13 @@ public class SimplePaddleView implements Drawable {
         return instance;
     }
 
-    private void fillImgs() throws IOException {
+    private void fillImgs() throws IOException{
         // TODO Auto-generated method stub
-        paddle_img = ImageIO.read(new File("src/assets/paddle.png"));
+        System.out.println(new File("/UI.assets/paddle1.png").getPath());
+        File f = new File(String.valueOf(getClass().getResource("/UI.assets/paddle1.png")));
+        BufferedImage paddle_img = ImageIO.read(f);
+        //paddle_img = ImageIO.read(new File("/Users/beyzanurcoban/Desktop/lectures/Fall2021/comp302/2021_302_noncompers/NeedForSpear/src/asset/paddle1.png"));
+        //paddle_img = ImageIO.read(new File("../UI.assets/paddle1.png"));
 
         // scale to unit length L
         Image scaled = paddle_img.getScaledInstance(100, 10,

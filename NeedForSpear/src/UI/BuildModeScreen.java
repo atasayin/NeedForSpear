@@ -122,6 +122,7 @@ public class BuildModeScreen extends JFrame {
         System.out.println("ALL LISTENERS ARE NOTIFIED THAT THE BUTTON IS CLICKED \n\n\n");
 
         for (IRunListener listener : runModeListeners) {
+            System.out.println(listener);
             listener.onClickEvent(this.runSettings, username.getText());
         }
         this.setVisible(false);

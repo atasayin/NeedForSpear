@@ -89,22 +89,22 @@ public class BuildModeScreen2 extends JPanel implements ActionListener, MouseLis
         giftObstacleCount = new JTextField(Integer.toString(GIFT_COUNT), 30);
 
         // Simple Obstacle Row
-        GameObjectPanel.add(new JLabel(new ImageIcon("assets/simple.png")));
+        GameObjectPanel.add(new JLabel(new ImageIcon("UI.assets/simple.png")));
         GameObjectPanel.add(new JLabel("Number of simple obstacles"));
         GameObjectPanel.add(simpleObstacleCount);
 
         // Firm Obstacle Row
-        GameObjectPanel.add(new JLabel(new ImageIcon("assets/firm.png")));
+        GameObjectPanel.add(new JLabel(new ImageIcon("UI.assets/firm.png")));
         GameObjectPanel.add(new JLabel("Number of firm obstacles"));
         GameObjectPanel.add(firmObstacleCount);
 
         // Explosive Obstacle Row
-        GameObjectPanel.add(new JLabel(new ImageIcon("assets/explosive.png")));
+        GameObjectPanel.add(new JLabel(new ImageIcon("UI.assets/explosive.png")));
         GameObjectPanel.add(new JLabel("Number of explosive obstacles"));
         GameObjectPanel.add(explosiveObstacleCount);
 
         // Gift Obstacle Row
-        GameObjectPanel.add(new JLabel(new ImageIcon("assets/gift.png")));
+        GameObjectPanel.add(new JLabel(new ImageIcon("UI.assets/gift.png")));
         GameObjectPanel.add(new JLabel("Number of gift obstacles"));
         GameObjectPanel.add(giftObstacleCount);
 

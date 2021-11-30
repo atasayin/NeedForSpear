@@ -24,7 +24,7 @@ public class Main {
         //adds the player
         Game.getInstance().addPlayer(new Player(88999,"kelebis"));
         //buildMode.addListener((IRunListener) Game.getInstance().gameState.getPC());
-        buildMode.addListener(Game.getInstance().getPlayers().get(0).getPlayerState());
+        //buildMode.addListener(Game.getInstance().getPlayers().get(0).getPlayerState());
 
 
         // add listener to the playerstate to update statisticsScreen
