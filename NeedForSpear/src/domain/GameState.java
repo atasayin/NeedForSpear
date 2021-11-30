@@ -50,9 +50,9 @@ public class GameState {
         return pc.getPaddle().getPosVector();
     }
 
-    public void updatePaddlePosition() {
-        this.pc.getPaddle().updatePosition() ;
-    }
+    //public void updatePaddlePosition() {
+      //  this.pc.getPaddle().updatePosition() ;}
+
 
     public Layout getLayout() {
         return layout;

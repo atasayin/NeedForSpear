@@ -101,11 +101,12 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
 
 
     public void update() {
-        for (DomainObject domainObject : Game.getInstance().getDomainObjectArr()) {
-            domainObject.updatePosition();
-            domainObject.updateAngle();
-        }
-        Game.getInstance().gameState.updatePaddlePosition();
+//        for (DomainObject domainObject : Game.getInstance().getDomainObjectArr()) {
+//            domainObject.updatePosition();
+//            domainObject.updateAngle();
+//        }
+//        Game.getInstance().gameState.updatePaddlePosition();
+        Game.getInstance().PC.getPaddle().updatePosition(0,0);
     }
 
     @Override

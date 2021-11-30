@@ -10,6 +10,8 @@ import static java.lang.System.*;
 
 
 public class Game implements IRunListener {
+    static final int FRAME_WIDTH = 1368;
+    static final int FRAME_HEIGHT = 766;
 
     String gameStatus;
     public GameState gameState;
@@ -74,7 +76,7 @@ public class Game implements IRunListener {
         // TODO Auto-generated method stub
         initializeGame(startParameters, username);
         //PC = new PaddleController(startParameters.get("width"),startParameters.get("height"));
-        PC = new PaddleController(100,20);
+        PC = new PaddleController(FRAME_WIDTH,FRAME_HEIGHT);
         System.out.println("Paddle created " + PC.toString());
     }
 

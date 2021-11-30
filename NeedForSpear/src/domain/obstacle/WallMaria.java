@@ -17,4 +17,9 @@ public class WallMaria extends Obstacle {
 	public ArrayList<String> makeList() {
 		return null;
 	}
+
+	@Override
+	protected void updatePosition(int x, int y) {
+
+	}
 }
