@@ -22,15 +22,8 @@ import domain.*;
 @SuppressWarnings("serial")
 public class BuildModeScreen extends JFrame {
 
-
     static final int FRAME_WIDTH = 1368;
     static final int FRAME_HEIGHT = 766;
-    static final int UNITLENGTH_L = (int) (FRAME_HEIGHT * 0.1 + 0.5); // 10% of game height
-    static final int STATISTICS_SCREEN_WIDTH = 200;
-
-    static final String SAVE_METHOD_1 = "Database";
-    static final String SAVE_METHOD_2 = "Local";
-
 
     private JTextField username;
     private JButton gameStart;
@@ -53,18 +46,6 @@ public class BuildModeScreen extends JFrame {
         runSettings.put("screenHeight", (int) FRAME_HEIGHT);
 
         this.runSettings = runSettings;
-    }
-
-    private double isStationaryOrRotating(JRadioButton radiobtn, JRadioButton childRadiobtn) {
-        if (radiobtn.isSelected()) {
-            if (childRadiobtn.isSelected()) {
-                return 1.0;
-            } else {
-                return 0.0;
-            }
-        } else {
-            return -1.0;
-        }
     }
 
 

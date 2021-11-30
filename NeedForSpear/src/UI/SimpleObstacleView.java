@@ -16,10 +16,6 @@ public class SimpleObstacleView  implements Drawable {
         Obstacle obstacle;
         BufferedImage simple_obs_img ;
 
-        //BufferedImage beta_img;
-        //BufferedImage sigma_img;
-        //BufferedImage gamma_img;
-
         static SimpleObstacleView instance;
 
         private SimpleObstacleView() {
@@ -39,17 +35,10 @@ public class SimpleObstacleView  implements Drawable {
 
         private void fillImgs() throws IOException {
             simple_obs_img = ImageIO.read(new File("src/assets/simpleball.png"));
-            //beta_img = ImageIO.read(new File("src/assets/atoms/beta.png"));
-            //gamma_img = ImageIO.read(new File("src/assets/atoms/gamma.png"));
-            //sigma_img = ImageIO.read(new File("src/assets/atoms/sigma.png"));
 
-            //int obs_size = (int) (Game.UNITLENGTH_L * 0.6);
             int obs_size = (int) (25 * 0.6);
             int offset = 10;
             simple_obs_img = scaleBImage(simple_obs_img, obs_size, obs_size);
-            //beta_img = scaleBImage(beta_img, atom_size - offset, atom_size - offset);
-            //gamma_img = scaleBImage(gamma_img, atom_size - offset, atom_size - offset);
-            //sigma_img = scaleBImage(sigma_img, atom_size - offset, atom_size - offset);
 
         }
 
