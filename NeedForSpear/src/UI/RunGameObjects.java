@@ -138,7 +138,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
             case 83: // s: save
                 if (!tm.isRunning()) {
                     infoString = "Game Saved.";
-                    kc.getInput(input, Game.getInstance().gameState.getPC().getPaddle()); // only works if game was paused
+                    kc.getInput(input); // only works if game was paused
                     return;
                 } else {
                     infoString = "Press \"Pause\" Button before saving.";
@@ -147,7 +147,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
             case 76: // l: load
                 if (!tm.isRunning()) {
                     infoString = "Game Loaded.";
-                    kc.getInput(input, Game.getInstance().gameState.getPC().getPaddle());
+                    kc.getInput(input);
                     tm.restart();// only works if game was paused
                     Game.getInstance().gameState.isRunning = true;
                     Game.getInstance().getPlayers().get(0).getPlayerState().notifyAllInventoryListeners("all");
@@ -159,7 +159,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
             default:
         }
 
-        if (kc.getInput(input, Game.getInstance().gameState.getPC().getPaddle())) { // when returns true restart
+        if (kc.getInput(input)) { // when returns true restart
             tm.restart();
             Game.getInstance().gameState.isRunning = true;
 

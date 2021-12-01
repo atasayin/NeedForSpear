@@ -5,16 +5,21 @@ import domain.util.PosVector;
 public class Paddle extends DomainObject{
 	public static final int FRAME_WIDTH = 1368;
 	public static final int FRAME_HEIGHT = 766;
+	public static final int PADDLE_THICKNESS = 20;
 
 	protected int length;
 	private int thickness;
 	private double angle;
+	private int normalSpeed;
+	private int fastSpeed;
 	
 	public Paddle(int fWidth, int fHeight) {
 		this.length = fWidth/10;
-		this.thickness = 20;
+		this.thickness = PADDLE_THICKNESS;
 		this.posVector = new PosVector((fWidth - length)/2, fHeight - (this.thickness * 4));
 		this.angle = 0;
+		normalSpeed = length/2;
+		fastSpeed = 2*length;
 		this.setSpeed(0,0);
 	}
 
@@ -31,6 +36,9 @@ public class Paddle extends DomainObject{
 	public void setPosVector(PosVector pos) {
 		this.posVector = pos;
 	}
+
+	public int getNormalSpeed(){ return this.normalSpeed; }
+	public int getFastSpeed() { return this.fastSpeed; }
 
 	public void move(int direction) {
 		if(direction==1) { // right
