@@ -61,8 +61,8 @@ public class PaddleView implements Drawable {
         // TODO Auto-generated method stub
         Paddle paddle = (Paddle) domainObject;
 
-        //g2d.drawImage(paddle_img, paddle.getPosVector().getX(), paddle.getPosVector().getY(), null);
-        g2d.drawImage(paddle_img, (width-paddle.getLength())/2, (height-paddle.getThickness()-40), null);
+        g2d.drawImage(paddle_img, paddle.getPosVector().getX(), paddle.getPosVector().getY(), null);
+        //g2d.drawImage(paddle_img, (width-paddle.getLength())/2, (height-paddle.getThickness()-40), null);
 
     }
 

@@ -77,6 +77,7 @@ public class Game implements IRunListener {
         initializeGame(startParameters, username);
         //PC = new PaddleController(startParameters.get("width"),startParameters.get("height"));
         PC = new PaddleController(FRAME_WIDTH,FRAME_HEIGHT);
+        Game.getInstance().gameState.isRunning = true;
         System.out.println("Paddle created " + PC.toString());
     }
 

@@ -1,6 +1,7 @@
 package domain.controller;
 
 import domain.*;
+import domain.util.PosVector;
 
 
 public class KeyboardController {
@@ -13,22 +14,24 @@ public class KeyboardController {
                 Game.getInstance().PC.getPaddle().setSpeed(-8, 0);
 
                 //Game.getInstance().PC.getPaddle().move(2);
-                if( (Game.getInstance().PC.getPaddle().getPosVector().x !=0) && (Game.getInstance().PC.getPaddle().getPosVector().x<= Game.getInstance().PC.getPaddle().FRAME_WIDTH - Game.getInstance().PC.getPaddle().getLength())) {
-                    Game.getInstance().PC.getPaddle().updatePosition(Game.getInstance().PC.getPaddle().getDx(),Game.getInstance().PC.getPaddle().getDy());
-                }
-                else{
-                    Game.getInstance().PC.getPaddle().updatePosition(0,Game.getInstance().PC.getPaddle().getDy());
+                if (Game.getInstance().gameState.isRunning) {
+                    if ((Game.getInstance().PC.getPaddle().getPosVector().x != 0) && (Game.getInstance().PC.getPaddle().getPosVector().x <= Game.getInstance().PC.getPaddle().FRAME_WIDTH - Game.getInstance().PC.getPaddle().getLength())) {
+                        Game.getInstance().PC.getPaddle().updatePosition(Game.getInstance().PC.getPaddle().getDx(), Game.getInstance().PC.getPaddle().getDy());
+                    } else {
+                        Game.getInstance().PC.getPaddle().updatePosition(0, Game.getInstance().PC.getPaddle().getDy());
+                    }
                 }
                 System.out.println("bu cok farkli bi yerden gelen");
                 System.out.println(Game.getInstance().PC.getPaddle().getPosVector().x);
                 return false;
             case 39: // right
                 Game.getInstance().PC.getPaddle().setSpeed(8, 0);
-                if( (Game.getInstance().PC.getPaddle().getPosVector().x != Game.getInstance().PC.getPaddle().FRAME_WIDTH-Game.getInstance().PC.getPaddle().getLength()) && (Game.getInstance().PC.getPaddle().getPosVector().x >=0)) {
-                    Game.getInstance().PC.getPaddle().updatePosition(Game.getInstance().PC.getPaddle().getDx(),Game.getInstance().PC.getPaddle().getDy());
-                }
-                else{
-                    Game.getInstance().PC.getPaddle().updatePosition(0,Game.getInstance().PC.getPaddle().getDy());
+                if (Game.getInstance().gameState.isRunning) {
+                    if ((Game.getInstance().PC.getPaddle().getPosVector().x != Game.getInstance().PC.getPaddle().FRAME_WIDTH - Game.getInstance().PC.getPaddle().getLength()) && (Game.getInstance().PC.getPaddle().getPosVector().x >= 0)) {
+                        Game.getInstance().PC.getPaddle().updatePosition(Game.getInstance().PC.getPaddle().getDx(), Game.getInstance().PC.getPaddle().getDy());
+                    } else {
+                        Game.getInstance().PC.getPaddle().updatePosition(0, Game.getInstance().PC.getPaddle().getDy());
+                    }
                 }
                 System.out.println("bu cok farkli bi yerden gelen");
                 System.out.println(Game.getInstance().PC.getPaddle().getPosVector().x);

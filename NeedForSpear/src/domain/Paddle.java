@@ -28,6 +28,10 @@ public class Paddle extends DomainObject{
 
 	public PosVector getPosVector() { return this.posVector; }
 
+	public void setPosVector(PosVector pos) {
+		this.posVector = pos;
+	}
+
 	public void move(int direction) {
 		if(direction==1) { // right
 			//System.out.println(this.getDx());

@@ -10,12 +10,12 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-import javax.swing.JPanel;
-import javax.swing.Timer;
+import javax.swing.*;
 
 import domain.controller.KeyboardController;
 import domain.* ;
 import domain.obstacle.Obstacle;
+import domain.util.PosVector;
 
 
 @SuppressWarnings("serial")
@@ -118,12 +118,16 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
 
         int input = e.getKeyCode();
         // pause resume
+
         switch (input) {
             case 80: // p: pause
                 infoString = "Game Paused.";
                 repaint();
                 tm.stop();
                 Game.getInstance().gameState.isRunning = false;
+                //lastPos = Game.getInstance().PC.getPaddle().getPosVector();
+                //System.out.println(lastPos);
+
                 return;
             case 82: // r: resume
                 infoString = "Game Resumed.";
