@@ -20,6 +20,7 @@ public class Game implements IRunListener {
     static Game instance;
     private Timer game_Timer;
     public PaddleController PC;
+    // buraya ballcontroller??
 
     public static int UNITLENGTH_L = 1;
 

@@ -1,5 +1,6 @@
 package domain;
 
+import domain.controller.BallController;
 import domain.controller.PaddleController;
 import domain.util.PosVector;
 
