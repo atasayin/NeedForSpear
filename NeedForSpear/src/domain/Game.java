@@ -20,7 +20,7 @@ public class Game implements IRunListener {
     static Game instance;
     private Timer game_Timer;
     public PaddleController PC;
-    // buraya ballcontroller??
+    public Ball ball;
 
     public static int UNITLENGTH_L = 1;
 
@@ -78,6 +78,7 @@ public class Game implements IRunListener {
         initializeGame(startParameters, username);
         //PC = new PaddleController(startParameters.get("width"),startParameters.get("height"));
         PC = new PaddleController(FRAME_WIDTH,FRAME_HEIGHT);
+        this.ball = new Ball();
         Game.getInstance().gameState.isRunning = true;
         System.out.println("Paddle created " + PC.toString());
     }

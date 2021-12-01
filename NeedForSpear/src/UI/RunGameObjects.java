@@ -59,6 +59,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
         }
 
         drawPaddle(g2d, Game.getInstance().PC.getPaddle(), frame_width, frame_height);
+        drawBall(g2d, Game.getInstance().ball, frame_width, frame_height);
 
         //drawBall(g2d, player.getShooter());
         g2d.setTransform(old);
@@ -74,6 +75,12 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
     private void drawPaddle(Graphics2D g2d, Paddle d, int width, int height) {
         // TODO Auto-generated method stub
         PaddleView.getInstance().draw(g2d, d, width, height);
+
+    }
+
+    private void drawBall(Graphics2D g2d, Ball b, int width, int height) {
+        // TODO Auto-generated method stub
+        BallView.getInstance().draw(g2d, b, width, height);
 
     }
 
@@ -107,6 +114,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
 //        }
 //        Game.getInstance().gameState.updatePaddlePosition();
         Game.getInstance().PC.getPaddle().updatePosition(0,0);
+        Game.getInstance().ball.move();
     }
 
     @Override

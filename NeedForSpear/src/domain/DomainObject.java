@@ -25,7 +25,9 @@ public abstract class DomainObject {
     }
 
     protected abstract void updatePosition(int x, int y);
-    protected abstract void updatePosition();
+    public void updatePosition() {
+
+    }
 
     public PosVector getPosVector() {
         return posVector;
