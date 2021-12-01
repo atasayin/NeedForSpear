@@ -51,8 +51,6 @@ public class BuildModeScreen extends JFrame {
     // Game
     Game game = Game.getInstance();
 
-
-
     /////////////////////////////////////////////////////////////////////////////////////
 
     public void addListener(IRunListener listener) {
@@ -91,14 +89,15 @@ public class BuildModeScreen extends JFrame {
     }
 
     private void initializeBuildScreen() {
-        this.setLayout(new GridLayout(3, 0));
+        this.setLayout(new GridLayout(3, 1));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(FRAME_WIDTH, FRAME_HEIGHT);
         this.setLocationRelativeTo(null);
     }
     private JPanel initializeObstacleSettingsPanel(){
-        GridLayout gameObjLayout = new GridLayout(5, 1); // #Type of obstacles + Button
+        GridLayout gameObjLayout = new GridLayout(5, 2,10,10); // #Type of obstacles + Button
         JPanel GameObjectPanel = new JPanel(gameObjLayout);
+        GameObjectPanel.setBackground(Color.orange);
 
         // Text Fields
         simpleObstacle = new JTextField(Integer.toString(SIMPLE_COUNT), 30);
@@ -108,7 +107,8 @@ public class BuildModeScreen extends JFrame {
 
         // Simple Obstacle Row
         //GameObjectPanel.add(new JLabel(new ImageIcon("../assets/simple.png")));
-        GameObjectPanel.add(new JLabel("Number of simple obstacles"));
+        JLabel simpleObstacleLabel = new JLabel("Number of simple obstacles");
+        GameObjectPanel.add(simpleObstacleLabel);
         GameObjectPanel.add(simpleObstacle);
 
         // Firm Obstacle Row
@@ -142,7 +142,6 @@ public class BuildModeScreen extends JFrame {
         return GameObjectPanel;
 
     }
-
 
     // Get random Layout after the obstacle settings
     private void getRandomLayout(){

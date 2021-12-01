@@ -1,11 +1,11 @@
 package domain;
 
-import domain.obstacle.Obstacle;
-import domain.obstacle.WallMaria;
+import domain.obstacle.*;
 import domain.util.PosVector;
 import javafx.geometry.Pos;
 
 import java.util.HashMap;
+import java.util.Random;
 
 public class Layout {
     // Represents the locations and types of the objects in the game.
@@ -13,16 +13,16 @@ public class Layout {
     /////////////////////////////////////////////////////////////////////////////////////
 
     // Total number of Simple Obstacles(Wall Maria)
-    public int simpleObstacleCount;
+    public int wallMariaCount;
 
     // Total number of Firm Obstacles(Steins Gate)
-    public int firmObstacleCount;
+    public int steinsGateCount;
 
     // Total number of Explosive Obstacles(Pandora’s Box)
-    public int explosiveObstacleCount;
+    public int pandoraBoxCount;
 
     // Total number of Gift Obstacles(Gift of Uranus)
-    public int giftObstacleCount;
+    public int uranusCount;
 
     // Holds positions of all obstacles
     public static HashMap<Obstacle, PosVector> obstacle_positions;
@@ -37,13 +37,19 @@ public class Layout {
     public int layoutWidth;
 
     // Layout heigth
-    public int layoutHeight
+    public int layoutHeight;
 
     /////////////////////////////////////////////////////////////////////////////////////
 
     public Layout(int layoutWidth, int layoutHeight){
+        this.layoutWidth = layoutWidth;
+        this.layoutHeight = layoutHeight;
         isAvailable = new boolean[layoutWidth][layoutHeight];
         setLayout();
+    }
+
+    public Layout(){
+
     }
 
     // This method is called once the map is build to save the centers of the obstacles.
@@ -61,57 +67,165 @@ public class Layout {
     // Returns center of circles of the paths that some obstacles move in.
     HashMap<Obstacle, PosVector> getObstacle_centers() { return obstacle_centers; }
 
-    // Sets Simple Obstacles(Wall Maria)
-    public void setSimpleObstacleCount(int simpleObstacleCount) {
-        this.simpleObstacleCount = simpleObstacleCount;
-    }
-
-    // Sets Firm Obstacles(Steins Gate)
-    public void setFirmObstacleCount(int firmObstacleCount) {
-        this.firmObstacleCount = firmObstacleCount;
-    }
-
-    // Sets Explosive Obstacles(Pandora’s Box)
-    public void setExplosiveObstacleCount(int explosiveObstacleCount) {
-        this.explosiveObstacleCount = explosiveObstacleCount;
-    }
-
-    // Sets Gift Obstacles(Gift of Uranus)
-    public void setGiftObstacleCount(int giftObstacleCount) {
-        this.giftObstacleCount = giftObstacleCount;
-    }
 
     //
     public void setLayout(){
+        Random rnd = new Random(3);
+        HashMap<Obstacle, PosVector> obstacle_positions = new HashMap<>();
+        HashMap<Obstacle, PosVector> obstacle_centers = new HashMap<>();
 
-        // bir o bir o bir o bir o
-        for (int i = 0; i < simpleObstacleCount; i ++) {
-            PosVector pos;
+        for (int i = 0; i < pandoraBoxCount; i++) {
 
-            WallMaria wm = new WallMaria();
+            while(true) {
+                int x = rnd.nextInt(layoutWidth);
+                int y = rnd.nextInt(layoutHeight);
+
+                if (isAvailable[x][y]) {
+                    PosVector pos = new PosVector(x, y);
+                    int L = 10;
+                    PandorasBox obs = new PandorasBox(pos.getX(),pos.getY(),L, 1);
+                    obstacle_positions.put(obs,pos);
+                    updateAvailable(pos.getX(), pos.getY(), obs);
+                    break;
+
+                }
+
+
+            }
+
+
         }
 
-        for (int i = 0; i < firmObstacleCount; i ++) {
+        for (int i = 0; i < steinsGateCount; i++) {
+
+            while(true) {
+                int x = rnd.nextInt(layoutWidth);
+                int y = rnd.nextInt(layoutHeight);
+
+                if (isAvailable[x][y]) {
+                    PosVector pos = new PosVector(x, y);
+                    int L = 10;
+                    SteinsGate obs = new SteinsGate(pos.getX(),pos.getY(),L, 1);
+                    obstacle_positions.put(obs,pos);
+                    updateAvailable(pos.getX(), pos.getY(), obs);
+                    break;
+
+                }
+
+
+            }
+
 
         }
 
-        for (int i = 0; i < explosiveObstacleCount; i ++) {
+        for (int i = 0; i < uranusCount; i++) {
+
+            while(true) {
+                int x = rnd.nextInt(layoutWidth);
+                int y = rnd.nextInt(layoutHeight);
+
+                if (isAvailable[x][y]) {
+                    PosVector pos = new PosVector(x, y);
+                    int L = 10;
+                    GiftOfUranus obs = new GiftOfUranus(pos.getX(),pos.getY(),L, 1);
+                    obstacle_positions.put(obs,pos);
+                    updateAvailable(pos.getX(), pos.getY(), obs);
+                    break;
+
+                }
+
+
+            }
+
 
         }
 
-        for (int i = 0; i < giftObstacleCount; i ++) {
+        for (int i = 0; i < wallMariaCount; i++) {
+
+            while(true) {
+                int x = rnd.nextInt(layoutWidth);
+                int y = rnd.nextInt(layoutHeight);
+
+                if (isAvailable[x][y]) {
+                    PosVector pos = new PosVector(x, y);
+                    int L = 10;
+                    WallMaria obs = new WallMaria(pos.getX(),pos.getY(),L, 1);
+                    obstacle_positions.put(obs,pos);
+                    updateAvailable(pos.getX(), pos.getY(), obs);
+                    break;
+
+                }
+
+
+            }
+
 
         }
+
+        }
+
+
+    // Updates 2D bool array acc. Obstacle
+    private void updateAvailable(int x, int y, Obstacle obs){
+
+        String type = obs.getType();
+
+        switch (type){
+
+            case "PandorasBox":
+                for(int dx = 0; dx < obs.getWidth(); dx++){
+                    for(int dy = 0; dy < obs.getHeight(); dy++){
+                        isAvailable[x + dx][y + dy] = true;
+
+                    }
+
+                }
+                break;
+            case "GiftOfUranus":
+                for(int dx = 0; dx < obs.getWidth(); dx++){
+                    for(int dy = 0; dy < obs.getHeight(); dy++){
+                        isAvailable[x + dx][y + dy] = true;
+
+                    }
+
+                }
+
+                break;
+            case "SteinsGate":
+                for(int dx = 0; dx < obs.getWidth(); dx++){
+                    for(int dy = 0; dy < obs.getHeight(); dy++){
+                        isAvailable[x + dx][y + dy] = true;
+
+                    }
+
+                }
+                break;
+            case "WallMaria":
+                for(int dx = 0; dx < obs.getWidth(); dx++){
+                    for(int dy = 0; dy < obs.getHeight(); dy++){
+                        isAvailable[x + dx][y + dy] = true;
+                    }
+
+                }
+                break;
+            default:
+                System.out.println("Could not receive valid obstacle type!");
+                break;
+        }
+
+
 
 
     }
 
-    //
-    public
+    private boolean isAvailable(){
 
+        return true;
+    }
 
+    /*
     // Changes type of the obstacle.
- /*
+
     void changeTypeObstacle(Obstacle obstacle, newType){
 
     }
@@ -127,10 +241,12 @@ public class Layout {
 
     }
 
-  */
+
     // Removes a obstacle from Layout.
     void removeObstacle(Obstacle obstacle){
 
 
     }
+    */
+
 }

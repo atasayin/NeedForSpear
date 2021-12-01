@@ -18,4 +18,6 @@ public class PandorasBox extends Obstacle {
 
 		return null;
 	}
+
+
 }

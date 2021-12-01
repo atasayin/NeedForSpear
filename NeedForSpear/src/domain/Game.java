@@ -108,7 +108,7 @@ public class Game implements IRunListener {
 
     public Layout getLayout(){
 
-
+        return null;
     }
 }
 
