@@ -18,11 +18,8 @@ import domain.obstacle.Obstacle;
 @SuppressWarnings("serial")
 public class BuildModeScreen extends JFrame {
 
-    /////////////////////////////////////////////////////////////////////////////////////
-
-    // Frame Parameters
-    static final int FRAME_WIDTH = 1368;
-    static final int FRAME_HEIGHT = 766;
+    public static final int FRAME_WIDTH = 1368;
+    public static final int FRAME_HEIGHT = 766;
 
     // Obstacles
     static final int SIMPLE_COUNT = 75;

@@ -2,7 +2,8 @@ package UI;
 
 import java.awt.BorderLayout;
 import java.util.HashMap;
-import javax.swing.JFrame;
+import javax.swing.*;
+
 import domain.*;
 
 
@@ -17,9 +18,18 @@ public class Playground implements IRunListener {
         initializeOuterFrameSettings(screenWidth, screenHeight);
         openRunModeScreen(screenWidth, screenHeight);
 
+//        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+//            public void run() {
+//                openRunModeScreen(screenWidth, screenHeight);
+//                System.out.println("aaaaaaaaaaaaaaaaa");
+//            }
+//        });
+
     }
 
     public Playground() {
+
+
     }
 
     private void initializeOuterFrameSettings(int screenWidth, int screenHeight) {
@@ -39,6 +49,8 @@ public class Playground implements IRunListener {
         screen.setVisible(true);
         jf.add(screen);
         jf.addKeyListener(screen);
+
+
     }
 
     public static void GameOver() {

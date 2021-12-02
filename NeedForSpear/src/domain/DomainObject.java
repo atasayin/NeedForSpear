@@ -24,9 +24,9 @@ public abstract class DomainObject {
         this.angle += Math.toRadians(1);
     }
 
+    protected abstract void updatePosition(int x, int y);
     public void updatePosition() {
-        posVector.setX(posVector.getX() + dx);
-        posVector.setY(posVector.getY() + dy);
+
     }
 
     public PosVector getPosVector() {

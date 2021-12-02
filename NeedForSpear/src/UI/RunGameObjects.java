@@ -10,12 +10,12 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-import javax.swing.JPanel;
-import javax.swing.Timer;
+import javax.swing.*;
 
 import domain.controller.KeyboardController;
 import domain.* ;
 import domain.obstacle.Obstacle;
+import domain.util.PosVector;
 
 
 @SuppressWarnings("serial")
@@ -27,6 +27,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
     int infoRefreshCount;
     KeyboardController kc = new KeyboardController();
     Game game = Game.getInstance();
+    CollisionChecker colCheck = CollisionChecker.getInstance();
 
     public static int frame_width;
     public static int frame_height;
@@ -59,6 +60,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
         }
 
         drawPaddle(g2d, Game.getInstance().PC.getPaddle(), frame_width, frame_height);
+        drawBall(g2d, Game.getInstance().ball, frame_width, frame_height);
 
         //drawBall(g2d, player.getShooter());
         g2d.setTransform(old);
@@ -74,6 +76,12 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
     private void drawPaddle(Graphics2D g2d, Paddle d, int width, int height) {
         // TODO Auto-generated method stub
         PaddleView.getInstance().draw(g2d, d, width, height);
+
+    }
+
+    private void drawBall(Graphics2D g2d, Ball b, int width, int height) {
+        // TODO Auto-generated method stub
+        BallView.getInstance().draw(g2d, b, width, height);
 
     }
 
@@ -101,11 +109,17 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
 
 
     public void update() {
-        for (DomainObject domainObject : Game.getInstance().getDomainObjectArr()) {
-            domainObject.updatePosition();
-            domainObject.updateAngle();
+//        for (DomainObject domainObject : Game.getInstance().getDomainObjectArr()) {
+//            domainObject.updatePosition();
+//            domainObject.updateAngle();
+//        }
+//        Game.getInstance().gameState.updatePaddlePosition();
+        Game.getInstance().PC.getPaddle().updatePosition(0,0);
+        Game.getInstance().ball.move();
+        if (colCheck.checkPaddleBallCollision(Game.getInstance().ball, Game.getInstance().PC.getPaddle())) {
+            Game.getInstance().ball.reflectFromHorizontal();
         }
-        Game.getInstance().gameState.updatePaddlePosition();
+
     }
 
     @Override
@@ -117,12 +131,16 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
 
         int input = e.getKeyCode();
         // pause resume
+
         switch (input) {
             case 80: // p: pause
                 infoString = "Game Paused.";
                 repaint();
                 tm.stop();
                 Game.getInstance().gameState.isRunning = false;
+                //lastPos = Game.getInstance().PC.getPaddle().getPosVector();
+                //System.out.println(lastPos);
+
                 return;
             case 82: // r: resume
                 infoString = "Game Resumed.";
@@ -133,7 +151,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
             case 83: // s: save
                 if (!tm.isRunning()) {
                     infoString = "Game Saved.";
-                    kc.getInput(input, Game.getInstance().gameState.getPC().getPaddle()); // only works if game was paused
+                    kc.getInput(input); // only works if game was paused
                     return;
                 } else {
                     infoString = "Press \"Pause\" Button before saving.";
@@ -142,7 +160,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
             case 76: // l: load
                 if (!tm.isRunning()) {
                     infoString = "Game Loaded.";
-                    kc.getInput(input, Game.getInstance().gameState.getPC().getPaddle());
+                    kc.getInput(input);
                     tm.restart();// only works if game was paused
                     Game.getInstance().gameState.isRunning = true;
                     Game.getInstance().getPlayers().get(0).getPlayerState().notifyAllInventoryListeners("all");
@@ -154,7 +172,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
             default:
         }
 
-        if (kc.getInput(input, Game.getInstance().gameState.getPC().getPaddle())) { // when returns true restart
+        if (kc.getInput(input)) { // when returns true restart
             tm.restart();
             Game.getInstance().gameState.isRunning = true;
 
@@ -174,7 +192,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
 
     }
 
-    private static final int TIMER_SPEED = 10;
+    private static final int TIMER_SPEED = 50;
     private static final int INFO_REFRESH_PERIOD = 3000;
 
 }
