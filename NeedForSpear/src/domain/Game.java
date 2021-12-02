@@ -1,4 +1,5 @@
 package domain;
+import domain.controller.LayoutController;
 import domain.controller.PaddleController;
 
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public class Game implements IRunListener {
     static Game instance;
     private Timer game_Timer;
     public PaddleController PC;
-    public Ball ball;
+    private LayoutController LC;
 
     public static int UNITLENGTH_L = 1;
 
@@ -102,6 +103,16 @@ public class Game implements IRunListener {
 
     public void addPlayer(Player p) {
         this.gameState.addPlayer(p);
+    }
+
+
+    public LayoutController getLC() {
+        return LC;
+    }
+
+    public Layout getLayout(){
+
+        return null;
     }
 }
 

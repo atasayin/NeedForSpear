@@ -12,8 +12,7 @@ public abstract class Obstacle extends DomainObject {
 	public DestroyBehaviour destroyBehaviour;
 	protected static String type;
 
-	
-	
+
 	public Obstacle(int xPos, int yPos, float L, int health) {
 		this.pos = new PosVector(xPos, yPos);
 		this.health = health;
@@ -41,4 +40,12 @@ public abstract class Obstacle extends DomainObject {
 		this.destroyBehaviour.destroy();
 	}
 
+	@Override
+	public String toString() {
+		return "Obstacle{" +
+				pos.toString() +
+				", is_rotating= " + is_rotating +
+				", health= " + health +
+				", type = " + getType();
+	}
 }
