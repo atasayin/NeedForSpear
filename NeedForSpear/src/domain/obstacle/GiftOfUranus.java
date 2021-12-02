@@ -16,4 +16,6 @@ public class GiftOfUranus extends Obstacle {
 	public ArrayList<String> makeList() {
 		return null;
 	}
+
+
 }

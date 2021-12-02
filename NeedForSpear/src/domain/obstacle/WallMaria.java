@@ -17,4 +17,6 @@ public class WallMaria extends Obstacle {
 	public ArrayList<String> makeList() {
 		return null;
 	}
+
+
 }

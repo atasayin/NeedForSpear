@@ -14,4 +14,6 @@ public class SteinsGate extends Obstacle {
 	public ArrayList<String> makeList() {
 		return null;
 	}
+
+
 }

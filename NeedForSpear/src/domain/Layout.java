@@ -5,6 +5,7 @@ import domain.util.PosVector;
 import javafx.geometry.Pos;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 public class Layout {
@@ -30,21 +31,28 @@ public class Layout {
     // Holds the center of circles of the paths that some obstacles move in
     public static HashMap<Obstacle, PosVector> obstacle_centers;
 
-    // 2D bool array
-    public boolean[][] isAvailable;
-
     // Layout width
     public int layoutWidth;
 
     // Layout heigth
     public int layoutHeight;
 
+    private int SEED_NUMBER = 3;
+
     /////////////////////////////////////////////////////////////////////////////////////
 
-    public Layout(int layoutWidth, int layoutHeight){
+    public Layout(int wallMariaCount,int steinsGateCount,int pandoraBoxCount
+                  , int uranusCount, int layoutWidth, int layoutHeight){
+        this.wallMariaCount = wallMariaCount;
+        this.steinsGateCount = steinsGateCount;
+        this.pandoraBoxCount = pandoraBoxCount;
+        this.uranusCount = uranusCount;
+
+        obstacle_positions = new HashMap<Obstacle, PosVector>();
+        obstacle_centers = new HashMap<Obstacle, PosVector>();
+
         this.layoutWidth = layoutWidth;
         this.layoutHeight = layoutHeight;
-        isAvailable = new boolean[layoutWidth][layoutHeight];
         setLayout();
     }
 
@@ -70,22 +78,20 @@ public class Layout {
 
     //
     public void setLayout(){
-        Random rnd = new Random(3);
-        HashMap<Obstacle, PosVector> obstacle_positions = new HashMap<>();
-        HashMap<Obstacle, PosVector> obstacle_centers = new HashMap<>();
+        Random rnd = new Random(SEED_NUMBER);
 
         for (int i = 0; i < pandoraBoxCount; i++) {
-
             while(true) {
                 int x = rnd.nextInt(layoutWidth);
                 int y = rnd.nextInt(layoutHeight);
 
-                if (isAvailable[x][y]) {
+                if (isAvailable()) {
                     PosVector pos = new PosVector(x, y);
+
                     int L = 10;
                     PandorasBox obs = new PandorasBox(pos.getX(),pos.getY(),L, 1);
                     obstacle_positions.put(obs,pos);
-                    updateAvailable(pos.getX(), pos.getY(), obs);
+                    //updateAvailable(pos.getX(), pos.getY(), obs);
                     break;
 
                 }
@@ -102,12 +108,12 @@ public class Layout {
                 int x = rnd.nextInt(layoutWidth);
                 int y = rnd.nextInt(layoutHeight);
 
-                if (isAvailable[x][y]) {
+                if (isAvailable()) {
                     PosVector pos = new PosVector(x, y);
                     int L = 10;
                     SteinsGate obs = new SteinsGate(pos.getX(),pos.getY(),L, 1);
                     obstacle_positions.put(obs,pos);
-                    updateAvailable(pos.getX(), pos.getY(), obs);
+                    //updateAvailable(pos.getX(), pos.getY(), obs);
                     break;
 
                 }
@@ -124,12 +130,12 @@ public class Layout {
                 int x = rnd.nextInt(layoutWidth);
                 int y = rnd.nextInt(layoutHeight);
 
-                if (isAvailable[x][y]) {
+                if (isAvailable()) {
                     PosVector pos = new PosVector(x, y);
                     int L = 10;
                     GiftOfUranus obs = new GiftOfUranus(pos.getX(),pos.getY(),L, 1);
                     obstacle_positions.put(obs,pos);
-                    updateAvailable(pos.getX(), pos.getY(), obs);
+                    //updateAvailable(pos.getX(), pos.getY(), obs);
                     break;
 
                 }
@@ -146,12 +152,12 @@ public class Layout {
                 int x = rnd.nextInt(layoutWidth);
                 int y = rnd.nextInt(layoutHeight);
 
-                if (isAvailable[x][y]) {
+                if (isAvailable()) {
                     PosVector pos = new PosVector(x, y);
                     int L = 10;
                     WallMaria obs = new WallMaria(pos.getX(),pos.getY(),L, 1);
                     obstacle_positions.put(obs,pos);
-                    updateAvailable(pos.getX(), pos.getY(), obs);
+                    //updateAvailable(pos.getX(), pos.getY(), obs);
                     break;
 
                 }
@@ -165,60 +171,20 @@ public class Layout {
         }
 
 
-    // Updates 2D bool array acc. Obstacle
-    private void updateAvailable(int x, int y, Obstacle obs){
 
-        String type = obs.getType();
-
-        switch (type){
-
-            case "PandorasBox":
-                for(int dx = 0; dx < obs.getWidth(); dx++){
-                    for(int dy = 0; dy < obs.getHeight(); dy++){
-                        isAvailable[x + dx][y + dy] = true;
-
-                    }
-
-                }
-                break;
-            case "GiftOfUranus":
-                for(int dx = 0; dx < obs.getWidth(); dx++){
-                    for(int dy = 0; dy < obs.getHeight(); dy++){
-                        isAvailable[x + dx][y + dy] = true;
-
-                    }
-
-                }
-
-                break;
-            case "SteinsGate":
-                for(int dx = 0; dx < obs.getWidth(); dx++){
-                    for(int dy = 0; dy < obs.getHeight(); dy++){
-                        isAvailable[x + dx][y + dy] = true;
-
-                    }
-
-                }
-                break;
-            case "WallMaria":
-                for(int dx = 0; dx < obs.getWidth(); dx++){
-                    for(int dy = 0; dy < obs.getHeight(); dy++){
-                        isAvailable[x + dx][y + dy] = true;
-                    }
-
-                }
-                break;
-            default:
-                System.out.println("Could not receive valid obstacle type!");
-                break;
-        }
-
-
-
-
-    }
-
+    // Collider check for creating Layout
     private boolean isAvailable(){
+    /*
+        for (Map.Entry<Obstacle,PosVector> entry: obstacle_positions.entrySet()){
+            Obstacle obs = entry.getKey();
+            PosVector pos = entry.getValue();
+
+            if(!fun()){
+                return false;
+
+            }
+        }
+    */
 
         return true;
     }

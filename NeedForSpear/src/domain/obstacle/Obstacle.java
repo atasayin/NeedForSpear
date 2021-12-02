@@ -40,4 +40,12 @@ public abstract class Obstacle extends DomainObject {
 		this.destroyBehaviour.destroy();
 	}
 
+	@Override
+	public String toString() {
+		return "Obstacle{" +
+				pos.toString() +
+				", is_rotating= " + is_rotating +
+				", health= " + health +
+				", type = " + getType();
+	}
 }

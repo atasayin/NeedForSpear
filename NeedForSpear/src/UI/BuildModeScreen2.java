@@ -20,6 +20,8 @@ import java.util.List;
 
 public class BuildModeScreen2 extends JPanel implements ActionListener, MouseListener {
 
+    /////////////////////////////////////////////////////////////////////////////////////
+
     static final int SIMPLE_COUNT = 75;
     static final int FIRM_COUNT = 10;
     static final int EXPLOSIVE_COUNT = 5;
@@ -41,6 +43,14 @@ public class BuildModeScreen2 extends JPanel implements ActionListener, MouseLis
     private List<IRunListener> runModeListeners = new ArrayList<>();
     private HashMap<String, Double> runSettings;
 
+    private static final int TIMER_SPEED = 10;
+
+    Timer timer = new Timer(TIMER_SPEED, this);
+
+    LayoutController lc = new LayoutController();
+
+    /////////////////////////////////////////////////////////////////////////////////////
+
     public void addListener(IRunListener listener) {
         runModeListeners.add(listener);
     }
@@ -48,11 +58,7 @@ public class BuildModeScreen2 extends JPanel implements ActionListener, MouseLis
     public void removeListener(IRunListener listener) {
         runModeListeners.remove(listener);
     }
-    private static final int TIMER_SPEED = 10;
 
-    Timer timer = new Timer(TIMER_SPEED, this);
-
-    LayoutController lc = new LayoutController();
 
     public void setObstacleSettings() {
         HashMap<String, Double> obstacleSettings = new HashMap<String, Double>();
@@ -67,7 +73,6 @@ public class BuildModeScreen2 extends JPanel implements ActionListener, MouseLis
 
     public BuildModeScreen2() {
         initializeBuildScreen();
-        add(initializeObstacleSettingsPanel());
     }
 
     // Initial Build Mode Screen and the timer
