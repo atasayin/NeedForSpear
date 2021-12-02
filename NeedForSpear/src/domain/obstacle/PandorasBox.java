@@ -19,7 +19,8 @@ public class PandorasBox extends Obstacle {
 		return null;
 	}
 
+	@Override
+	protected void updatePosition(int x, int y) {
 
-
-
+	}
 }
