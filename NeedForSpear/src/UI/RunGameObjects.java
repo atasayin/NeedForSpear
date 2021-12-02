@@ -27,6 +27,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
     int infoRefreshCount;
     KeyboardController kc = new KeyboardController();
     Game game = Game.getInstance();
+    CollisionChecker colCheck = CollisionChecker.getInstance();
 
     public static int frame_width;
     public static int frame_height;
@@ -115,6 +116,10 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
 //        Game.getInstance().gameState.updatePaddlePosition();
         Game.getInstance().PC.getPaddle().updatePosition(0,0);
         Game.getInstance().ball.move();
+        if (colCheck.checkPaddleBallCollision(Game.getInstance().ball, Game.getInstance().PC.getPaddle())) {
+            Game.getInstance().ball.reflectFromHorizontal();
+        }
+
     }
 
     @Override
@@ -187,7 +192,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
 
     }
 
-    private static final int TIMER_SPEED = 10;
+    private static final int TIMER_SPEED = 50;
     private static final int INFO_REFRESH_PERIOD = 3000;
 
 }
