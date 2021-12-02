@@ -1,6 +1,7 @@
 package UI;
 
 import domain.DomainObject;
+import domain.Game;
 import domain.Paddle;
 
 import javax.imageio.ImageIO;
@@ -39,7 +40,9 @@ public class PaddleView implements Drawable {
         }
 
         // scale to unit length L
-        Image scaled = paddle_img.getScaledInstance(100, 10,
+        int paddleLen = BuildModeScreen.FRAME_WIDTH/10;
+        int paddleThick = 20;
+        Image scaled = paddle_img.getScaledInstance(paddleLen, paddleThick,
                 BufferedImage.SCALE_SMOOTH);
         if (scaled instanceof BufferedImage)
             paddle_img = (BufferedImage) scaled;

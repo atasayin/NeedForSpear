@@ -22,8 +22,8 @@ import domain.*;
 @SuppressWarnings("serial")
 public class BuildModeScreen extends JFrame {
 
-    static final int FRAME_WIDTH = 1368;
-    static final int FRAME_HEIGHT = 766;
+    public static final int FRAME_WIDTH = 1368;
+    public static final int FRAME_HEIGHT = 766;
 
     private JTextField username;
     private JButton gameStart;
