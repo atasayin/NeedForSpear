@@ -17,5 +17,8 @@ public class GiftOfUranus extends Obstacle {
 		return null;
 	}
 
+	@Override
+	protected void updatePosition(int x, int y) {
 
+	}
 }
