@@ -1,12 +1,17 @@
-package domain;
+package domain.obstacle;
 
-public abstract class Obstacle {
+import domain.DomainObject;
+import domain.strategy.DestroyBehaviour;
+import domain.util.PosVector;
+
+public abstract class Obstacle extends DomainObject {
 	
 	public PosVector pos;
 	public boolean is_rotating;
 	public int health;
 	public DestroyBehaviour destroyBehaviour;
-	
+	protected static String type;
+
 	
 	
 	public Obstacle(int xPos, int yPos, float L, int health) {
@@ -14,7 +19,13 @@ public abstract class Obstacle {
 		this.health = health;
 		this.is_rotating = false;
 	}
-	
+	public static String getType() {
+		return type;
+	}
+
+	public PosVector getPosVector() {
+		return this.pos;
+	}
 	
 	public boolean getHit() {
 		this.health -= 1;

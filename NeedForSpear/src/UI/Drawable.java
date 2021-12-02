@@ -1,10 +1,13 @@
-package NeedForSpear.src.UI;
-import java.awt.Graphics;
+package UI;
+import domain.DomainObject;
+
+import java.awt.*;
 
 public interface Drawable {
-	
-	static void drawRec(Graphics g, int x , int y, int l, int t){
-		g.fillRect(x,y,l,t);
-	}
+
+	void draw(Graphics2D g2d, DomainObject domainObject, int w, int h);
+//	static void drawRec(Graphics g, int x , int y, int l, int t){
+//		g.fillRect(x,y,l,t);
+//	}
 
 }

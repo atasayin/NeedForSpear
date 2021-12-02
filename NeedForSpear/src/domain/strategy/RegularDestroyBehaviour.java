@@ -1,4 +1,6 @@
-package domain;
+package domain.strategy;
+
+import domain.strategy.DestroyBehaviour;
 
 public class RegularDestroyBehaviour implements DestroyBehaviour {
 

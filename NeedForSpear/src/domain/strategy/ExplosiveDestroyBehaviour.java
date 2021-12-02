@@ -1,4 +1,4 @@
-package domain;
+package domain.strategy;
 
 public class ExplosiveDestroyBehaviour implements DestroyBehaviour {
 	public void destroy() {
