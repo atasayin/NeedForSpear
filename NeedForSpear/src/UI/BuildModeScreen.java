@@ -43,10 +43,10 @@ public class BuildModeScreen extends JFrame {
     private List<IRunListener> runModeListeners = new ArrayList<>();
 
     // Layout
-    Layout layout;
+    private Layout layout;
 
     // Layout Controller
-    LayoutController lc = new LayoutController();
+    private LayoutController LC = LayoutController.getInstance();
 
     // Layout Panel
     private LayoutPanel layoutPanel;
@@ -84,6 +84,8 @@ public class BuildModeScreen extends JFrame {
         obstacleSettings.put("giftObstacleCount", Integer.parseInt(giftObstacle.getText()));
 
         this.obstacleSettings = obstacleSettings;
+
+        LC.setObstacleSettings(obstacleSettings);
     }
 
     public BuildModeScreen() {
@@ -91,7 +93,7 @@ public class BuildModeScreen extends JFrame {
         obstacleSettingsPanel = initializeObstacleSettingsPanel();
         add(obstacleSettingsPanel,BorderLayout.EAST);
         layoutPanel = initializeLayoutPanel();
-        add(layoutPanel);
+        add(layoutPanel,BorderLayout.CENTER);
         add(runGamePanel(this),BorderLayout.SOUTH);
     }
 
@@ -101,6 +103,7 @@ public class BuildModeScreen extends JFrame {
         this.setSize(FRAME_WIDTH, FRAME_HEIGHT);
         this.setLocationRelativeTo(null);
     }
+
     private JPanel initializeObstacleSettingsPanel(){
         GridLayout gameObjLayout = new GridLayout(5, 3,10,10); // #Type of obstacles + Button
         JPanel GameObjectPanel = new JPanel(gameObjLayout);
@@ -113,23 +116,23 @@ public class BuildModeScreen extends JFrame {
         giftObstacle = new JTextField(Integer.toString(GIFT_COUNT), 30);
 
         // Simple Obstacle Row
-        //GameObjectPanel.add(new JLabel(new ImageIcon("../assets/simpleball.png")));
+        GameObjectPanel.add(new JLabel(new ImageIcon("../assets/simpleball.png")));
         JLabel simpleObstacleLabel = new JLabel("Number of simple obstacles");
         GameObjectPanel.add(simpleObstacleLabel);
         GameObjectPanel.add(simpleObstacle);
 
         // Firm Obstacle Row
-        //GameObjectPanel.add(new JLabel(new ImageIcon("../assets/simpleball.png")));
+        GameObjectPanel.add(new JLabel(new ImageIcon("../assets/simpleball.png")));
         GameObjectPanel.add(new JLabel("Number of firm obstacles"));
         GameObjectPanel.add(firmObstacle);
 
         // Explosive Obstacle Row
-        //GameObjectPanel.add(new JLabel(new ImageIcon("../assets/simpleball.png")));
+        GameObjectPanel.add(new JLabel(new ImageIcon("../assets/simpleball.png")));
         GameObjectPanel.add(new JLabel("Number of explosive obstacles"));
         GameObjectPanel.add(explosiveObstacle);
 
         // Gift Obstacle Row
-        //GameObjectPanel.add(new JLabel(new ImageIcon("../assets/simpleball.png")));
+        GameObjectPanel.add(new JLabel(new ImageIcon("../assets/simpleball.png")));
         GameObjectPanel.add(new JLabel("Number of gift obstacles"));
         GameObjectPanel.add(giftObstacle);
 
@@ -138,34 +141,19 @@ public class BuildModeScreen extends JFrame {
         obstacleButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
                 setObstacleSettings();
-                getRandomLayout();
-                //notifyButtonisClickedListeners();
+                layout = LC.getRandomLayout();
 
             }
         });
 
+        GameObjectPanel.add(new JLabel(""));
         GameObjectPanel.add(obstacleButton);
+        GameObjectPanel.add(new JLabel(""));
 
         return GameObjectPanel;
 
     }
 
-    // Gets random Layout after the obstacle settings
-    private void getRandomLayout(){
-        layout = new Layout(obstacleSettings.get("simpleObstacleCount"),
-                obstacleSettings.get("firmObstacleCount"),
-                obstacleSettings.get("explosiveObstacleCount"),
-                obstacleSettings.get("giftObstacleCount"),
-                1368,
-                766
-        );
-        System.out.println(obstacleSettings);
-
-        for (Obstacle obs : layout.obstacle_positions.keySet()){
-            System.out.println(obs.toString());
-        }
-
-    }
 
     private LayoutPanel initializeLayoutPanel() {
         return new LayoutPanel(layout,FRAME_WIDTH,FRAME_HEIGHT);
