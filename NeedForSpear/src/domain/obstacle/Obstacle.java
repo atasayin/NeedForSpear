@@ -41,4 +41,9 @@ public abstract class Obstacle extends DomainObject {
 		this.destroyBehaviour.destroy();
 	}
 
+	@Override
+	public String toString() {
+		return "Obstacle{" +
+				"pos=" + pos.toString();
+	}
 }

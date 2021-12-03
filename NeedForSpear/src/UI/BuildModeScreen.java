@@ -18,14 +18,16 @@ import domain.obstacle.Obstacle;
 @SuppressWarnings("serial")
 public class BuildModeScreen extends JFrame {
 
+    /////////////////////////////////////////////////////////////////////////////////////
+
     public static final int FRAME_WIDTH = 1368;
     public static final int FRAME_HEIGHT = 766;
 
     // Obstacles
-    static final int SIMPLE_COUNT = 75;
-    static final int FIRM_COUNT = 10;
-    static final int EXPLOSIVE_COUNT = 5;
-    static final int GIFT_COUNT = 10;
+    static final int SIMPLE_COUNT = 8;
+    static final int FIRM_COUNT = 7;
+    static final int EXPLOSIVE_COUNT = 6;
+    static final int GIFT_COUNT = 5;
 
     private JTextField simpleObstacle;
     private JTextField firmObstacle;
@@ -45,6 +47,11 @@ public class BuildModeScreen extends JFrame {
 
     // Layout Controller
     LayoutController lc = new LayoutController();
+
+    // Layout Panel
+    private LayoutPanel layoutPanel;
+
+    private JPanel obstacleSettingsPanel;
 
     // Game
     Game game = Game.getInstance();
@@ -81,13 +88,15 @@ public class BuildModeScreen extends JFrame {
 
     public BuildModeScreen() {
         initializeBuildScreen();
-        add(initializeObstacleSettingsPanel());
-        add(initializeLayoutPanel());
-        add(runGamePanel(this));
+        obstacleSettingsPanel = initializeObstacleSettingsPanel();
+        add(obstacleSettingsPanel,BorderLayout.EAST);
+        layoutPanel = initializeLayoutPanel();
+        add(layoutPanel);
+        add(runGamePanel(this),BorderLayout.SOUTH);
     }
 
     private void initializeBuildScreen() {
-        this.setLayout(new GridLayout(3, 1));
+        this.setLayout(new BorderLayout(0, 0));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(FRAME_WIDTH, FRAME_HEIGHT);
         this.setLocationRelativeTo(null);
@@ -141,7 +150,7 @@ public class BuildModeScreen extends JFrame {
 
     }
 
-    // Get random Layout after the obstacle settings
+    // Gets random Layout after the obstacle settings
     private void getRandomLayout(){
         layout = new Layout(obstacleSettings.get("simpleObstacleCount"),
                 obstacleSettings.get("firmObstacleCount"),
@@ -158,15 +167,8 @@ public class BuildModeScreen extends JFrame {
 
     }
 
-    private JPanel initializeLayoutPanel() {
-        GridLayout varLayout = new GridLayout(5, 3);
-        JPanel GameSettingsPanel = new JPanel(varLayout);
-
-
-        GameSettingsPanel.setBackground(Color.YELLOW);
-
-        return GameSettingsPanel;
-
+    private LayoutPanel initializeLayoutPanel() {
+        return new LayoutPanel(layout,FRAME_WIDTH,FRAME_HEIGHT);
     }
 
     private JPanel runGamePanel(JFrame frame) {
@@ -195,5 +197,6 @@ public class BuildModeScreen extends JFrame {
         this.setVisible(false);
         this.dispose();
     }
+
 
 }
