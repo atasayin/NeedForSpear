@@ -12,9 +12,12 @@ public class Paddle extends DomainObject{
 	private double angle;
 	private int normalSpeed;
 	private int fastSpeed;
+	private int width;
+	private int height = PADDLE_THICKNESS;
 	
 	public Paddle(int fWidth, int fHeight) {
 		this.length = fWidth/10;
+		this.width = this.length;
 		this.thickness = PADDLE_THICKNESS;
 		this.posVector = new PosVector((fWidth - length)/2, fHeight - (this.thickness * 4));
 		this.angle = 0;
@@ -74,4 +77,15 @@ public class Paddle extends DomainObject{
 		this.posVector.y += y;
 	}
 
+
+	// Needed for collision check calculations
+	@Override
+	public int getWidth() {
+		return width;
+	}
+
+	@Override
+	public int getHeight() {
+		return height;
+	}
 }

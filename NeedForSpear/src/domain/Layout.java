@@ -2,7 +2,7 @@ package domain;
 
 import domain.obstacle.*;
 import domain.util.PosVector;
-import javafx.geometry.Pos;
+//import javafx.geometry.Pos;
 
 import java.util.HashMap;
 import java.util.Map;

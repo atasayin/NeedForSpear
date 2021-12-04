@@ -5,16 +5,18 @@ import domain.util.PosVector;
 import java.awt.*;
 
 public class Ball extends DomainObject {
-    private final int WIDTH = 1368;
-    private final int HEIGHT = 766;
+    private final int FRAME_WIDTH = 1368;
+    private final int FRAME_HEIGHT = 766;
     private final int diameter = 16;
     public double gravity;
     public int yVelocity, xVelocity;
+    private int width = 16;
+    private int height = 16;
 
     public Ball() {
-        this.posVector = new PosVector(600, 5);
+        this.posVector = new PosVector(540, 100);
         this.gravity = 1;
-        this.xVelocity = 4;
+        this.xVelocity = 3;
         this.yVelocity = 0;
     }
 
@@ -59,7 +61,7 @@ public class Ball extends DomainObject {
     public void checkWallCollision() {
         if (this.posVector.getX() < 8) {
             this.reflectFromVertical();
-        } else if (this.posVector.getX() > (WIDTH - 40)) {
+        } else if (this.posVector.getX() > (FRAME_WIDTH - 40)) {
             this.reflectFromVertical();
         }
     }
@@ -69,7 +71,7 @@ public class Ball extends DomainObject {
     }
 
     public Boolean checkAlive() {
-        return (this.posVector.getY() <= (HEIGHT + 100));
+        return (this.posVector.getY() <= (FRAME_HEIGHT + 100));
     }
 
     public Boolean move() {
@@ -85,4 +87,13 @@ public class Ball extends DomainObject {
 
     }
 
+    @Override
+    public int getWidth() {
+        return width;
+    }
+
+    @Override
+    public int getHeight() {
+        return height;
+    }
 }
