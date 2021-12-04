@@ -10,7 +10,7 @@ public abstract class Obstacle extends DomainObject {
 	public boolean is_rotating;
 	public int health;
 	public DestroyBehaviour destroyBehaviour;
-	protected static String type;
+	protected String type;
 
 	
 	
@@ -19,7 +19,7 @@ public abstract class Obstacle extends DomainObject {
 		this.health = health;
 		this.is_rotating = false;
 	}
-	public static String getType() {
+	public String getType() {
 		return type;
 	}
 

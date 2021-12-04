@@ -26,6 +26,6 @@ public class PandorasBox extends Obstacle {
 
 	@Override
 	public String toString() {
-		return super.toString() + ", typeVariable=" + getType() + ", typeString = PandorasBox}";
+		return super.toString() + ", typeVariable=" + getType();
 	}
 }

@@ -92,6 +92,7 @@ public class Layout {
                 PosVector pos = new PosVector(rnd.nextInt(layoutWidth), rnd.nextInt(layoutHeight));
                 int L = 10;
                 PandorasBox obs = new PandorasBox(pos.getX(),pos.getY(),L, 1);
+                Game.getInstance().getDomainObjectArr().add(obs);
 
                 if (isAvailable(obs)) {
                     obstacle_positions.put(obs,pos);
@@ -111,6 +112,7 @@ public class Layout {
                 PosVector pos = new PosVector(rnd.nextInt(layoutWidth), rnd.nextInt(layoutHeight));
                 int L = 10;
                 SteinsGate obs = new SteinsGate(pos.getX(),pos.getY(),L, 1);
+                Game.getInstance().getDomainObjectArr().add(obs);
 
                 if (isAvailable(obs)) {
                     obstacle_positions.put(obs,pos);
@@ -130,6 +132,7 @@ public class Layout {
                 PosVector pos = new PosVector(rnd.nextInt(layoutWidth), rnd.nextInt(layoutHeight));
                 int L = 10;
                 GiftOfUranus obs = new GiftOfUranus(pos.getX(),pos.getY(),L, 1);
+                Game.getInstance().getDomainObjectArr().add(obs);
 
                 if (isAvailable(obs)) {
                     obstacle_positions.put(obs,pos);
@@ -149,6 +152,7 @@ public class Layout {
                 PosVector pos = new PosVector(rnd.nextInt(layoutWidth), rnd.nextInt(layoutHeight));
                 int L = 10;
                 WallMaria obs = new WallMaria(pos.getX(),pos.getY(),L, 1);
+                Game.getInstance().getDomainObjectArr().add(obs);
 
                 if (isAvailable(obs)) {
                     obstacle_positions.put(obs,pos);
@@ -167,14 +171,14 @@ public class Layout {
 
     // Collider check for creating Layout
     private boolean isAvailable(Obstacle newObs){
-        for (Obstacle obs: obstacle_positions.keySet()){
-
-            if ( !CS.checkCollision(newObs, obs)){
-                return false;
-
-            }
-
-        }
+//        for (Obstacle obs: obstacle_positions.keySet()){
+//
+//            if ( !CS.checkCollision(newObs, obs)){
+//                return false;
+//
+//            }
+//
+//        }
 
         return true;
     }

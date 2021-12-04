@@ -22,6 +22,6 @@ public class SteinsGate extends Obstacle {
 
 	@Override
 	public String toString() {
-		return super.toString() + ", typeVariable=" + getType() + ", typeString = SteinsGate}";
+		return super.toString() + ", typeVariable=" + getType();
 	}
 }

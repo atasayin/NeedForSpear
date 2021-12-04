@@ -24,6 +24,6 @@ public class GiftOfUranus extends Obstacle {
 
 	@Override
 	public String toString() {
-		return super.toString() + ", typeVariable=" + getType() + ", typeString = GiftOfUranus}";
+		return super.toString() + ", typeVariable=" + getType();
 	}
 }

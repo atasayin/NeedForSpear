@@ -1,9 +1,12 @@
 package domain.controller;
 
+import domain.Game;
 import domain.Layout;
 import domain.obstacle.Obstacle;
+import domain.obstacle.WallMaria;
 
 import java.util.HashMap;
+import java.util.Iterator;
 
 public class LayoutController {
 
@@ -59,6 +62,16 @@ public class LayoutController {
         this.obstacleSettings = obstacleSettings;
 
     }
+
+//    public void addObstaclesToGame(HashMap<String, Integer> obstacleSettings){
+//        Game game = Game.getInstance();
+//
+//        for (String key : obstacleSettings.keySet()){
+//            if (key.equals("simpleObstacleCount")){
+//                game.getDomainObjectArr().add(new WallMaria())
+//            }
+//        }
+//    }
 
     // Prints layout
     private void printLayout(){
