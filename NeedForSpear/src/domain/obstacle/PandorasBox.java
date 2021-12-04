@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class PandorasBox extends Obstacle {
 
-	public PandorasBox(int xPos, int yPos, float L, int health) {
+	public PandorasBox(int xPos, int yPos, int L, int health) {
 		super(xPos, yPos, L, health);
 		this.destroyBehaviour = new ExplosiveDestroyBehaviour();
 		this.is_rotating = true;

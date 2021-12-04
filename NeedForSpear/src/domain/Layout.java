@@ -178,14 +178,14 @@ public class Layout {
 
     // Collider check for creating Layout
     private boolean isAvailable(Obstacle newObs){
-//        for (Obstacle obs: obstacle_positions.keySet()){
-//
-//            if ( !CS.checkCollision(newObs, obs)){
-//                return false;
-//
-//            }
-//
-//        }
+        for (Obstacle obs: obstacle_positions.keySet()){
+
+            if ( CS.checkCollision(newObs, obs)){
+                return false;
+
+            }
+
+        }
 
         return true;
     }

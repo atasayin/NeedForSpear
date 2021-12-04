@@ -120,6 +120,12 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
             Game.getInstance().ball.reflectFromHorizontal();
         }
 
+        for (Obstacle obs : Layout.obstacle_positions.keySet()) {
+            if (colCheck.checkCollision(Game.getInstance().ball, obs)) {
+                System.out.println("carpistilar");
+            }
+        }
+
     }
 
     @Override
