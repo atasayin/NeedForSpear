@@ -41,9 +41,9 @@ public class SimpleObstacleView  implements Drawable {
             }
 
             // scale to unit length L
-            int paddleLen = BuildModeScreen.FRAME_WIDTH/10;
+            int obsLen = BuildModeScreen.FRAME_WIDTH/50;
             int paddleThick = 20;
-            Image scaled = simple_obs_img.getScaledInstance(paddleLen/5, paddleThick,
+            Image scaled = simple_obs_img.getScaledInstance(obsLen, paddleThick,
                     BufferedImage.SCALE_SMOOTH);
             if (scaled instanceof BufferedImage)
                 simple_obs_img = (BufferedImage) scaled;
