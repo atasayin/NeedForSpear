@@ -19,4 +19,9 @@ public class SteinsGate extends Obstacle {
 	protected void updatePosition(int x, int y) {
 
 	}
+
+	@Override
+	public String toString() {
+		return super.toString() + ", typeVariable=" + getType() + ", typeString = SteinsGate}";
+	}
 }

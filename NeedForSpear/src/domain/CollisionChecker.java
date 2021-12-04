@@ -1,5 +1,7 @@
 package domain;
 
+import domain.obstacle.Obstacle;
+
 public class CollisionChecker {
     private final int HEIGHT = 766;
     private final int WIDTH = 1368;

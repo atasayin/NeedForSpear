@@ -18,14 +18,16 @@ import domain.obstacle.Obstacle;
 @SuppressWarnings("serial")
 public class BuildModeScreen extends JFrame {
 
+    /////////////////////////////////////////////////////////////////////////////////////
+
     public static final int FRAME_WIDTH = 1368;
     public static final int FRAME_HEIGHT = 766;
 
     // Obstacles
-    static final int SIMPLE_COUNT = 75;
-    static final int FIRM_COUNT = 10;
-    static final int EXPLOSIVE_COUNT = 5;
-    static final int GIFT_COUNT = 10;
+    static final int SIMPLE_COUNT = 8;
+    static final int FIRM_COUNT = 7;
+    static final int EXPLOSIVE_COUNT = 6;
+    static final int GIFT_COUNT = 5;
 
     private JTextField simpleObstacle;
     private JTextField firmObstacle;
@@ -41,10 +43,15 @@ public class BuildModeScreen extends JFrame {
     private List<IRunListener> runModeListeners = new ArrayList<>();
 
     // Layout
-    Layout layout;
+    private Layout layout;
 
     // Layout Controller
-    LayoutController lc = new LayoutController();
+    private LayoutController LC = LayoutController.getInstance();
+
+    // Layout Panel
+    private LayoutPanel layoutPanel;
+
+    private JPanel obstacleSettingsPanel;
 
     // Game
     Game game = Game.getInstance();
@@ -77,21 +84,26 @@ public class BuildModeScreen extends JFrame {
         obstacleSettings.put("giftObstacleCount", Integer.parseInt(giftObstacle.getText()));
 
         this.obstacleSettings = obstacleSettings;
+
+        LC.setObstacleSettings(obstacleSettings);
     }
 
     public BuildModeScreen() {
         initializeBuildScreen();
-        add(initializeObstacleSettingsPanel());
-        add(initializeLayoutPanel());
-        add(runGamePanel(this));
+        obstacleSettingsPanel = initializeObstacleSettingsPanel();
+        add(obstacleSettingsPanel,BorderLayout.EAST);
+        layoutPanel = initializeLayoutPanel();
+        add(layoutPanel,BorderLayout.CENTER);
+        add(runGamePanel(this),BorderLayout.SOUTH);
     }
 
     private void initializeBuildScreen() {
-        this.setLayout(new GridLayout(3, 1));
+        this.setLayout(new BorderLayout(0, 0));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(FRAME_WIDTH, FRAME_HEIGHT);
         this.setLocationRelativeTo(null);
     }
+
     private JPanel initializeObstacleSettingsPanel(){
         GridLayout gameObjLayout = new GridLayout(5, 3,10,10); // #Type of obstacles + Button
         JPanel GameObjectPanel = new JPanel(gameObjLayout);
@@ -104,23 +116,23 @@ public class BuildModeScreen extends JFrame {
         giftObstacle = new JTextField(Integer.toString(GIFT_COUNT), 30);
 
         // Simple Obstacle Row
-        //GameObjectPanel.add(new JLabel(new ImageIcon("../assets/simpleball.png")));
+        GameObjectPanel.add(new JLabel(new ImageIcon("../assets/simpleball.png")));
         JLabel simpleObstacleLabel = new JLabel("Number of simple obstacles");
         GameObjectPanel.add(simpleObstacleLabel);
         GameObjectPanel.add(simpleObstacle);
 
         // Firm Obstacle Row
-        //GameObjectPanel.add(new JLabel(new ImageIcon("../assets/simpleball.png")));
+        GameObjectPanel.add(new JLabel(new ImageIcon("../assets/simpleball.png")));
         GameObjectPanel.add(new JLabel("Number of firm obstacles"));
         GameObjectPanel.add(firmObstacle);
 
         // Explosive Obstacle Row
-        //GameObjectPanel.add(new JLabel(new ImageIcon("../assets/simpleball.png")));
+        GameObjectPanel.add(new JLabel(new ImageIcon("../assets/simpleball.png")));
         GameObjectPanel.add(new JLabel("Number of explosive obstacles"));
         GameObjectPanel.add(explosiveObstacle);
 
         // Gift Obstacle Row
-        //GameObjectPanel.add(new JLabel(new ImageIcon("../assets/simpleball.png")));
+        GameObjectPanel.add(new JLabel(new ImageIcon("../assets/simpleball.png")));
         GameObjectPanel.add(new JLabel("Number of gift obstacles"));
         GameObjectPanel.add(giftObstacle);
 
@@ -129,44 +141,22 @@ public class BuildModeScreen extends JFrame {
         obstacleButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
                 setObstacleSettings();
-                getRandomLayout();
-                //notifyButtonisClickedListeners();
+                layout = LC.getRandomLayout();
 
             }
         });
 
+        GameObjectPanel.add(new JLabel(""));
         GameObjectPanel.add(obstacleButton);
+        GameObjectPanel.add(new JLabel(""));
 
         return GameObjectPanel;
 
     }
 
-    // Get random Layout after the obstacle settings
-    private void getRandomLayout(){
-        layout = new Layout(obstacleSettings.get("simpleObstacleCount"),
-                obstacleSettings.get("firmObstacleCount"),
-                obstacleSettings.get("explosiveObstacleCount"),
-                obstacleSettings.get("giftObstacleCount"),
-                1368,
-                766
-        );
-        System.out.println(obstacleSettings);
 
-        for (Obstacle obs : layout.obstacle_positions.keySet()){
-            System.out.println(obs.toString());
-        }
-
-    }
-
-    private JPanel initializeLayoutPanel() {
-        GridLayout varLayout = new GridLayout(5, 3);
-        JPanel GameSettingsPanel = new JPanel(varLayout);
-
-
-        GameSettingsPanel.setBackground(Color.YELLOW);
-
-        return GameSettingsPanel;
-
+    private LayoutPanel initializeLayoutPanel() {
+        return new LayoutPanel(layout,FRAME_WIDTH,FRAME_HEIGHT);
     }
 
     private JPanel runGamePanel(JFrame frame) {
@@ -195,5 +185,6 @@ public class BuildModeScreen extends JFrame {
         this.setVisible(false);
         this.dispose();
     }
+
 
 }

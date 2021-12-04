@@ -40,4 +40,12 @@ public class PosVector {
 	public void setY(int y) {
 		this.y = y;
 	}
+
+	@Override
+	public String toString() {
+		return "PosVector{" +
+				"x=" + x +
+				", y=" + y +
+				'}';
+	}
 }
