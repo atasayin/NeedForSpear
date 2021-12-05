@@ -71,7 +71,7 @@ public class Ball extends DomainObject {
     }
 
     public Boolean checkAlive() {
-        return (this.posVector.getY() <= (FRAME_HEIGHT));
+        return (this.posVector.getY() <= (FRAME_HEIGHT-Game.getInstance().PC.getPaddle().getHeight()*3));
     }
 
     public Boolean move() {

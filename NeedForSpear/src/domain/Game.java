@@ -6,8 +6,6 @@ import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static java.lang.System.*;
-
 
 public class Game implements IRunListener {
     static final int FRAME_WIDTH = 1368;
@@ -16,7 +14,7 @@ public class Game implements IRunListener {
     String gameStatus;
     public GameState gameState;
     public PlayerState playerState;
-    public Client client;
+    public Saver saver;
     static Game instance;
     private Timer game_Timer;
     public PaddleController PC;
@@ -61,14 +59,14 @@ public class Game implements IRunListener {
     }
 
     public void loadGame() {
-        client = new Client();
-        client.loadGame(Game.getInstance().PC, Game.getInstance().ball);
+        saver = new Saver();
+        saver.loadGame(Game.getInstance().PC, Game.getInstance().ball);
 
     }
 
     public void saveGame() {
-        client = new Client();
-        client.saveGame(Game.getInstance().PC, Game.getInstance().ball, Layout.getObstacle_positions());
+        saver = new Saver();
+        saver.saveGame(Game.getInstance().PC, Game.getInstance().ball, Layout.getObstacle_positions());
     }
 
     @Override

@@ -1,5 +1,5 @@
 package domain;
 
 public interface TimeListener {
-    public void onTimeEvent();
+    void onTimeEvent();
 }

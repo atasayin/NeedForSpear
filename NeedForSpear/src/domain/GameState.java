@@ -51,10 +51,6 @@ public class GameState {
         return pc.getPaddle().getPosVector();
     }
 
-    //public void updatePaddlePosition() {
-      //  this.pc.getPaddle().updatePosition() ;}
-
-
     public Layout getLayout() {
         return layout;
     }
@@ -78,6 +74,7 @@ public class GameState {
     public void addPlayer(Player player) {
         players.add(player);
     }
+
     public PaddleController getPC(){
         return pc;
     }
