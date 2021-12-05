@@ -144,6 +144,7 @@ public class BuildModeScreen extends JFrame {
                 layout = LC.getRandomLayout();
                 gameStartButton.setEnabled(true);
 
+
             }
         });
 
