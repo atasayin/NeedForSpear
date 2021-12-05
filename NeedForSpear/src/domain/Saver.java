@@ -84,6 +84,7 @@ public class Saver {
             ArrayList<DomainObject> listDO = new ArrayList<DomainObject>();
             System.out.println(jsonlist.get(1));
             int obsLen = Game.getInstance().PC.getPaddle().length/5;
+            PosVector vec;
 
             for (int i = 0; i < jsonlist.size(); i++) {
 
@@ -102,18 +103,26 @@ public class Saver {
                 if(s.contains("WallMaria")){
                     WallMaria obs = new WallMaria(p, m, obsLen, 1);
                     listDO.add(obs);
+                    vec = new PosVector(p,m);
+                    Layout.getObstacle_positions().put(obs,vec);
                 }
                 if(s.contains("GiftOfUranus")){
                     GiftOfUranus obs = new GiftOfUranus(p, m, obsLen, 1);
                     listDO.add(obs);
+                    vec = new PosVector(p,m);
+                    Layout.getObstacle_positions().put(obs,vec);
                 }
                 if(s.contains("PandorasBox")){
                     PandorasBox obs = new PandorasBox(p, m, obsLen, 1);
                     listDO.add(obs);
+                    vec = new PosVector(p,m);
+                    Layout.getObstacle_positions().put(obs,vec);
                 }
                 if(s.contains("SteinsGate")){
                     SteinsGate obs = new SteinsGate(p, m, obsLen, 1);
                     listDO.add(obs);
+                    vec = new PosVector(p,m);
+                    Layout.getObstacle_positions().put(obs,vec);
                 }
                 //System.out.println(jsonlist.get(i)[0]);
                 //System.out.println(jsonlist.get(i).getClass());
