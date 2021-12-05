@@ -57,6 +57,10 @@ public class Saver {
     }
 
     public void loadGame(PaddleController pc, Ball ball) {
+
+        HashMap<Obstacle, PosVector> loadObsPos = new HashMap<>();
+        Layout.setObstacle_positions(loadObsPos);
+
         JSONParser jsonParser = new JSONParser();
         try (FileReader reader = new FileReader(FILEPATH)) {
             Object obj = jsonParser.parse(reader);
@@ -69,11 +73,13 @@ public class Saver {
 
             pc.getPaddle().setPosVector(paddleLoc);
             z = (long) doc.get("BallPositionX");
-            t = (long) doc.get("BallPositionY");
+//            t = (long) doc.get("BallPositionY");
             x = ((int) z);
-            y = ((int) t);
+//            y = ((int) t);
 
-            PosVector ballLoc = new PosVector(x, y);
+
+
+            PosVector ballLoc = new PosVector(x, 0);
             ball.setPosVector(ballLoc);
             System.out.println(x + "  " + y);
 
@@ -129,49 +135,6 @@ public class Saver {
                 //Obstacle o = (Obstacle)jsonlist.get(i) ;
                 //PosVector pos = ((Obstacle) (jsonlist.get(i))).posVector ;
                 //list.put(o, pos);
-            }
-
-            //HashMap<Obstacle, PosVector> list = (HashMap<Obstacle, PosVector>) doc.get("ObjectList");
-
-
-            for (Entry<Obstacle, PosVector> l : list.entrySet()) {
-                String s = l.getKey().getType();
-
-                switch (s) {
-                    case "WallMaria":
-                        int a = l.getValue().getX();
-                        int b = l.getValue().getY();
-                        int c = l.getKey().health;
-                        WallMaria obs = new WallMaria(a, b, 10, c);
-                        listDO.add(obs);
-                        break;
-                    case "GiftOfUranus":
-                        a = l.getValue().getX();
-                        b = l.getValue().getY();
-                        c = l.getKey().health;
-                        GiftOfUranus obs2 = new GiftOfUranus(a, b, 10, c);
-                        listDO.add(obs2);
-                        break;
-                    case "PandorasBox":
-                        a = l.getValue().getX();
-                        b = l.getValue().getY();
-                        c = l.getKey().health;
-                        PandorasBox obs3 = new PandorasBox(a, b, 10, c);
-                        listDO.add(obs3);
-                        break;
-                    case "SteinsGate":
-                        a = l.getValue().getX();
-                        b = l.getValue().getY();
-                        c = l.getKey().health;
-                        SteinsGate obs4 = new SteinsGate(a, b, 10, c);
-                        listDO.add(obs4);
-                        break;
-
-                    default:
-                        break;
-
-                }
-
             }
 
             Game.getInstance().setDomainObjectArr(listDO);

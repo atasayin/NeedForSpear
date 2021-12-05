@@ -19,6 +19,7 @@ public class Game implements IRunListener {
     private Timer game_Timer;
     public PaddleController PC;
     public Ball ball;
+    public Layout layout;
 
     public static int UNITLENGTH_L = 1;
 

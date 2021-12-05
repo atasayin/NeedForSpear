@@ -24,10 +24,10 @@ public class BuildModeScreen extends JFrame {
     public static final int FRAME_HEIGHT = 766;
 
     // Obstacles
-    static final int SIMPLE_COUNT = 8;
-    static final int FIRM_COUNT = 7;
-    static final int EXPLOSIVE_COUNT = 6;
-    static final int GIFT_COUNT = 5;
+    static final int SIMPLE_COUNT = 75;
+    static final int FIRM_COUNT = 10;
+    static final int EXPLOSIVE_COUNT = 5;
+    static final int GIFT_COUNT = 10;
 
     private JTextField simpleObstacle;
     private JTextField firmObstacle;

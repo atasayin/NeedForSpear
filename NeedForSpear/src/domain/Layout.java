@@ -84,6 +84,10 @@ public class Layout {
     // Returns positions of all current obstacles.
     public static HashMap<Obstacle, PosVector> getObstacle_positions() { return obstacle_positions; }
 
+    public static void setObstacle_positions(HashMap<Obstacle, PosVector> newMap){
+        obstacle_positions = newMap;
+    }
+
     // Returns center of circles of the paths that some obstacles move in.
     public HashMap<Obstacle, PosVector> getObstacle_centers() { return obstacle_centers; }
 
@@ -169,7 +173,6 @@ public class Layout {
 
 
             }
-
 
         }
 
