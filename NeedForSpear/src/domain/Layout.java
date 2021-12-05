@@ -98,10 +98,10 @@ public class Layout {
                 PosVector pos = new PosVector(rnd.nextInt(layoutWidth-obsLen), rnd.nextInt(layoutHeight-layoutHeightOffset));
                 //int L = 10;
                 PandorasBox obs = new PandorasBox(pos.getX(),pos.getY(),obsLen, 1);
-                Game.getInstance().getDomainObjectArr().add(obs);
 
                 if (isAvailable(obs)) {
                     obstacle_positions.put(obs,pos);
+                    Game.getInstance().getDomainObjectArr().add(obs);
                     break;
 
                 }
@@ -118,10 +118,10 @@ public class Layout {
                 PosVector pos = new PosVector(rnd.nextInt(layoutWidth-obsLen), rnd.nextInt(layoutHeight-layoutHeightOffset));
                 //int L = 10;
                 SteinsGate obs = new SteinsGate(pos.getX(),pos.getY(),obsLen, 1);
-                Game.getInstance().getDomainObjectArr().add(obs);
 
                 if (isAvailable(obs)) {
                     obstacle_positions.put(obs,pos);
+                    Game.getInstance().getDomainObjectArr().add(obs);
                     break;
 
                 }
@@ -138,10 +138,10 @@ public class Layout {
                 PosVector pos = new PosVector(rnd.nextInt(layoutWidth-obsLen), rnd.nextInt(layoutHeight-layoutHeightOffset));
                 //int L = 10;
                 GiftOfUranus obs = new GiftOfUranus(pos.getX(),pos.getY(),obsLen, 1);
-                Game.getInstance().getDomainObjectArr().add(obs);
 
                 if (isAvailable(obs)) {
                     obstacle_positions.put(obs,pos);
+                    Game.getInstance().getDomainObjectArr().add(obs);
                     break;
 
                 }
@@ -159,10 +159,10 @@ public class Layout {
                 //int L = 10;
                 System.out.println(obsLen);
                 WallMaria obs = new WallMaria(pos.getX(),pos.getY(),obsLen, 1);
-                Game.getInstance().getDomainObjectArr().add(obs);
 
                 if (isAvailable(obs)) {
                     obstacle_positions.put(obs,pos);
+                    Game.getInstance().getDomainObjectArr().add(obs);
                     break;
 
                 }
