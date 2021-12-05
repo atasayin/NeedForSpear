@@ -36,11 +36,13 @@ public class BuildModeScreen extends JFrame {
 
     private JButton gameStartButton;
     private JButton obstacleButton;
+    private JButton loadGameButton;
 
     private HashMap<String, Integer> obstacleSettings;
 
     private HashMap<String, Integer> runSettings;
     private List<IRunListener> runModeListeners = new ArrayList<>();
+    private List<ILoadListener> loadModeListeners = new ArrayList<>();
 
     // Layout
     private Layout layout;
@@ -65,6 +67,8 @@ public class BuildModeScreen extends JFrame {
     public void removeListener(IRunListener listener) {
         runModeListeners.remove(listener);
     }
+
+    public void addLoadListener(ILoadListener listener) { loadModeListeners.add(listener) ;}
 
     public void setRunSettings() {
         HashMap<String, Integer> runSettings = new HashMap<String, Integer>();
@@ -164,8 +168,10 @@ public class BuildModeScreen extends JFrame {
     private JPanel runGamePanel(JFrame frame) {
         GridLayout panelLayout = new GridLayout(3, 0);
         JPanel runGamePanel = new JPanel(panelLayout);
+        loadGameButton = new JButton("Load Game");
         gameStartButton = new JButton("Click to start the game!");
         gameStartButton.setEnabled(false);
+
         gameStartButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
                 setRunSettings();
@@ -174,6 +180,18 @@ public class BuildModeScreen extends JFrame {
             }
         });
 
+        loadGameButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
+                for (ILoadListener listener : loadModeListeners) {
+                    System.out.println(listener);
+                    listener.onClickEvent();
+                    gameStartButton.setEnabled(true);
+                }
+
+            }
+        });
+
+        runGamePanel.add(loadGameButton);
         runGamePanel.add(gameStartButton);
         return runGamePanel;
     }

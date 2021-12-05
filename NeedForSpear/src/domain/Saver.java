@@ -81,14 +81,11 @@ public class Saver {
 
             PosVector ballLoc = new PosVector(x, 0);
             ball.setPosVector(ballLoc);
-            System.out.println(x + "  " + y);
-
 
             JSONArray jsonlist = (JSONArray) doc.get("ObjectList");
 
             Map<Obstacle, PosVector> list = new HashMap<>();
             ArrayList<DomainObject> listDO = new ArrayList<DomainObject>();
-            System.out.println(jsonlist.get(1));
             int obsLen = Game.getInstance().PC.getPaddle().length/5;
             PosVector vec;
 
@@ -99,12 +96,10 @@ public class Saver {
                 int a = s.indexOf("x");
                 int b = s.indexOf(",");
                 int p = (Integer.parseInt(s.substring(a + 2, b)));
-                System.out.println(p);
 
                 int k = s.indexOf("y");
                 int l = s.indexOf("}");
                 int m = (Integer.parseInt(s.substring(k + 2, l)));
-                System.out.println(m);
 
                 if(s.contains("WallMaria")){
                     WallMaria obs = new WallMaria(p, m, obsLen, 1);

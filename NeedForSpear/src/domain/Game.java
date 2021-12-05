@@ -7,7 +7,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
-public class Game implements IRunListener {
+public class Game implements IRunListener, ILoadListener {
     static final int FRAME_WIDTH = 1368;
     static final int FRAME_HEIGHT = 766;
 
@@ -20,6 +20,7 @@ public class Game implements IRunListener {
     public PaddleController PC;
     public Ball ball;
     public Layout layout;
+    public boolean isLoad = false;
 
     public static int UNITLENGTH_L = 1;
 
@@ -79,6 +80,10 @@ public class Game implements IRunListener {
         this.ball = new Ball();
         Game.getInstance().gameState.isRunning = true;
         System.out.println("Paddle created " + PC.toString());
+
+        if(isLoad){
+            Game.getInstance().loadGame();
+        }
     }
 
     private void initializeGame(HashMap<String, Integer> startParameters, String username) {
@@ -100,6 +105,11 @@ public class Game implements IRunListener {
 
     public void addPlayer(Player p) {
         this.gameState.addPlayer(p);
+    }
+
+    @Override
+    public void onClickEvent() {
+        isLoad = true;
     }
 }
 
