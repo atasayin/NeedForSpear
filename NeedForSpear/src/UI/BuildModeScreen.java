@@ -34,7 +34,7 @@ public class BuildModeScreen extends JFrame {
     private JTextField explosiveObstacle;
     private JTextField giftObstacle;
 
-    private JButton gameStart;
+    private JButton gameStartButton;
     private JButton obstacleButton;
 
     private HashMap<String, Integer> obstacleSettings;
@@ -142,6 +142,7 @@ public class BuildModeScreen extends JFrame {
             public void actionPerformed(ActionEvent ev) {
                 setObstacleSettings();
                 layout = LC.getRandomLayout();
+                gameStartButton.setEnabled(true);
 
             }
         });
@@ -162,8 +163,9 @@ public class BuildModeScreen extends JFrame {
     private JPanel runGamePanel(JFrame frame) {
         GridLayout panelLayout = new GridLayout(3, 0);
         JPanel runGamePanel = new JPanel(panelLayout);
-        gameStart = new JButton("Click to start the game!");
-        gameStart.addActionListener(new ActionListener() {
+        gameStartButton = new JButton("Click to start the game!");
+        gameStartButton.setEnabled(false);
+        gameStartButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
                 setRunSettings();
                 notifyButtonisClickedListeners();
@@ -171,7 +173,7 @@ public class BuildModeScreen extends JFrame {
             }
         });
 
-        runGamePanel.add(gameStart);
+        runGamePanel.add(gameStartButton);
         return runGamePanel;
     }
 
