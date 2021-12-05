@@ -6,7 +6,9 @@ import java.util.ArrayList;
 
 public class GiftOfUranus extends Obstacle {
 
-	public GiftOfUranus(int xPos, int yPos, float L, int health) {
+	private int width;
+
+	public GiftOfUranus(int xPos, int yPos, int L, int health) {
 		super(xPos, yPos, L, health);
 		this.destroyBehaviour = new GiftObstacleDestroyBehaviour();
 		this.type = "GiftOfUranus";
@@ -24,6 +26,6 @@ public class GiftOfUranus extends Obstacle {
 
 	@Override
 	public String toString() {
-		return super.toString() + ", typeVariable=" + getType() + ", typeString = GiftOfUranus}";
+		return super.toString() + ", typeVariable=" + getType();
 	}
 }

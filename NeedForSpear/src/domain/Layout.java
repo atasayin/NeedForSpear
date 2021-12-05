@@ -43,6 +43,11 @@ public class Layout {
     // Collision Checker for Obstacles
     private CollisionChecker CS;
 
+    // Offset to place the obstacles
+    int obsLen;
+    int layoutHeightOffset = 350;
+
+
     /////////////////////////////////////////////////////////////////////////////////////
 
     public Layout(int wallMariaCount,int steinsGateCount,int pandoraBoxCount
@@ -59,6 +64,7 @@ public class Layout {
 
         this.layoutWidth = layoutWidth;
         this.layoutHeight = layoutHeight;
+        obsLen = layoutWidth/50;
         setLayout();
     }
 
@@ -76,7 +82,7 @@ public class Layout {
     }
 
     // Returns positions of all current obstacles.
-    public HashMap<Obstacle, PosVector> getObstacle_positions() { return obstacle_positions; }
+    public static HashMap<Obstacle, PosVector> getObstacle_positions() { return obstacle_positions; }
 
     // Returns center of circles of the paths that some obstacles move in.
     public HashMap<Obstacle, PosVector> getObstacle_centers() { return obstacle_centers; }
@@ -89,9 +95,10 @@ public class Layout {
         // Create PandorasBox Obstacles
         for (int i = 0; i < pandoraBoxCount; i++) {
             while(true) {
-                PosVector pos = new PosVector(rnd.nextInt(layoutWidth), rnd.nextInt(layoutHeight));
-                int L = 10;
-                PandorasBox obs = new PandorasBox(pos.getX(),pos.getY(),L, 1);
+                PosVector pos = new PosVector(rnd.nextInt(layoutWidth-obsLen), rnd.nextInt(layoutHeight-layoutHeightOffset));
+                //int L = 10;
+                PandorasBox obs = new PandorasBox(pos.getX(),pos.getY(),obsLen, 1);
+                Game.getInstance().getDomainObjectArr().add(obs);
 
                 if (isAvailable(obs)) {
                     obstacle_positions.put(obs,pos);
@@ -108,9 +115,10 @@ public class Layout {
         // Create SteinsGate Obstacles
         for (int i = 0; i < steinsGateCount; i++) {
             while(true) {
-                PosVector pos = new PosVector(rnd.nextInt(layoutWidth), rnd.nextInt(layoutHeight));
-                int L = 10;
-                SteinsGate obs = new SteinsGate(pos.getX(),pos.getY(),L, 1);
+                PosVector pos = new PosVector(rnd.nextInt(layoutWidth-obsLen), rnd.nextInt(layoutHeight-layoutHeightOffset));
+                //int L = 10;
+                SteinsGate obs = new SteinsGate(pos.getX(),pos.getY(),obsLen, 1);
+                Game.getInstance().getDomainObjectArr().add(obs);
 
                 if (isAvailable(obs)) {
                     obstacle_positions.put(obs,pos);
@@ -127,9 +135,10 @@ public class Layout {
         // Create GiftOfUranus Obstacles
         for (int i = 0; i < uranusCount; i++) {
             while(true) {
-                PosVector pos = new PosVector(rnd.nextInt(layoutWidth), rnd.nextInt(layoutHeight));
-                int L = 10;
-                GiftOfUranus obs = new GiftOfUranus(pos.getX(),pos.getY(),L, 1);
+                PosVector pos = new PosVector(rnd.nextInt(layoutWidth-obsLen), rnd.nextInt(layoutHeight-layoutHeightOffset));
+                //int L = 10;
+                GiftOfUranus obs = new GiftOfUranus(pos.getX(),pos.getY(),obsLen, 1);
+                Game.getInstance().getDomainObjectArr().add(obs);
 
                 if (isAvailable(obs)) {
                     obstacle_positions.put(obs,pos);
@@ -146,9 +155,11 @@ public class Layout {
         // Create WallMaria Obstacles
         for (int i = 0; i < wallMariaCount; i++) {
             while(true) {
-                PosVector pos = new PosVector(rnd.nextInt(layoutWidth), rnd.nextInt(layoutHeight));
-                int L = 10;
-                WallMaria obs = new WallMaria(pos.getX(),pos.getY(),L, 1);
+                PosVector pos = new PosVector(rnd.nextInt(layoutWidth-obsLen), rnd.nextInt(layoutHeight-layoutHeightOffset ));
+                //int L = 10;
+                System.out.println(obsLen);
+                WallMaria obs = new WallMaria(pos.getX(),pos.getY(),obsLen, 1);
+                Game.getInstance().getDomainObjectArr().add(obs);
 
                 if (isAvailable(obs)) {
                     obstacle_positions.put(obs,pos);
@@ -169,7 +180,7 @@ public class Layout {
     private boolean isAvailable(Obstacle newObs){
         for (Obstacle obs: obstacle_positions.keySet()){
 
-            if ( !CS.checkCollision(newObs, obs)){
+            if ( CS.checkCollision(newObs, obs)){
                 return false;
 
             }

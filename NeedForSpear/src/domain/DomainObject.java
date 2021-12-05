@@ -81,13 +81,6 @@ public abstract class DomainObject {
     public void setHeight(int height) {
         this.height = height;
     }
-    /*
-     * * EFFECTS: Turns the given domain object in the array of string representing
-     * the properties of the given domain object. Output is in the order type,for
-     * non shooter objects name, location x, location y , speed x, speed y, and
-     * angle in radians for shooter
-     *
-     */
 
-    //public abstract ArrayList<String> makeList();
+
 }

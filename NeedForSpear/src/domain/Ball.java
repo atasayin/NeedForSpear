@@ -50,7 +50,7 @@ public class Ball extends DomainObject {
     // When the ball reflects from a horizontal surface, it reverses its velocity in y-direction.
     // When a collision of this type is detected, the handler will command the ball domain.controller to reverse the y-velocity.
     public void reflectFromHorizontal() {
-        this.yVelocity *= -1;
+        this.yVelocity *= -1.05;
     }
 
 
@@ -71,7 +71,7 @@ public class Ball extends DomainObject {
     }
 
     public Boolean checkAlive() {
-        return (this.posVector.getY() <= (FRAME_HEIGHT + 100));
+        return (this.posVector.getY() <= (FRAME_HEIGHT));
     }
 
     public Boolean move() {
@@ -95,5 +95,9 @@ public class Ball extends DomainObject {
     @Override
     public int getHeight() {
         return height;
+    }
+
+    public void setPosVector(PosVector pos) {
+        this.posVector = pos;
     }
 }

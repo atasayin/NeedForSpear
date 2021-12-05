@@ -61,7 +61,7 @@ public class save {
                         String type = l.get(1);
                         int x = Integer.parseInt(l.get(2));
                         int y = Integer.parseInt(l.get(3));
-                        float L = Float.parseFloat(l.get(4));
+                        int L = Integer.parseInt(l.get(4));
                         int h = Integer.parseInt(l.get(5));
 
                         if (type.equals("WallMaria")){

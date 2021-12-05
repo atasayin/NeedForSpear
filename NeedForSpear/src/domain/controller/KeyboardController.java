@@ -52,10 +52,12 @@ public class KeyboardController {
                 return false;
             case 83: // s
                 Game currentGame = Game.getInstance();
+                currentGame.saveGame();
                 //SAVE SETTINGS
                 return false;
             case 76: // l
                 Game currentGame1 = Game.getInstance();
+                currentGame1.loadGame();
                 //LOAD SETTINGS
                 return false;
             default:

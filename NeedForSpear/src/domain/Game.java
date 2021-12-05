@@ -60,16 +60,15 @@ public class Game implements IRunListener {
         game_Timer.cancel();
     }
 
-    public void loadGame(String type) {
+    public void loadGame() {
         client = new Client();
-        client.loadGame(gameState.players.get(0).getPlayerState().getAbilities(), gameState.ObstacleCounts);
+        client.loadGame(Game.getInstance().PC, Game.getInstance().ball);
 
     }
 
-    public void saveGame(Player player, String type) {
+    public void saveGame() {
         client = new Client();
-        client.saveGame(player.getUserName(),gameState.players.get(0).getPlayerState().getScore(),
-                gameState.players.get(0).getPlayerState().getChance_points() ,gameState.players.get(0).getPlayerState().getAbilities(),gameState.ObstacleCounts);
+        client.saveGame(Game.getInstance().PC, Game.getInstance().ball, Layout.getObstacle_positions());
     }
 
     @Override

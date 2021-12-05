@@ -10,16 +10,19 @@ public abstract class Obstacle extends DomainObject {
 	public boolean is_rotating;
 	public int health;
 	public DestroyBehaviour destroyBehaviour;
-	protected static String type;
+	protected String type;
+	private int height, width;
 
 	
 	
-	public Obstacle(int xPos, int yPos, float L, int health) {
+	public Obstacle(int xPos, int yPos, int L, int health) {
 		this.pos = new PosVector(xPos, yPos);
 		this.health = health;
 		this.is_rotating = false;
+		this.width = L;
+		this.height = 20;
 	}
-	public static String getType() {
+	public String getType() {
 		return type;
 	}
 
@@ -45,5 +48,24 @@ public abstract class Obstacle extends DomainObject {
 	public String toString() {
 		return "Obstacle{" +
 				"pos=" + pos.toString();
+	}
+
+	public PosVector getPos() {
+		return pos;
+	}
+
+	@Override
+	public int getHeight() {
+		return height;
+	}
+
+	@Override
+	public int getWidth() {
+		return width;
+	}
+
+
+	public int getHealth() {
+		return health;
 	}
 }
