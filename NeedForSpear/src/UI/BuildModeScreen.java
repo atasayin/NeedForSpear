@@ -143,6 +143,7 @@ public class BuildModeScreen extends JFrame {
                 setObstacleSettings();
                 layout = LC.getRandomLayout();
                 gameStartButton.setEnabled(true);
+                obstacleButton.setEnabled(false);
 
             }
         });
