@@ -109,6 +109,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
 
 
     public void update() {
+        // Obstacle positions will be updated when they start to move in the future
 //        for (DomainObject domainObject : Game.getInstance().getDomainObjectArr()) {
 //            domainObject.updatePosition();
 //            domainObject.updateAngle();
@@ -122,7 +123,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
 
         for (Obstacle obs : Layout.obstacle_positions.keySet()) {
             if (colCheck.checkCollision(Game.getInstance().ball, obs)) {
-                System.out.println("carpistilar");
+                Game.getInstance().getDomainObjectArr().remove(obs);
             }
         }
 
