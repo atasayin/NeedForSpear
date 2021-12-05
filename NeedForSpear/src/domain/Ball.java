@@ -96,4 +96,8 @@ public class Ball extends DomainObject {
     public int getHeight() {
         return height;
     }
+
+    public void setPosVector(PosVector pos) {
+        this.posVector = pos;
+    }
 }

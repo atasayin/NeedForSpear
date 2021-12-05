@@ -169,7 +169,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
                     kc.getInput(input);
                     tm.restart();// only works if game was paused
                     Game.getInstance().gameState.isRunning = true;
-                    Game.getInstance().getPlayers().get(0).getPlayerState().notifyAllInventoryListeners("all");
+                    //Game.getInstance().getPlayers().get(0).getPlayerState().notifyAllInventoryListeners("all");
                     return;
                 } else {
                     infoString = "Press \"Pause\" Button before loading.";

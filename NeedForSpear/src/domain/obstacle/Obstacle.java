@@ -63,4 +63,9 @@ public abstract class Obstacle extends DomainObject {
 	public int getWidth() {
 		return width;
 	}
+
+
+	public int getHealth() {
+		return health;
+	}
 }
