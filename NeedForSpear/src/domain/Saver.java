@@ -13,23 +13,20 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
 
-public class Client {
-    String username = "Player";
-    //String FILEPATH = "src/saves/" + username + ".json";
-    String FILEPATH = "C:/Users/MetincanOya/Desktop/deneme.json";
+public class Saver {
     private Object WallMaria;
-    //String FILEPATH = "../saves/2.json";
+    String FILEPATH = "NeedForSpear/src/saves/Demo1.json";
 
 
     public void saveGame(PaddleController pc, Ball ball, HashMap<Obstacle, PosVector> list) {
-        //username = Game.getInstance().gameState.getPlayers().get(0).getName();
-        //FILEPATH = "src/saves/" + "2" + ".json";
         Document doc = new Document();
         ArrayList<String> temp;
         ArrayList<ArrayList<String>> map = new ArrayList<ArrayList<String>>();
@@ -46,24 +43,21 @@ public class Client {
             map.add(temp);
         }
         doc.put("ObjectList", map);
-        //doc.put("username", username);
+
         try {
             FileWriter file = new FileWriter(FILEPATH);
             file.write(doc.toJson());
             file.close();
+            System.out.println("Saved to local directory successfully.");
 
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        System.out.println("Saved to local directory.");
     }
 
     public void loadGame(PaddleController pc, Ball ball) {
-        //username = Game.getInstance().gameState.getPlayers().get(0).getName();
-        //FILEPATH = "src/saves/" + username + ".json";
         JSONParser jsonParser = new JSONParser();
-        String FILEPATH = "C:/Users/MetincanOya/Desktop/deneme.json";
         try (FileReader reader = new FileReader(FILEPATH)) {
             Object obj = jsonParser.parse(reader);
             JSONObject doc = (JSONObject) obj;
@@ -89,6 +83,8 @@ public class Client {
             Map<Obstacle, PosVector> list = new HashMap<>();
             ArrayList<DomainObject> listDO = new ArrayList<DomainObject>();
             System.out.println(jsonlist.get(1));
+            int obsLen = Game.getInstance().PC.getPaddle().length/5;
+            PosVector vec;
 
             for (int i = 0; i < jsonlist.size(); i++) {
 
@@ -105,20 +101,28 @@ public class Client {
                 System.out.println(m);
 
                 if(s.contains("WallMaria")){
-                    WallMaria obs = new WallMaria(p, m, 10, 1);
+                    WallMaria obs = new WallMaria(p, m, obsLen, 1);
                     listDO.add(obs);
+                    vec = new PosVector(p,m);
+                    Layout.getObstacle_positions().put(obs,vec);
                 }
                 if(s.contains("GiftOfUranus")){
-                    GiftOfUranus obs = new GiftOfUranus(p, m, 10, 1);
+                    GiftOfUranus obs = new GiftOfUranus(p, m, obsLen, 1);
                     listDO.add(obs);
+                    vec = new PosVector(p,m);
+                    Layout.getObstacle_positions().put(obs,vec);
                 }
                 if(s.contains("PandorasBox")){
-                    PandorasBox obs = new PandorasBox(p, m, 10, 1);
+                    PandorasBox obs = new PandorasBox(p, m, obsLen, 1);
                     listDO.add(obs);
+                    vec = new PosVector(p,m);
+                    Layout.getObstacle_positions().put(obs,vec);
                 }
                 if(s.contains("SteinsGate")){
-                    SteinsGate obs = new SteinsGate(p, m, 10, 1);
+                    SteinsGate obs = new SteinsGate(p, m, obsLen, 1);
                     listDO.add(obs);
+                    vec = new PosVector(p,m);
+                    Layout.getObstacle_positions().put(obs,vec);
                 }
                 //System.out.println(jsonlist.get(i)[0]);
                 //System.out.println(jsonlist.get(i).getClass());
@@ -128,7 +132,6 @@ public class Client {
             }
 
             //HashMap<Obstacle, PosVector> list = (HashMap<Obstacle, PosVector>) doc.get("ObjectList");
-
 
 
             for (Entry<Obstacle, PosVector> l : list.entrySet()) {
@@ -172,7 +175,7 @@ public class Client {
             }
 
             Game.getInstance().setDomainObjectArr(listDO);
-            System.out.println("Loaded from local directory.");
+            System.out.println("Loaded from local directory successfully.");
 
         } catch (FileNotFoundException e) {
 
