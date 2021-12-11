@@ -33,7 +33,6 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
 
     public static int frame_width;
     public static int frame_height;
-    public int sil = 0;
 
     public RunGameObjects(int width, int height) {
         this.frame_width = width;
@@ -139,13 +138,6 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
             }
         }
         if (toBeDeleted != null) Layout.obstacle_positions.remove(toBeDeleted);
-        sil++;
-        if (sil == 20) {
-            System.out.println("aga durdurulamiyor");
-            UnstopppableBall ub = new UnstopppableBall();
-            Thread t = new Thread(ub);
-            t.start();
-        }
 
 
     }

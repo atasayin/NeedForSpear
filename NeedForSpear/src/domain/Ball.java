@@ -32,7 +32,7 @@ public class Ball extends DomainObject {
 
     public void updateVelocity() {
         this.yVelocity += this.gravity;
-        this.yVelocity = Math.min(((int) (this.yVelocity + this.gravity)), 50);
+        this.yVelocity = Math.min(((int) (this.yVelocity + this.gravity)), 40);
     }
 
     public void updatePosition(int x, int y) {
@@ -65,7 +65,7 @@ public class Ball extends DomainObject {
 
 
     public void reflectFromPaddle() {
-        this.yVelocity *= -1.15;
+        this.yVelocity *= -1.25;
     }
 
     public void reflectFromTopWall() {
