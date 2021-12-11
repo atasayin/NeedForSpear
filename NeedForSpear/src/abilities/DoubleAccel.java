@@ -4,12 +4,9 @@ import domain.Game;
 
 import java.util.concurrent.TimeUnit;
 
-public class DoubleAccel implements Activatable, Runnable{
-    private boolean activated;
+public class DoubleAccel implements Runnable{
 
-    public DoubleAccel() {
-
-    }
+    public DoubleAccel() { }
 
     public void activate() {
         this.run();
