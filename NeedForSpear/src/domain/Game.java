@@ -21,6 +21,8 @@ public class Game implements IRunListener, ILoadListener {
     public Layout layout;
     public boolean isLoad = false;
 
+    Player player = null;
+
     public static int UNITLENGTH_L = 1;
 
     private Game() {
@@ -99,6 +101,10 @@ public class Game implements IRunListener, ILoadListener {
 
     public ArrayList<Player> getPlayers() {
         return this.gameState.getPlayers();
+    }
+
+    public Player getPlayer() {
+        return this.player;
     }
 
     public void addPlayer(Player p) {

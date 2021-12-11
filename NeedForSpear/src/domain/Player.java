@@ -45,6 +45,10 @@ public class Player implements IRunListener{
         return userName;
     }
 
+    public void incrementChances() {
+        this.chance_points++;
+    }
+
     public void setUserName(String userName) {
         this.userName = userName;
     }
