@@ -19,7 +19,7 @@ public class Player implements IRunListener{
     public Player(int id, String userName) {
         this.id = id;
         this.userName = userName;
-        this.chance_points = 0;
+        this.chance_points = 3;
         this.score = 0;
         abilities = new HashMap<>();
     }

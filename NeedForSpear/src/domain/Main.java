@@ -20,17 +20,7 @@ public class Main {
             autoMode = new AuthorizeScreen(nfs);
             autoMode.setVisible(true);
             autoMode.addListener(nfs);
-            /*buildMode = new BuildModeScreen();
 
-
-
-            //starts with the build mode screen
-
-            buildMode.setVisible(true);
-            buildMode.addListener(nfs);
-            buildMode.addListener(Game.getInstance());
-            buildMode.addLoadListener(Game.getInstance());
-*/
             //adds the player
             Game.getInstance().addPlayer(new Player(88999,"kelebis"));
             //buildMode.addListener((IRunListener) Game.getInstance().gameState.getPC());
