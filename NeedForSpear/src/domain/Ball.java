@@ -1,8 +1,11 @@
 package domain;
 
+import UI.RunGameObjects;
 import domain.util.PosVector;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Ball extends DomainObject {
     private final int FRAME_WIDTH = 1368;
@@ -13,13 +16,16 @@ public class Ball extends DomainObject {
     private int width = 16;
     private int height = 16;
     private boolean is_unstoppable;
-
+    private List<IGameListener> gameListeners = new ArrayList<>();
+    private boolean isBall;
     public Ball() {
         this.posVector = new PosVector(540, 100);
         this.gravity = 1;
         this.xVelocity = 3;
         this.yVelocity = 0;
         this.is_unstoppable = false;
+        this.isBall = true;
+
     }
 
     public Ball(int xVel, int yVel) {
@@ -28,6 +34,7 @@ public class Ball extends DomainObject {
         this.xVelocity = xVel;
         this.yVelocity = yVel;
         this.is_unstoppable = false;
+        //this.gameListeners.add(RunGameObjects);
     }
 
     public void updateVelocity() {
@@ -96,11 +103,15 @@ public class Ball extends DomainObject {
     }
 
     public Boolean checkAlive() {
-        return (this.posVector.getY() <= (FRAME_HEIGHT - 40));
+        return (this.posVector.getY() <= (FRAME_HEIGHT));
     }
 
     public Boolean move() {
         if (this.checkAlive() != true) {
+            isBall =false;
+           /* for (IGameListener listener : autoModeListeners) {
+                listener.onEvent();
+            }*/
             return false;
         }
         this.checkWallCollision();
@@ -111,7 +122,12 @@ public class Ball extends DomainObject {
         return true;
 
     }
-
+    public boolean getIsBall(){
+        return isBall;
+    }
+    public void setBall(Boolean b){
+        this.isBall = b;
+    }
     @Override
     public int getWidth() {
         return width;

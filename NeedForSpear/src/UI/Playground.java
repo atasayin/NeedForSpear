@@ -61,7 +61,7 @@ public class Playground implements IRunListener, IAuthorizeListener {
         nfs.bd.addLoadListener(Game.getInstance());
         nfs.bd.setUserName(username);
         nfs.bd.setID(id);
-        System.out.println(id + " id is ");
+        
     }
 
 }

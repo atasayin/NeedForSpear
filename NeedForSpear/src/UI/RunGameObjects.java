@@ -9,6 +9,7 @@ import java.awt.event.KeyListener;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.*;
 
@@ -24,6 +25,7 @@ import domain.util.PosVector;
 public class RunGameObjects extends JPanel implements ActionListener, KeyListener, IGameListener {
 
     Timer tm = new Timer(TIMER_SPEED, this);
+
     BufferedImage img; // background
     String infoString = "";
     int infoRefreshCount;
@@ -100,7 +102,13 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
             gameOverCheck();
             update();
             repaint();
-            //Game.getInstance().gameState.removeObjectsIfOutsideScreen();
+        try {
+            ballChance();
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();
+        }
+
+        //Game.getInstance().gameState.removeObjectsIfOutsideScreen();
             infoRefreshCount += TIMER_SPEED;
             if (infoRefreshCount >= INFO_REFRESH_PERIOD) {
                 infoString = "";
@@ -222,6 +230,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
     @Override
     public void onClickEvent() {
         stop =true;
+
     }
 
     public void gameOverCheck() {
@@ -241,6 +250,13 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
         }
         //Playground.jf.dispose();
 
+    }
+
+    public void ballChance() throws InterruptedException {
+        if(stop){
+            wait(2000);
+
+        }
     }
 }
 

@@ -1,13 +1,16 @@
 package domain;
 import domain.controller.PaddleController;
 
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
 
-public class Game implements IRunListener, ILoadListener {
+public class Game implements IRunListener, ILoadListener, ActionListener {
     static final int FRAME_WIDTH = 1368;
     static final int FRAME_HEIGHT = 766;
 
@@ -15,26 +18,28 @@ public class Game implements IRunListener, ILoadListener {
     public GameState gameState;
     public Saver saver;
     static Game instance;
-    private Timer game_Timer;
     public PaddleController PC;
     public Ball ball;
     public Layout layout;
     public boolean isLoad = false;
-
+    private static final int TIMER_SPEED = 50;
     Player player = null;
 
     public static int UNITLENGTH_L = 1;
 
+    private javax.swing.Timer game_Timer = new javax.swing.Timer(TIMER_SPEED, this);
     private Game() {
         gameState = new GameState();
-        game_Timer = new Timer();
+
+
+/*
         game_Timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 // TODO Auto-generated method stub
                 //gameState.decreaseTime();
             }
-        }, 0, 1000);
+        }, 0, 1000);*/
 
     }
 
@@ -46,14 +51,7 @@ public class Game implements IRunListener, ILoadListener {
     }
 
     public void resumeTime(double remaining) {
-        game_Timer = new Timer();
-        game_Timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                // TODO Auto-generated method stub
-                //gameState.decreaseTime();
-            }
-        }, 0, 200);
+
     }
 
     public void loadGame() {
@@ -81,6 +79,7 @@ public class Game implements IRunListener, ILoadListener {
         player.initializeInventory();
         System.out.println(player);
         instance.gameState.setPlayer(player);
+        game_Timer.start();
 
         if(isLoad){
             Game.getInstance().loadGame();
@@ -110,6 +109,20 @@ public class Game implements IRunListener, ILoadListener {
     @Override
     public void onClickEvent() {
         isLoad = true;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        //boolean isDead = Game.getInstance().ball.move();
+        if(!Game.getInstance().ball.getIsBall()){
+            Integer points = Game.getInstance().gameState.getPlayer().getChance_points() - 1;
+            Game.getInstance().gameState.getPlayer().setChance_points(points);
+            Game.getInstance().ball.setBall(true);
+            System.out.println(Game.getInstance().gameState.getPlayer().getChance_points());
+            System.out.println("ball is reseted");
+
+        }
+
     }
 }
 
