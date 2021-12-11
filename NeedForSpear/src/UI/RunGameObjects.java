@@ -239,7 +239,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
                     JOptionPane.WARNING_MESSAGE);
 
         }
-        Playground.jf.dispose();
+        //Playground.jf.dispose();
 
     }
 }
