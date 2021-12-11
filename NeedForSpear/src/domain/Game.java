@@ -100,6 +100,13 @@ public class Game implements IRunListener, ILoadListener {
         this.gameState.setDomainList(list);
     }
 
+    public void gameOverCheck(){
+        Integer chancePoint = instance.gameState.getPlayer().getChance_points();
+        if( chancePoint <= 0 ){
+            instance.gameState.isRunning = false;
+        }
+    }
+
     @Override
     public void onClickEvent() {
         isLoad = true;

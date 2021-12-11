@@ -21,7 +21,7 @@ import domain.util.PosVector;
 
 
 @SuppressWarnings("serial")
-public class RunGameObjects extends JPanel implements ActionListener, KeyListener {
+public class RunGameObjects extends JPanel implements ActionListener, KeyListener, IGameListener {
 
     Timer tm = new Timer(TIMER_SPEED, this);
     BufferedImage img; // background
@@ -30,7 +30,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
     KeyboardController kc = new KeyboardController();
     Game game = Game.getInstance();
     CollisionChecker colCheck = CollisionChecker.getInstance();
-
+    Boolean stop = false;
     public static int frame_width;
     public static int frame_height;
 
@@ -97,16 +97,17 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
     public void actionPerformed(ActionEvent e) {
         // TODO Auto-generated method stub
         //Game.getInstance().gameState.checkCollisions();
-        update();
-        repaint();
-        //Game.getInstance().gameState.removeObjectsIfOutsideScreen();
-        infoRefreshCount += TIMER_SPEED;
-        if (infoRefreshCount >= INFO_REFRESH_PERIOD) {
-            infoString = "";
-            infoRefreshCount = 0;
+            gameOverCheck();
+            update();
+            repaint();
+            //Game.getInstance().gameState.removeObjectsIfOutsideScreen();
+            infoRefreshCount += TIMER_SPEED;
+            if (infoRefreshCount >= INFO_REFRESH_PERIOD) {
+                infoString = "";
+                infoRefreshCount = 0;
+            }
         }
 
-    }
 
 
     public void update() {
@@ -218,6 +219,29 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
     private static final int TIMER_SPEED = 50;
     private static final int INFO_REFRESH_PERIOD = 3000;
 
+    @Override
+    public void onClickEvent() {
+        stop =true;
+    }
+
+    public void gameOverCheck() {
+
+        Integer chance = Game.getInstance().gameState.getPlayer().getChance_points();
+
+        Object[] options = { "OK" };
+        if (chance <=0){
+            tm.stop();
+            //Game.getInstance().cancelTime();
+
+            JOptionPane.showMessageDialog(Playground.jf,
+                    "You are out of chance." + "Your score is "+Game.getInstance().gameState.getPlayer().getScore(),
+                    "Out of chance",
+                    JOptionPane.WARNING_MESSAGE);
+
+        }
+        Playground.jf.dispose();
+
+    }
 }
 
 
