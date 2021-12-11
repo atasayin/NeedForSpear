@@ -121,7 +121,7 @@ public class Layout {
             while(true) {
                 PosVector pos = new PosVector(rnd.nextInt(layoutWidth-obsLen), rnd.nextInt(layoutHeight-layoutHeightOffset));
                 //int L = 10;
-                SteinsGate obs = new SteinsGate(pos.getX(),pos.getY(),obsLen, 1);
+                SteinsGate obs = new SteinsGate(pos.getX(),pos.getY(),obsLen, 3);
 
                 if (isAvailable(obs)) {
                     obstacle_positions.put(obs,pos);
