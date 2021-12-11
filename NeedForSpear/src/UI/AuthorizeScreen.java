@@ -27,11 +27,12 @@ public class AuthorizeScreen extends JFrame  {
     String FILEPATH = "NeedForSpear/src/saves/players.json";
 
     private JTextField userName;
-    private JTextField password;
+    private JTextField ID;
 
     private JPanel info;
     private JPanel buttons;
 
+    private boolean isUsernameExist = false;
     private boolean isLogin = false;
     private boolean isSignup = false;
 
@@ -42,7 +43,6 @@ public class AuthorizeScreen extends JFrame  {
         this.nfs = nfs;
         initializeAuthorizeScreen();
         //add(initializeImagePanel());
-        System.out.println("authorizationnn");
         info = initializeInfoPanel();
         buttons = initializeButtonPanel();
         add(info,BorderLayout.EAST);
@@ -86,7 +86,8 @@ public class AuthorizeScreen extends JFrame  {
         userName = new JTextField(USERNAME, 30);
         infoPanel.add(userName);
 
-
+        ID = new JTextField("1111", 8);
+        infoPanel.add(ID);
 
         return infoPanel;
 
@@ -104,7 +105,6 @@ public class AuthorizeScreen extends JFrame  {
                 checkPlayerLogs();
                 if(isLogin){
                     for (IAuthorizeListener listener : autoModeListeners) {
-                        System.out.println(listener);
                         listener.onClickEvent(nfs);
                     }
                 }
@@ -120,7 +120,6 @@ public class AuthorizeScreen extends JFrame  {
                 boolean succSign = savePlayerLogs();
                 if(succSign){
                     for (IAuthorizeListener listener : autoModeListeners) {
-                        System.out.println(listener);
                         listener.onClickEvent(nfs);
                     }
                 }
@@ -138,6 +137,7 @@ public class AuthorizeScreen extends JFrame  {
     private void checkPlayerLogs() {
 
         String checking = userName.getText();
+        String id = ID.getText();
 
         JSONParser jsonParser = new JSONParser();
         try (FileReader reader = new FileReader(FILEPATH)) {
@@ -149,11 +149,15 @@ public class AuthorizeScreen extends JFrame  {
 
             for(int i=0; i<usernameList.size(); i++){
                 String s = usernameList.get(i).toString();
+                String m = IDList.get(i).toString();
 
                 if(s.equals(checking)){
-                    isLogin = true;
-                    System.out.println("User is found");
-                    break;
+                    isUsernameExist = true;
+                    if(m.equals(id)){
+                        isLogin = true;
+                        System.out.println("User is found.");
+                        break;
+                    }
                 }
             }
 
@@ -168,12 +172,13 @@ public class AuthorizeScreen extends JFrame  {
     private boolean savePlayerLogs() {
         checkPlayerLogs();
 
-        if(isLogin){
+        if(isUsernameExist){
             System.out.println("User is already exist");
             return false;
         }
 
         String signing = userName.getText();
+        String id = ID.getText();
 
         JSONParser jsonParser = new JSONParser();
         try (FileReader reader = new FileReader(FILEPATH)) {
@@ -181,20 +186,24 @@ public class AuthorizeScreen extends JFrame  {
             JSONObject doc = (JSONObject) obj;
 
             JSONArray usernameList = (JSONArray) doc.get("Username");
-            System.out.println(usernameList);
-            //JSONArray IDList = (JSONArray) doc.get("ID");
+            JSONArray IDList = (JSONArray) doc.get("ID");
 
             Document document = new Document();
             ArrayList<String> temp = new ArrayList<>();
+            ArrayList<String> tempID = new ArrayList<>();
 
             for(int i=0; i<usernameList.size(); i++){
                 String s = usernameList.get(i).toString();
-                System.out.println("First user " + s);
+                String m = IDList.get(i).toString();
+
                 temp.add(s);
+                tempID.add(m);
             }
 
             temp.add(signing);
+            tempID.add(id);
             document.put("Username", temp);
+            document.put("ID", tempID);
 
             try {
                 FileWriter file = new FileWriter(FILEPATH);

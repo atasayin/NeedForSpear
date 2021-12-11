@@ -50,7 +50,7 @@ public class LayoutController {
                 1368,
                 766
         );
-        printLayout();
+        //printLayout();
         return layout;
     }
 
