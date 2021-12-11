@@ -128,8 +128,11 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
 
         for (Obstacle obs : Layout.obstacle_positions.keySet()) {
             if (colCheck.checkCollision(Game.getInstance().ball, obs)) {
-                Game.getInstance().getDomainObjectArr().remove(obs);
-                toBeDeleted = obs;
+                if (obs.getHit()){
+                    Game.getInstance().getDomainObjectArr().remove(obs);
+                    toBeDeleted = obs;
+                }
+
                 if (colCheck.findCollisionDirection(Game.getInstance().ball, obs)) {
                     Game.getInstance().ball.reflectFromVertical();
                 } else {
