@@ -16,7 +16,7 @@ import domain.obstacle.Obstacle;
 
 
 @SuppressWarnings("serial")
-public class BuildModeScreen extends JFrame implements IAuthorizeListener{
+public class BuildModeScreen extends JFrame {
 
     /////////////////////////////////////////////////////////////////////////////////////
 
@@ -54,6 +54,9 @@ public class BuildModeScreen extends JFrame implements IAuthorizeListener{
     private LayoutPanel layoutPanel;
 
     private JPanel obstacleSettingsPanel;
+
+    private String  username;
+    private  String id;
 
     // Game
     Game game = Game.getInstance();
@@ -175,7 +178,7 @@ public class BuildModeScreen extends JFrame implements IAuthorizeListener{
         gameStartButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
                 setRunSettings();
-                notifyButtonisClickedListeners();
+                notifyButtonisClickedListeners(username, id);
 
             }
         });
@@ -196,20 +199,23 @@ public class BuildModeScreen extends JFrame implements IAuthorizeListener{
         return runGamePanel;
     }
 
-    public void notifyButtonisClickedListeners() {
+    public void notifyButtonisClickedListeners(String username, String id) {
         System.out.println("ALL LISTENERS ARE NOTIFIED THAT THE BUTTON IS CLICKED \n\n\n");
 
         for (IRunListener listener : runModeListeners) {
             System.out.println(listener);
-            listener.onClickEvent(this.runSettings, "sds");
+            listener.onClickEvent(this.runSettings, username, id);
         }
         this.setVisible(false);
         this.dispose();
     }
 
-
-    @Override
-    public void onClickEvent(Playground nfs) {
+    public void setID(String  ID){
+        this.id = ID;
+    }
+    public void setUserName(String  username){
+        this.username = username;
 
     }
+
 }

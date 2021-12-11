@@ -103,9 +103,11 @@ public class AuthorizeScreen extends JFrame  {
             @Override
             public void actionPerformed(ActionEvent e) {
                 checkPlayerLogs();
+                String username = userName.getText();
+                String id = ID.getText();
                 if(isLogin){
                     for (IAuthorizeListener listener : autoModeListeners) {
-                        listener.onClickEvent(nfs);
+                        listener.onClickEvent(nfs, username, id);
                     }
                 }
 
@@ -118,9 +120,11 @@ public class AuthorizeScreen extends JFrame  {
             @Override
             public void actionPerformed(ActionEvent e) {
                 boolean succSign = savePlayerLogs();
+                String username = userName.getText();
+                String id = ID.getText();
                 if(succSign){
                     for (IAuthorizeListener listener : autoModeListeners) {
-                        listener.onClickEvent(nfs);
+                        listener.onClickEvent(nfs,username, id);
                     }
                 }
                 // check database

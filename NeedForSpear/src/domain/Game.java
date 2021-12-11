@@ -54,10 +54,6 @@ public class Game implements IRunListener, ILoadListener {
         }, 0, 200);
     }
 
-    public void cancelTime() {
-        game_Timer.cancel();
-    }
-
     public void loadGame() {
         saver = new Saver();
         saver.loadGame(Game.getInstance().PC, Game.getInstance().ball);
@@ -70,14 +66,19 @@ public class Game implements IRunListener, ILoadListener {
     }
 
     @Override
-    public void onClickEvent(HashMap<String, Integer> startParameters, String username) {
+    public void onClickEvent(HashMap<String, Integer> startParameters, String username, String id) {
         // TODO Auto-generated method stub
         initializeGame(startParameters, username);
-        //PC = new PaddleController(startParameters.get("width"),startParameters.get("height"));
+
         PC = new PaddleController(FRAME_WIDTH,FRAME_HEIGHT);
         this.ball = new Ball();
         Game.getInstance().gameState.isRunning = true;
         System.out.println("Paddle created " + PC.toString());
+
+        Player player = new Player(username, id);
+        player.initializeInventory();
+        System.out.println(player);
+        instance.gameState.setPlayer(player);
 
         if(isLoad){
             Game.getInstance().loadGame();
@@ -95,14 +96,6 @@ public class Game implements IRunListener, ILoadListener {
 
     public void setDomainObjectArr(ArrayList<DomainObject> list) {
         this.gameState.setDomainList(list);
-    }
-
-    public ArrayList<Player> getPlayers() {
-        return this.gameState.getPlayers();
-    }
-
-    public void addPlayer(Player p) {
-        this.gameState.addPlayer(p);
     }
 
     @Override
