@@ -44,17 +44,17 @@ public class SimpleObstacleView  implements Drawable {
 
         private void fillImgs() throws IOException {
             try {
-                simple_obs_img = ImageIO.read(this.getClass().getResource("../assets/01-Breakout-Tiles.png"));
-                firm_obs_img = ImageIO.read(this.getClass().getResource("../assets/03-Breakout-Tiles.png"));
-                explosive_obs_img = ImageIO.read(this.getClass().getResource("../assets/58-Breakout-Tiles.png"));
-                gift_obs_img = ImageIO.read(this.getClass().getResource("../assets/05-Breakout-Tiles.png"));
+                simple_obs_img = ImageIO.read(this.getClass().getResource("../assets/simple_obstacle.png"));
+                firm_obs_img = ImageIO.read(this.getClass().getResource("../assets/firm_obstacle_empty.png"));
+                explosive_obs_img = ImageIO.read(this.getClass().getResource("../assets/explosive_obstacle.png"));
+                gift_obs_img = ImageIO.read(this.getClass().getResource("../assets/gift_obstacle.png"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
             // Length, thickness, and radius of the obstacles
-            int obsLen = BuildModeScreen.FRAME_WIDTH/50;
-            int obsThick = 20;
+            int obsLen = BuildModeScreen.FRAME_WIDTH/40;
+            int obsThick = 40;
             int circRadius = 15;
 
             // Scale all images
@@ -96,7 +96,7 @@ public class SimpleObstacleView  implements Drawable {
             firm_obs_img = newBuffImage;
 
             // Explosive obstacle scale
-            scaled = explosive_obs_img.getScaledInstance(circRadius, circRadius,
+            scaled = explosive_obs_img.getScaledInstance(circRadius*2, circRadius*2,
                     BufferedImage.SCALE_SMOOTH);
             if (scaled instanceof BufferedImage)
                 explosive_obs_img = (BufferedImage) scaled;
