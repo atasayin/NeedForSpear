@@ -16,7 +16,7 @@ public class Game implements IRunListener, ILoadListener {
     public Saver saver;
     static Game instance;
     private Timer game_Timer;
-    public PaddleController PC;
+    private Paddle paddle;
     public Ball ball;
     public Layout layout;
     public boolean isLoad = false;
@@ -58,13 +58,13 @@ public class Game implements IRunListener, ILoadListener {
 
     public void loadGame() {
         saver = new Saver();
-        saver.loadGame(Game.getInstance().PC, Game.getInstance().ball);
+        saver.loadGame(Game.getInstance().getPaddle(), Game.getInstance().ball);
 
     }
 
     public void saveGame() {
         saver = new Saver();
-        saver.saveGame(Game.getInstance().PC, Game.getInstance().ball, Layout.getObstacle_positions());
+        saver.saveGame(Game.getInstance().getPaddle(), Game.getInstance().ball, Layout.getObstacle_positions());
     }
 
     @Override
@@ -72,10 +72,9 @@ public class Game implements IRunListener, ILoadListener {
         // TODO Auto-generated method stub
         initializeGame(startParameters, username);
 
-        PC = new PaddleController(FRAME_WIDTH,FRAME_HEIGHT);
+        paddle = new Paddle(FRAME_WIDTH,FRAME_HEIGHT);
         this.ball = new Ball();
         Game.getInstance().gameState.isRunning = true;
-        System.out.println("Paddle created " + PC.toString());
 
         Player player = new Player(username, id);
         player.initializeInventory();
@@ -106,6 +105,7 @@ public class Game implements IRunListener, ILoadListener {
             instance.gameState.isRunning = false;
         }
     }
+    public Paddle getPaddle() {return paddle;}
 
     @Override
     public void onClickEvent() {

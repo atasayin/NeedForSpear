@@ -6,6 +6,7 @@ import domain.Paddle;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -63,9 +64,16 @@ public class PaddleView implements Drawable {
     public void draw(Graphics2D g2d, DomainObject domainObject, int width, int height) {
         // TODO Auto-generated method stub
         Paddle paddle = (Paddle) domainObject;
+        int x = paddle.getPosVector().getX();
+        int y = paddle.getPosVector().getY();
+        int length = paddle.getLength();
+        int h = paddle.getHeight();
+        double angle = paddle.getAngle();
 
-        g2d.drawImage(paddle_img, paddle.getPosVector().getX(), paddle.getPosVector().getY(), null);
-        //g2d.drawImage(paddle_img, (width-paddle.getLength())/2, (height-paddle.getThickness()-40), null);
+        AffineTransform at = AffineTransform.getTranslateInstance(x,y);
+        at.rotate(Math.toRadians(angle),length/2,h /2);
+
+        g2d.drawImage(paddle_img, at, null);
 
     }
 

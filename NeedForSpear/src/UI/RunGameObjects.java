@@ -60,7 +60,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
 
         }
 
-        drawPaddle(g2d, Game.getInstance().PC.getPaddle(), frame_width, frame_height);
+        drawPaddle(g2d, Game.getInstance().getPaddle(), frame_width, frame_height);
         drawBall(g2d, Game.getInstance().ball, frame_width, frame_height);
 
         //drawBall(g2d, player.getShooter());
@@ -119,9 +119,9 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
 //        Game.getInstance().gameState.updatePaddlePosition();
 
         Obstacle toBeDeleted = null;
-        Game.getInstance().PC.getPaddle().updatePosition(0,0);
+        Game.getInstance().getPaddle().updatePosition(0,0);
         Game.getInstance().ball.move();
-        if (colCheck.checkPaddleBallCollision(Game.getInstance().ball, Game.getInstance().PC.getPaddle())) {
+        if (colCheck.checkPaddleBallCollision(Game.getInstance().ball, Game.getInstance().getPaddle())) {
             Game.getInstance().ball.reflectFromPaddle();
         }
 
