@@ -30,6 +30,7 @@ public class Player implements IRunListener{
         this.chance_points = chance;
         this.score = score;
         this.abilities = abilities;
+
     }
 
     public int getId() {

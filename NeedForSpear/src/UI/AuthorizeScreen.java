@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 public class AuthorizeScreen extends JFrame  {
 
+
     static final int SCREEN_WIDTH = 1500;
     static final int SCREEN_HEIGHT = 766;
 
