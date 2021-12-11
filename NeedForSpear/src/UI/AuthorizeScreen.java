@@ -1,11 +1,19 @@
 package UI;
 
 import domain.IAuthorizeListener;
+import org.bson.Document;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class AuthorizeScreen extends JFrame  {
@@ -16,12 +24,17 @@ public class AuthorizeScreen extends JFrame  {
 
     static final String USERNAME = "Attila";
 
+    String FILEPATH = "NeedForSpear/src/saves/players.json";
 
     private JTextField userName;
-    private JTextField password;
+    private JTextField ID;
 
     private JPanel info;
     private JPanel buttons;
+
+    private boolean isUsernameExist = false;
+    private boolean isLogin = false;
+    private boolean isSignup = false;
 
     private java.util.List<IAuthorizeListener> autoModeListeners = new ArrayList<>();
     protected Playground nfs;
@@ -30,7 +43,6 @@ public class AuthorizeScreen extends JFrame  {
         this.nfs = nfs;
         initializeAuthorizeScreen();
         //add(initializeImagePanel());
-        System.out.println("authorizationnn");
         info = initializeInfoPanel();
         buttons = initializeButtonPanel();
         add(info,BorderLayout.EAST);
@@ -74,7 +86,8 @@ public class AuthorizeScreen extends JFrame  {
         userName = new JTextField(USERNAME, 30);
         infoPanel.add(userName);
 
-
+        ID = new JTextField("1111", 8);
+        infoPanel.add(ID);
 
         return infoPanel;
 
@@ -89,10 +102,15 @@ public class AuthorizeScreen extends JFrame  {
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                for (IAuthorizeListener listener : autoModeListeners) {
-                    System.out.println(listener);
-                    listener.onClickEvent(nfs);
+                checkPlayerLogs();
+                String username = userName.getText();
+                String id = ID.getText();
+                if(isLogin){
+                    for (IAuthorizeListener listener : autoModeListeners) {
+                        listener.onClickEvent(nfs, username, id);
+                    }
                 }
+
                 // check database
             }
         });
@@ -101,12 +119,14 @@ public class AuthorizeScreen extends JFrame  {
         signButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                for (IAuthorizeListener listener : autoModeListeners) {
-                    System.out.println(listener);
-                    listener.onClickEvent(nfs);
+                boolean succSign = savePlayerLogs();
+                String username = userName.getText();
+                String id = ID.getText();
+                if(succSign){
+                    for (IAuthorizeListener listener : autoModeListeners) {
+                        listener.onClickEvent(nfs,username, id);
+                    }
                 }
-
-
                 // check database
             }
 
@@ -118,6 +138,97 @@ public class AuthorizeScreen extends JFrame  {
         return buttonPanel;
     }
 
+    private void checkPlayerLogs() {
+
+        String checking = userName.getText();
+        String id = ID.getText();
+
+        JSONParser jsonParser = new JSONParser();
+        try (FileReader reader = new FileReader(FILEPATH)) {
+            Object obj = jsonParser.parse(reader);
+            JSONObject doc = (JSONObject) obj;
+
+            JSONArray usernameList = (JSONArray) doc.get("Username");
+            JSONArray IDList = (JSONArray) doc.get("ID");
+
+            for(int i=0; i<usernameList.size(); i++){
+                String s = usernameList.get(i).toString();
+                String m = IDList.get(i).toString();
+
+                if(s.equals(checking)){
+                    isUsernameExist = true;
+                    if(m.equals(id)){
+                        isLogin = true;
+                        System.out.println("User is found.");
+                        break;
+                    }
+                }
+            }
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private boolean savePlayerLogs() {
+        checkPlayerLogs();
+
+        if(isUsernameExist){
+            System.out.println("User is already exist");
+            return false;
+        }
+
+        String signing = userName.getText();
+        String id = ID.getText();
+
+        JSONParser jsonParser = new JSONParser();
+        try (FileReader reader = new FileReader(FILEPATH)) {
+            Object obj = jsonParser.parse(reader);
+            JSONObject doc = (JSONObject) obj;
+
+            JSONArray usernameList = (JSONArray) doc.get("Username");
+            JSONArray IDList = (JSONArray) doc.get("ID");
+
+            Document document = new Document();
+            ArrayList<String> temp = new ArrayList<>();
+            ArrayList<String> tempID = new ArrayList<>();
+
+            for(int i=0; i<usernameList.size(); i++){
+                String s = usernameList.get(i).toString();
+                String m = IDList.get(i).toString();
+
+                temp.add(s);
+                tempID.add(m);
+            }
+
+            temp.add(signing);
+            tempID.add(id);
+            document.put("Username", temp);
+            document.put("ID", tempID);
+
+            try {
+                FileWriter file = new FileWriter(FILEPATH);
+                file.write(document.toJson());
+                file.close();
+                System.out.println("Signed up successfully.");
+
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return true;
+
+    }
 
 
 

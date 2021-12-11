@@ -161,7 +161,6 @@ public class Layout {
             while(true) {
                 PosVector pos = new PosVector(rnd.nextInt(layoutWidth-obsLen), rnd.nextInt(layoutHeight-layoutHeightOffset ));
                 //int L = 10;
-                System.out.println(obsLen);
                 WallMaria obs = new WallMaria(pos.getX(),pos.getY(),obsLen, 1);
 
                 if (isAvailable(obs)) {

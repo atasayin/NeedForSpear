@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class Player implements IRunListener{
+public class Player{
     // Player attributes
-    private int id;
+    private String id;
     private String userName;
 
     // Attributes that this player has
@@ -16,15 +16,15 @@ public class Player implements IRunListener{
     private List<InventoryListener> inventoryListeners = new ArrayList<>();
     private List<TimeListener> timeListeners = new ArrayList<>();
 
-    public Player(int id, String userName) {
+    public Player(String userName, String id) {
         this.id = id;
         this.userName = userName;
-        this.chance_points = 0;
+        this.chance_points = 3;
         this.score = 0;
         abilities = new HashMap<>();
     }
 
-    public Player(int id, String userName, int chance, int score, HashMap<Integer, Integer> abilities){
+    public Player(String userName, String id, int chance, int score, HashMap<Integer, Integer> abilities){
         this.id = id;
         this.userName = userName;
         this.chance_points = chance;
@@ -33,11 +33,11 @@ public class Player implements IRunListener{
 
     }
 
-    public int getId() {
+    public String  getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -105,17 +105,5 @@ public class Player implements IRunListener{
 
     }
 
-    @Override
-    public void onClickEvent(HashMap<String, Integer> runSettings, String username) {
-        initializeInventory();
-        notifyAllInventoryListeners("all");
-
-    }
-
-    private void notifyTimeListeners() {
-        for (TimeListener listener : timeListeners) {
-            listener.onTimeEvent();
-        }
-    }
 }
 

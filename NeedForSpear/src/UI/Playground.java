@@ -13,18 +13,11 @@ public class Playground implements IRunListener, IAuthorizeListener {
 
     RunGameObjects screen;
 
-    public void onClickEvent(HashMap<String, Integer> runSettings, String username) {
+    public void onClickEvent(HashMap<String, Integer> runSettings, String username, String id) {
         int screenWidth = runSettings.get("screenWidth").intValue();
         int screenHeight = runSettings.get("screenHeight").intValue();
         initializeOuterFrameSettings(screenWidth, screenHeight);
         openRunModeScreen(screenWidth, screenHeight);
-
-//        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-//            public void run() {
-//                openRunModeScreen(screenWidth, screenHeight);
-//                System.out.println("aaaaaaaaaaaaaaaaa");
-//            }
-//        });
 
     }
 
@@ -60,11 +53,15 @@ public class Playground implements IRunListener, IAuthorizeListener {
     }
 
     @Override
-    public void onClickEvent(Playground nfs) {
+    public void onClickEvent(Playground nfs, String username, String id) {
         nfs.bd = new BuildModeScreen();
         nfs.bd.setVisible(true);
         nfs.bd.addListener(nfs);
         nfs.bd.addListener(Game.getInstance());
         nfs.bd.addLoadListener(Game.getInstance());
+        nfs.bd.setUserName(username);
+        nfs.bd.setID(id);
+        System.out.println(id + " id is ");
     }
+
 }

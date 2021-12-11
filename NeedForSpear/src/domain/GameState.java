@@ -15,7 +15,7 @@ public class GameState {
     private ArrayList<DomainObject> domainObjects;
     public HashMap<Integer, Integer> ObstacleCounts;
     private double time;
-    protected ArrayList<Player> players;
+    protected Player player;
     public static PaddleController pc;
 
 
@@ -26,7 +26,6 @@ public class GameState {
         ballController = new BallController();
         domainObjects = new ArrayList<DomainObject>();
         ObstacleCounts = new HashMap<Integer, Integer>();
-        players = new ArrayList<Player>();
         pc = new PaddleController(100,20);
     }
 
@@ -67,13 +66,11 @@ public class GameState {
         return this.domainObjects;
     }
 
-    public ArrayList<Player> getPlayers() {
-        return players;
+    public Player getPlayer() {
+        return player;
     }
 
-    public void addPlayer(Player player) {
-        players.add(player);
-    }
+    public void setPlayer(Player p) { this.player = p; }
 
     public PaddleController getPC(){
         return pc;
