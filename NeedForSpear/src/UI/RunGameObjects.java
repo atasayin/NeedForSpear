@@ -13,6 +13,7 @@ import java.io.IOException;
 import javax.swing.*;
 
 import abilities.DoubleAccel;
+import abilities.UnstopppableBall;
 import domain.controller.KeyboardController;
 import domain.* ;
 import domain.obstacle.Obstacle;
@@ -32,6 +33,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
 
     public static int frame_width;
     public static int frame_height;
+    public int sil = 0;
 
     public RunGameObjects(int width, int height) {
         this.frame_width = width;
@@ -120,10 +122,10 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
         Game.getInstance().PC.getPaddle().updatePosition(0,0);
         Game.getInstance().ball.move();
         if (colCheck.checkPaddleBallCollision(Game.getInstance().ball, Game.getInstance().PC.getPaddle())) {
-            Game.getInstance().ball.reflectFromHorizontal();
+            Game.getInstance().ball.reflectFromPaddle();
         }
 
-        if (Game.getInstance().ball.getPosVector().getY() < 0) Game.getInstance().ball.reflectFromHorizontal();
+        //if (Game.getInstance().ball.getPosVector().getY() < 0) Game.getInstance().ball.reflectFromHorizontal();
 
         for (Obstacle obs : Layout.obstacle_positions.keySet()) {
             if (colCheck.checkCollision(Game.getInstance().ball, obs)) {
@@ -137,6 +139,13 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
             }
         }
         if (toBeDeleted != null) Layout.obstacle_positions.remove(toBeDeleted);
+        sil++;
+        if (sil == 20) {
+            System.out.println("aga durdurulamiyor");
+            UnstopppableBall ub = new UnstopppableBall();
+            Thread t = new Thread(ub);
+            t.start();
+        }
 
 
     }
