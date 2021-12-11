@@ -13,7 +13,6 @@ public class Game implements IRunListener, ILoadListener {
 
     String gameStatus;
     public GameState gameState;
-    public PlayerState playerState;
     public Saver saver;
     static Game instance;
     private Timer game_Timer;
@@ -26,7 +25,6 @@ public class Game implements IRunListener, ILoadListener {
 
     private Game() {
         gameState = new GameState();
-        playerState = new PlayerState();
         game_Timer = new Timer();
         game_Timer.scheduleAtFixedRate(new TimerTask() {
             @Override

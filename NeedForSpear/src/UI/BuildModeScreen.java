@@ -16,7 +16,7 @@ import domain.obstacle.Obstacle;
 
 
 @SuppressWarnings("serial")
-public class BuildModeScreen extends JFrame {
+public class BuildModeScreen extends JFrame implements IAuthorizeListener{
 
     /////////////////////////////////////////////////////////////////////////////////////
 
@@ -208,4 +208,8 @@ public class BuildModeScreen extends JFrame {
     }
 
 
+    @Override
+    public void onClickEvent(Playground nfs) {
+
+    }
 }
