@@ -17,6 +17,11 @@ public class PosVector {
 		this.setY( this.getY() + vec.getY() );
 	}
 
+	public void halfVelociy() {
+		this.setX( this.getX() / 2 );
+		this.setY( this.getY() / 2 );
+	}
+
 	// To rotate the obstacles, we will need to get the angle between current pos and the center of the circle
 	public double getTheta(PosVector center){
 		double dy = center.getY() - this.getY();

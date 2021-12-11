@@ -12,6 +12,7 @@ import java.io.IOException;
 
 import javax.swing.*;
 
+import abilities.DoubleAccel;
 import domain.controller.KeyboardController;
 import domain.* ;
 import domain.obstacle.Obstacle;
@@ -31,7 +32,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
 
     public static int frame_width;
     public static int frame_height;
-
+    int sil = 0;
 
     public RunGameObjects(int width, int height) {
         this.frame_width = width;
@@ -115,6 +116,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
 //            domainObject.updateAngle();
 //        }
 //        Game.getInstance().gameState.updatePaddlePosition();
+
         Obstacle toBeDeleted = null;
         Game.getInstance().PC.getPaddle().updatePosition(0,0);
         Game.getInstance().ball.move();
@@ -136,6 +138,15 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
             }
         }
         if (toBeDeleted != null) Layout.obstacle_positions.remove(toBeDeleted);
+        sil++;
+        System.out.println(sil);
+        if (sil == 100) {
+            DoubleAccel d = new DoubleAccel();
+            Thread thread = new Thread(d);
+            thread.start();
+        }
+
+
     }
 
     @Override
