@@ -7,8 +7,9 @@ import javax.swing.*;
 import domain.*;
 
 
-public class Playground implements IRunListener {
+public class Playground implements IRunListener, IAuthorizeListener {
     static JFrame jf;
+    protected BuildModeScreen bd;
 
     RunGameObjects screen;
 
@@ -58,4 +59,12 @@ public class Playground implements IRunListener {
         jf.dispose();
     }
 
+    @Override
+    public void onClickEvent(Playground nfs) {
+        nfs.bd = new BuildModeScreen();
+        nfs.bd.setVisible(true);
+        nfs.bd.addListener(nfs);
+        nfs.bd.addListener(Game.getInstance());
+        nfs.bd.addLoadListener(Game.getInstance());
+    }
 }
