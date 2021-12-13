@@ -18,6 +18,8 @@ public class Ball extends DomainObject {
     private boolean is_unstoppable;
     private List<IGameListener> gameListeners = new ArrayList<>();
     private boolean isBall;
+    private boolean outOfScreen;
+
     public Ball() {
         this.posVector = new PosVector(540, 100);
         this.gravity = 1;
@@ -34,6 +36,7 @@ public class Ball extends DomainObject {
         this.xVelocity = xVel;
         this.yVelocity = yVel;
         this.is_unstoppable = false;
+        this.outOfScreen = false;
         //this.gameListeners.add(RunGameObjects);
     }
 
@@ -93,7 +96,10 @@ public class Ball extends DomainObject {
             this.reflectFromSideWall();
         } else if (this.posVector.getX() > (FRAME_WIDTH - 40)) {
             this.reflectFromSideWall();
-        } else if (this.posVector.getY() < 0) {
+        }
+        else if (this.posVector.getY()<0 && this.outOfScreen) {
+            System.out.println("reflected");
+            //this.yVelocity = 2;
             this.reflectFromTopWall();
         }
     }
@@ -128,6 +134,11 @@ public class Ball extends DomainObject {
     public void setBall(Boolean b){
         this.isBall = b;
     }
+
+    public void setOutOfScreen(Boolean b){
+        this.outOfScreen = b;
+    }
+
     @Override
     public int getWidth() {
         return width;
@@ -140,6 +151,10 @@ public class Ball extends DomainObject {
 
     public void setPosVector(PosVector pos) {
         this.posVector = pos;
+    }
+
+    public void setyVelocity(Integer a) {
+        this.yVelocity = a;
     }
 
     public void set_is_unstoppable(boolean is_unstoppable) {

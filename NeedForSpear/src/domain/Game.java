@@ -1,5 +1,6 @@
 package domain;
 import domain.controller.PaddleController;
+import domain.util.PosVector;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -22,9 +23,10 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
     public Ball ball;
     public Layout layout;
     public boolean isLoad = false;
-    private static final int TIMER_SPEED = 50;
+    private static final int TIMER_SPEED = 5;
     Player player = null;
-
+    private static final long TOTAL_DEATH_TIME = 10000;
+    private long deathInitTime = -100;
     public static int UNITLENGTH_L = 1;
 
     private javax.swing.Timer game_Timer = new javax.swing.Timer(TIMER_SPEED, this);
@@ -114,14 +116,49 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         //boolean isDead = Game.getInstance().ball.move();
-        if(!Game.getInstance().ball.getIsBall()){
+        if(!Game.getInstance().ball.getIsBall()) {
+
+            if (deathInitTime < 0) {
+                // if dead but just now dead, initialize deathInitTime
+                deathInitTime = System.currentTimeMillis();
+                Integer points = Game.getInstance().gameState.getPlayer().getChance_points() - 1;
+                Game.getInstance().gameState.getPlayer().setChance_points(points);
+            } else {
+                // he's been dead
+                // check how long he's been dead
+                long deathTime = System.currentTimeMillis() - deathInitTime;
+                if (deathTime > TOTAL_DEATH_TIME) {
+                    // if he's been dead long enough, call this code
+                    Game.getInstance().ball.setOutOfScreen(true);
+                    System.out.println(Game.getInstance().gameState.getPlayer().getChance_points());
+                    System.out.println("ball is reseted");
+                    PosVector pos = new PosVector(FRAME_WIDTH/2, 1);
+                    Game.getInstance().ball.setPosVector(pos);
+                    Game.getInstance().ball.setyVelocity(0);
+                    Game.getInstance().ball.setBall(true);
+                    System.out.println(Game.getInstance().ball.posVector.getY());
+                    deathInitTime = -1L;  // and re-initialize deathInitTime
+                }
+                Game.getInstance().ball.setOutOfScreen(true);
+            }
+        }
+        /*if(!Game.getInstance().ball.getIsBall()){
             Integer points = Game.getInstance().gameState.getPlayer().getChance_points() - 1;
             Game.getInstance().gameState.getPlayer().setChance_points(points);
-            Game.getInstance().ball.setBall(true);
-            System.out.println(Game.getInstance().gameState.getPlayer().getChance_points());
-            System.out.println("ball is reseted");
 
-        }
+            if(Game.getInstance().ball.getPosVector().getY() > FRAME_HEIGHT){
+                Game.getInstance().ball.setOutOfScreen(true);
+                System.out.println(Game.getInstance().gameState.getPlayer().getChance_points());
+                System.out.println("ball is reseted");
+                PosVector pos = new PosVector(FRAME_WIDTH/2, 1);
+                Game.getInstance().ball.setPosVector(pos);
+                Game.getInstance().ball.setBall(true);
+
+                System.out.println(Game.getInstance().ball.posVector.getY());
+            }
+            Game.getInstance().ball.setOutOfScreen(true);
+
+        }*/
 
     }
 }
