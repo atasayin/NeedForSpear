@@ -2,13 +2,10 @@ package domain;
 import domain.controller.PaddleController;
 import domain.util.PosVector;
 
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Timer;
-import java.util.TimerTask;
 
 
 public class Game implements IRunListener, ILoadListener, ActionListener {
@@ -25,13 +22,17 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
     public boolean isLoad = false;
     private static final int TIMER_SPEED = 5;
     Player player = null;
-    private static final long TOTAL_DEATH_TIME = 10000;
+    private static final long TOTAL_DEATH_TIME = 5000;
     private long deathInitTime = -100;
     public static int UNITLENGTH_L = 1;
+    private boolean isWin = false;
+    private long initialTime;
+    private double score =0;
 
     private javax.swing.Timer game_Timer = new javax.swing.Timer(TIMER_SPEED, this);
     private Game() {
         gameState = new GameState();
+
 
 
 /*
@@ -67,6 +68,17 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
         saver.saveGame(Game.getInstance().PC, Game.getInstance().ball, Layout.getObstacle_positions());
     }
 
+    public double getScore(double oldScore){
+       long CurrentTime = System.currentTimeMillis();
+       double NewScore = oldScore + 300/(double)((CurrentTime-initialTime)/1000);
+       System.out.println(CurrentTime-initialTime);
+       return NewScore;
+    }
+    public void setScore(double newScore){  this.score = newScore;}
+
+    public double getOldScore() {
+        return this.score;
+    }
     @Override
     public void onClickEvent(HashMap<String, Integer> startParameters, String username, String id) {
         // TODO Auto-generated method stub
@@ -74,7 +86,11 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
 
         PC = new PaddleController(FRAME_WIDTH,FRAME_HEIGHT);
         this.ball = new Ball();
+        this.ball.setisAlive(false);
+
         Game.getInstance().gameState.isRunning = true;
+        initialTime = System.currentTimeMillis();
+        System.out.println(ball.posVector.getX() + " " + ball.posVector.getY());
         System.out.println("Paddle created " + PC.toString());
 
         Player player = new Player(username, id);
@@ -105,8 +121,17 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
         Integer chancePoint = instance.gameState.getPlayer().getChance_points();
         if( chancePoint <= 0 ){
             instance.gameState.isRunning = false;
+            game_Timer.stop();
+        }
+        else if(instance.getDomainObjectArr().size() == 0){
+            System.out.println("bitti");
+            this.isWin= true;
+            game_Timer.stop();
         }
     }
+
+    public boolean getIsWin(){ return this.isWin;}
+
 
     @Override
     public void onClickEvent() {
@@ -116,7 +141,9 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         //boolean isDead = Game.getInstance().ball.move();
-        if(!Game.getInstance().ball.getIsBall()) {
+        /// List size review
+        gameOverCheck();
+        if(!Game.getInstance().ball.checkAlive()) {
 
             if (deathInitTime < 0) {
                 // if dead but just now dead, initialize deathInitTime
@@ -135,7 +162,7 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
                     PosVector pos = new PosVector(FRAME_WIDTH/2, 1);
                     Game.getInstance().ball.setPosVector(pos);
                     Game.getInstance().ball.setyVelocity(0);
-                    Game.getInstance().ball.setBall(true);
+
                     System.out.println(Game.getInstance().ball.posVector.getY());
                     deathInitTime = -1L;  // and re-initialize deathInitTime
                 }

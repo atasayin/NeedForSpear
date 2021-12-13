@@ -24,7 +24,7 @@ public class AuthorizeScreen extends JFrame  {
 
     static final String USERNAME = "Attila";
 
-    String FILEPATH = "src/saves/players.json";
+    String FILEPATH = "NeedForSpear/src/saves/players.json";
 
     private JTextField userName;
     private JTextField ID;

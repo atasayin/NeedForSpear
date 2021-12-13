@@ -17,21 +17,22 @@ public class Ball extends DomainObject {
     private int height = 16;
     private boolean is_unstoppable;
     private List<IGameListener> gameListeners = new ArrayList<>();
-    private boolean isBall;
+    private boolean isAlive;
+
     private boolean outOfScreen;
 
     public Ball() {
-        this.posVector = new PosVector(540, 100);
+        this.posVector = new PosVector(400, 400);
         this.gravity = 1;
         this.xVelocity = 3;
-        this.yVelocity = 0;
+        this.yVelocity = -40;
         this.is_unstoppable = false;
-        this.isBall = true;
+        this.isAlive = false;
 
     }
 
     public Ball(int xVel, int yVel) {
-        this.posVector = new PosVector(500, 500);
+        this.posVector = new PosVector(100, 100);
         this.gravity = 10;
         this.xVelocity = xVel;
         this.yVelocity = yVel;
@@ -97,9 +98,7 @@ public class Ball extends DomainObject {
         } else if (this.posVector.getX() > (FRAME_WIDTH - 40)) {
             this.reflectFromSideWall();
         }
-        else if (this.posVector.getY()<0 && this.outOfScreen) {
-            System.out.println("reflected");
-            //this.yVelocity = 2;
+        else if (this.posVector.getY()<0) {
             this.reflectFromTopWall();
         }
     }
@@ -114,10 +113,13 @@ public class Ball extends DomainObject {
 
     public Boolean move() {
         if (this.checkAlive() != true) {
-            isBall =false;
+
            /* for (IGameListener listener : autoModeListeners) {
                 listener.onEvent();
             }*/
+            return false;
+        }
+        if(!this.isAlive){
             return false;
         }
         this.checkWallCollision();
@@ -128,11 +130,9 @@ public class Ball extends DomainObject {
         return true;
 
     }
-    public boolean getIsBall(){
-        return isBall;
-    }
-    public void setBall(Boolean b){
-        this.isBall = b;
+
+    public void setisAlive(Boolean b){
+        this.isAlive = b;
     }
 
     public void setOutOfScreen(Boolean b){
@@ -155,6 +155,14 @@ public class Ball extends DomainObject {
 
     public void setyVelocity(Integer a) {
         this.yVelocity = a;
+    }
+
+    public void setXVelocity(Integer a) {
+        this.xVelocity = a;
+    }
+
+    public void setGravity(Integer a) {
+        this.gravity = a;
     }
 
     public void set_is_unstoppable(boolean is_unstoppable) {

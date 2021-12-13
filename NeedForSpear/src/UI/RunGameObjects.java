@@ -237,6 +237,8 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
 
         Integer chance = Game.getInstance().gameState.getPlayer().getChance_points();
 
+        Boolean isWin = Game.getInstance().getIsWin();
+
         Object[] options = { "OK" };
         if (chance <=0){
             tm.stop();
@@ -246,11 +248,20 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
                     "You are out of chance." + "Your score is "+Game.getInstance().gameState.getPlayer().getScore(),
                     "Out of chance",
                     JOptionPane.WARNING_MESSAGE);
+            Playground.jf.dispose();
 
         }
-        //Playground.jf.dispose();
+        else if (isWin){
+            tm.stop();
+            JOptionPane.showMessageDialog(Playground.jf,
+                    "You win the game." + "Your score is "+Game.getInstance().gameState.getPlayer().getScore());
 
-    }
+            Playground.jf.dispose();
+        }
+        }
+        //
+
+
 
     public void ballChance() throws InterruptedException {
         if(stop){

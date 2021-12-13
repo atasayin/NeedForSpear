@@ -37,7 +37,7 @@ public class CollisionChecker {
         int paddle_right = paddle_x + paddle_length;
 
 
-        if (ball.posVector.getY() > (paddle_y - 30)) {
+        if (ball.posVector.getY() > (paddle_y -37)) {
             if ((ball_x > paddle_x) && (ball_x < paddle_right)) {
                 return true;
             }
