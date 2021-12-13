@@ -67,15 +67,9 @@ public class Paddle extends DomainObject{
 		// Paddle rotates clockwise (D)
 		else if (direction == 4) { rotateClockwise(); }
 		// Paddle goes faster left
-		else if (direction == 5) {
-
-
-		}
+		else if (direction == 5) { goFastLeft(); }
 		// Paddle goes faster right
-		else if (direction == 6) {
-
-
-		}
+		else if (direction == 6) { goFastRight(); }
 
 	}
 
@@ -126,6 +120,24 @@ public class Paddle extends DomainObject{
 
 
 
+	}
+
+	private void goFastLeft(){
+		setSpeed(-fastSpeed, 0);
+		if ((getPosVector().x >= fastSpeed) && (getPosVector().x <= FRAME_WIDTH - getLength())) {
+			updatePosition(getDx(), getDy());
+		} else {
+			updatePosition(0, getDy());
+		}
+	}
+
+	private void goFastRight(){
+		setSpeed(fastSpeed, 0);
+		if ((getPosVector().x <= FRAME_WIDTH - getLength() - fastSpeed) && (getPosVector().x >= 0)) {
+			updatePosition(getDx(), getDy());
+		} else {
+			updatePosition(0, getDy());
+		}
 	}
 
 
