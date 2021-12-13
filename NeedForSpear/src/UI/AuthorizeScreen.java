@@ -45,6 +45,8 @@ public class AuthorizeScreen extends JFrame  {
         //add(initializeImagePanel());
         info = initializeInfoPanel();
         buttons = initializeButtonPanel();
+        ImageIcon icon = new ImageIcon(new ImageIcon("NeedForSpear/src/assets/intro.png").getImage().getScaledInstance(200, 200, Image.SCALE_DEFAULT));
+        add(new JLabel(icon));
         add(info,BorderLayout.EAST);
         add(buttons,BorderLayout.SOUTH);
 
@@ -83,9 +85,17 @@ public class AuthorizeScreen extends JFrame  {
         GridLayout infoLayout = new GridLayout(2, 2);
         JPanel infoPanel = new JPanel(infoLayout);
 
+        JLabel usernameLabel = new JLabel("  Username: ", SwingConstants.CENTER);
+        ImageIcon usernameIcon = new ImageIcon(new ImageIcon("NeedForSpear/src/assets/user.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
+        usernameLabel.setIcon(usernameIcon);
+        infoPanel.add(usernameLabel);
         userName = new JTextField(USERNAME, 30);
         infoPanel.add(userName);
 
+        JLabel passwordLabel = new JLabel("Password: ", SwingConstants.CENTER);
+        ImageIcon passwordIcon = new ImageIcon(new ImageIcon("NeedForSpear/src/assets/password.png").getImage().getScaledInstance(60, 60, Image.SCALE_DEFAULT));
+        passwordLabel.setIcon(passwordIcon);
+        infoPanel.add(passwordLabel);
         ID = new JTextField("1111", 8);
         infoPanel.add(ID);
 
