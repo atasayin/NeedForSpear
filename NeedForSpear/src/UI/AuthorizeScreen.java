@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class AuthorizeScreen extends JFrame  {
 
 
-    static final int SCREEN_WIDTH = 1500;
+    static final int SCREEN_WIDTH = 1368;
     static final int SCREEN_HEIGHT = 766;
 
     static final String USERNAME = "Attila";
@@ -53,14 +53,11 @@ public class AuthorizeScreen extends JFrame  {
     }
 
     private void initializeAuthorizeScreen() {
-
         this.setTitle("Need For Spear");
         this.setLayout(new GridLayout(3, 0));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
-
-
-
+        this.setLocationRelativeTo(null);
     }
     public void addListener(IAuthorizeListener listener) {
         autoModeListeners.add(listener);
@@ -120,8 +117,7 @@ public class AuthorizeScreen extends JFrame  {
                         listener.onClickEvent(nfs, username, id);
                     }
                 }
-
-                // check database
+                dispose();
             }
         });
 
@@ -137,7 +133,7 @@ public class AuthorizeScreen extends JFrame  {
                         listener.onClickEvent(nfs,username, id);
                     }
                 }
-                // check database
+                dispose();
             }
 
         });
