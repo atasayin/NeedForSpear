@@ -1,6 +1,6 @@
 package UI;
 
-import java.awt.BorderLayout;
+import java.awt.*;
 import java.util.HashMap;
 import javax.swing.*;
 
@@ -8,7 +8,7 @@ import domain.*;
 
 
 public class Playground implements IRunListener, IAuthorizeListener {
-    static JFrame jf;
+    protected static JFrame jf;
     protected BuildModeScreen bd;
 
     RunGameObjects screen;
@@ -43,14 +43,8 @@ public class Playground implements IRunListener, IAuthorizeListener {
         screen.setVisible(true);
         jf.add(screen);
         jf.addKeyListener(screen);
-
-
     }
 
-    public static void GameOver() {
-
-        jf.dispose();
-    }
 
     @Override
     public void onClickEvent(Playground nfs, String username, String id) {
