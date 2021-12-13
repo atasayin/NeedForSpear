@@ -14,6 +14,10 @@ public class KeyboardController {
         int fastSpeed = paddle.getFastSpeed();
 
         switch (input) {
+            case 87: // w
+                Game.getInstance().ball.setisAlive(true);
+
+
             case 37: // left
                 paddle.setSpeed(-speed, 0);
 

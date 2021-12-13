@@ -9,6 +9,7 @@ import java.awt.event.KeyListener;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.*;
 
@@ -24,6 +25,7 @@ import domain.util.PosVector;
 public class RunGameObjects extends JPanel implements ActionListener, KeyListener, IGameListener {
 
     Timer tm = new Timer(TIMER_SPEED, this);
+
     BufferedImage img; // background
     String infoString = "";
     int infoRefreshCount;
@@ -100,7 +102,13 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
             gameOverCheck();
             update();
             repaint();
-            //Game.getInstance().gameState.removeObjectsIfOutsideScreen();
+        try {
+            ballChance();
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();
+        }
+
+        //Game.getInstance().gameState.removeObjectsIfOutsideScreen();
             infoRefreshCount += TIMER_SPEED;
             if (infoRefreshCount >= INFO_REFRESH_PERIOD) {
                 infoString = "";
@@ -222,11 +230,14 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
     @Override
     public void onClickEvent() {
         stop =true;
+
     }
 
     public void gameOverCheck() {
 
         Integer chance = Game.getInstance().gameState.getPlayer().getChance_points();
+
+        Boolean isWin = Game.getInstance().getIsWin();
 
         Object[] options = { "OK" };
         if (chance <=0){
@@ -237,10 +248,26 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
                     "You are out of chance." + "Your score is "+Game.getInstance().gameState.getPlayer().getScore(),
                     "Out of chance",
                     JOptionPane.WARNING_MESSAGE);
+            Playground.jf.dispose();
 
         }
-        //Playground.jf.dispose();
+        else if (isWin){
+            tm.stop();
+            JOptionPane.showMessageDialog(Playground.jf,
+                    "You win the game." + "Your score is "+Game.getInstance().gameState.getPlayer().getScore());
 
+            Playground.jf.dispose();
+        }
+        }
+        //
+
+
+
+    public void ballChance() throws InterruptedException {
+        if(stop){
+            wait(2000);
+
+        }
     }
 }
 

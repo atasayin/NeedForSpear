@@ -1,6 +1,7 @@
 package domain.obstacle;
 
 import domain.DomainObject;
+import domain.Game;
 import domain.strategy.DestroyBehaviour;
 import domain.util.PosVector;
 
@@ -34,6 +35,10 @@ public abstract class Obstacle extends DomainObject {
 		this.health -= 1;
 		if (this.health == 0) {
 			this.destroy();
+			double o = Game.getInstance().getOldScore();
+			double neww = Game.getInstance().getScore(o);
+			Game.getInstance().setScore(neww);
+			System.out.println(Game.getInstance().getOldScore());
 			return true;
 		} else {
 			return false;

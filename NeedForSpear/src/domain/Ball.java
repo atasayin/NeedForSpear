@@ -1,8 +1,11 @@
 package domain;
 
+import UI.RunGameObjects;
 import domain.util.PosVector;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Ball extends DomainObject {
     private final int FRAME_WIDTH = 1368;
@@ -13,21 +16,29 @@ public class Ball extends DomainObject {
     private int width = 16;
     private int height = 16;
     private boolean is_unstoppable;
+    private List<IGameListener> gameListeners = new ArrayList<>();
+    private boolean isAlive;
+
+    private boolean outOfScreen;
 
     public Ball() {
-        this.posVector = new PosVector(540, 100);
+        this.posVector = new PosVector(400, 400);
         this.gravity = 1;
         this.xVelocity = 3;
-        this.yVelocity = 0;
+        this.yVelocity = -40;
         this.is_unstoppable = false;
+        this.isAlive = false;
+
     }
 
     public Ball(int xVel, int yVel) {
-        this.posVector = new PosVector(500, 500);
+        this.posVector = new PosVector(100, 100);
         this.gravity = 10;
         this.xVelocity = xVel;
         this.yVelocity = yVel;
         this.is_unstoppable = false;
+        this.outOfScreen = false;
+        //this.gameListeners.add(RunGameObjects);
     }
 
     public void updateVelocity() {
@@ -86,7 +97,8 @@ public class Ball extends DomainObject {
             this.reflectFromSideWall();
         } else if (this.posVector.getX() > (FRAME_WIDTH - 40)) {
             this.reflectFromSideWall();
-        } else if (this.posVector.getY() < 0) {
+        }
+        else if (this.posVector.getY()<0) {
             this.reflectFromTopWall();
         }
     }
@@ -96,11 +108,18 @@ public class Ball extends DomainObject {
     }
 
     public Boolean checkAlive() {
-        return (this.posVector.getY() <= (FRAME_HEIGHT - 40));
+        return (this.posVector.getY() <= (FRAME_HEIGHT));
     }
 
     public Boolean move() {
         if (this.checkAlive() != true) {
+
+           /* for (IGameListener listener : autoModeListeners) {
+                listener.onEvent();
+            }*/
+            return false;
+        }
+        if(!this.isAlive){
             return false;
         }
         this.checkWallCollision();
@@ -110,6 +129,14 @@ public class Ball extends DomainObject {
 
         return true;
 
+    }
+
+    public void setisAlive(Boolean b){
+        this.isAlive = b;
+    }
+
+    public void setOutOfScreen(Boolean b){
+        this.outOfScreen = b;
     }
 
     @Override
@@ -124,6 +151,18 @@ public class Ball extends DomainObject {
 
     public void setPosVector(PosVector pos) {
         this.posVector = pos;
+    }
+
+    public void setyVelocity(Integer a) {
+        this.yVelocity = a;
+    }
+
+    public void setXVelocity(Integer a) {
+        this.xVelocity = a;
+    }
+
+    public void setGravity(Integer a) {
+        this.gravity = a;
     }
 
     public void set_is_unstoppable(boolean is_unstoppable) {
