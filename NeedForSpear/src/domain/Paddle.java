@@ -43,6 +43,16 @@ public class Paddle extends DomainObject{
 	public int getNormalSpeed(){ return this.normalSpeed; }
 	public int getFastSpeed() { return this.fastSpeed; }
 
+	// Used for Paddle Expansion ability
+	public void expandPaddle() {
+		this.length *=2;
+	}
+
+	// Normalize paddle after ability
+	public void normalizePaddle() {
+		this.length /=2;
+	}
+
 	public void move(int direction) {
 		if(direction==1) { // right
 			//System.out.println(this.getDx());
