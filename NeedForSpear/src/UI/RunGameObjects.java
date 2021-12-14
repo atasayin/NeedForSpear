@@ -9,7 +9,7 @@ import java.awt.event.KeyListener;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
+import java.util.BitSet;
 
 import javax.swing.*;
 
@@ -25,6 +25,8 @@ import domain.util.PosVector;
 @SuppressWarnings("serial")
 public class RunGameObjects extends JPanel implements ActionListener, KeyListener, IGameListener {
 
+    /////////////////////////////////////////////////////////////////////////////////////
+
     Timer tm = new Timer(TIMER_SPEED, this);
 
     BufferedImage img; // background
@@ -34,9 +36,13 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
     Game game = Game.getInstance();
     CollisionChecker colCheck = CollisionChecker.getInstance();
     Boolean stop = false;
+    private BitSet keyBits = new BitSet(256);
+
     public static int frame_width;
     public static int frame_height;
     public int sil = 0;
+
+    /////////////////////////////////////////////////////////////////////////////////////
 
     public RunGameObjects(int width, int height) {
         this.frame_width = width;
@@ -64,7 +70,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
 
         }
 
-        drawPaddle(g2d, Game.getInstance().PC.getPaddle(), frame_width, frame_height);
+        drawPaddle(g2d, Game.getInstance().getPaddle(), frame_width, frame_height);
         drawBall(g2d, Game.getInstance().ball, frame_width, frame_height);
 
         //drawBall(g2d, player.getShooter());
@@ -130,9 +136,9 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
 //        Game.getInstance().gameState.updatePaddlePosition();
 
         Obstacle toBeDeleted = null;
-        Game.getInstance().PC.getPaddle().updatePosition(0,0);
+        Game.getInstance().getPaddle().updatePosition(0,0);
         Game.getInstance().ball.move();
-        if (colCheck.checkPaddleBallCollision(Game.getInstance().ball, Game.getInstance().PC.getPaddle())) {
+        if (colCheck.checkPaddleBallCollision(Game.getInstance().ball, Game.getInstance().getPaddle())) {
             Game.getInstance().ball.reflectFromPaddle();
         }
 
@@ -164,26 +170,53 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
 
     }
 
+
     @Override
     public void keyTyped(KeyEvent e) {
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
+        int keyCode = e.getKeyCode();
+        keyBits.set(keyCode);
 
+        // Pause (p)
+        if (isKeyPressed(80)) {
+            pauseGame();
+            return;
+        }
+
+       // Resume (r)
+        if (isKeyPressed(82)) {
+            resumeGame();
+            return;
+        }
+
+        // Save (s)
+        if (isKeyPressed(80)) {
+            saveGame();
+            return;
+        }
+
+        // Load (l)
+        if (isKeyPressed(76)){
+            loadGame();
+            return;
+        }
+
+        /*
         int input = e.getKeyCode();
-        // pause resume
+
 
         switch (input) {
+
             case 80: // p: pause
                 infoString = "Game Paused.";
                 repaint();
                 tm.stop();
                 Game.getInstance().gameState.isRunning = false;
-                //lastPos = Game.getInstance().PC.getPaddle().getPosVector();
-                //System.out.println(lastPos);
-
                 return;
+
             case 82: // r: resume
                 infoString = "Game Resumed.";
                 tm.restart();
@@ -193,7 +226,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
             case 83: // s: save
                 if (!tm.isRunning()) {
                     infoString = "Game Saved.";
-                    kc.getInput(input); // only works if game was paused
+                    kc.getInput(keyBits); // only works if game was paused
                     return;
                 } else {
                     infoString = "Press \"Pause\" Button before saving.";
@@ -202,19 +235,19 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
             case 76: // l: load
                 if (!tm.isRunning()) {
                     infoString = "Game Loaded.";
-                    kc.getInput(input);
+                    kc.getInput(keyBits);
                     tm.restart();// only works if game was paused
                     Game.getInstance().gameState.isRunning = true;
-                    //Game.getInstance().getPlayers().get(0).getPlayerState().notifyAllInventoryListeners("all");
                     return;
                 } else {
                     infoString = "Press \"Pause\" Button before loading.";
                     return;
                 }
             default:
-        }
 
-        if (kc.getInput(input)) { // when returns true restart
+        }
+            */
+        if (kc.getInput(keyBits)) { // when returns true restart
             tm.restart();
             Game.getInstance().gameState.isRunning = true;
 
@@ -226,6 +259,49 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
     public void keyReleased(KeyEvent e) {
             // TODO Auto-generated method stub
             kc.released(Game.getInstance().gameState.getPC().getPaddle());
+        int keyCode = e.getKeyCode();
+        keyBits.clear(keyCode);
+    }
+
+    public boolean isKeyPressed(int keyCode) {
+        return keyBits.get(keyCode);
+    }
+
+    private void pauseGame(){
+        infoString = "Game Paused.";
+        repaint();
+        tm.stop();
+        Game.getInstance().gameState.isRunning = false;
+        kc.getInput(keyBits);
+
+    }
+
+    private void resumeGame(){
+        infoString = "Game Resumed.";
+        tm.restart();
+        Game.getInstance().gameState.isRunning = true;
+    }
+
+    private void saveGame(){
+        if (!tm.isRunning()) {
+            infoString = "Game Saved.";
+            kc.getInput(keyBits); // only works if game was paused
+        } else {
+            infoString = "Press \"Pause\" Button before saving.";
+        }
+
+    }
+
+    private void loadGame(){
+        if (!tm.isRunning()) {
+            infoString = "Game Loaded.";
+            kc.getInput(keyBits);
+            tm.restart();// only works if game was paused
+            Game.getInstance().gameState.isRunning = true;
+        } else {
+            infoString = "Press \"Pause\" Button before loading.";
+        }
+
     }
 
     public void initializeRunModeScreen() throws IOException {

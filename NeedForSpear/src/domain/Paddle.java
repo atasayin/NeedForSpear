@@ -3,24 +3,34 @@ package domain;
 import domain.util.PosVector;
 
 public class Paddle extends DomainObject{
+
+	/////////////////////////////////////////////////////////////////////////////////////
+
 	public static final int FRAME_WIDTH = 1368;
 	public static final int FRAME_HEIGHT = 766;
 	public static final int PADDLE_THICKNESS = 20;
 
+	private double MIN_ANGLE_LIMIT = -45;
+	private double MAX_ANGLE_LIMIT = 45;
+
 	protected int length;
 	private int thickness;
 	private double angle;
+	private double angleSpeed;
 	private int normalSpeed;
 	private int fastSpeed;
 	private int width;
 	private int height = PADDLE_THICKNESS;
-	
+
+	/////////////////////////////////////////////////////////////////////////////////////
+
 	public Paddle(int fWidth, int fHeight) {
 		this.length = fWidth/10;
 		this.width = this.length;
 		this.thickness = PADDLE_THICKNESS;
 		this.posVector = new PosVector((fWidth - length)/2, fHeight - (this.thickness * 4));
 		this.angle = 0;
+		this.angleSpeed = 10;
 		normalSpeed = length/2;
 		fastSpeed = 2*length;
 		this.setSpeed(0,0);
@@ -33,6 +43,10 @@ public class Paddle extends DomainObject{
 	public double getAngle() { return this.angle; }
 
 	public void setAngle(double angle) { this.angle = angle; }
+
+	public double getAngleSpeed() { return this.angleSpeed; }
+
+	public void setAngleSpeed(double angleSpeed) {this.angleSpeed = angleSpeed; }
 
 	public PosVector getPosVector() { return this.posVector; }
 
@@ -54,38 +68,88 @@ public class Paddle extends DomainObject{
 	}
 
 	public void move(int direction) {
-		if(direction==1) { // right
-			//System.out.println(this.getDx());
-			if(this.getPosVector().getX() <= FRAME_WIDTH - this.getLength()) {
-				//this.updatePosition();
-			}
-		} else if (direction==2) { // left
-			//System.out.println(this.getDx());
-			if(this.getPosVector().getX() >= 0) {
-				//this.updatePosition();
-			}
-		} else if (direction==3) { // speed right
-			if(this.getPosVector().getX() <= FRAME_WIDTH - this.getLength()) {
-				//this.updatePosition();
-			}
-		}  else if (direction==4) { // speed left
-			if(this.getPosVector().getX() >= 0){
-				//this.updatePosition();
-			}
-
-		}
+		// Paddle goes left
+		if (direction == 1) { goLeft(); }
+		// Paddle goes right
+		else if (direction == 2) { goRight(); }
+		// Paddle rotates counter clockwise (A)
+		else if (direction == 3) { rotateCClockwise(); }
+		// Paddle rotates clockwise (D)
+		else if (direction == 4) { rotateClockwise(); }
+		// Paddle goes faster left
+		else if (direction == 5) { goFastLeft(); }
+		// Paddle goes faster right
+		else if (direction == 6) { goFastRight(); }
 
 	}
 
 
 	public void updatePosition(int  x, int  y) {
-		this.posVector.x += x;
-//		System.out.println("Pcden gelen");
-//		System.out.println(Game.getInstance().PC.getPaddle().getPosVector().x);
-//		System.out.println("thisden gelen");
-//		System.out.println(this.posVector.x);
-		this.posVector.y += y;
+		this.posVector.setX(posVector.getX() + x);
+		this.posVector.setY(posVector.getY() + y);
 	}
+
+	private void goLeft(){
+		setSpeed(-normalSpeed, 0);
+		if ((getPosVector().x >= normalSpeed) && (getPosVector().x <= FRAME_WIDTH - getLength())) {
+			updatePosition(getDx(), getDy());
+		} else {
+			updatePosition(0, getDy());
+		}
+	}
+
+	private void goRight(){
+		setSpeed(normalSpeed, 0);
+		if ((getPosVector().x <= FRAME_WIDTH - getLength() - normalSpeed) && (getPosVector().x >= 0)) {
+			updatePosition(getDx(), getDy());
+		} else {
+			updatePosition(0, getDy());
+		}
+	}
+
+	private void rotateCClockwise(){
+		// | -45 --- 45 |
+
+		if (angle > MIN_ANGLE_LIMIT + angleSpeed){
+			setAngle(angle - angleSpeed);
+		}else{
+			setAngle(MIN_ANGLE_LIMIT);
+		}
+
+
+	}
+
+	private void rotateClockwise(){
+		// | -45 --- 45 |
+
+		if (angle < MAX_ANGLE_LIMIT - angleSpeed){
+			setAngle(angle + angleSpeed);
+		}else{
+			setAngle(MAX_ANGLE_LIMIT);
+		}
+
+
+
+	}
+
+	private void goFastLeft(){
+		setSpeed(-fastSpeed, 0);
+		if ((getPosVector().x >= fastSpeed) && (getPosVector().x <= FRAME_WIDTH - getLength())) {
+			updatePosition(getDx(), getDy());
+		} else {
+			updatePosition(0, getDy());
+		}
+	}
+
+	private void goFastRight(){
+		setSpeed(fastSpeed, 0);
+		if ((getPosVector().x <= FRAME_WIDTH - getLength() - fastSpeed) && (getPosVector().x >= 0)) {
+			updatePosition(getDx(), getDy());
+		} else {
+			updatePosition(0, getDy());
+		}
+	}
+
 
 
 	// Needed for collision check calculations
