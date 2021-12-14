@@ -41,8 +41,8 @@ public class PaddleView implements Drawable {
         }
 
         // scale to unit length L
-        int paddleLen = BuildModeScreen.FRAME_WIDTH/10;
-        //int paddleLen = Game.getInstance().PC.getPaddle().getLength();
+        //int paddleLen = BuildModeScreen.FRAME_WIDTH/10;
+        int paddleLen = Game.getInstance().getPaddle().getLength();
         int paddleThick = 20;
         Image scaled = paddle_img.getScaledInstance(paddleLen, paddleThick,
                 BufferedImage.SCALE_SMOOTH);
@@ -62,8 +62,9 @@ public class PaddleView implements Drawable {
     }
 
     @Override
-    public void draw(Graphics2D g2d, DomainObject domainObject, int width, int height) {
+    public void draw(Graphics2D g2d, DomainObject domainObject, int width, int height) throws IOException {
         // TODO Auto-generated method stub
+        fillImgs();
         Paddle paddle = (Paddle) domainObject;
         int x = paddle.getPosVector().getX();
         int y = paddle.getPosVector().getY();

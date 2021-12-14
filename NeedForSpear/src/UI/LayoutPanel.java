@@ -72,7 +72,7 @@ public class LayoutPanel extends JPanel{
         SimpleObstacleView.getInstance().draw(g2d, d, frame_width, frame_height);
 
     }
-    private void drawPaddle(Graphics2D g2d, Paddle d, int width, int height) {
+    private void drawPaddle(Graphics2D g2d, Paddle d, int width, int height) throws IOException {
         // TODO Auto-generated method stub
         PaddleView.getInstance().draw(g2d, d, width, height);
 
