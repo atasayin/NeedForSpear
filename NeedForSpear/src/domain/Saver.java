@@ -26,12 +26,12 @@ public class Saver {
     String FILEPATH = "NeedForSpear/src/saves/Demo1.json";
 
 
-    public void saveGame(PaddleController pc, Ball ball, HashMap<Obstacle, PosVector> list) {
+    public void saveGame(Paddle paddle, Ball ball, HashMap<Obstacle, PosVector> list) {
         Document doc = new Document();
         ArrayList<String> temp;
         ArrayList<ArrayList<String>> map = new ArrayList<ArrayList<String>>();
-        doc.put("PaddlePositionX", pc.getPaddle().getPosVector().x);
-        doc.put("PaddlePositionY", pc.getPaddle().getPosVector().y);
+        doc.put("PaddlePositionX", paddle.getPosVector().x);
+        doc.put("PaddlePositionY", paddle.getPosVector().y);
         doc.put("BallPositionX", ball.posVector.x);
         doc.put("BallPositionY", ball.posVector.y);
         doc.put("Username", Game.getInstance().gameState.getPlayer().getUserName());
@@ -58,7 +58,7 @@ public class Saver {
         }
     }
 
-    public void loadGame(PaddleController pc, Ball ball) {
+    public void loadGame(Paddle paddle, Ball ball) {
 
         HashMap<Obstacle, PosVector> loadObsPos = new HashMap<>();
         Layout.setObstacle_positions(loadObsPos);
@@ -89,7 +89,7 @@ public class Saver {
 
             Map<Obstacle, PosVector> list = new HashMap<>();
             ArrayList<DomainObject> listDO = new ArrayList<DomainObject>();
-            int obsLen = Game.getInstance().PC.getPaddle().length/5;
+            int obsLen = Game.getInstance().getPaddle().length/5;
             PosVector vec;
 
             for (int i = 0; i < jsonlist.size(); i++) {

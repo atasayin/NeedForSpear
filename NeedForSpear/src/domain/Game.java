@@ -16,7 +16,8 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
     public GameState gameState;
     public Saver saver;
     static Game instance;
-    public PaddleController PC;
+    private Timer game_Timer;
+    private Paddle paddle;
     public Ball ball;
     public Layout layout;
     public boolean isLoad = false;
@@ -59,13 +60,13 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
 
     public void loadGame() {
         saver = new Saver();
-        saver.loadGame(Game.getInstance().PC, Game.getInstance().ball);
+        saver.loadGame(Game.getInstance().getPaddle(), Game.getInstance().ball);
 
     }
 
     public void saveGame() {
         saver = new Saver();
-        saver.saveGame(Game.getInstance().PC, Game.getInstance().ball, Layout.getObstacle_positions());
+        saver.saveGame(Game.getInstance().getPaddle(), Game.getInstance().ball, Layout.getObstacle_positions());
     }
 
     public double getScore(double oldScore){
@@ -84,7 +85,7 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
         // TODO Auto-generated method stub
         initializeGame(startParameters, username);
 
-        PC = new PaddleController(FRAME_WIDTH,FRAME_HEIGHT);
+        paddle = new Paddle(FRAME_WIDTH,FRAME_HEIGHT);
         this.ball = new Ball();
         this.ball.setisAlive(false);
 
@@ -129,6 +130,7 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
             game_Timer.stop();
         }
     }
+    public Paddle getPaddle() {return paddle;}
 
     public boolean getIsWin(){ return this.isWin;}
 
