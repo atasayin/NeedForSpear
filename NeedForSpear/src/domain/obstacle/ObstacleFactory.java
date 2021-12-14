@@ -4,7 +4,7 @@ import util.PosVector;
 
 public class ObstacleFactory {
 
-    public static ObstacleFactory instance;
+    private static ObstacleFactory instance;
 
     private ObstacleFactory(){}
 
