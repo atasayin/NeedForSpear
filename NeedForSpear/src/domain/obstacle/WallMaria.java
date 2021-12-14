@@ -7,8 +7,8 @@ import java.util.ArrayList;
 
 public class WallMaria extends Obstacle {
 	
-	public WallMaria(int xPos, int yPos, int L, int health) {
-		super(xPos, yPos, L, health);
+	public WallMaria(int xPos, int yPos) {
+		super(xPos, yPos);
 		this.destroyBehaviour = (DestroyBehaviour) new RegularDestroyBehaviour();
 		this.type = "WallMaria";
 	}

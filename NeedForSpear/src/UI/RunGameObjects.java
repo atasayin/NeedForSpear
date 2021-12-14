@@ -205,49 +205,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
             return;
         }
 
-        /*
-        int input = e.getKeyCode();
 
-
-        switch (input) {
-
-            case 80: // p: pause
-                infoString = "Game Paused.";
-                repaint();
-                tm.stop();
-                Game.getInstance().gameState.isRunning = false;
-                return;
-
-            case 82: // r: resume
-                infoString = "Game Resumed.";
-                tm.restart();
-                Game.getInstance().gameState.isRunning = true;
-
-                break;
-            case 83: // s: save
-                if (!tm.isRunning()) {
-                    infoString = "Game Saved.";
-                    kc.getInput(keyBits); // only works if game was paused
-                    return;
-                } else {
-                    infoString = "Press \"Pause\" Button before saving.";
-                    return;
-                }
-            case 76: // l: load
-                if (!tm.isRunning()) {
-                    infoString = "Game Loaded.";
-                    kc.getInput(keyBits);
-                    tm.restart();// only works if game was paused
-                    Game.getInstance().gameState.isRunning = true;
-                    return;
-                } else {
-                    infoString = "Press \"Pause\" Button before loading.";
-                    return;
-                }
-            default:
-
-        }
-            */
         if (kc.getInput(keyBits)) { // when returns true restart
             tm.restart();
             Game.getInstance().gameState.isRunning = true;
