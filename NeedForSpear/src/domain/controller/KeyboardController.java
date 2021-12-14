@@ -1,7 +1,6 @@
 package domain.controller;
 
 import domain.*;
-import domain.util.PosVector;
 
 import java.util.BitSet;
 

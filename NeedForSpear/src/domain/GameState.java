@@ -2,7 +2,7 @@ package domain;
 
 import domain.controller.BallController;
 import domain.controller.PaddleController;
-import domain.util.PosVector;
+import util.PosVector;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package domain.util;
+package util;
 import java.lang.Math;
 
 public class PosVector {

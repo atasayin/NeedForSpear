@@ -1,11 +1,10 @@
 package domain;
 
 import domain.obstacle.*;
-import domain.util.PosVector;
+import util.PosVector;
 //import javafx.geometry.Pos;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 public class Layout {

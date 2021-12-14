@@ -1,9 +1,7 @@
 package domain;
 
-import UI.RunGameObjects;
-import domain.util.PosVector;
+import util.PosVector;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 

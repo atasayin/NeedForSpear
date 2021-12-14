@@ -1,6 +1,6 @@
 package domain.controller;
 
-import domain.util.PosVector;
+import util.PosVector;
 
 public class BallController {
     public domain.Ball ball;

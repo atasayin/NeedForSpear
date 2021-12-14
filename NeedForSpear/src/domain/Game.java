@@ -1,6 +1,5 @@
 package domain;
-import domain.controller.PaddleController;
-import domain.util.PosVector;
+import util.PosVector;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

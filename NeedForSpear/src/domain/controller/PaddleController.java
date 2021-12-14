@@ -1,8 +1,5 @@
 package domain.controller;
 import domain.Paddle;
-import domain.util.PosVector;
-
-import java.awt.Graphics;
 
 public class PaddleController {
 	protected Paddle paddle;

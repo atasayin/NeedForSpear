@@ -1,13 +1,13 @@
-package abilities;
+package domain.abilities;
 
 import domain.Game;
 
 import java.util.concurrent.TimeUnit;
 
-public class UnstopppableBall implements Runnable{
+public class UnstoppableBall implements Runnable{
 
 
-    public UnstopppableBall() {}
+    public UnstoppableBall() {}
 
 
     public void activate() {

@@ -3,7 +3,7 @@ package domain.obstacle;
 import domain.DomainObject;
 import domain.Game;
 import domain.strategy.DestroyBehaviour;
-import domain.util.PosVector;
+import util.PosVector;
 
 public abstract class Obstacle extends DomainObject {
 	

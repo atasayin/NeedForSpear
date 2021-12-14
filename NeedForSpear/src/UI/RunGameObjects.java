@@ -12,13 +12,10 @@ import java.util.BitSet;
 
 import javax.swing.*;
 
-import abilities.DoubleAccel;
-import abilities.PaddleExpansion;
-import abilities.UnstopppableBall;
+import domain.abilities.PaddleExpansion;
 import domain.controller.KeyboardController;
 import domain.* ;
 import domain.obstacle.Obstacle;
-import domain.util.PosVector;
 
 
 @SuppressWarnings("serial")

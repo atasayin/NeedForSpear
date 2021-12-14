@@ -4,16 +4,12 @@ import domain.obstacle.Obstacle;
 import domain.obstacle.PandorasBox;
 import domain.obstacle.SteinsGate;
 import domain.obstacle.WallMaria;
-import domain.util.PosVector;
 
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import domain.*;
 

@@ -1,4 +1,4 @@
-package abilities;
+package domain.abilities;
 
 import domain.Game;
 

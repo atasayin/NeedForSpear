@@ -1,8 +1,7 @@
 package domain;
 
-import domain.controller.PaddleController;
 import domain.obstacle.*;
-import domain.util.PosVector;
+import util.PosVector;
 import org.bson.Document;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -13,8 +12,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;

@@ -1,6 +1,6 @@
 package domain;
 
-import domain.util.PosVector;
+import util.PosVector;
 
 public abstract class DomainObject {
 
