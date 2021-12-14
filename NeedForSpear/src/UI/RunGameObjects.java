@@ -85,7 +85,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
     }
     private void drawPaddle(Graphics2D g2d, Paddle d, int width, int height) {
         // TODO Auto-generated method stub
-        int width_ = Game.getInstance().PC.getPaddle().getWidth();
+        int width_ = Game.getInstance().getPaddle().getWidth();
         PaddleView.getInstance().draw(g2d, d, width_, height);
 
     }
@@ -159,14 +159,6 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
             }
         }
         if (toBeDeleted != null) Layout.obstacle_positions.remove(toBeDeleted);
-        sil++;
-        System.out.println(sil);
-        if (sil == 100) {
-            PaddleExpansion pe = new PaddleExpansion();
-            Thread t = new Thread(pe);
-            t.start();
-        }
-
 
     }
 

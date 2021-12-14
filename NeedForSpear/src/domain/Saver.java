@@ -23,7 +23,7 @@ import java.util.Map.Entry;
 
 public class Saver {
     private Object WallMaria;
-    String FILEPATH = "NeedForSpear/src/saves/Demo1.json";
+    String FILEPATH = "src/saves/Demo1.json";
 
 
     public void saveGame(Paddle paddle, Ball ball, HashMap<Obstacle, PosVector> list) {
@@ -76,7 +76,7 @@ public class Saver {
             String user = (String) doc.get("Username");
             Game.getInstance().gameState.getPlayer().setChance_points((int)c);
             Game.getInstance().gameState.getPlayer().setUserName(user);
-            pc.getPaddle().setPosVector(paddleLoc);
+            Game.getInstance().getPaddle().setPosVector(paddleLoc);
             z = (long) doc.get("BallPositionX");
 //            t = (long) doc.get("BallPositionY");
             x = ((int) z);

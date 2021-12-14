@@ -16,7 +16,7 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
     public GameState gameState;
     public Saver saver;
     static Game instance;
-    private Timer game_Timer;
+    //private Timer game_Timer;
     private Paddle paddle;
     public Ball ball;
     public Layout layout;
@@ -92,7 +92,7 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
         Game.getInstance().gameState.isRunning = true;
         initialTime = System.currentTimeMillis();
         System.out.println(ball.posVector.getX() + " " + ball.posVector.getY());
-        System.out.println("Paddle created " + PC.toString());
+        //System.out.println("Paddle created " + PC.toString());
 
         Player player = new Player(username, id);
         player.initializeInventory();
