@@ -72,7 +72,7 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
     public double getScore(double oldScore){
        long CurrentTime = System.currentTimeMillis();
        double NewScore = oldScore + 300/(double)((CurrentTime-initialTime)/1000);
-       System.out.println(CurrentTime-initialTime);
+       //System.out.println(CurrentTime-initialTime);
        return NewScore;
     }
     public void setScore(double newScore){  this.score = newScore;}

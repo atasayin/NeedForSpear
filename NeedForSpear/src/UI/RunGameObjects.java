@@ -1,7 +1,6 @@
 package UI;
 
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -40,9 +39,9 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
 
     public static int frame_width;
     public static int frame_height;
-    public int sil = 0;
-
-    /////////////////////////////////////////////////////////////////////////////////////
+    private JPanel scorePanel;
+    private JLabel scoreNameLabel;
+    private JLabel scoreNumLabel;
 
     public RunGameObjects(int width, int height) {
         this.frame_width = width;
@@ -110,6 +109,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
         //Game.getInstance().gameState.checkCollisions();
             gameOverCheck();
             update();
+            updateScore();
             repaint();
         try {
             ballChance();
@@ -306,8 +306,27 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
 
     public void initializeRunModeScreen() throws IOException {
         this.setFocusable(true);
+        scorePanel = initializeScorePanel();
+        scorePanel.setVisible(true);
+        this.add(scorePanel);
+
         tm.start();
 
+    }
+
+    private JPanel initializeScorePanel(){
+        JPanel scoreP = new JPanel();
+        scoreNameLabel = new JLabel("Score: ");
+        scoreNumLabel = new JLabel("0");
+
+        scoreP.add(scoreNameLabel);
+        scoreP.add(scoreNumLabel);
+        return scoreP;
+    }
+
+    private void updateScore(){
+        int score = (int) Game.getInstance().getOldScore();
+        scoreNumLabel.setText(score+"");
     }
 
     private static final int TIMER_SPEED = 50;
@@ -315,8 +334,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
 
     @Override
     public void onClickEvent() {
-        stop =true;
-
+        stop = true;
     }
 
     public void gameOverCheck() {
@@ -331,7 +349,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
             //Game.getInstance().cancelTime();
 
             JOptionPane.showMessageDialog(Playground.jf,
-                    "You are out of chance." + "Your score is "+Game.getInstance().gameState.getPlayer().getScore(),
+                    "You are out of chance." + "Your score is "+(int) Game.getInstance().getOldScore(),
                     "Out of chance",
                     JOptionPane.WARNING_MESSAGE);
             Playground.jf.dispose();
@@ -340,12 +358,11 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
         else if (isWin){
             tm.stop();
             JOptionPane.showMessageDialog(Playground.jf,
-                    "You win the game." + "Your score is "+Game.getInstance().gameState.getPlayer().getScore());
+                    "You win the game." + "Your score is "+(int) Game.getInstance().getOldScore());
 
             Playground.jf.dispose();
         }
-        }
-        //
+    }
 
 
 
