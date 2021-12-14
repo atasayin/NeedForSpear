@@ -42,6 +42,7 @@ public class PaddleView implements Drawable {
 
         // scale to unit length L
         int paddleLen = BuildModeScreen.FRAME_WIDTH/10;
+        //int paddleLen = Game.getInstance().PC.getPaddle().getLength();
         int paddleThick = 20;
         Image scaled = paddle_img.getScaledInstance(paddleLen, paddleThick,
                 BufferedImage.SCALE_SMOOTH);

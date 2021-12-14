@@ -14,6 +14,7 @@ import java.util.BitSet;
 import javax.swing.*;
 
 import abilities.DoubleAccel;
+import abilities.PaddleExpansion;
 import abilities.UnstopppableBall;
 import domain.controller.KeyboardController;
 import domain.* ;
@@ -27,6 +28,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
     /////////////////////////////////////////////////////////////////////////////////////
 
     Timer tm = new Timer(TIMER_SPEED, this);
+
     BufferedImage img; // background
     String infoString = "";
     int infoRefreshCount;
@@ -38,6 +40,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
 
     public static int frame_width;
     public static int frame_height;
+    public int sil = 0;
 
     /////////////////////////////////////////////////////////////////////////////////////
 
@@ -83,7 +86,8 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
     }
     private void drawPaddle(Graphics2D g2d, Paddle d, int width, int height) {
         // TODO Auto-generated method stub
-        PaddleView.getInstance().draw(g2d, d, width, height);
+        int width_ = Game.getInstance().PC.getPaddle().getWidth();
+        PaddleView.getInstance().draw(g2d, d, width_, height);
 
     }
 
@@ -107,7 +111,13 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
             gameOverCheck();
             update();
             repaint();
-            //Game.getInstance().gameState.removeObjectsIfOutsideScreen();
+        try {
+            ballChance();
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();
+        }
+
+        //Game.getInstance().gameState.removeObjectsIfOutsideScreen();
             infoRefreshCount += TIMER_SPEED;
             if (infoRefreshCount >= INFO_REFRESH_PERIOD) {
                 infoString = "";
@@ -149,6 +159,13 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
             }
         }
         if (toBeDeleted != null) Layout.obstacle_positions.remove(toBeDeleted);
+        sil++;
+        System.out.println(sil);
+        if (sil == 100) {
+            PaddleExpansion pe = new PaddleExpansion();
+            Thread t = new Thread(pe);
+            t.start();
+        }
 
 
     }
@@ -299,11 +316,14 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
     @Override
     public void onClickEvent() {
         stop =true;
+
     }
 
     public void gameOverCheck() {
 
         Integer chance = Game.getInstance().gameState.getPlayer().getChance_points();
+
+        Boolean isWin = Game.getInstance().getIsWin();
 
         Object[] options = { "OK" };
         if (chance <=0){
@@ -314,10 +334,26 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
                     "You are out of chance." + "Your score is "+Game.getInstance().gameState.getPlayer().getScore(),
                     "Out of chance",
                     JOptionPane.WARNING_MESSAGE);
+            Playground.jf.dispose();
 
         }
-        //Playground.jf.dispose();
+        else if (isWin){
+            tm.stop();
+            JOptionPane.showMessageDialog(Playground.jf,
+                    "You win the game." + "Your score is "+Game.getInstance().gameState.getPlayer().getScore());
 
+            Playground.jf.dispose();
+        }
+        }
+        //
+
+
+
+    public void ballChance() throws InterruptedException {
+        if(stop){
+            wait(2000);
+
+        }
     }
 }
 

@@ -51,15 +51,13 @@ public class BuildModeScreen extends JFrame {
     private LayoutController LC = LayoutController.getInstance();
 
     // Layout Panel
-    private LayoutPanel layoutPanel;
+    // private LayoutPanel layoutPanel;
 
     private JPanel obstacleSettingsPanel;
+    private JPanel viewPanel;
 
     private String  username;
     private  String id;
-
-    // Game
-    Game game = Game.getInstance();
 
     /////////////////////////////////////////////////////////////////////////////////////
 
@@ -97,22 +95,37 @@ public class BuildModeScreen extends JFrame {
 
     public BuildModeScreen() {
         initializeBuildScreen();
+        viewPanel = initializeViewPanel();
+        add(viewPanel);
         obstacleSettingsPanel = initializeObstacleSettingsPanel();
-        add(obstacleSettingsPanel,BorderLayout.EAST);
-        layoutPanel = initializeLayoutPanel();
-        add(layoutPanel,BorderLayout.CENTER);
-        add(runGamePanel(this),BorderLayout.SOUTH);
+        add(obstacleSettingsPanel);
+        add(runGamePanel(this));
+
+
+//        initializeBuildScreen();
+//        obstacleSettingsPanel = initializeObstacleSettingsPanel();
+//        add(obstacleSettingsPanel,BorderLayout.CENTER);
+//        layoutPanel = initializeLayoutPanel();
+//        add(layoutPanel,BorderLayout.NORTH);
+//        add(runGamePanel(this),BorderLayout.SOUTH);
     }
 
     private void initializeBuildScreen() {
-        this.setLayout(new BorderLayout(0, 0));
+        //this.setLayout(new BorderLayout(0, 0));
+        this.setLayout(new GridLayout(3,0));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(FRAME_WIDTH, FRAME_HEIGHT);
         this.setLocationRelativeTo(null);
     }
 
+    private JPanel initializeViewPanel(){
+        JPanel viewP = new JPanel();
+        viewP.setBackground(Color.BLACK);
+        return viewP;
+    }
+
     private JPanel initializeObstacleSettingsPanel(){
-        GridLayout gameObjLayout = new GridLayout(5, 3,10,10); // #Type of obstacles + Button
+        GridLayout gameObjLayout = new GridLayout(5,3); // #Type of obstacles + Button
         JPanel GameObjectPanel = new JPanel(gameObjLayout);
         GameObjectPanel.setBackground(Color.orange);
 
@@ -123,23 +136,26 @@ public class BuildModeScreen extends JFrame {
         giftObstacle = new JTextField(Integer.toString(GIFT_COUNT), 30);
 
         // Simple Obstacle Row
-        GameObjectPanel.add(new JLabel(new ImageIcon("../assets/simpleball.png")));
-        JLabel simpleObstacleLabel = new JLabel("Number of simple obstacles");
-        GameObjectPanel.add(simpleObstacleLabel);
+        ImageIcon simpleObsIcon = new ImageIcon(new ImageIcon("NeedForSpear/src/assets/simple_obstacle.png").getImage().getScaledInstance(80, 50, Image.SCALE_DEFAULT));
+        GameObjectPanel.add(new JLabel(simpleObsIcon));
+        GameObjectPanel.add(new JLabel("Number of simple obstacles"));
         GameObjectPanel.add(simpleObstacle);
 
         // Firm Obstacle Row
-        GameObjectPanel.add(new JLabel(new ImageIcon("../assets/simpleball.png")));
+        ImageIcon firmObsIcon = new ImageIcon(new ImageIcon("NeedForSpear/src/assets/firm_obstacle_empty.png").getImage().getScaledInstance(80, 50, Image.SCALE_DEFAULT));
+        GameObjectPanel.add(new JLabel(firmObsIcon));
         GameObjectPanel.add(new JLabel("Number of firm obstacles"));
         GameObjectPanel.add(firmObstacle);
 
         // Explosive Obstacle Row
-        GameObjectPanel.add(new JLabel(new ImageIcon("../assets/simpleball.png")));
+        ImageIcon expObsIcon = new ImageIcon(new ImageIcon("NeedForSpear/src/assets/explosive_obstacle.png").getImage().getScaledInstance(60, 60, Image.SCALE_DEFAULT));
+        GameObjectPanel.add(new JLabel(expObsIcon));
         GameObjectPanel.add(new JLabel("Number of explosive obstacles"));
         GameObjectPanel.add(explosiveObstacle);
 
         // Gift Obstacle Row
-        GameObjectPanel.add(new JLabel(new ImageIcon("../assets/simpleball.png")));
+        ImageIcon giftObsIcon = new ImageIcon(new ImageIcon("NeedForSpear/src/assets/gift_obstacle.png").getImage().getScaledInstance(80, 50, Image.SCALE_DEFAULT));
+        GameObjectPanel.add(new JLabel(giftObsIcon));
         GameObjectPanel.add(new JLabel("Number of gift obstacles"));
         GameObjectPanel.add(giftObstacle);
 
@@ -150,8 +166,6 @@ public class BuildModeScreen extends JFrame {
                 setObstacleSettings();
                 layout = LC.getRandomLayout();
                 gameStartButton.setEnabled(true);
-
-
             }
         });
 
@@ -169,7 +183,7 @@ public class BuildModeScreen extends JFrame {
     }
 
     private JPanel runGamePanel(JFrame frame) {
-        GridLayout panelLayout = new GridLayout(3, 0);
+        GridLayout panelLayout = new GridLayout(2, 0);
         JPanel runGamePanel = new JPanel(panelLayout);
         loadGameButton = new JButton("Load Game");
         gameStartButton = new JButton("Click to start the game!");
@@ -179,7 +193,6 @@ public class BuildModeScreen extends JFrame {
             public void actionPerformed(ActionEvent ev) {
                 setRunSettings();
                 notifyButtonisClickedListeners(username, id);
-
             }
         });
 
@@ -197,6 +210,14 @@ public class BuildModeScreen extends JFrame {
         runGamePanel.add(loadGameButton);
         runGamePanel.add(gameStartButton);
         return runGamePanel;
+    }
+
+    private JPanel ust () {
+        GridLayout panelLayout = new GridLayout(5, 3);
+        JPanel GameObjectPanel = new JPanel(panelLayout);
+        GameObjectPanel.setBackground(Color.BLACK);
+
+        return GameObjectPanel;
     }
 
     public void notifyButtonisClickedListeners(String username, String id) {

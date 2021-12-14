@@ -34,6 +34,8 @@ public class Saver {
         doc.put("PaddlePositionY", paddle.getPosVector().y);
         doc.put("BallPositionX", ball.posVector.x);
         doc.put("BallPositionY", ball.posVector.y);
+        doc.put("Username", Game.getInstance().gameState.getPlayer().getUserName());
+        doc.put("ChancePoints", Game.getInstance().gameState.getPlayer().getChance_points());
         //doc.put(" Object List: ", list);
 
         for (Entry<Obstacle, PosVector> o : list.entrySet()) {
@@ -70,14 +72,15 @@ public class Saver {
             long t = (long)  doc.get("PaddlePositionY");
             int y = ((int) t);
             PosVector paddleLoc = new PosVector(x, y);
-
-            paddle.setPosVector(paddleLoc);
+            long c = (long) doc.get("ChancePoints");
+            String user = (String) doc.get("Username");
+            Game.getInstance().gameState.getPlayer().setChance_points((int)c);
+            Game.getInstance().gameState.getPlayer().setUserName(user);
+            pc.getPaddle().setPosVector(paddleLoc);
             z = (long) doc.get("BallPositionX");
 //            t = (long) doc.get("BallPositionY");
             x = ((int) z);
 //            y = ((int) t);
-
-
 
             PosVector ballLoc = new PosVector(x, 0);
             ball.setPosVector(ballLoc);
