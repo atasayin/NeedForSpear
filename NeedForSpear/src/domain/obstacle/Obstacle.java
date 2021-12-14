@@ -6,7 +6,9 @@ import domain.strategy.DestroyBehaviour;
 import util.PosVector;
 
 public abstract class Obstacle extends DomainObject {
-	
+
+	static final int FRAME_WIDTH = 1368;
+
 	public PosVector pos;
 	public boolean is_rotating;
 	public int health;
@@ -15,12 +17,11 @@ public abstract class Obstacle extends DomainObject {
 	private int height, width;
 
 	
-	
-	public Obstacle(int xPos, int yPos, int L, int health) {
+	public Obstacle(int xPos, int yPos) {
 		this.pos = new PosVector(xPos, yPos);
-		this.health = health;
+		this.health = 1;
 		this.is_rotating = false;
-		this.width = L;
+		this.width = FRAME_WIDTH/50;
 		this.height = 20;
 	}
 	public String getType() {

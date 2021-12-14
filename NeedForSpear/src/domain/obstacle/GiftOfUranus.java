@@ -8,8 +8,8 @@ public class GiftOfUranus extends Obstacle {
 
 	private int width;
 
-	public GiftOfUranus(int xPos, int yPos, int L, int health) {
-		super(xPos, yPos, L, health);
+	public GiftOfUranus(int xPos, int yPos) {
+		super(xPos, yPos);
 		this.destroyBehaviour = new GiftObstacleDestroyBehaviour();
 		this.type = "GiftOfUranus";
 	}

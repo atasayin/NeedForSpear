@@ -102,25 +102,25 @@ public class Saver {
                 int m = (Integer.parseInt(s.substring(k + 2, l)));
 
                 if(s.contains("WallMaria")){
-                    WallMaria obs = new WallMaria(p, m, obsLen, 1);
+                    WallMaria obs = new WallMaria(p, m);
                     listDO.add(obs);
                     vec = new PosVector(p,m);
                     Layout.getObstacle_positions().put(obs,vec);
                 }
                 if(s.contains("GiftOfUranus")){
-                    GiftOfUranus obs = new GiftOfUranus(p, m, obsLen, 1);
+                    GiftOfUranus obs = new GiftOfUranus(p, m);
                     listDO.add(obs);
                     vec = new PosVector(p,m);
                     Layout.getObstacle_positions().put(obs,vec);
                 }
                 if(s.contains("PandorasBox")){
-                    PandorasBox obs = new PandorasBox(p, m, obsLen, 1);
+                    PandorasBox obs = new PandorasBox(p, m);
                     listDO.add(obs);
                     vec = new PosVector(p,m);
                     Layout.getObstacle_positions().put(obs,vec);
                 }
                 if(s.contains("SteinsGate")){
-                    SteinsGate obs = new SteinsGate(p, m, obsLen, 1);
+                    SteinsGate obs = new SteinsGate(p, m);
                     listDO.add(obs);
                     vec = new PosVector(p,m);
                     Layout.getObstacle_positions().put(obs,vec);
