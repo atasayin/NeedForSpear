@@ -12,7 +12,6 @@ import javax.swing.*;
 
 import domain.*;
 import domain.controller.LayoutController;
-import domain.obstacle.Obstacle;
 
 
 @SuppressWarnings("serial")
@@ -20,10 +19,11 @@ public class BuildModeScreen extends JFrame {
 
     /////////////////////////////////////////////////////////////////////////////////////
 
+    // Build Mode Screen features
     public static final int FRAME_WIDTH = 1368;
     public static final int FRAME_HEIGHT = 766;
 
-    // Obstacles
+    // Initial Obstacle Counts
     static final int SIMPLE_COUNT = 75;
     static final int FIRM_COUNT = 10;
     static final int EXPLOSIVE_COUNT = 5;
@@ -80,6 +80,7 @@ public class BuildModeScreen extends JFrame {
         this.runSettings = runSettings;
     }
 
+    // Take the obstacle counts according to their types, and send them to the LayoutController
     public void setObstacleSettings() {
         HashMap<String, Integer> obstacleSettings = new HashMap<String, Integer>();
 
@@ -101,7 +102,6 @@ public class BuildModeScreen extends JFrame {
         add(obstacleSettingsPanel);
         add(runGamePanel(this));
 
-
 //        initializeBuildScreen();
 //        obstacleSettingsPanel = initializeObstacleSettingsPanel();
 //        add(obstacleSettingsPanel,BorderLayout.CENTER);
@@ -110,20 +110,23 @@ public class BuildModeScreen extends JFrame {
 //        add(runGamePanel(this),BorderLayout.SOUTH);
     }
 
+    // Initialize the outer JFrame of Build Mode Screen
     private void initializeBuildScreen() {
-        //this.setLayout(new BorderLayout(0, 0));
         this.setLayout(new GridLayout(3,0));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(FRAME_WIDTH, FRAME_HEIGHT);
         this.setLocationRelativeTo(null);
     }
 
+    // This will be the interactive Build Mode Panel in the future
+    // TODO: Make this panel interactive (How?)
     private JPanel initializeViewPanel(){
         JPanel viewP = new JPanel();
         viewP.setBackground(Color.BLACK);
         return viewP;
     }
 
+    // This provides a panel that the player can set the obstacle numbers (Orange Panel)
     private JPanel initializeObstacleSettingsPanel(){
         GridLayout gameObjLayout = new GridLayout(5,3); // #Type of obstacles + Button
         JPanel GameObjectPanel = new JPanel(gameObjLayout);
@@ -136,25 +139,25 @@ public class BuildModeScreen extends JFrame {
         giftObstacle = new JTextField(Integer.toString(GIFT_COUNT), 30);
 
         // Simple Obstacle Row
-        ImageIcon simpleObsIcon = new ImageIcon(new ImageIcon("NeedForSpear/src/assets/simple_obstacle.png").getImage().getScaledInstance(80, 50, Image.SCALE_DEFAULT));
+        ImageIcon simpleObsIcon = new ImageIcon(new ImageIcon("src/assets/simple_obstacle.png").getImage().getScaledInstance(80, 50, Image.SCALE_DEFAULT));
         GameObjectPanel.add(new JLabel(simpleObsIcon));
         GameObjectPanel.add(new JLabel("Number of simple obstacles"));
         GameObjectPanel.add(simpleObstacle);
 
         // Firm Obstacle Row
-        ImageIcon firmObsIcon = new ImageIcon(new ImageIcon("NeedForSpear/src/assets/firm_obstacle_empty.png").getImage().getScaledInstance(80, 50, Image.SCALE_DEFAULT));
+        ImageIcon firmObsIcon = new ImageIcon(new ImageIcon("src/assets/firm_obstacle_empty.png").getImage().getScaledInstance(80, 50, Image.SCALE_DEFAULT));
         GameObjectPanel.add(new JLabel(firmObsIcon));
         GameObjectPanel.add(new JLabel("Number of firm obstacles"));
         GameObjectPanel.add(firmObstacle);
 
         // Explosive Obstacle Row
-        ImageIcon expObsIcon = new ImageIcon(new ImageIcon("NeedForSpear/src/assets/explosive_obstacle.png").getImage().getScaledInstance(60, 60, Image.SCALE_DEFAULT));
+        ImageIcon expObsIcon = new ImageIcon(new ImageIcon("src/assets/explosive_obstacle.png").getImage().getScaledInstance(60, 60, Image.SCALE_DEFAULT));
         GameObjectPanel.add(new JLabel(expObsIcon));
         GameObjectPanel.add(new JLabel("Number of explosive obstacles"));
         GameObjectPanel.add(explosiveObstacle);
 
         // Gift Obstacle Row
-        ImageIcon giftObsIcon = new ImageIcon(new ImageIcon("NeedForSpear/src/assets/gift_obstacle.png").getImage().getScaledInstance(80, 50, Image.SCALE_DEFAULT));
+        ImageIcon giftObsIcon = new ImageIcon(new ImageIcon("src/assets/gift_obstacle.png").getImage().getScaledInstance(80, 50, Image.SCALE_DEFAULT));
         GameObjectPanel.add(new JLabel(giftObsIcon));
         GameObjectPanel.add(new JLabel("Number of gift obstacles"));
         GameObjectPanel.add(giftObstacle);
@@ -182,6 +185,7 @@ public class BuildModeScreen extends JFrame {
         return new LayoutPanel(layout,FRAME_WIDTH,FRAME_HEIGHT);
     }
 
+    // This panel provides an option to load an existing game, and start to game
     private JPanel runGamePanel(JFrame frame) {
         GridLayout panelLayout = new GridLayout(2, 0);
         JPanel runGamePanel = new JPanel(panelLayout);
@@ -212,14 +216,6 @@ public class BuildModeScreen extends JFrame {
         return runGamePanel;
     }
 
-    private JPanel ust () {
-        GridLayout panelLayout = new GridLayout(5, 3);
-        JPanel GameObjectPanel = new JPanel(panelLayout);
-        GameObjectPanel.setBackground(Color.BLACK);
-
-        return GameObjectPanel;
-    }
-
     public void notifyButtonisClickedListeners(String username, String id) {
         System.out.println("ALL LISTENERS ARE NOTIFIED THAT THE BUTTON IS CLICKED \n\n\n");
 
@@ -234,9 +230,9 @@ public class BuildModeScreen extends JFrame {
     public void setID(String  ID){
         this.id = ID;
     }
+
     public void setUserName(String  username){
         this.username = username;
-
     }
 
 }
