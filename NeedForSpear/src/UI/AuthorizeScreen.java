@@ -18,12 +18,17 @@ import java.util.ArrayList;
 
 public class AuthorizeScreen extends JFrame  {
 
+    /////////////////////////////////////////////////////////////////////////////////////
 
+    // Authorize Screen Features
     static final int SCREEN_WIDTH = 1368;
     static final int SCREEN_HEIGHT = 766;
 
+    // Initial Username and Password JTextField Arguments
     static final String USERNAME = "Attila";
+    static final String PASSWORD = "1111";
 
+    // Filepath to save the players' usernames and passwords
     String FILEPATH = "src/saves/players.json";
 
     private JTextField userName;
@@ -39,10 +44,11 @@ public class AuthorizeScreen extends JFrame  {
     private java.util.List<IAuthorizeListener> autoModeListeners = new ArrayList<>();
     protected Playground nfs;
 
+    /////////////////////////////////////////////////////////////////////////////////////
+
     public AuthorizeScreen(Playground nfs){
         this.nfs = nfs;
         initializeAuthorizeScreen();
-        //add(initializeImagePanel());
         info = initializeInfoPanel();
         buttons = initializeButtonPanel();
         ImageIcon icon = new ImageIcon(new ImageIcon("src/assets/intro.png").getImage().getScaledInstance(200, 200, Image.SCALE_DEFAULT));
@@ -52,6 +58,7 @@ public class AuthorizeScreen extends JFrame  {
 
     }
 
+    // Initialize the outer JFrame of Authorization Screen
     private void initializeAuthorizeScreen() {
         this.setTitle("Need For Spear");
         this.setLayout(new GridLayout(3, 0));
@@ -59,14 +66,8 @@ public class AuthorizeScreen extends JFrame  {
         this.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
         this.setLocationRelativeTo(null);
     }
-    public void addListener(IAuthorizeListener listener) {
-        autoModeListeners.add(listener);
-    }
 
-    public void removeListener(IAuthorizeListener listener) { autoModeListeners.remove(listener);}
-
-
-    // Username and Password
+    // Username and password fields, images
     private JPanel initializeInfoPanel(){
         GridLayout infoLayout = new GridLayout(2, 2);
         JPanel infoPanel = new JPanel(infoLayout);
@@ -82,18 +83,18 @@ public class AuthorizeScreen extends JFrame  {
         ImageIcon passwordIcon = new ImageIcon(new ImageIcon("src/assets/password.png").getImage().getScaledInstance(60, 60, Image.SCALE_DEFAULT));
         passwordLabel.setIcon(passwordIcon);
         infoPanel.add(passwordLabel);
-        ID = new JTextField("1111", 8);
+        ID = new JTextField(PASSWORD, 8);
         infoPanel.add(ID);
 
         return infoPanel;
-
     }
 
-    // Sign Up or Login
+    // Sign Up and Login buttons and their functionalities
     private JPanel initializeButtonPanel(){
         GridLayout buttonLayout = new GridLayout(1, 2);
         JPanel buttonPanel = new JPanel(buttonLayout);
 
+        // Login Button
         JButton loginButton = new JButton("Login");
         loginButton.addActionListener(new ActionListener() {
             @Override
@@ -110,6 +111,7 @@ public class AuthorizeScreen extends JFrame  {
             }
         });
 
+        // Sign Up Button
         JButton signButton = new JButton("Sign Up");
         signButton.addActionListener(new ActionListener() {
             @Override
@@ -133,6 +135,10 @@ public class AuthorizeScreen extends JFrame  {
         return buttonPanel;
     }
 
+    /* Checks all existing player usernames and passwords.
+     * If a username-password pair exists in the log file, system allows to login.
+     * If a username does not exist, or password is wrong, system does not allow to login.
+     * */
     private void checkPlayerLogs() {
 
         String checking = userName.getText();
@@ -167,7 +173,10 @@ public class AuthorizeScreen extends JFrame  {
         }
     }
 
-
+    /* First it checks whether the provided username already exists in the log file.
+     * If it exists, the system does not allow to sign up.
+     * If it does not, system takes the username-password pair and puts it into the log file.
+     */
     private boolean savePlayerLogs() {
         checkPlayerLogs();
 
@@ -222,8 +231,13 @@ public class AuthorizeScreen extends JFrame  {
         }
 
         return true;
-
     }
+
+    public void addListener(IAuthorizeListener listener) {
+        autoModeListeners.add(listener);
+    }
+
+    public void removeListener(IAuthorizeListener listener) { autoModeListeners.remove(listener); }
 
 
 
