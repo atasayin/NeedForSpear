@@ -117,7 +117,10 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
             update();
             updateScore();
             if(update) {
+                System.out.println("action preformed");
                 updateChance();
+                System.out.println(update);
+                repaint();
             }
             repaint();
         try {
@@ -295,6 +298,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
         JPanel ChanceP = new JPanel();
         ImageIcon icon = new ImageIcon(new ImageIcon("src/assets/3heart.png").getImage().getScaledInstance(200, 50, Image.SCALE_DEFAULT));
         ChanceP.add(new JLabel(icon));
+
         return ChanceP;
     }
 
@@ -354,7 +358,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
         System.out.println("chance is " +chance);
         this.chance = chance;
         System.out.println("this chance is " +this.chance);
-        updateChance();
+        //updateChance();
         update =true;
         //chancePanel.removeAll();
     }
