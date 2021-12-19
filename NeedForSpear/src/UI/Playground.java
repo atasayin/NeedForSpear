@@ -13,6 +13,7 @@ public class Playground implements IRunListener, IAuthorizeListener {
 
     RunGameObjects screen;
 
+
     public void onClickEvent(HashMap<String, Integer> runSettings, String username, String id) {
         int screenWidth = runSettings.get("screenWidth").intValue();
         int screenHeight = runSettings.get("screenHeight").intValue();
@@ -40,6 +41,7 @@ public class Playground implements IRunListener, IAuthorizeListener {
 
     private void openRunModeScreen(int width, int height) {
         screen = new RunGameObjects(width, height);
+        this.bd.addLoadListener(screen);
         screen.setVisible(true);
         jf.add(screen);
         jf.addKeyListener(screen);

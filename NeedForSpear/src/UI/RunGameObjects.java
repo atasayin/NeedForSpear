@@ -19,7 +19,7 @@ import domain.obstacle.Obstacle;
 
 
 @SuppressWarnings("serial")
-public class RunGameObjects extends JPanel implements ActionListener, KeyListener, IGameListener,IChanceListener {
+public class RunGameObjects extends JPanel implements ActionListener, KeyListener, IGameListener,IChanceListener,ILoadListener {
 
     /////////////////////////////////////////////////////////////////////////////////////
 
@@ -267,6 +267,9 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
             kc.getInput(keyBits);
             tm.restart();// only works if game was paused
             Game.getInstance().gameState.isRunning = true;
+            updateChance();
+            System.out.println(Game.getInstance().gameState.getPlayer().getScore()+ "in loadgame run obj");
+            scoreNumLabel.setText(Game.getInstance().getOldScore()+"");
         } else {
             infoString = "Press \"Pause\" Button before loading.";
         }
@@ -366,21 +369,43 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
     public void updateChance(){
 
         chancePanel.removeAll();
-        if(chance == 2){
+        if(chance == 3){
+            chancePanel.removeAll();
+            icon = new ImageIcon(new ImageIcon("src/assets/3heart.png").getImage().getScaledInstance(200, 50, Image.SCALE_DEFAULT));
+            chancePanel.add(new JLabel(icon));
+            chancePanel.setVisible(true);
+            update =false;
+        }
+        else if(chance == 2){
             chancePanel.removeAll();
              icon = new ImageIcon(new ImageIcon("src/assets/2heart.png").getImage().getScaledInstance(200, 50, Image.SCALE_DEFAULT));
              chancePanel.add(new JLabel(icon));
             chancePanel.setVisible(true);
             update =false;
         }
-        if(chance == 1){
+        else if(chance == 1){
             //chancePanel.removeAll();
              icon = new ImageIcon(new ImageIcon("src/assets/1heart.png").getImage().getScaledInstance(200, 50, Image.SCALE_DEFAULT));
             chancePanel.add(new JLabel(icon));
             chancePanel.setVisible(true);
             update =false;
         }
+        else if(chance == 0){
+            chancePanel.removeAll();
+            icon = new ImageIcon(new ImageIcon("src/assets/0heart.png").getImage().getScaledInstance(200, 50, Image.SCALE_DEFAULT));
+            chancePanel.add(new JLabel(icon));
+            chancePanel.setVisible(true);
+            update =false;
+        }
 
+
+    }
+
+    @Override
+    public void onClickEventDo() {
+        System.out.println("OnclickEVetnDo");
+        System.out.println(Game.getInstance().gameState.getPlayer().getScore()+ "in loadgame run obj");
+        scoreNumLabel.setText(Game.getInstance().gameState.getPlayer().getScore()+"");
 
     }
 }

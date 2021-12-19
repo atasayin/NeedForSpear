@@ -27,7 +27,7 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
     public static int UNITLENGTH_L = 1;
     private boolean isWin = false;
     private long initialTime;
-    private double score =0;
+    private int score =0;
 
     private javax.swing.Timer game_Timer = new javax.swing.Timer(TIMER_SPEED, this);
     private Game() {
@@ -68,15 +68,15 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
         saver.saveGame(Game.getInstance().getPaddle(), Game.getInstance().ball, Layout.getObstacle_positions());
     }
 
-    public double getScore(double oldScore){
+    public Integer getScore(int oldScore){
        long CurrentTime = System.currentTimeMillis();
-       double NewScore = oldScore + 300/(double)((CurrentTime-initialTime)/1000);
+       int NewScore =(int) (oldScore + 300/(double)((CurrentTime-initialTime)/1000));
        //System.out.println(CurrentTime-initialTime);
        return NewScore;
     }
-    public void setScore(double newScore){  this.score = newScore;}
+    public void setScore(int newScore){  this.score = newScore;}
 
-    public double getOldScore() {
+    public int getOldScore() {
         return this.score;
     }
     @Override
@@ -135,7 +135,7 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
 
 
     @Override
-    public void onClickEvent() {
+    public void onClickEventDo() {
         isLoad = true;
     }
 
