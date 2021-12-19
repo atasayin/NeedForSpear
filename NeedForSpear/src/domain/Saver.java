@@ -19,7 +19,7 @@ import java.util.Map.Entry;
 
 
 public class Saver {
-    private Object WallMaria;
+
     String FILEPATH = "src/saves/Demo1.json";
 
 

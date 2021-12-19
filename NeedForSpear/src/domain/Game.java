@@ -22,7 +22,7 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
     public boolean isLoad = false;
     private static final int TIMER_SPEED = 5;
     Player player = null;
-    private static final long TOTAL_DEATH_TIME = 5000;
+    private static final long TOTAL_DEATH_TIME = 4500;
     private long deathInitTime = -100;
     public static int UNITLENGTH_L = 1;
     private boolean isWin = false;
@@ -150,7 +150,8 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
                 // if dead but just now dead, initialize deathInitTime
                 deathInitTime = System.currentTimeMillis();
                 Integer points = Game.getInstance().gameState.getPlayer().getChance_points() - 1;
-                Game.getInstance().gameState.getPlayer().setChance_points(points);
+                Game.getInstance().gameState.setChance(points);
+                //Game.getInstance().gameState.getPlayer().setChance_points(points);
             } else {
                 // he's been dead
                 // check how long he's been dead
