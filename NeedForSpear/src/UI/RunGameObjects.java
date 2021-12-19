@@ -146,38 +146,8 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
 //            domainObject.updateAngle();
 //        }
 //        Game.getInstance().gameState.updatePaddlePosition();
+        colCheck.check();
 
-        Obstacle toBeDeleted = null;
-        Game.getInstance().getPaddle().updatePosition(0,0);
-        Game.getInstance().ball.move();
-        if (colCheck.checkPaddleBallCollision(Game.getInstance().ball, Game.getInstance().getPaddle())) {
-            Game.getInstance().ball.reflectFromPaddle();
-        }
-
-        //if (Game.getInstance().ball.getPosVector().getY() < 0) Game.getInstance().ball.reflectFromHorizontal();
-
-        for (Obstacle obs : Layout.obstacle_positions.keySet()) {
-            if (colCheck.checkCollision(Game.getInstance().ball, obs)) {
-                if (obs.getHit()){
-                    Game.getInstance().getDomainObjectArr().remove(obs);
-                    toBeDeleted = obs;
-                }
-
-                if (colCheck.findCollisionDirection(Game.getInstance().ball, obs)) {
-                    Game.getInstance().ball.reflectFromVertical();
-                } else {
-                    Game.getInstance().ball.reflectFromHorizontal();
-                }
-            }
-        }
-        if (toBeDeleted != null) Layout.obstacle_positions.remove(toBeDeleted);
-        sil++;
-        System.out.println(sil);
-        if (sil == 100) {
-            PaddleExpansion pe = new PaddleExpansion();
-            Thread t = new Thread(pe);
-            t.start();
-        }
 
     }
 

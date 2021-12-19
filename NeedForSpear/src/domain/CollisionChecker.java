@@ -1,5 +1,6 @@
 package domain;
 
+import domain.abilities.PaddleExpansion;
 import domain.obstacle.Obstacle;
 
 import java.util.ArrayList;
@@ -97,6 +98,34 @@ public class CollisionChecker {
 
 
     }
+    public void check(){
+        Obstacle toBeDeleted = null;
+        Game.getInstance().getPaddle().updatePosition(0,0);
+        Game.getInstance().ball.move();
+        if (instance.checkPaddleBallCollision(Game.getInstance().ball, Game.getInstance().getPaddle())) {
+            Game.getInstance().ball.reflectFromPaddle();
+        }
+
+        //if (Game.getInstance().ball.getPosVector().getY() < 0) Game.getInstance().ball.reflectFromHorizontal();
+
+        for (Obstacle obs : Layout.obstacle_positions.keySet()) {
+            if (instance.checkCollision(Game.getInstance().ball, obs)) {
+                if (obs.getHit()){
+                    Game.getInstance().getDomainObjectArr().remove(obs);
+                    toBeDeleted = obs;
+                }
+
+                if (instance.findCollisionDirection(Game.getInstance().ball, obs)) {
+                    Game.getInstance().ball.reflectFromVertical();
+                } else {
+                    Game.getInstance().ball.reflectFromHorizontal();
+                }
+            }
+        }
+        if (toBeDeleted != null) Layout.obstacle_positions.remove(toBeDeleted);
+
+    }
+
 
 
 }
