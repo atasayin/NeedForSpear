@@ -1,5 +1,5 @@
 package domain;
 
 public interface ILoadListener {
-    void onClickEvent();
+    void onClickEventDo();
 }

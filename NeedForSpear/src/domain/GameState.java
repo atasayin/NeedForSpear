@@ -17,6 +17,7 @@ public class GameState {
     private double time;
     protected Player player;
     public static PaddleController pc;
+    private java.util.List<IChanceListener> ChanceListeners = new ArrayList<>();
 
 
     public GameState() {
@@ -82,5 +83,16 @@ public class GameState {
 
     public void initializeGameState(Layout layout) {
 
+    }
+    public void setChance(int chance){
+        this.getPlayer().setChance_points(chance);
+        System.out.println("I am dead they listen ");
+        for (IChanceListener listener : ChanceListeners) {
+            listener.onLoseChance(chance);
+        }
+    }
+
+    public void addListener( IChanceListener listener) {
+        ChanceListeners.add(listener);
     }
 }

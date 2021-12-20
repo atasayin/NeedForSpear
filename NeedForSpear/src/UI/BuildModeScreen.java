@@ -102,6 +102,7 @@ public class BuildModeScreen extends JFrame {
         add(obstacleSettingsPanel);
         add(runGamePanel(this));
 
+
 //        initializeBuildScreen();
 //        obstacleSettingsPanel = initializeObstacleSettingsPanel();
 //        add(obstacleSettingsPanel,BorderLayout.CENTER);
@@ -169,6 +170,7 @@ public class BuildModeScreen extends JFrame {
                 setObstacleSettings();
                 layout = LC.getRandomLayout();
                 gameStartButton.setEnabled(true);
+                obstacleButton.setEnabled(false);
             }
         });
 
@@ -203,8 +205,8 @@ public class BuildModeScreen extends JFrame {
         loadGameButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
                 for (ILoadListener listener : loadModeListeners) {
-                    System.out.println(listener);
-                    listener.onClickEvent();
+                    System.out.println("Myload listeners" + listener);
+                    listener.onClickEventDo();
                     gameStartButton.setEnabled(true);
                 }
 

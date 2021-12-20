@@ -22,12 +22,12 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
     public boolean isLoad = false;
     private static final int TIMER_SPEED = 5;
     Player player = null;
-    private static final long TOTAL_DEATH_TIME = 5000;
+    private static final long TOTAL_DEATH_TIME = 4500;
     private long deathInitTime = -100;
     public static int UNITLENGTH_L = 1;
     private boolean isWin = false;
     private long initialTime;
-    private double score =0;
+    private int score =0;
 
     private javax.swing.Timer game_Timer = new javax.swing.Timer(TIMER_SPEED, this);
     private Game() {
@@ -68,15 +68,15 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
         saver.saveGame(Game.getInstance().getPaddle(), Game.getInstance().ball, Layout.getObstacle_positions());
     }
 
-    public double getScore(double oldScore){
+    public Integer getScore(int oldScore){
        long CurrentTime = System.currentTimeMillis();
-       double NewScore = oldScore + 300/(double)((CurrentTime-initialTime)/1000);
+       int NewScore =(int) (oldScore + 300/(double)((CurrentTime-initialTime)/1000));
        //System.out.println(CurrentTime-initialTime);
        return NewScore;
     }
-    public void setScore(double newScore){  this.score = newScore;}
+    public void setScore(int newScore){  this.score = newScore;}
 
-    public double getOldScore() {
+    public int getOldScore() {
         return this.score;
     }
     @Override
@@ -135,7 +135,7 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
 
 
     @Override
-    public void onClickEvent() {
+    public void onClickEventDo() {
         isLoad = true;
     }
 
@@ -150,7 +150,8 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
                 // if dead but just now dead, initialize deathInitTime
                 deathInitTime = System.currentTimeMillis();
                 Integer points = Game.getInstance().gameState.getPlayer().getChance_points() - 1;
-                Game.getInstance().gameState.getPlayer().setChance_points(points);
+                Game.getInstance().gameState.setChance(points);
+                //Game.getInstance().gameState.getPlayer().setChance_points(points);
             } else {
                 // he's been dead
                 // check how long he's been dead

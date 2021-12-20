@@ -19,7 +19,7 @@ import java.util.Map.Entry;
 
 
 public class Saver {
-    private Object WallMaria;
+
     String FILEPATH = "src/saves/Demo1.json";
 
 
@@ -33,6 +33,7 @@ public class Saver {
         doc.put("BallPositionY", ball.posVector.y);
         doc.put("Username", Game.getInstance().gameState.getPlayer().getUserName());
         doc.put("ChancePoints", Game.getInstance().gameState.getPlayer().getChance_points());
+        doc.put("Score", Game.getInstance().getOldScore());
         //doc.put(" Object List: ", list);
 
         for (Entry<Obstacle, PosVector> o : list.entrySet()) {
@@ -71,8 +72,11 @@ public class Saver {
             PosVector paddleLoc = new PosVector(x, y);
             long c = (long) doc.get("ChancePoints");
             String user = (String) doc.get("Username");
-            Game.getInstance().gameState.getPlayer().setChance_points((int)c);
+            Game.getInstance().gameState.setChance((int)c);
+            long f = (long) doc.get("Score");
             Game.getInstance().gameState.getPlayer().setUserName(user);
+            Game.getInstance().gameState.getPlayer().setScore((int)f);
+            Game.getInstance().setScore((int)f);
             Game.getInstance().getPaddle().setPosVector(paddleLoc);
             z = (long) doc.get("BallPositionX");
 //            t = (long) doc.get("BallPositionY");

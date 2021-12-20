@@ -19,7 +19,7 @@ import domain.obstacle.Obstacle;
 
 
 @SuppressWarnings("serial")
-public class RunGameObjects extends JPanel implements ActionListener, KeyListener, IGameListener {
+public class RunGameObjects extends JPanel implements ActionListener, KeyListener, IGameListener,IChanceListener,ILoadListener {
 
     /////////////////////////////////////////////////////////////////////////////////////
 
@@ -33,19 +33,23 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
     CollisionChecker colCheck = CollisionChecker.getInstance();
     Boolean stop = false;
     private BitSet keyBits = new BitSet(256);
-
+    private Integer chance =3;
     public static int frame_width;
     public static int frame_height;
+    private JPanel chancePanel;
     private JPanel scorePanel;
     private JLabel scoreNameLabel;
     private JLabel scoreNumLabel;
     public int sil = 0;
+    private  ImageIcon icon;
+    private boolean update =false;
 
     public RunGameObjects(int width, int height) {
         this.frame_width = width;
         this.frame_height = height;
         try {
             initializeRunModeScreen();
+            Game.getInstance().gameState.addListener(this);
 
         } catch (IOException e) {
             // TODO Auto-generated catch block
@@ -110,8 +114,20 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
         // TODO Auto-generated method stub
         //Game.getInstance().gameState.checkCollisions();
             gameOverCheck();
+
+        if(Game.getInstance().isLoad) {
+            scoreNumLabel.setText(Game.getInstance().getOldScore() + "");
+            Game.getInstance().isLoad = false;
+        }
             update();
             updateScore();
+
+            if(update) {
+                System.out.println("action preformed");
+                updateChance();
+                System.out.println(update);
+                repaint();
+            }
             repaint();
         try {
             ballChance();
@@ -136,38 +152,8 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
 //            domainObject.updateAngle();
 //        }
 //        Game.getInstance().gameState.updatePaddlePosition();
+        colCheck.check();
 
-        Obstacle toBeDeleted = null;
-        Game.getInstance().getPaddle().updatePosition(0,0);
-        Game.getInstance().ball.move();
-        if (colCheck.checkPaddleBallCollision(Game.getInstance().ball, Game.getInstance().getPaddle())) {
-            Game.getInstance().ball.reflectFromPaddle();
-        }
-
-        //if (Game.getInstance().ball.getPosVector().getY() < 0) Game.getInstance().ball.reflectFromHorizontal();
-
-        for (Obstacle obs : Layout.obstacle_positions.keySet()) {
-            if (colCheck.checkCollision(Game.getInstance().ball, obs)) {
-                if (obs.getHit()){
-                    Game.getInstance().getDomainObjectArr().remove(obs);
-                    toBeDeleted = obs;
-                }
-
-                if (colCheck.findCollisionDirection(Game.getInstance().ball, obs)) {
-                    Game.getInstance().ball.reflectFromVertical();
-                } else {
-                    Game.getInstance().ball.reflectFromHorizontal();
-                }
-            }
-        }
-        if (toBeDeleted != null) Layout.obstacle_positions.remove(toBeDeleted);
-        sil++;
-        System.out.println(sil);
-        if (sil == 100) {
-            PaddleExpansion pe = new PaddleExpansion();
-            Thread t = new Thread(pe);
-            t.start();
-        }
 
     }
 
@@ -257,6 +243,9 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
             kc.getInput(keyBits);
             tm.restart();// only works if game was paused
             Game.getInstance().gameState.isRunning = true;
+            updateChance();
+            System.out.println(Game.getInstance().gameState.getPlayer().getScore()+ "in loadgame run obj");
+            scoreNumLabel.setText(Game.getInstance().getOldScore()+"");
         } else {
             infoString = "Press \"Pause\" Button before loading.";
         }
@@ -266,9 +255,11 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
     public void initializeRunModeScreen() throws IOException {
         this.setFocusable(true);
         scorePanel = initializeScorePanel();
+        chancePanel =initializeChancePanel();
+        chancePanel.setVisible(true);
         scorePanel.setVisible(true);
+        this.add(chancePanel);
         this.add(scorePanel);
-
         tm.start();
 
     }
@@ -277,13 +268,24 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
         JPanel scoreP = new JPanel();
         scoreNameLabel = new JLabel("Score: ");
         scoreNumLabel = new JLabel("0");
+        if(Game.getInstance().isLoad){
+            scoreNumLabel = new JLabel(Game.getInstance().getOldScore() + "");
+        }
 
         scoreP.add(scoreNameLabel);
         scoreP.add(scoreNumLabel);
         return scoreP;
     }
+    private JPanel initializeChancePanel(){
+        JPanel ChanceP = new JPanel();
+        ImageIcon icon = new ImageIcon(new ImageIcon("src/assets/3heart.png").getImage().getScaledInstance(200, 50, Image.SCALE_DEFAULT));
+        ChanceP.add(new JLabel(icon));
+
+        return ChanceP;
+    }
 
     private void updateScore(){
+
         int score = (int) Game.getInstance().getOldScore();
         scoreNumLabel.setText(score+"");
     }
@@ -306,6 +308,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
         if (chance <=0){
             tm.stop();
             //Game.getInstance().cancelTime();
+
 
             JOptionPane.showMessageDialog(Playground.jf,
                     "You are out of chance." + "Your score is "+(int) Game.getInstance().getOldScore(),
@@ -330,6 +333,57 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
             wait(2000);
 
         }
+    }
+
+    @Override
+    public void onLoseChance(Integer chance) {
+        this.chance = chance;
+        //updateChance();
+        update =true;
+        //chancePanel.removeAll();
+    }
+
+    public void updateChance(){
+
+        chancePanel.removeAll();
+        if(chance == 3){
+            chancePanel.removeAll();
+            icon = new ImageIcon(new ImageIcon("src/assets/3heart.png").getImage().getScaledInstance(200, 50, Image.SCALE_DEFAULT));
+            chancePanel.add(new JLabel(icon));
+            chancePanel.setVisible(true);
+            update =false;
+        }
+        else if(chance == 2){
+            chancePanel.removeAll();
+             icon = new ImageIcon(new ImageIcon("src/assets/2heart.png").getImage().getScaledInstance(200, 50, Image.SCALE_DEFAULT));
+             chancePanel.add(new JLabel(icon));
+            chancePanel.setVisible(true);
+            update =false;
+        }
+        else if(chance == 1){
+            //chancePanel.removeAll();
+             icon = new ImageIcon(new ImageIcon("src/assets/1heart.png").getImage().getScaledInstance(200, 50, Image.SCALE_DEFAULT));
+            chancePanel.add(new JLabel(icon));
+            chancePanel.setVisible(true);
+            update =false;
+        }
+        else if(chance == 0){
+            chancePanel.removeAll();
+            icon = new ImageIcon(new ImageIcon("src/assets/0heart.png").getImage().getScaledInstance(200, 50, Image.SCALE_DEFAULT));
+            chancePanel.add(new JLabel(icon));
+            chancePanel.setVisible(true);
+            update =false;
+        }
+
+
+    }
+
+    @Override
+    public void onClickEventDo() {
+        System.out.println("OnclickEVetnDo");
+        System.out.println(Game.getInstance().gameState.getPlayer().getScore()+ "in loadgame run obj");
+        scoreNumLabel.setText(Game.getInstance().gameState.getPlayer().getScore()+"");
+
     }
 }
 
