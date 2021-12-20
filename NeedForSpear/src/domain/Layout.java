@@ -12,7 +12,7 @@ public class Layout {
     // Represents the locations and types of the objects in the game.
 
     /////////////////////////////////////////////////////////////////////////////////////
-
+    private static int yOffset = 70;
     // Total number of Simple Obstacles(Wall Maria)
     public int wallMariaCount;
 
@@ -103,7 +103,7 @@ public class Layout {
                 while (true) {
                     PosVector pos = new PosVector(
                             rnd.nextInt(layoutWidth - obsLen),
-                            rnd.nextInt(layoutHeight - layoutHeightOffset));
+                            rnd.nextInt(layoutHeight - layoutHeightOffset - yOffset) + yOffset);
                     obs = ObstacleFactory.getInstance().getObstacle(type, pos);
 
                     if (isAvailable(obs)) {
