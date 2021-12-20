@@ -13,7 +13,7 @@ import java.io.IOException;
 
 import domain.*;
 
-public class SimpleObstacleView  implements Drawable {
+public class ObstacleView implements Drawable {
 
         //Obstacle obstacle;
         BufferedImage simple_obs_img ;
@@ -21,14 +21,14 @@ public class SimpleObstacleView  implements Drawable {
         BufferedImage explosive_obs_img;
         BufferedImage gift_obs_img;
 
-        static SimpleObstacleView instance;
+        static ObstacleView instance;
 
-        private SimpleObstacleView() {
+        private ObstacleView() {
         }
 
-        public static SimpleObstacleView getInstance() {
+        public static ObstacleView getInstance() {
             if (instance == null) {
-                instance = new SimpleObstacleView();
+                instance = new ObstacleView();
                 try {
                     instance.fillImgs();
                 } catch (IOException e) {
@@ -51,7 +51,7 @@ public class SimpleObstacleView  implements Drawable {
             // Length, thickness, and radius of the obstacles
             int obsLen = BuildModeScreen.FRAME_WIDTH/40;
             int obsThick = 40;
-            int circRadius = 15;
+            int circRadius = 16;
 
             // Scale all images
             Image scaled;

@@ -12,8 +12,8 @@ import java.io.IOException;
 
 public class PaddleView implements Drawable {
 
-    BufferedImage paddle_img;
-    static PaddleView instance;
+    private BufferedImage paddle_img;
+    private static PaddleView instance;
 
     private PaddleView() {
     }

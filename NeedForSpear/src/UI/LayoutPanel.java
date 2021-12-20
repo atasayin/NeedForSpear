@@ -6,14 +6,9 @@ import domain.obstacle.Obstacle;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.HashMap;
 
 public class LayoutPanel extends JPanel{
 
@@ -69,7 +64,7 @@ public class LayoutPanel extends JPanel{
 
     private void drawObstacle(Graphics2D g2d, Obstacle d) {
         // TODO Auto-generated method stub
-        SimpleObstacleView.getInstance().draw(g2d, d, frame_width, frame_height);
+        ObstacleView.getInstance().draw(g2d, d, frame_width, frame_height);
 
     }
     private void drawPaddle(Graphics2D g2d, Paddle d, int width, int height) throws IOException {

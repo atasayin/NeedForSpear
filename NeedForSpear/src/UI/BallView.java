@@ -10,8 +10,9 @@ import java.io.IOException;
 
 public class BallView implements Drawable {
 
-    BufferedImage Ball_img;
-    static BallView instance;
+    private BufferedImage Ball_img;
+    private static BallView instance;
+    private int ballRadius = 20;
 
     private BallView() {
     }
@@ -33,14 +34,14 @@ public class BallView implements Drawable {
     private void fillImgs() throws IOException{
         // TODO Auto-generated method stub
         try {
-            Ball_img = ImageIO.read(this.getClass().getResource("../assets/simpleball.png"));
+            Ball_img = ImageIO.read(this.getClass().getResource("../assets/Pokeball.png"));
         } catch (Exception e) {
             e.printStackTrace();
 
         }
 
         // scale to unit length L
-        Image scaled = Ball_img.getScaledInstance(16, 16,
+        Image scaled = Ball_img.getScaledInstance(ballRadius, ballRadius,
                 BufferedImage.SCALE_SMOOTH);
         if (scaled instanceof BufferedImage)
             Ball_img = (BufferedImage) scaled;
@@ -63,7 +64,6 @@ public class BallView implements Drawable {
         Ball Ball = (Ball) domainObject;
 
         g2d.drawImage(Ball_img, Ball.getPosVector().getX(), Ball.getPosVector().getY(), null);
-        //g2d.drawImage(Ball_img, (width-Ball.getLength())/2, (height-Ball.getThickness()-40), null);
 
     }
 

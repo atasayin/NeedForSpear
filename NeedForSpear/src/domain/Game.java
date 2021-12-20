@@ -28,6 +28,7 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
     private boolean isWin = false;
     private long initialTime;
     private int score = 0;
+    private static int yOffset = 70;
 
     private javax.swing.Timer game_Timer = new javax.swing.Timer(TIMER_SPEED, this);
     private Game() {
@@ -82,7 +83,7 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
     @Override
     public void onClickEvent(HashMap<String, Integer> startParameters, String username, String id) {
         // TODO Auto-generated method stub
-        initializeGame(startParameters, username);
+        //initializeGame(startParameters, username);
 
         paddle = new Paddle(FRAME_WIDTH,FRAME_HEIGHT);
         this.ball = new Ball();
@@ -90,8 +91,6 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
 
         Game.getInstance().gameState.isRunning = true;
         initialTime = System.currentTimeMillis();
-        //System.out.println(ball.posVector.getX() + " " + ball.posVector.getY());
-        //System.out.println("Paddle created " + PC.toString());
 
         Player player = new Player(username, id);
         player.initializeInventory();
@@ -103,10 +102,10 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
         }
     }
 
-    private void initializeGame(HashMap<String, Integer> startParameters, String username) {
-
-        //gameState.initializeGameState(gameState.layout);
-    }
+//    private void initializeGame(HashMap<String, Integer> startParameters, String username) {
+//
+//        //gameState.initializeGameState(gameState.layout);
+//    }
 
     public ArrayList<DomainObject> getDomainObjectArr() {
         return this.gameState.getDomainObjectArr();
@@ -150,7 +149,6 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
                 deathInitTime = System.currentTimeMillis();
                 Integer points = Game.getInstance().gameState.getPlayer().getChance_points() - 1;
                 Game.getInstance().gameState.setChance(points);
-                //Game.getInstance().gameState.getPlayer().setChance_points(points);
             } else {
                 // he's been dead
                 // check how long he's been dead
@@ -158,7 +156,7 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
                 if (deathTime > TOTAL_DEATH_TIME) {
                     // if he's been dead long enough, call this code
                     Game.getInstance().ball.setOutOfScreen(true);
-                    PosVector pos = new PosVector(FRAME_WIDTH/2, 1);
+                    PosVector pos = new PosVector(FRAME_WIDTH/2, yOffset+1);
                     Game.getInstance().ball.setPosVector(pos);
                     Game.getInstance().ball.setyVelocity(0);
 
@@ -167,23 +165,6 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
                 Game.getInstance().ball.setOutOfScreen(true);
             }
         }
-        /*if(!Game.getInstance().ball.getIsBall()){
-            Integer points = Game.getInstance().gameState.getPlayer().getChance_points() - 1;
-            Game.getInstance().gameState.getPlayer().setChance_points(points);
-
-            if(Game.getInstance().ball.getPosVector().getY() > FRAME_HEIGHT){
-                Game.getInstance().ball.setOutOfScreen(true);
-                System.out.println(Game.getInstance().gameState.getPlayer().getChance_points());
-                System.out.println("ball is reseted");
-                PosVector pos = new PosVector(FRAME_WIDTH/2, 1);
-                Game.getInstance().ball.setPosVector(pos);
-                Game.getInstance().ball.setBall(true);
-
-                System.out.println(Game.getInstance().ball.posVector.getY());
-            }
-            Game.getInstance().ball.setOutOfScreen(true);
-
-        }*/
 
     }
 }

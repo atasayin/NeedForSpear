@@ -79,11 +79,11 @@ public class Saver {
             Game.getInstance().setScore((int)f);
             Game.getInstance().getPaddle().setPosVector(paddleLoc);
             z = (long) doc.get("BallPositionX");
-//            t = (long) doc.get("BallPositionY");
+            t = (long) doc.get("BallPositionY");
             x = ((int) z);
-//            y = ((int) t);
+            y = ((int) t);
 
-            PosVector ballLoc = new PosVector(x, 0);
+            PosVector ballLoc = new PosVector(x, y);
             ball.setPosVector(ballLoc);
 
             JSONArray jsonlist = (JSONArray) doc.get("ObjectList");

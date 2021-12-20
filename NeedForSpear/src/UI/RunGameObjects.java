@@ -42,7 +42,9 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
     private JLabel scoreNumLabel;
     public int sil = 0;
     private  ImageIcon icon;
-    private boolean update =false;
+    private boolean update = false;
+    private static int yOffset = 70;
+    private static int xOffset = 175;
 
     public RunGameObjects(int width, int height) {
         this.frame_width = width;
@@ -78,22 +80,28 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
         }
         drawBall(g2d, Game.getInstance().ball, frame_width, frame_height);
 
-        //drawBall(g2d, player.getShooter());
         g2d.setTransform(old);
         int textWidth = g.getFontMetrics().stringWidth(infoString);
         g2d.drawString(infoString, this.getWidth() / 2 - textWidth / 2, 20);
+        g2d.drawLine(0, yOffset, frame_width, yOffset);
+        g2d.drawLine(frame_width-xOffset, yOffset, frame_width-xOffset, frame_height);
+
+        try {
+            MagicalAbilityView.getInstance().draw(g2d);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void drawObstacle(Graphics2D g2d, Obstacle d) {
         // TODO Auto-generated method stub
-        SimpleObstacleView.getInstance().draw(g2d, d, frame_width, frame_height);
+        ObstacleView.getInstance().draw(g2d, d, frame_width, frame_height);
 
     }
     private void drawPaddle(Graphics2D g2d, Paddle d, int width, int height) throws IOException {
         // TODO Auto-generated method stub
         int width_ = Game.getInstance().getPaddle().getWidth();
         PaddleView.getInstance().draw(g2d, d, width_, height);
-
     }
 
     private void drawBall(Graphics2D g2d, Ball b, int width, int height) {
@@ -105,7 +113,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
     private void drawComponent(Graphics2D g2d, DomainObject d) {
         // TODO Auto-generated method stub
         if (d instanceof Obstacle) {
-            SimpleObstacleView.getInstance().draw(g2d, d, frame_width, frame_height);
+            ObstacleView.getInstance().draw(g2d, d, frame_width, frame_height);
         }
     }
 
@@ -296,7 +304,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
     }
     private JPanel initializeChancePanel(){
         JPanel ChanceP = new JPanel();
-        ImageIcon icon = new ImageIcon(new ImageIcon("src/assets/3heart.png").getImage().getScaledInstance(200, 50, Image.SCALE_DEFAULT));
+        ImageIcon icon = new ImageIcon(new ImageIcon("src/assets/3heart.png").getImage().getScaledInstance(100,35, Image.SCALE_DEFAULT));
         ChanceP.add(new JLabel(icon));
 
         return ChanceP;
@@ -365,28 +373,28 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
         chancePanel.removeAll();
         if(chance == 3){
             chancePanel.removeAll();
-            icon = new ImageIcon(new ImageIcon("src/assets/3heart.png").getImage().getScaledInstance(200, 50, Image.SCALE_DEFAULT));
+            icon = new ImageIcon(new ImageIcon("src/assets/3heart.png").getImage().getScaledInstance(100,35, Image.SCALE_DEFAULT));
             chancePanel.add(new JLabel(icon));
             chancePanel.setVisible(true);
             update =false;
         }
         else if(chance == 2){
             chancePanel.removeAll();
-            icon = new ImageIcon(new ImageIcon("src/assets/2heart.png").getImage().getScaledInstance(200, 50, Image.SCALE_DEFAULT));
+            icon = new ImageIcon(new ImageIcon("src/assets/2heart.png").getImage().getScaledInstance(100,35, Image.SCALE_DEFAULT));
             chancePanel.add(new JLabel(icon));
             chancePanel.setVisible(true);
             update =false;
         }
         else if(chance == 1){
             //chancePanel.removeAll();
-            icon = new ImageIcon(new ImageIcon("src/assets/1heart.png").getImage().getScaledInstance(200, 50, Image.SCALE_DEFAULT));
+            icon = new ImageIcon(new ImageIcon("src/assets/1heart.png").getImage().getScaledInstance(100,35, Image.SCALE_DEFAULT));
             chancePanel.add(new JLabel(icon));
             chancePanel.setVisible(true);
             update =false;
         }
         else if(chance == 0){
             chancePanel.removeAll();
-            icon = new ImageIcon(new ImageIcon("src/assets/0heart.png").getImage().getScaledInstance(200, 50, Image.SCALE_DEFAULT));
+            icon = new ImageIcon(new ImageIcon("src/assets/0heart.png").getImage().getScaledInstance(100,35, Image.SCALE_DEFAULT));
             chancePanel.add(new JLabel(icon));
             chancePanel.setVisible(true);
             update =false;

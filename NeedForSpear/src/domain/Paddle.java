@@ -21,6 +21,7 @@ public class Paddle extends DomainObject{
 	private int fastSpeed;
 	private int width;
 	private int height = PADDLE_THICKNESS;
+	private static int xOffset = 150;
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
@@ -100,7 +101,7 @@ public class Paddle extends DomainObject{
 
 	private void goRight(){
 		setSpeed(normalSpeed, 0);
-		if ((getPosVector().x <= FRAME_WIDTH - getLength() - normalSpeed) && (getPosVector().x >= 0)) {
+		if ((getPosVector().x <= FRAME_WIDTH - getLength() - normalSpeed - xOffset) && (getPosVector().x >= 0)) {
 			updatePosition(getDx(), getDy());
 		} else {
 			updatePosition(0, getDy());

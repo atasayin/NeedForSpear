@@ -8,19 +8,20 @@ import java.util.List;
 public class Ball extends DomainObject {
     private final int FRAME_WIDTH = 1368;
     private final int FRAME_HEIGHT = 766;
-    private final int diameter = 16;
     public double gravity;
     public int yVelocity, xVelocity;
-    private int width = 16;
-    private int height = 16;
+    private int width = 20;
+    private int height = 20;
     private boolean is_unstoppable;
     private List<IGameListener> gameListeners = new ArrayList<>();
     private boolean isAlive;
+    private static int yOffset = 70;
+    private static int xOffset = 175;
 
     private boolean outOfScreen;
 
     public Ball() {
-        this.posVector = new PosVector(400, 400);
+        this.posVector = new PosVector(800, 400);
         this.gravity = 1;
         this.xVelocity = 3;
         this.yVelocity = -40;
@@ -93,10 +94,10 @@ public class Ball extends DomainObject {
     public void checkWallCollision() {
         if (this.posVector.getX() < 8) {
             this.reflectFromSideWall();
-        } else if (this.posVector.getX() > (FRAME_WIDTH - 40)) {
+        } else if (this.posVector.getX() > (FRAME_WIDTH - xOffset - 20)) {
             this.reflectFromSideWall();
         }
-        else if (this.posVector.getY()<0) {
+        else if (this.posVector.getY()<yOffset) {
             this.reflectFromTopWall();
         }
     }
