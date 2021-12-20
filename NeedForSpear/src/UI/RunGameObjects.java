@@ -305,6 +305,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
         return ChanceP;
     }
 
+
     private void updateScore(){
         int score = (int) Game.getInstance().getOldScore();
         scoreNumLabel.setText(score+"");
