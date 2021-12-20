@@ -114,8 +114,14 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
         // TODO Auto-generated method stub
         //Game.getInstance().gameState.checkCollisions();
             gameOverCheck();
+
+        if(Game.getInstance().isLoad) {
+            scoreNumLabel.setText(Game.getInstance().getOldScore() + "");
+            Game.getInstance().isLoad = false;
+        }
             update();
             updateScore();
+
             if(update) {
                 System.out.println("action preformed");
                 updateChance();
@@ -262,6 +268,9 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
         JPanel scoreP = new JPanel();
         scoreNameLabel = new JLabel("Score: ");
         scoreNumLabel = new JLabel("0");
+        if(Game.getInstance().isLoad){
+            scoreNumLabel = new JLabel(Game.getInstance().getOldScore() + "");
+        }
 
         scoreP.add(scoreNameLabel);
         scoreP.add(scoreNumLabel);
@@ -276,6 +285,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
     }
 
     private void updateScore(){
+
         int score = (int) Game.getInstance().getOldScore();
         scoreNumLabel.setText(score+"");
     }
@@ -327,10 +337,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
 
     @Override
     public void onLoseChance(Integer chance) {
-        System.out.println("this chance is " +this.chance);
-        System.out.println("chance is " +chance);
         this.chance = chance;
-        System.out.println("this chance is " +this.chance);
         //updateChance();
         update =true;
         //chancePanel.removeAll();
