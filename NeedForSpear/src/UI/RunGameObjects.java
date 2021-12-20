@@ -350,7 +350,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
 
     public void ballChance() throws InterruptedException {
         if(stop){
-            wait(2000);
+            wait(200);
 
         }
     }
