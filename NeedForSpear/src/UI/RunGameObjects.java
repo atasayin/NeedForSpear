@@ -141,8 +141,6 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
             }
         }
 
-
-
     public void update() {
         // Obstacle positions will be updated when they start to move in the future
 //        for (DomainObject domainObject : Game.getInstance().getDomainObjectArr()) {
