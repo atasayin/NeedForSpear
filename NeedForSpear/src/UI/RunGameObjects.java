@@ -123,9 +123,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
             updateScore();
 
             if(update) {
-                System.out.println("action preformed");
                 updateChance();
-                System.out.println(update);
                 repaint();
             }
             repaint();
@@ -278,7 +276,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
     }
     private JPanel initializeChancePanel(){
         JPanel ChanceP = new JPanel();
-        ImageIcon icon = new ImageIcon(new ImageIcon("src/assets/3heart.png").getImage().getScaledInstance(200, 50, Image.SCALE_DEFAULT));
+        ImageIcon icon = new ImageIcon(new ImageIcon("src/assets/3heart.png").getImage().getScaledInstance(100, 35, Image.SCALE_DEFAULT));
         ChanceP.add(new JLabel(icon));
 
         return ChanceP;
@@ -348,28 +346,28 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
         chancePanel.removeAll();
         if(chance == 3){
             chancePanel.removeAll();
-            icon = new ImageIcon(new ImageIcon("src/assets/3heart.png").getImage().getScaledInstance(200, 50, Image.SCALE_DEFAULT));
+            icon = new ImageIcon(new ImageIcon("src/assets/3heart.png").getImage().getScaledInstance(100, 35, Image.SCALE_DEFAULT));
             chancePanel.add(new JLabel(icon));
             chancePanel.setVisible(true);
             update =false;
         }
         else if(chance == 2){
             chancePanel.removeAll();
-             icon = new ImageIcon(new ImageIcon("src/assets/2heart.png").getImage().getScaledInstance(200, 50, Image.SCALE_DEFAULT));
+             icon = new ImageIcon(new ImageIcon("src/assets/2heart.png").getImage().getScaledInstance(100, 35, Image.SCALE_DEFAULT));
              chancePanel.add(new JLabel(icon));
             chancePanel.setVisible(true);
             update =false;
         }
         else if(chance == 1){
             //chancePanel.removeAll();
-             icon = new ImageIcon(new ImageIcon("src/assets/1heart.png").getImage().getScaledInstance(200, 50, Image.SCALE_DEFAULT));
+             icon = new ImageIcon(new ImageIcon("src/assets/1heart.png").getImage().getScaledInstance(100, 35, Image.SCALE_DEFAULT));
             chancePanel.add(new JLabel(icon));
             chancePanel.setVisible(true);
             update =false;
         }
         else if(chance == 0){
             chancePanel.removeAll();
-            icon = new ImageIcon(new ImageIcon("src/assets/0heart.png").getImage().getScaledInstance(200, 50, Image.SCALE_DEFAULT));
+            icon = new ImageIcon(new ImageIcon("src/assets/0heart.png").getImage().getScaledInstance(100, 35, Image.SCALE_DEFAULT));
             chancePanel.add(new JLabel(icon));
             chancePanel.setVisible(true);
             update =false;
