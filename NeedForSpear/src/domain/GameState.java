@@ -86,7 +86,6 @@ public class GameState {
     }
     public void setChance(int chance){
         this.getPlayer().setChance_points(chance);
-        System.out.println("I am dead they listen ");
         for (IChanceListener listener : ChanceListeners) {
             listener.onLoseChance(chance);
         }

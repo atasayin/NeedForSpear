@@ -27,7 +27,7 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
     public static int UNITLENGTH_L = 1;
     private boolean isWin = false;
     private long initialTime;
-    private int score =0;
+    private int score = 0;
 
     private javax.swing.Timer game_Timer = new javax.swing.Timer(TIMER_SPEED, this);
     private Game() {
@@ -90,12 +90,11 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
 
         Game.getInstance().gameState.isRunning = true;
         initialTime = System.currentTimeMillis();
-        System.out.println(ball.posVector.getX() + " " + ball.posVector.getY());
+        //System.out.println(ball.posVector.getX() + " " + ball.posVector.getY());
         //System.out.println("Paddle created " + PC.toString());
 
         Player player = new Player(username, id);
         player.initializeInventory();
-        System.out.println(player);
         instance.gameState.setPlayer(player);
         game_Timer.start();
 
@@ -159,13 +158,10 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
                 if (deathTime > TOTAL_DEATH_TIME) {
                     // if he's been dead long enough, call this code
                     Game.getInstance().ball.setOutOfScreen(true);
-                    System.out.println(Game.getInstance().gameState.getPlayer().getChance_points());
-                    System.out.println("ball is reseted");
                     PosVector pos = new PosVector(FRAME_WIDTH/2, 1);
                     Game.getInstance().ball.setPosVector(pos);
                     Game.getInstance().ball.setyVelocity(0);
 
-                    System.out.println(Game.getInstance().ball.posVector.getY());
                     deathInitTime = -1L;  // and re-initialize deathInitTime
                 }
                 Game.getInstance().ball.setOutOfScreen(true);

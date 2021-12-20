@@ -38,7 +38,7 @@ public class Layout {
     public int layoutHeight;
 
     // Random Seed number
-    private int SEED_NUMBER = 3;
+    private int SEED_NUMBER = 77;
 
     // Collision Checker for Obstacles
     private CollisionChecker CS;

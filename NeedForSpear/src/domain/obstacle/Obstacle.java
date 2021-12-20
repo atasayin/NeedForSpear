@@ -39,7 +39,6 @@ public abstract class Obstacle extends DomainObject {
 			int o = Game.getInstance().getOldScore();
 			int neww = Game.getInstance().getScore(o);
 			Game.getInstance().setScore(neww);
-			System.out.println(Game.getInstance().getOldScore());
 			return true;
 		} else {
 			return false;

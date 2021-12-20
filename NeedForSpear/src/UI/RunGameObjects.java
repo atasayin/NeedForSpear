@@ -117,9 +117,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
         update();
         updateScore();
         if(update) {
-            System.out.println("action preformed");
             updateChance();
-            System.out.println(update);
             repaint();
         }
         repaint();
@@ -172,7 +170,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
         }
         if (toBeDeleted != null) Layout.obstacle_positions.remove(toBeDeleted);
         sil++;
-        System.out.println(sil);
+        //System.out.println(sil);
         if (sil == 100) {
             PaddleExpansion pe = new PaddleExpansion();
             Thread t = new Thread(pe);
@@ -268,7 +266,6 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
             tm.restart();// only works if game was paused
             Game.getInstance().gameState.isRunning = true;
             updateChance();
-            System.out.println(Game.getInstance().gameState.getPlayer().getScore()+ "in loadgame run obj");
             scoreNumLabel.setText(Game.getInstance().getOldScore()+"");
         } else {
             infoString = "Press \"Pause\" Button before loading.";
@@ -357,10 +354,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
 
     @Override
     public void onLoseChance(Integer chance) {
-        System.out.println("this chance is " +this.chance);
-        System.out.println("chance is " +chance);
         this.chance = chance;
-        System.out.println("this chance is " +this.chance);
         //updateChance();
         update =true;
         //chancePanel.removeAll();
@@ -403,10 +397,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
 
     @Override
     public void onClickEventDo() {
-        System.out.println("OnclickEVetnDo");
-        System.out.println(Game.getInstance().gameState.getPlayer().getScore()+ "in loadgame run obj");
         scoreNumLabel.setText(Game.getInstance().gameState.getPlayer().getScore()+"");
-
     }
 }
 
