@@ -114,12 +114,16 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
         // TODO Auto-generated method stub
         //Game.getInstance().gameState.checkCollisions();
             gameOverCheck();
+
+        if(Game.getInstance().isLoad) {
+            scoreNumLabel.setText(Game.getInstance().getOldScore() + "");
+            Game.getInstance().isLoad = false;
+        }
             update();
             updateScore();
+
             if(update) {
-                System.out.println("action preformed");
                 updateChance();
-                System.out.println(update);
                 repaint();
             }
             repaint();
@@ -137,8 +141,6 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
             }
         }
 
-
-
     public void update() {
         // Obstacle positions will be updated when they start to move in the future
 //        for (DomainObject domainObject : Game.getInstance().getDomainObjectArr()) {
@@ -146,38 +148,8 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
 //            domainObject.updateAngle();
 //        }
 //        Game.getInstance().gameState.updatePaddlePosition();
+        colCheck.check();
 
-        Obstacle toBeDeleted = null;
-        Game.getInstance().getPaddle().updatePosition(0,0);
-        Game.getInstance().ball.move();
-        if (colCheck.checkPaddleBallCollision(Game.getInstance().ball, Game.getInstance().getPaddle())) {
-            Game.getInstance().ball.reflectFromPaddle();
-        }
-
-        //if (Game.getInstance().ball.getPosVector().getY() < 0) Game.getInstance().ball.reflectFromHorizontal();
-
-        for (Obstacle obs : Layout.obstacle_positions.keySet()) {
-            if (colCheck.checkCollision(Game.getInstance().ball, obs)) {
-                if (obs.getHit()){
-                    Game.getInstance().getDomainObjectArr().remove(obs);
-                    toBeDeleted = obs;
-                }
-
-                if (colCheck.findCollisionDirection(Game.getInstance().ball, obs)) {
-                    Game.getInstance().ball.reflectFromVertical();
-                } else {
-                    Game.getInstance().ball.reflectFromHorizontal();
-                }
-            }
-        }
-        if (toBeDeleted != null) Layout.obstacle_positions.remove(toBeDeleted);
-        sil++;
-        System.out.println(sil);
-        if (sil == 100) {
-            PaddleExpansion pe = new PaddleExpansion();
-            Thread t = new Thread(pe);
-            t.start();
-        }
 
     }
 
@@ -292,6 +264,9 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
         JPanel scoreP = new JPanel();
         scoreNameLabel = new JLabel("Score: ");
         scoreNumLabel = new JLabel("0");
+        if(Game.getInstance().isLoad){
+            scoreNumLabel = new JLabel(Game.getInstance().getOldScore() + "");
+        }
 
         scoreP.add(scoreNameLabel);
         scoreP.add(scoreNumLabel);
@@ -299,7 +274,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
     }
     private JPanel initializeChancePanel(){
         JPanel ChanceP = new JPanel();
-        ImageIcon icon = new ImageIcon(new ImageIcon("src/assets/3heart.png").getImage().getScaledInstance(200, 50, Image.SCALE_DEFAULT));
+        ImageIcon icon = new ImageIcon(new ImageIcon("src/assets/3heart.png").getImage().getScaledInstance(100, 35, Image.SCALE_DEFAULT));
         ChanceP.add(new JLabel(icon));
 
         return ChanceP;
@@ -307,6 +282,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
 
 
     private void updateScore(){
+
         int score = (int) Game.getInstance().getOldScore();
         scoreNumLabel.setText(score+"");
     }
@@ -358,10 +334,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
 
     @Override
     public void onLoseChance(Integer chance) {
-        System.out.println("this chance is " +this.chance);
-        System.out.println("chance is " +chance);
         this.chance = chance;
-        System.out.println("this chance is " +this.chance);
         //updateChance();
         update =true;
         //chancePanel.removeAll();
@@ -372,28 +345,28 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
         chancePanel.removeAll();
         if(chance == 3){
             chancePanel.removeAll();
-            icon = new ImageIcon(new ImageIcon("src/assets/3heart.png").getImage().getScaledInstance(200, 50, Image.SCALE_DEFAULT));
+            icon = new ImageIcon(new ImageIcon("src/assets/3heart.png").getImage().getScaledInstance(100, 35, Image.SCALE_DEFAULT));
             chancePanel.add(new JLabel(icon));
             chancePanel.setVisible(true);
             update =false;
         }
         else if(chance == 2){
             chancePanel.removeAll();
-             icon = new ImageIcon(new ImageIcon("src/assets/2heart.png").getImage().getScaledInstance(200, 50, Image.SCALE_DEFAULT));
+             icon = new ImageIcon(new ImageIcon("src/assets/2heart.png").getImage().getScaledInstance(100, 35, Image.SCALE_DEFAULT));
              chancePanel.add(new JLabel(icon));
             chancePanel.setVisible(true);
             update =false;
         }
         else if(chance == 1){
             //chancePanel.removeAll();
-             icon = new ImageIcon(new ImageIcon("src/assets/1heart.png").getImage().getScaledInstance(200, 50, Image.SCALE_DEFAULT));
+             icon = new ImageIcon(new ImageIcon("src/assets/1heart.png").getImage().getScaledInstance(100, 35, Image.SCALE_DEFAULT));
             chancePanel.add(new JLabel(icon));
             chancePanel.setVisible(true);
             update =false;
         }
         else if(chance == 0){
             chancePanel.removeAll();
-            icon = new ImageIcon(new ImageIcon("src/assets/0heart.png").getImage().getScaledInstance(200, 50, Image.SCALE_DEFAULT));
+            icon = new ImageIcon(new ImageIcon("src/assets/0heart.png").getImage().getScaledInstance(100, 35, Image.SCALE_DEFAULT));
             chancePanel.add(new JLabel(icon));
             chancePanel.setVisible(true);
             update =false;

@@ -2,8 +2,6 @@ classDiagram
 
     direction LR
     Player "1*" --> "1" NeedForSpearGame : plays 
-    NeedForSpearGame "1" --> "1*" PlayerState: updates
-    Player "1" --> "1" PlayerState : has
     GameState "1" --> "1" NeedForSpearGame : describes
     Ball "1" --> "1*" Obstacle: hits
     Player "1" --> "1" Paddle : controls
@@ -17,6 +15,8 @@ classDiagram
     Player "1" --> "1*" Layout : builds
     NeedForSpearGame "1" --> "1*" Obstacle : generates
     NeedForSpearGame "1" --> "1" Layout : uses
+    Ymir "1" --> "1" MagicalAbility : activates
+    Saver "1" --> "1" NeedForSpearGame : saves
      
 
 
@@ -27,6 +27,8 @@ classDiagram
     class Player{
       id
       userName
+      chances
+      score
     }
 
     class Obstacle{
@@ -54,10 +56,6 @@ classDiagram
       paddle
     }
 
-    class PlayerState{
-      chances
-      score
-    }
 
     class Authenticator{
 
@@ -80,4 +78,13 @@ classDiagram
       grid
       obstacleCount
       file
+    }
+
+    class Ymir {
+        frequency
+        probability
+    }
+
+    class Saver {
+        file
     }
