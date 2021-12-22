@@ -44,10 +44,10 @@ public class MagicalAbilityView implements DrawableMagical {
     private void fillImgs() throws IOException{
         // TODO Auto-generated method stub
         try {
-            unstop_img = ImageIO.read(this.getClass().getResource("../assets/unstoppable.png"));
-            rocket_img = ImageIO.read(this.getClass().getResource("../assets/rocket.png"));
-            chance_img = ImageIO.read(this.getClass().getResource("../assets/heart.png"));
-            expansion_img = ImageIO.read(this.getClass().getResource("../assets/expansion.png"));
+            unstop_img = ImageIO.read(this.getClass().getResource("../assets/paddle1.png"));
+            rocket_img = ImageIO.read(this.getClass().getResource("../assets/paddle1.png"));
+            chance_img = ImageIO.read(this.getClass().getResource("../assets/paddle1.png"));
+            expansion_img = ImageIO.read(this.getClass().getResource("../assets/paddle1.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }

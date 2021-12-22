@@ -12,6 +12,7 @@ import java.util.BitSet;
 
 import javax.swing.*;
 
+import domain.Box;
 import domain.abilities.PaddleExpansion;
 import domain.controller.KeyboardController;
 import domain.* ;
@@ -19,7 +20,7 @@ import domain.obstacle.Obstacle;
 
 
 @SuppressWarnings("serial")
-public class RunGameObjects extends JPanel implements ActionListener, KeyListener, IGameListener,IChanceListener,ILoadListener {
+public class RunGameObjects extends JPanel implements ActionListener, KeyListener, IGameListener,IChanceListener,ILoadListener,IBoxListener {
 
     /////////////////////////////////////////////////////////////////////////////////////
 
@@ -29,8 +30,6 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
     String infoString = "";
     int infoRefreshCount;
     KeyboardController kc = new KeyboardController();
-    Game game = Game.getInstance();
-    CollisionChecker colCheck = CollisionChecker.getInstance();
     Boolean stop = false;
     private BitSet keyBits = new BitSet(256);
     private Integer chance =3;
@@ -40,11 +39,14 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
     private JPanel scorePanel;
     private JLabel scoreNameLabel;
     private JLabel scoreNumLabel;
-    public int sil = 0;
+
     private  ImageIcon icon;
     private boolean update = false;
     private static int yOffset = 70;
     private static int xOffset = 175;
+    private boolean isBoxDropped = false;
+    private double boxX;
+    private double boxY;
 
     public RunGameObjects(int width, int height) {
         this.frame_width = width;
@@ -52,6 +54,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
         try {
             initializeRunModeScreen();
             Game.getInstance().gameState.addListener(this);
+            CollisionChecker.getInstance().addListener(this);
 
         } catch (IOException e) {
             // TODO Auto-generated catch block
@@ -68,7 +71,11 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
         g2d.drawImage(img, 0, 0, null);
 
         for (DomainObject domainObject : Game.getInstance().getDomainObjectArr()) {
-            drawComponent(g2d, domainObject);
+            try {
+                drawComponent(g2d, domainObject);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             g2d.setTransform(old);
 
         }
@@ -91,6 +98,20 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        if(isBoxDropped) {
+           /* try {
+                drawBox(g2d,Game.getInstance().creatBox(boxX,boxY),frame_width, frame_height);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            isBoxDropped =false;*/
+            System.out.println("box is dripped");
+            //System.out.println(Game.getInstance().getDomainObjectArr());
+            isBoxDropped = false;
+
+
+        }
     }
 
     private void drawObstacle(Graphics2D g2d, Obstacle d) {
@@ -110,10 +131,25 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
 
     }
 
-    private void drawComponent(Graphics2D g2d, DomainObject d) {
+    private void drawBox(Graphics2D g2d, Box b, int width, int height, boolean isDrop) throws IOException {
+        // TODO Auto-generated method stub
+        BoxView boxView = new BoxView();
+        if(isDrop) {
+            boxView.draw(g2d, b, width, height);
+        }
+    }
+
+    private void drawComponent(Graphics2D g2d, DomainObject d) throws IOException {
         // TODO Auto-generated method stub
         if (d instanceof Obstacle) {
             ObstacleView.getInstance().draw(g2d, d, frame_width, frame_height);
+        }
+        if (d instanceof Box) {
+            for (Box b : CollisionChecker.getInstance().getBoxes()) {
+                if (b.equals(d)){
+                    drawBox(g2d, (Box) d, frame_width, frame_height,true);
+                }
+            }
         }
     }
 
@@ -128,6 +164,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
             updateChance();
             repaint();
         }
+
         repaint();
         try {
             ballChance();
@@ -146,45 +183,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
 
 
     public void update() {
-        // Obstacle positions will be updated when they start to move in the future
-//        for (DomainObject domainObject : Game.getInstance().getDomainObjectArr()) {
-//            domainObject.updatePosition();
-//            domainObject.updateAngle();
-//        }
-//        Game.getInstance().gameState.updatePaddlePosition();
-
-        Obstacle toBeDeleted = null;
-        Game.getInstance().getPaddle().updatePosition(0,0);
-        Game.getInstance().ball.move();
-        if (colCheck.checkPaddleBallCollision(Game.getInstance().ball, Game.getInstance().getPaddle())) {
-            Game.getInstance().ball.reflectFromPaddle();
-        }
-
-        //if (Game.getInstance().ball.getPosVector().getY() < 0) Game.getInstance().ball.reflectFromHorizontal();
-
-        for (Obstacle obs : Layout.obstacle_positions.keySet()) {
-            if (colCheck.checkCollision(Game.getInstance().ball, obs)) {
-                if (obs.getHit()){
-                    Game.getInstance().getDomainObjectArr().remove(obs);
-                    toBeDeleted = obs;
-                }
-
-                if (colCheck.findCollisionDirection(Game.getInstance().ball, obs)) {
-                    Game.getInstance().ball.reflectFromVertical();
-                } else {
-                    Game.getInstance().ball.reflectFromHorizontal();
-                }
-            }
-        }
-        if (toBeDeleted != null) Layout.obstacle_positions.remove(toBeDeleted);
-        sil++;
-        //System.out.println(sil);
-        if (sil == 100) {
-            PaddleExpansion pe = new PaddleExpansion();
-            Thread t = new Thread(pe);
-            t.start();
-        }
-
+        CollisionChecker.getInstance().ChecktoDelete();
     }
 
 
@@ -406,6 +405,15 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
     @Override
     public void onClickEventDo() {
         scoreNumLabel.setText(Game.getInstance().gameState.getPlayer().getScore()+"");
+    }
+
+    @Override
+    public void dropBox(double x, double y) {
+        isBoxDropped =true;
+        boxX = x;
+        boxY = y;
+
+
     }
 }
 

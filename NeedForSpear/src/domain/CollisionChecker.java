@@ -12,6 +12,8 @@ public class CollisionChecker {
     private final int HEIGHT = 766;
     private final int WIDTH = 1368;
     static CollisionChecker instance;
+    private ArrayList<IBoxListener> BoxListeners = new ArrayList<>();
+    private  ArrayList<Box> boxes = new ArrayList<Box>();
 
     private CollisionChecker(){
 
@@ -24,11 +26,6 @@ public class CollisionChecker {
         return instance;
     }
 
-    public Boolean isBetween(int loc, int left, int right) {
-        if (loc > right & loc < left) return true;
-
-        return false;
-    }
 
     public Boolean checkPaddleBallCollision(Ball ball, Paddle paddle) {
         int ball_x = ball.posVector.getX();
@@ -98,10 +95,13 @@ public class CollisionChecker {
 
 
     }
-    public void check(){
+    public void ChecktoDelete(){
         Obstacle toBeDeleted = null;
         Game.getInstance().getPaddle().updatePosition(0,0);
         Game.getInstance().ball.move();
+        for(Box box: boxes){
+            box.updatePosition();
+        }
         if (instance.checkPaddleBallCollision(Game.getInstance().ball, Game.getInstance().getPaddle())) {
             Game.getInstance().ball.reflectFromPaddle();
         }
@@ -111,6 +111,14 @@ public class CollisionChecker {
         for (Obstacle obs : Layout.obstacle_positions.keySet()) {
             if (instance.checkCollision(Game.getInstance().ball, obs)) {
                 if (obs.getHit()){
+                    String typeCheck = obs.getType();
+                    if(typeCheck.equals("GiftOfUranus")){
+                         //Game.getInstance().getDomainObjectArr().add(obs.getBox());
+                         boxes.add(obs.getBox());
+                        for (IBoxListener listener : BoxListeners) {
+                            listener.dropBox(obs.getPosVector().getX(), obs.getPosVector().getY());
+                        }
+                    }
                     Game.getInstance().getDomainObjectArr().remove(obs);
                     toBeDeleted = obs;
                 }
@@ -126,6 +134,11 @@ public class CollisionChecker {
 
     }
 
+    public void addListener( IBoxListener listener) {
+        BoxListeners.add(listener);
+    }
 
-
+    public ArrayList<Box> getBoxes() {
+        return this.boxes;
+    }
 }
