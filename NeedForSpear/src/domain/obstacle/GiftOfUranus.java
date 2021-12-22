@@ -1,5 +1,6 @@
 package domain.obstacle;
 
+import domain.Box;
 import domain.strategy.GiftObstacleDestroyBehaviour;
 
 import java.util.ArrayList;
@@ -7,11 +8,11 @@ import java.util.ArrayList;
 public class GiftOfUranus extends Obstacle {
 
 	private int width;
-
 	public GiftOfUranus(int xPos, int yPos) {
 		super(xPos, yPos);
 		this.destroyBehaviour = new GiftObstacleDestroyBehaviour();
 		this.type = "GiftOfUranus";
+		box = new Box(xPos, yPos);
 	}
 
 

@@ -86,11 +86,6 @@ public class Ball extends DomainObject {
         this.xVelocity *= -1;
     }
 
-
-    public PosVector getBallVelocity() {
-        return new PosVector(this.xVelocity, this.yVelocity);
-    }
-
     public void checkWallCollision() {
         if (this.posVector.getX() < 8) {
             this.reflectFromSideWall();
@@ -100,10 +95,6 @@ public class Ball extends DomainObject {
         else if (this.posVector.getY()<yOffset) {
             this.reflectFromTopWall();
         }
-    }
-
-    public void checkPaddleCollision() {
-
     }
 
     public Boolean checkAlive() {

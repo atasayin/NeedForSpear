@@ -29,7 +29,7 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
     private long initialTime;
     private int score = 0;
     private static int yOffset = 70;
-
+    private Box box;
     private javax.swing.Timer game_Timer = new javax.swing.Timer(TIMER_SPEED, this);
     private Game() {
         gameState = new GameState();
@@ -137,6 +137,10 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
         isLoad = true;
     }
 
+    public Box creatBox(double x, double y){
+        Box b = new Box(x,y);
+        return b;
+    }
     @Override
     public void actionPerformed(ActionEvent e) {
         //boolean isDead = Game.getInstance().ball.move();

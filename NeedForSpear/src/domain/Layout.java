@@ -110,6 +110,7 @@ public class Layout {
                     if (isAvailable(obs)) {
                         obstacle_positions.put(obs, pos);
                         Game.getInstance().getDomainObjectArr().add(obs);
+                        Game.getInstance().getDomainObjectArr().add(obs.getBox());
                         break;
                     }
 

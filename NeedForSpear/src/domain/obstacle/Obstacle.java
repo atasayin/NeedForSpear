@@ -1,5 +1,6 @@
 package domain.obstacle;
 
+import domain.Box;
 import domain.DomainObject;
 import domain.Game;
 import domain.strategy.DestroyBehaviour;
@@ -15,6 +16,7 @@ public abstract class Obstacle extends DomainObject {
 	public DestroyBehaviour destroyBehaviour;
 	protected String type;
 	private int height, width;
+	protected Box box;
 
 	
 	public Obstacle(int xPos, int yPos) {
@@ -72,5 +74,9 @@ public abstract class Obstacle extends DomainObject {
 
 	public int getHealth() {
 		return health;
+	}
+
+	public Box getBox(){
+		return this.box;
 	}
 }
