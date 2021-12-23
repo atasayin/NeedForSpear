@@ -33,6 +33,7 @@ public class KeyboardController {
         //           else
         //           return false
         //
+        // MODIFIES: Paddle, Game, Ball
 
         Paddle paddle = Game.getInstance().getPaddle();
         this.keyBits = keyBits;
