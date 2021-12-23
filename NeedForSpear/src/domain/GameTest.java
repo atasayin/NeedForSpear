@@ -40,12 +40,11 @@ class GameTest implements ActionListener {
 
     @org.junit.jupiter.api.AfterEach
     void tearDown() {
+        System.out.println("Running: Tear Down");
+        g.getDomainObjectArr().remove(wm);
+
     }
 
-    @org.junit.jupiter.api.Test
-    void getInstance() {
-        assertNotEquals(g.getInstance(), null);
-    }
     @org.junit.jupiter.api.Test
     void IsGameOver(){
         g.gameState.getPlayer().setChance_points(0);
@@ -58,12 +57,7 @@ class GameTest implements ActionListener {
         g.gameOverCheck();
         assertEquals(g.gameState.getIsRunning(), true);
     }
-    @org.junit.jupiter.api.Test
-    void GameNotOverIsWinCheck(){
-        g.gameState.getPlayer().setChance_points(2);
-        g.gameOverCheck();
-        assertEquals(g.getIsWin(), true);
-    }
+
     @org.junit.jupiter.api.Test
     void GameNotOverIsNotWinCheck(){
         g.gameState.getPlayer().setChance_points(2);
@@ -72,14 +66,8 @@ class GameTest implements ActionListener {
         assertEquals(g.getIsWin(), false);
     }
     @org.junit.jupiter.api.Test
-    void IsTimerStopped(){
+    void IsTimerStoppedGameLose(){
         g.gameState.getPlayer().setChance_points(0);
-        g.gameOverCheck();
-        assertEquals(g.getT().isRunning(), false);
-    }
-    @org.junit.jupiter.api.Test
-    void TimerStopGameWon(){
-        g.gameState.getPlayer().setChance_points(2);
         g.gameOverCheck();
         assertEquals(g.getT().isRunning(), false);
     }
@@ -90,6 +78,17 @@ class GameTest implements ActionListener {
         g.getDomainObjectArr().add(wm);
         g.gameOverCheck();
         assertEquals(g.getT().isRunning(), true);
+    }
+
+    @org.junit.jupiter.api.Test
+    void IsObjectArrayNull(){
+        g.gameState.getPlayer().setChance_points(2);
+        assertEquals(g.getDomainObjectArr().isEmpty(), true);
+    }
+
+    @org.junit.jupiter.api.Test
+    void IsGetChanceWork(){
+        assertEquals(g.gameState.getPlayer().getChance_points(), 3);
     }
 
     @Override
