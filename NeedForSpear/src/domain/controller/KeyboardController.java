@@ -60,7 +60,7 @@ public class KeyboardController {
 
         // First shot (w)
         if(isKeyPressed(87)){
-            Game.getInstance().ball.setisAlive(true);
+            Game.getInstance().getBall().setisAlive(true);
         }
 
         // Save

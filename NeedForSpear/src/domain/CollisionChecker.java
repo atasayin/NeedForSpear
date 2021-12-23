@@ -98,22 +98,36 @@ public class CollisionChecker {
     public void ChecktoDelete(){
         Obstacle toBeDeleted = null;
         Game.getInstance().getPaddle().updatePosition(0,0);
-        Game.getInstance().ball.move();
-        for(Box box: boxes){
-            box.updatePosition();
-        }
-        if (instance.checkPaddleBallCollision(Game.getInstance().ball, Game.getInstance().getPaddle())) {
-            Game.getInstance().ball.reflectFromPaddle();
+        Game.getInstance().getBall().move();
+        if(boxes != null) {
+            for (Box box : boxes) {
+                box.updatePosition();
+                }
+              }
+        /*
+                if (box.getPosVector().getY() - box.boxwidth >= Game.getInstance().getPaddle().getPosVector().getY() ||
+                        box.getPosVector().getY() + box.boxwidth >= HEIGHT) {
+                    box.updateAbility();
+                    Game.getInstance().getDomainObjectArr().remove(box);
+                    boxes.remove(box);
+                    System.out.println(box.getPosVector().getY());
+                    System.out.println(Game.getInstance().getPaddle().getPosVector().getY());
+                    System.out.println(Game.getInstance().gameState.getPlayer().getAbilities());
+                }
+            }
+        }*/
+        if (instance.checkPaddleBallCollision(Game.getInstance().getBall(), Game.getInstance().getPaddle())) {
+            Game.getInstance().getBall().reflectFromPaddle();
         }
 
         //if (Game.getInstance().ball.getPosVector().getY() < 0) Game.getInstance().ball.reflectFromHorizontal();
 
         for (Obstacle obs : Layout.obstacle_positions.keySet()) {
-            if (instance.checkCollision(Game.getInstance().ball, obs)) {
+            if (instance.checkCollision(Game.getInstance().getBall(), obs)) {
                 if (obs.getHit()){
                     String typeCheck = obs.getType();
                     if(typeCheck.equals("GiftOfUranus")){
-                         //Game.getInstance().getDomainObjectArr().add(obs.getBox());
+                         Game.getInstance().getDomainObjectArr().add(obs.getBox());
                          boxes.add(obs.getBox());
                         for (IBoxListener listener : BoxListeners) {
                             listener.dropBox(obs.getPosVector().getX(), obs.getPosVector().getY());
@@ -123,10 +137,10 @@ public class CollisionChecker {
                     toBeDeleted = obs;
                 }
 
-                if (instance.findCollisionDirection(Game.getInstance().ball, obs)) {
-                    Game.getInstance().ball.reflectFromVertical();
+                if (instance.findCollisionDirection(Game.getInstance().getBall(), obs)) {
+                    Game.getInstance().getBall().reflectFromVertical();
                 } else {
-                    Game.getInstance().ball.reflectFromHorizontal();
+                    Game.getInstance().getBall().reflectFromHorizontal();
                 }
             }
         }

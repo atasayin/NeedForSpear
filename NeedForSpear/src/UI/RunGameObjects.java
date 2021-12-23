@@ -85,7 +85,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
         } catch (IOException e) {
             e.printStackTrace();
         }
-        drawBall(g2d, Game.getInstance().ball, frame_width, frame_height);
+        drawBall(g2d, Game.getInstance().getBall(), frame_width, frame_height);
 
         g2d.setTransform(old);
         int textWidth = g.getFontMetrics().stringWidth(infoString);

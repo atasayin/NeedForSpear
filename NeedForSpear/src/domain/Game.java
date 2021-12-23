@@ -1,6 +1,7 @@
 package domain;
 import util.PosVector;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
     static Game instance;
     //private Timer game_Timer;
     private Paddle paddle;
-    public Ball ball;
+    private Ball ball;
     public Layout layout;
     public boolean isLoad = false;
     private static final int TIMER_SPEED = 5;
@@ -30,9 +31,11 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
     private int score = 0;
     private static int yOffset = 70;
     private Box box;
-    private javax.swing.Timer game_Timer = new javax.swing.Timer(TIMER_SPEED, this);
+    private javax.swing.Timer game_Timer;
+
     private Game() {
         gameState = new GameState();
+        game_Timer = new javax.swing.Timer(TIMER_SPEED, this);
 
 
 
@@ -54,7 +57,8 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
         return instance;
     }
 
-    public void resumeTime(double remaining) {
+    public Timer getT() {
+        return instance.game_Timer;
 
     }
 
@@ -115,6 +119,11 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
         this.gameState.setDomainList(list);
     }
 
+     /*EFFECTS: If player has no more chance points it stops running, if player cleared whole layout
+        game stops running and player has won.
+
+        MODIFIES: this (Game), isWin, game_Timer, isRunning
+    */
     public void gameOverCheck(){
         Integer chancePoint = instance.gameState.getPlayer().getChance_points();
         if( chancePoint <= 0 ){
@@ -122,12 +131,14 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
             game_Timer.stop();
         }
         else if(instance.getDomainObjectArr().size() == 0){
-            System.out.println("bitti");
+            //System.out.println("bitti");
             this.isWin= true;
             game_Timer.stop();
         }
     }
     public Paddle getPaddle() {return paddle;}
+
+    public Ball getBall() {return ball;}
 
     public boolean getIsWin(){ return this.isWin;}
 
@@ -137,10 +148,6 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
         isLoad = true;
     }
 
-    public Box creatBox(double x, double y){
-        Box b = new Box(x,y);
-        return b;
-    }
     @Override
     public void actionPerformed(ActionEvent e) {
         //boolean isDead = Game.getInstance().ball.move();
