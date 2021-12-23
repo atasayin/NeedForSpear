@@ -1,7 +1,6 @@
 package domain;
 
 import domain.controller.BallController;
-import domain.controller.PaddleController;
 import util.PosVector;
 
 import java.util.ArrayList;
@@ -16,7 +15,7 @@ public class GameState {
     public HashMap<Integer, Integer> ObstacleCounts;
     private double time;
     protected Player player;
-    public static PaddleController pc;
+    public static Paddle paddle;
     private java.util.List<IChanceListener> ChanceListeners = new ArrayList<>();
 
 
@@ -27,7 +26,7 @@ public class GameState {
         ballController = new BallController();
         domainObjects = new ArrayList<DomainObject>();
         ObstacleCounts = new HashMap<Integer, Integer>();
-        pc = new PaddleController(100,20);
+        paddle = new Paddle(100,20);
     }
 
     public GameState(PosVector ballPos, PosVector paddlePos, Layout layout) {
@@ -48,7 +47,7 @@ public class GameState {
     }
 
     public PosVector getPaddlePos() {
-        return pc.getPaddle().getPosVector();
+        return paddle.getPosVector();
     }
 
     public Layout getLayout() {
@@ -67,15 +66,13 @@ public class GameState {
         return this.domainObjects;
     }
 
+    public Paddle getPaddle(){ return paddle; }
+
     public Player getPlayer() {
         return player;
     }
 
     public void setPlayer(Player p) { this.player = p; }
-
-    public PaddleController getPC(){
-        return pc;
-    }
 
     public void setDomainList(ArrayList<DomainObject> list) {
         this.domainObjects = list;
