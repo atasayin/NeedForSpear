@@ -49,10 +49,11 @@ public class paddleMovementTest {
     @Test
     void checkPaddleGoLeft() {
         paddle1.setPosVector(new PosVector(360, 1100));
-        paddle1.move(1);
-        paddle1.getPosVector();
-        assertTrue(paddle1.getDx() != 360);
 
+        paddle1.move(1);
+        paddle1.getNormalSpeed();
+        paddle1.getPosVector();
+        assertTrue(paddle1.getDx() < 360); //Check Paddle to go left based on its coordinates.
 
 
     }
@@ -62,7 +63,7 @@ public class paddleMovementTest {
         paddle1.setPosVector(new PosVector(360, 1100));
         paddle1.move(2);
         paddle1.getPosVector();
-        assertTrue(paddle1.getDx() != 360);
+        assertTrue(paddle1.getDx() != 360); //Check Paddle to go right based on its coordinates.
 
     }
 
@@ -74,7 +75,7 @@ public class paddleMovementTest {
         paddle1.setAngle(0);
         paddle1.move(3);
         paddle1.getAngle();
-        assertTrue(paddle1.getAngle() != 0);
+        assertTrue(paddle1.getAngle() < 0); //Check Paddle to rotate counterclockwise based on its angle.
         //assertTrue();
 
     }
@@ -85,7 +86,7 @@ public class paddleMovementTest {
         paddle1.setAngle(0);
         paddle1.move(4);
         paddle1.getAngle();
-        assertTrue(paddle1.getAngle() != 0);
+        assertTrue(paddle1.getAngle() > 0); //Check Paddle to rotate clockwise based on its angle.
         //paddle1.setPosVector(new PosVector(360, 1100));
 
         //assertTrue(paddle1.getAngle());
@@ -95,9 +96,13 @@ public class paddleMovementTest {
     @Test
     void checkPaddleGoFastLeft() {
         paddle1.setPosVector(new PosVector(360, 1100));
+
         paddle1.move(5);
         paddle1.getPosVector();
-        //assertTrue();
+
+        assertTrue(paddle1.getDx() - paddle1.getFastSpeed() < 360 - paddle1.getNormalSpeed());
+
+
     }
 
     @Test
@@ -105,6 +110,9 @@ public class paddleMovementTest {
         paddle1.setPosVector(new PosVector(360, 1100));
         paddle1.move(6);
         paddle1.getPosVector();
+
+        assertTrue(paddle1.getDx() + paddle1.getFastSpeed() > 360 + paddle1.getNormalSpeed());
+
 
     }
 
