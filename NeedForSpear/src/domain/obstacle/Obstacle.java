@@ -79,4 +79,8 @@ public abstract class Obstacle extends DomainObject {
 	public Box getBox(){
 		return this.box;
 	}
+
+	public void setPosVector(PosVector pos) {
+		this.pos = pos;
+	}
 }

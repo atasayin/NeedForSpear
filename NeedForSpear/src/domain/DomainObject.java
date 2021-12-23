@@ -82,5 +82,7 @@ public abstract class DomainObject {
         this.height = height;
     }
 
-
+    public void setPosVector(PosVector posVector) {
+        this.posVector = posVector;
+    }
 }

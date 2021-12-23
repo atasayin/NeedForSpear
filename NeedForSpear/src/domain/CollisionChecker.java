@@ -28,14 +28,14 @@ public class CollisionChecker {
 
 
     public Boolean checkPaddleBallCollision(Ball ball, Paddle paddle) {
-        int ball_x = ball.posVector.getX();
-        int paddle_x = paddle.posVector.getX();
-        int paddle_y = paddle.posVector.getY();
+        int ball_x = ball.getPosVector().getX();
+        int paddle_x = paddle.getPosVector().getX();
+        int paddle_y = paddle.getPosVector().getY();
         int paddle_length = paddle.getLength();
         int paddle_right = paddle_x + paddle_length;
 
 
-        if (ball.posVector.getY() > (paddle_y -37)) {
+        if (ball.getPosVector().getY() > (paddle_y -37)) {
             if ((ball_x > paddle_x) && (ball_x < paddle_right)) {
                 return true;
             }
@@ -43,21 +43,30 @@ public class CollisionChecker {
         return false;
     }
 
-    public Boolean checkCollision(DomainObject object1, DomainObject object2) {
-        int object1_x = object1.getPosVector().getX();
-        int object1_y = object1.getPosVector().getY();
-        int object1_width = object1.getWidth();
-        int object1_height = object1.getHeight();
+    public Boolean checkCollision(DomainObject object1, DomainObject object2){
+        try {
+            int object1_x = object1.getPosVector().getX();
+            int object1_y = object1.getPosVector().getY();
+            int object1_width = object1.getWidth();
+            int object1_height = object1.getHeight();
 
-        int object2_x = object2.getPosVector().getX();
-        int object2_y = object2.getPosVector().getY();
-        int object2_width = object2.getWidth();
-        int object2_height = object2.getHeight();
+            int object2_x = object2.getPosVector().getX();
+            int object2_y = object2.getPosVector().getY();
+            int object2_width = object2.getWidth();
+            int object2_height = object2.getHeight();
 
-        return (object1_y < object2_y + object2_height) &&
-                (object2_y < object1_y + object1_height) &&
-                (object1_x < object2_x + object2_width) &&
-                (object2_x < object1_x + object1_width);
+            return (object1_y < object2_y + object2_height) &&
+                    (object2_y < object1_y + object1_height) &&
+                    (object1_x < object2_x + object2_width) &&
+                    (object2_x < object1_x + object1_width);
+
+        }
+        catch (NullPointerException e) {
+            System.out.println("Null object in checkCollision");
+        }
+
+
+        return null;
     }
 
 
