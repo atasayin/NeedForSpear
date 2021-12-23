@@ -13,23 +13,17 @@ public class LayoutController {
     /////////////////////////////////////////////////////////////////////////////////////
 
     Layout layout;
+    private int FRAME_WIDTH;
+    private int FRAME_HEIGHT;
 
     HashMap<String, Integer> obstacleSettings;
 
-    static LayoutController instance;
-
     /////////////////////////////////////////////////////////////////////////////////////
 
-    private LayoutController() {
+    public LayoutController() {
+        FRAME_WIDTH = 1368;
+        FRAME_HEIGHT = 766;
     }
-
-    public static LayoutController getInstance() {
-        if (instance == null) {
-            instance = new LayoutController();
-        }
-        return instance;
-    }
-
 
     // For mouse events
     public boolean getInput(int input) {
@@ -43,14 +37,16 @@ public class LayoutController {
 
     // Gets random Layout after the obstacle settings
     public Layout getRandomLayout(){
-        layout = new Layout(obstacleSettings.get("simpleObstacleCount"),
+
+        layout = new Layout(
+                obstacleSettings.get("simpleObstacleCount"),
                 obstacleSettings.get("firmObstacleCount"),
                 obstacleSettings.get("explosiveObstacleCount"),
                 obstacleSettings.get("giftObstacleCount"),
-                1368,
-                766
+                FRAME_WIDTH,
+                FRAME_HEIGHT
         );
-        //printLayout();
+
         return layout;
     }
 

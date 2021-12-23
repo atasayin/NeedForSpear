@@ -1,15 +1,14 @@
 package domain;
 
-import domain.controller.BallController;
 import util.PosVector;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class GameState {
-    public PosVector ballPos, paddlePos, ballVelocity;
+
+    public PosVector ballPos, paddlePos;
     public Layout layout;
-    public static BallController ballController;
     public boolean isRunning;
     private ArrayList<DomainObject> domainObjects;
     public HashMap<Integer, Integer> ObstacleCounts;
@@ -23,7 +22,6 @@ public class GameState {
         this.paddlePos = new PosVector(200,800);
         this.ballPos = new PosVector(200, 750);
         this.layout = new Layout();
-        ballController = new BallController();
         domainObjects = new ArrayList<DomainObject>();
         ObstacleCounts = new HashMap<Integer, Integer>();
         paddle = new Paddle(100,20);
@@ -38,6 +36,7 @@ public class GameState {
     public double getTime() {
         return this.time;
     }
+
     public PosVector getBallPos() {
         return ballPos;
     }
@@ -45,6 +44,8 @@ public class GameState {
     public void setBallPos(PosVector ballPos) {
         this.ballPos = ballPos;
     }
+
+    public Paddle getPaddle(){ return paddle; }
 
     public PosVector getPaddlePos() {
         return paddle.getPosVector();
@@ -65,8 +66,6 @@ public class GameState {
     public ArrayList<DomainObject> getDomainObjectArr() {
         return this.domainObjects;
     }
-
-    public Paddle getPaddle(){ return paddle; }
 
     public Player getPlayer() {
         return player;
