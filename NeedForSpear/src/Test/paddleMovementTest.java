@@ -2,7 +2,6 @@ package Test;
 
 import domain.DomainObject;
 import domain.Paddle;
-import util.PosVector;
 import domain.Ball;
 
 import org.junit.jupiter.api.AfterEach;
@@ -15,19 +14,28 @@ public class paddleMovementTest {
 
     Ball ball;
     Paddle paddle;
-
-    DomainObject wallmaria, steinsgate, giftofuranus;
     ArrayList<DomainObject> objList;
 
 
     @BeforeEach
     void setUp() {
 
+        System.out.println("Running: Set Up");
+        ball = new Ball();
+        paddle = new Paddle(1368, 766);
+        objList = new ArrayList<>();
+        objList.add(ball);
+        objList.add(paddle);
+
     }
 
     @AfterEach
     void tearDown() {
 
+        System.out.println("Running: Teardown");
+        for (DomainObject obj : objList) {
+            obj = null;
+        }
 
     }
 
