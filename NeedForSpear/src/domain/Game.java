@@ -121,7 +121,6 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
 
      /*EFFECTS: If player has no more chance points it stops running, if player cleared whole layout
         game stops running and player has won.
-
         MODIFIES: this (Game), isWin, game_Timer, isRunning
     */
     public void gameOverCheck(){

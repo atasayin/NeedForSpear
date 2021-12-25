@@ -95,27 +95,26 @@ public class CollisionChecker {
 
 
     }
-    public void ChecktoDelete(){
+    public void ChecktoDelete() {
         Obstacle toBeDeleted = null;
-        Game.getInstance().getPaddle().updatePosition(0,0);
+        Box boxToBeDeleted = null;
+        Game.getInstance().getPaddle().updatePosition(0, 0);
         Game.getInstance().getBall().move();
-        if(boxes != null) {
+        if (boxes != null) {
             for (Box box : boxes) {
                 box.updatePosition();
-                }
-              }
-        /*
-                if (box.getPosVector().getY() - box.boxwidth >= Game.getInstance().getPaddle().getPosVector().getY() ||
-                        box.getPosVector().getY() + box.boxwidth >= HEIGHT) {
+                if(checkCollision(box,Game.getInstance().getPaddle())){
                     box.updateAbility();
                     Game.getInstance().getDomainObjectArr().remove(box);
-                    boxes.remove(box);
+                    boxToBeDeleted = box;
                     System.out.println(box.getPosVector().getY());
                     System.out.println(Game.getInstance().getPaddle().getPosVector().getY());
                     System.out.println(Game.getInstance().gameState.getPlayer().getAbilities());
                 }
-            }
-        }*/
+
+        }
+    }
+
         if (instance.checkPaddleBallCollision(Game.getInstance().getBall(), Game.getInstance().getPaddle())) {
             Game.getInstance().getBall().reflectFromPaddle();
         }
@@ -145,6 +144,10 @@ public class CollisionChecker {
             }
         }
         if (toBeDeleted != null) Layout.obstacle_positions.remove(toBeDeleted);
+        if (boxToBeDeleted != null) {
+            boxes.remove(boxToBeDeleted);
+            Game.getInstance().getDomainObjectArr().remove(boxToBeDeleted);
+        }
 
     }
 

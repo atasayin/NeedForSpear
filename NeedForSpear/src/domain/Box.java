@@ -13,17 +13,18 @@ public class Box extends DomainObject {
     private int abilityType;
     private int SEED_NUMBER = 10;
     private PosVector posVector;
-    protected int boxwidth = 30;
+    protected int height = 30;
+    protected int width = 30;
     private boolean isBoxCatched =true;
 
 
     /////////////////////////////////////////////////////////////////////////////////////
 
     public Box(double x, double y) {
-        Random rnd = new Random(SEED_NUMBER);
+        Random rnd = new Random();
         this.posVector = new PosVector((int)x,(int)y);
         this.setSpeed(0, 0);
-        this.abilityType = rnd.nextInt(4);
+        this.abilityType = rnd.nextInt(4) + 1;
 
     }
 
@@ -38,6 +39,10 @@ public class Box extends DomainObject {
 
     }
     public PosVector getPosVector() { return this.posVector; }
+
+    public int getHeight() { return this.height; }
+
+    public int getWidth() { return this.width; }
 
     public void setPosVector(PosVector pos) {
         this.posVector = pos;
