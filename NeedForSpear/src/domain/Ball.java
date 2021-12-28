@@ -21,7 +21,7 @@ public class Ball extends DomainObject {
     private boolean outOfScreen;
 
     public Ball() {
-        this.posVector = new PosVector(800, 400);
+        this.posVector = new PosVector(600, 600);
         this.gravity = 1;
         this.xVelocity = 3;
         this.yVelocity = -40;
@@ -71,6 +71,14 @@ public class Ball extends DomainObject {
         if (!this.is_unstoppable) {
             this.yVelocity *= -1;
         }
+    }
+
+    public void reflectFromAngle(double alpha) {
+        alpha *= -1;
+        double new_xVel = Math.cos(alpha) * this.xVelocity - Math.sin(alpha) * this.yVelocity;
+        double new_yVel = Math.sin(alpha) * this.xVelocity + Math.cos(alpha) * this.yVelocity;
+        this.xVelocity = (int) new_xVel;
+        this.yVelocity = (int) (new_yVel * -1.05);
     }
 
 

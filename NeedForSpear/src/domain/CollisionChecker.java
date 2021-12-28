@@ -43,6 +43,35 @@ public class CollisionChecker {
         return false;
     }
 
+    public Boolean checkPaddleBallCollisionAlt(Ball ball, Paddle paddle) {
+        int ball_x = ball.getPosVector().getX();
+        int ball_y = ball.getPosVector().getY();
+        int paddle_x = paddle.getPosVector().getX();
+        int paddle_y = paddle.getPosVector().getY() - 37;
+        int paddle_length = paddle.getLength();
+        int gx = paddle_x + paddle_length/2;
+        int gy = paddle_y;
+        double alpha = paddle.getAngle();
+        alpha = Math.toRadians(alpha);
+        int paddle_right = (int) (paddle_x + (paddle_length * Math.abs(Math.cos(alpha) ) ));
+        int paddle_left = (int) (paddle_x - (paddle_length * Math.abs(Math.cos(alpha) ) ));
+
+
+        if ((ball_x > paddle_left) && (ball_x < paddle_right)) {
+            int dy = ball_y - gy;
+            int dx = ball_x - gx;
+            double tranformed_dy = Math.cos(alpha) * dy - Math.sin(alpha) * dx;
+            double tranformed_dx = Math.sin(alpha) * dy + Math.cos(alpha) * dx;
+
+            if (tranformed_dy >= 0) {
+                return true;
+            }
+
+        }
+
+        return false;
+    }
+
     public Boolean checkCollision(DomainObject object1, DomainObject object2){
         try {
             int object1_x = object1.getPosVector().getX();
@@ -111,8 +140,9 @@ public class CollisionChecker {
         for(Box box: boxes){
             box.updatePosition();
         }
-        if (instance.checkPaddleBallCollision(Game.getInstance().ball, Game.getInstance().getPaddle())) {
-            Game.getInstance().ball.reflectFromPaddle();
+        if (instance.checkPaddleBallCollisionAlt(Game.getInstance().ball, Game.getInstance().getPaddle())) {
+            double alpha = Math.toRadians(Game.getInstance().getPaddle().getAngle());
+            Game.getInstance().ball.reflectFromAngle(alpha);
         }
 
         //if (Game.getInstance().ball.getPosVector().getY() < 0) Game.getInstance().ball.reflectFromHorizontal();
