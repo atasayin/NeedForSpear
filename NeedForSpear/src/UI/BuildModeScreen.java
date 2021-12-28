@@ -223,7 +223,7 @@ public class BuildModeScreen extends JFrame {
 
         for (IRunListener listener : runModeListeners) {
             System.out.println(listener);
-            listener.onClickEvent(this.runSettings, username, id);
+            listener.onRunEvent(this.runSettings, username, id);
         }
         this.setVisible(false);
         this.dispose();

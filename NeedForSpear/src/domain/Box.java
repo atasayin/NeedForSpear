@@ -1,8 +1,6 @@
 package domain;
 
 import util.PosVector;
-
-import java.util.HashMap;
 import java.util.Random;
 
 public class Box extends DomainObject {
@@ -11,7 +9,6 @@ public class Box extends DomainObject {
 
     private int yVelocity = 10;
     private int abilityType;
-    private int SEED_NUMBER = 10;
     private PosVector posVector;
     protected int height = 30;
     protected int width = 30;
@@ -59,7 +56,4 @@ public class Box extends DomainObject {
 
     }
 
-    public void setIsBoxCatched(boolean isCatched){
-        isBoxCatched = isCatched;
-    }
 }

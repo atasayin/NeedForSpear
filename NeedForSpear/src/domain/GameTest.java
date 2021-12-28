@@ -31,7 +31,7 @@ class GameTest implements ActionListener {
         runSettings.put("screenWidth",  FRAME_WIDTH);
         runSettings.put("screenHeight",  FRAME_HEIGHT);
          g = Game.getInstance();
-         g.onClickEvent(runSettings,"Oya", "99");
+         g.onRunEvent(runSettings,"Oya", "99");
          paddle =g.getPaddle();
          ball =g.getBall();
 
@@ -69,7 +69,7 @@ class GameTest implements ActionListener {
     void IsTimerStoppedGameLose(){
         g.gameState.getPlayer().setChance_points(0);
         g.gameOverCheck();
-        assertEquals(g.getT().isRunning(), false);
+        assertEquals(g.getTimer().isRunning(), false);
     }
 
     @org.junit.jupiter.api.Test
@@ -77,7 +77,7 @@ class GameTest implements ActionListener {
         g.gameState.getPlayer().setChance_points(2);
         g.getDomainObjectArr().add(wm);
         g.gameOverCheck();
-        assertEquals(g.getT().isRunning(), true);
+        assertEquals(g.getTimer().isRunning(), true);
     }
 
     @org.junit.jupiter.api.Test

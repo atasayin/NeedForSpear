@@ -34,7 +34,7 @@ public class Saver {
         doc.put("Username", Game.getInstance().gameState.getPlayer().getUserName());
         doc.put("ChancePoints", Game.getInstance().gameState.getPlayer().getChance_points());
         doc.put("Score", Game.getInstance().getOldScore());
-        //doc.put(" Object List: ", list);
+
 
         for (Entry<Obstacle, PosVector> o : list.entrySet()) {
             temp = new ArrayList<String>();
@@ -129,11 +129,6 @@ public class Saver {
                     vec = new PosVector(p,m);
                     Layout.getObstacle_positions().put(obs,vec);
                 }
-                //System.out.println(jsonlist.get(i)[0]);
-                //System.out.println(jsonlist.get(i).getClass());
-                //Obstacle o = (Obstacle)jsonlist.get(i) ;
-                //PosVector pos = ((Obstacle) (jsonlist.get(i))).posVector ;
-                //list.put(o, pos);
             }
 
             Game.getInstance().setDomainObjectArr(listDO);

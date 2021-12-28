@@ -24,7 +24,6 @@ public class PaddleView implements Drawable {
             try {
                 instance.fillImgs();
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
@@ -33,7 +32,6 @@ public class PaddleView implements Drawable {
 
 
     private void fillImgs() throws IOException{
-        // TODO Auto-generated method stub
         try {
             paddle_img = ImageIO.read(this.getClass().getResource("../assets/paddle1.png"));
         } catch (IOException e) {
@@ -63,7 +61,6 @@ public class PaddleView implements Drawable {
 
     @Override
     public void draw(Graphics2D g2d, DomainObject domainObject, int width, int height) throws IOException {
-        // TODO Auto-generated method stub
         fillImgs();
         Paddle paddle = (Paddle) domainObject;
         int x = paddle.getPosVector().getX();

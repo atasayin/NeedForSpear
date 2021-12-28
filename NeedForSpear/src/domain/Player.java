@@ -13,8 +13,15 @@ public class Player{
     private int chance_points;
     private int score;
     private HashMap<Integer, Integer> abilities;
-    private List<InventoryListener> inventoryListeners = new ArrayList<>();
+    public List<IInventoryListener> inventoryListeners = new ArrayList<>();
     private List<TimeListener> timeListeners = new ArrayList<>();
+
+    public Player(){
+        this.chance_points = 3;
+        this.score = 0;
+        abilities = new HashMap<>();
+
+    }
 
     public Player(String userName, String id) {
         this.id = id;
@@ -38,7 +45,7 @@ public class Player{
     }
 
     public void setId(String id) {
-        this.id = id;
+         this.id = id;
     }
 
     public String getUserName() {
@@ -51,18 +58,6 @@ public class Player{
 
     public void setUserName(String userName) {
         this.userName = userName;
-    }
-
-    public void addListener(InventoryListener listener) {
-        inventoryListeners.add(listener);
-    }
-
-    public void removeListener(InventoryListener listener) {
-        inventoryListeners.remove(listener);
-    }
-
-    public void addTimelistener(TimeListener l) {
-        this.timeListeners.add(l);
     }
 
     public int getChance_points() {
@@ -93,16 +88,19 @@ public class Player{
         abilities.put(4,0);
     }
 
-    public void notifyAllInventoryListeners(String toUpdate) {
-        for (InventoryListener listener : inventoryListeners) {
+    public void notifyAllInventoryListeners(Integer toUpdate) {
+        for (IInventoryListener listener : inventoryListeners) {
             listener.onInventoryChange(toUpdate);
         }
     }
     public void updateAbilitiesInventory(int powerupType, int changeInPowerupCount) {
         int currentCount = abilities.get(powerupType);
         abilities.put(powerupType, currentCount + changeInPowerupCount);
-        notifyAllInventoryListeners("powerup");
+        //notifyAllInventoryListeners("powerup");
 
+    }
+    public void addInventoryListener( IInventoryListener listener) {
+        inventoryListeners.add(listener);
     }
 
 }

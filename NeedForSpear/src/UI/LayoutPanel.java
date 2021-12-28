@@ -15,7 +15,7 @@ public class LayoutPanel extends JPanel{
     BufferedImage img; // background
     String infoString = "";
     KeyboardController kc = new KeyboardController();
-    Game game = Game.getInstance();
+
 
     public static int frame_width;
     public static int frame_height;
@@ -44,18 +44,6 @@ public class LayoutPanel extends JPanel{
 
         Graphics2D g2d = (Graphics2D) g;
         AffineTransform old = g2d.getTransform();
-        //g2d.drawImage(img, 0, 0, null);
-        /*
-        for (DomainObject domainObject : Game.getInstance().getDomainObjectArr()) {
-            drawComponent(g2d, domainObject);
-            g2d.setTransform(old);
-
-        }
-
-
-        drawBall(g2d, Game.getInstance().ball, frame_width, frame_height);
-*/
-        //drawPaddle(g2d, Game.getInstance().PC.getPaddle(), frame_width, frame_height);
         g2d.setTransform(old);
         int textWidth = g.getFontMetrics().stringWidth(infoString);
         g2d.drawString(infoString, this.getWidth() / 2 - textWidth / 2, 20);

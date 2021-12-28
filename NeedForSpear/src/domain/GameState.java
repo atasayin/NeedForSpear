@@ -8,13 +8,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class GameState {
-    public PosVector ballPos, paddlePos, ballVelocity;
+    public PosVector ballPos, paddlePos;
     public Layout layout;
     public static BallController ballController;
     public boolean isRunning;
     private ArrayList<DomainObject> domainObjects;
     public HashMap<Integer, Integer> ObstacleCounts;
-    private double time;
     protected Player player;
     public static PaddleController pc;
     private java.util.List<IChanceListener> ChanceListeners = new ArrayList<>();
@@ -28,34 +27,12 @@ public class GameState {
         domainObjects = new ArrayList<DomainObject>();
         ObstacleCounts = new HashMap<Integer, Integer>();
         pc = new PaddleController(100,20);
+        player = new Player();
     }
 
     public GameState(PosVector ballPos, PosVector paddlePos, Layout layout) {
         this.ballPos = ballPos;
         this.paddlePos = paddlePos;
-        this.layout = layout;
-    }
-
-    public double getTime() {
-        return this.time;
-    }
-    public PosVector getBallPos() {
-        return ballPos;
-    }
-
-    public void setBallPos(PosVector ballPos) {
-        this.ballPos = ballPos;
-    }
-
-    public PosVector getPaddlePos() {
-        return pc.getPaddle().getPosVector();
-    }
-
-    public Layout getLayout() {
-        return layout;
-    }
-
-    public void setLayout(Layout layout) {
         this.layout = layout;
     }
 
@@ -81,16 +58,12 @@ public class GameState {
         this.domainObjects = list;
     }
 
-    public void initializeGameState(Layout layout) {
-
-    }
     public void setChance(int chance){
         this.getPlayer().setChance_points(chance);
         for (IChanceListener listener : ChanceListeners) {
             listener.onLoseChance(chance);
         }
     }
-
     public void addListener( IChanceListener listener) {
         ChanceListeners.add(listener);
     }

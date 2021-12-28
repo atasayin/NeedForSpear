@@ -37,7 +37,6 @@ public class Ball extends DomainObject {
         this.yVelocity = yVel;
         this.is_unstoppable = false;
         this.outOfScreen = false;
-        //this.gameListeners.add(RunGameObjects);
     }
 
     public void updateVelocity() {
@@ -103,10 +102,6 @@ public class Ball extends DomainObject {
 
     public Boolean move() {
         if (this.checkAlive() != true) {
-
-           /* for (IGameListener listener : autoModeListeners) {
-                listener.onEvent();
-            }*/
             return false;
         }
         if(!this.isAlive){

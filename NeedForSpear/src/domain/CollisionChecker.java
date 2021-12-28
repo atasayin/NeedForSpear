@@ -9,11 +9,12 @@ import java.util.Collections;
 import java.util.List;
 
 public class CollisionChecker {
-    private final int HEIGHT = 766;
-    private final int WIDTH = 1368;
     static CollisionChecker instance;
     private ArrayList<IBoxListener> BoxListeners = new ArrayList<>();
-    private  ArrayList<Box> boxes = new ArrayList<Box>();
+    private ArrayList<IRemainsListener> RemainListeners = new ArrayList<>();
+    private  ArrayList<Box> boxes = new ArrayList<>();
+    private  ArrayList<RemainingPieces> remains = new ArrayList<>();
+
 
     private CollisionChecker(){
 
@@ -98,6 +99,7 @@ public class CollisionChecker {
     public void ChecktoDelete() {
         Obstacle toBeDeleted = null;
         Box boxToBeDeleted = null;
+        RemainingPieces remainsToBeDeleted = null;
         Game.getInstance().getPaddle().updatePosition(0, 0);
         Game.getInstance().getBall().move();
         if (boxes != null) {
@@ -107,13 +109,22 @@ public class CollisionChecker {
                     box.updateAbility();
                     Game.getInstance().getDomainObjectArr().remove(box);
                     boxToBeDeleted = box;
-                    System.out.println(box.getPosVector().getY());
-                    System.out.println(Game.getInstance().getPaddle().getPosVector().getY());
-                    System.out.println(Game.getInstance().gameState.getPlayer().getAbilities());
                 }
 
+            }
         }
-    }
+        if (remains != null) {
+            for (RemainingPieces r : remains) {
+                r.updatePosition();
+                if(checkCollision(r,Game.getInstance().getPaddle())){
+                    int chance = Game.getInstance().gameState.getPlayer().getChance_points();
+                    Game.getInstance().gameState.setChance(chance-1);
+                    Game.getInstance().getDomainObjectArr().remove(r);
+                    remainsToBeDeleted = r;
+                }
+
+            }
+        }
 
         if (instance.checkPaddleBallCollision(Game.getInstance().getBall(), Game.getInstance().getPaddle())) {
             Game.getInstance().getBall().reflectFromPaddle();
@@ -132,6 +143,13 @@ public class CollisionChecker {
                             listener.dropBox(obs.getPosVector().getX(), obs.getPosVector().getY());
                         }
                     }
+                    if(typeCheck.equals("PandorasBox")){
+                        Game.getInstance().getDomainObjectArr().add(obs.getRemains());
+                        remains.add(obs.getRemains());
+                        for (IRemainsListener listener : RemainListeners) {
+                            listener.dropRemains(obs.getPosVector().getX(), obs.getPosVector().getY());
+                        }
+                    }
                     Game.getInstance().getDomainObjectArr().remove(obs);
                     toBeDeleted = obs;
                 }
@@ -148,6 +166,10 @@ public class CollisionChecker {
             boxes.remove(boxToBeDeleted);
             Game.getInstance().getDomainObjectArr().remove(boxToBeDeleted);
         }
+        if (remainsToBeDeleted != null) {
+            remains.remove(remainsToBeDeleted);
+            Game.getInstance().getDomainObjectArr().remove(remainsToBeDeleted);
+        }
 
     }
 
@@ -157,5 +179,9 @@ public class CollisionChecker {
 
     public ArrayList<Box> getBoxes() {
         return this.boxes;
+    }
+
+    public ArrayList<RemainingPieces> getRemainingPieces() {
+        return this.remains;
     }
 }

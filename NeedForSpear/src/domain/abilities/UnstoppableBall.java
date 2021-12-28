@@ -9,11 +9,6 @@ public class UnstoppableBall implements Runnable{
 
     public UnstoppableBall() {}
 
-
-    public void activate() {
-        this.run();
-    }
-
     public void run() {
         Game.getInstance().getBall().set_is_unstoppable(true);
         try {

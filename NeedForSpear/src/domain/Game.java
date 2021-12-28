@@ -12,41 +12,25 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
     static final int FRAME_WIDTH = 1368;
     static final int FRAME_HEIGHT = 766;
 
-    String gameStatus;
     public GameState gameState;
     public Saver saver;
     static Game instance;
-    //private Timer game_Timer;
+
     private Paddle paddle;
     private Ball ball;
-    public Layout layout;
     public boolean isLoad = false;
     private static final int TIMER_SPEED = 5;
-    Player player = null;
     private static final long TOTAL_DEATH_TIME = 4500;
     private long deathInitTime = -100;
-    public static int UNITLENGTH_L = 1;
     private boolean isWin = false;
     private long initialTime;
     private int score = 0;
     private static int yOffset = 70;
-    private Box box;
     private javax.swing.Timer game_Timer;
 
     private Game() {
         gameState = new GameState();
         game_Timer = new javax.swing.Timer(TIMER_SPEED, this);
-
-
-
-/*
-        game_Timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                // TODO Auto-generated method stub
-                //gameState.decreaseTime();
-            }
-        }, 0, 1000);*/
 
     }
 
@@ -57,7 +41,7 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
         return instance;
     }
 
-    public Timer getT() {
+    public Timer getTimer() {
         return instance.game_Timer;
 
     }
@@ -73,10 +57,13 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
         saver.saveGame(Game.getInstance().getPaddle(), Game.getInstance().ball, Layout.getObstacle_positions());
     }
 
-    public Integer getScore(int oldScore){
+    /*EFFECTS: From oldScore value it calculates new value and updates the score attribute.
+      MODIFIES: score
+     */
+
+    public Integer updateScore(int oldScore){
        long CurrentTime = System.currentTimeMillis();
        int NewScore =(int) (oldScore + 300/(double)((CurrentTime-initialTime)/1000));
-       //System.out.println(CurrentTime-initialTime);
        return NewScore;
     }
     public void setScore(int newScore){  this.score = newScore;}
@@ -84,10 +71,9 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
     public int getOldScore() {
         return this.score;
     }
+
     @Override
-    public void onClickEvent(HashMap<String, Integer> startParameters, String username, String id) {
-        // TODO Auto-generated method stub
-        //initializeGame(startParameters, username);
+    public void onRunEvent(HashMap<String, Integer> startParameters, String username, String id) {
 
         paddle = new Paddle(FRAME_WIDTH,FRAME_HEIGHT);
         this.ball = new Ball();
@@ -96,9 +82,11 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
         Game.getInstance().gameState.isRunning = true;
         initialTime = System.currentTimeMillis();
 
-        Player player = new Player(username, id);
-        player.initializeInventory();
-        instance.gameState.setPlayer(player);
+        //Player player = new Player(username, id);
+
+        instance.gameState.getPlayer().setId(id);
+        instance.gameState.getPlayer().setId(username);
+        instance.gameState.getPlayer().initializeInventory();
         game_Timer.start();
 
         if(isLoad){
@@ -106,10 +94,6 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
         }
     }
 
-//    private void initializeGame(HashMap<String, Integer> startParameters, String username) {
-//
-//        //gameState.initializeGameState(gameState.layout);
-//    }
 
     public ArrayList<DomainObject> getDomainObjectArr() {
         return this.gameState.getDomainObjectArr();
@@ -130,7 +114,6 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
             game_Timer.stop();
         }
         else if(instance.getDomainObjectArr().size() == 0){
-            //System.out.println("bitti");
             this.isWin= true;
             game_Timer.stop();
         }
@@ -149,8 +132,6 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        //boolean isDead = Game.getInstance().ball.move();
-        /// List size review
         gameOverCheck();
         if(!Game.getInstance().ball.checkAlive()) {
 
@@ -160,11 +141,11 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
                 Integer points = Game.getInstance().gameState.getPlayer().getChance_points() - 1;
                 Game.getInstance().gameState.setChance(points);
             } else {
-                // he's been dead
-                // check how long he's been dead
+                // ball's been dead
+                // check how long ball's been dead
                 long deathTime = System.currentTimeMillis() - deathInitTime;
                 if (deathTime > TOTAL_DEATH_TIME) {
-                    // if he's been dead long enough, call this code
+                    // if ball's been dead long enough, call this code
                     Game.getInstance().ball.setOutOfScreen(true);
                     PosVector pos = new PosVector(FRAME_WIDTH/2, yOffset+1);
                     Game.getInstance().ball.setPosVector(pos);
