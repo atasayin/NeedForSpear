@@ -97,6 +97,7 @@ public class Ball extends DomainObject {
         }
     }
 // Gitlab check dummy commit
+    //gitlab check.
     public Boolean checkAlive() {
         return (this.posVector.getY() <= (FRAME_HEIGHT));
     }
