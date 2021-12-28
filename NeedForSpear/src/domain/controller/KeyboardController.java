@@ -96,6 +96,7 @@ public class KeyboardController {
                 int num = Game.getInstance().gameState.getPlayer().getAbilities().get(2);
                 Game.getInstance().gameState.getPlayer().getAbilities().put(2,num-1);
                 Game.getInstance().gameState.getPlayer().notifyAllInventoryListeners(num-1);
+                Game.getInstance().gameState.getPlayer().setIsMagicalAbilityActive(true);
                 PaddleExpansion paddleexp = new PaddleExpansion();
                 Thread t = new Thread(paddleexp);
                 t.start();
@@ -108,6 +109,7 @@ public class KeyboardController {
                 int num = Game.getInstance().gameState.getPlayer().getAbilities().get(3);
                 Game.getInstance().gameState.getPlayer().getAbilities().put(3,num-1);
                 Game.getInstance().gameState.getPlayer().notifyAllInventoryListeners(num - 1);
+                Game.getInstance().gameState.getPlayer().setIsMagicalAbilityActive(true);
                 UnstoppableBall unstoppableBall = new UnstoppableBall();
                 Thread t = new Thread(unstoppableBall);
                 t.start();

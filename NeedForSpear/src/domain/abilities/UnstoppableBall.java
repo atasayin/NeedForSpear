@@ -17,6 +17,7 @@ public class UnstoppableBall implements Runnable{
             e.printStackTrace();
         }
         Game.getInstance().getBall().set_is_unstoppable(false);
+        Game.getInstance().gameState.getPlayer().setIsMagicalAbilityActive(false);
 
     }
 

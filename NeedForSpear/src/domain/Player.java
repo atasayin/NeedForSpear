@@ -15,6 +15,7 @@ public class Player{
     private HashMap<Integer, Integer> abilities;
     public List<IInventoryListener> inventoryListeners = new ArrayList<>();
     private List<TimeListener> timeListeners = new ArrayList<>();
+    private boolean isMagicalAbilityActive = false;
 
     public Player(){
         this.chance_points = 3;
@@ -50,10 +51,6 @@ public class Player{
 
     public String getUserName() {
         return userName;
-    }
-
-    public void incrementChances() {
-        this.chance_points++;
     }
 
     public void setUserName(String userName) {
@@ -103,5 +100,8 @@ public class Player{
         inventoryListeners.add(listener);
     }
 
+    public void setIsMagicalAbilityActive(Boolean b){
+         this.isMagicalAbilityActive =b;
+    }
 }
 

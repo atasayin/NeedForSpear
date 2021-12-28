@@ -54,7 +54,7 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
 
     public void saveGame() {
         saver = new Saver();
-        saver.saveGame(Game.getInstance().getPaddle(), Game.getInstance().ball, Layout.getObstacle_positions());
+        saver.saveGame(Layout.getObstacle_positions());
     }
 
     /*EFFECTS: From oldScore value it calculates new value and updates the score attribute.
@@ -81,8 +81,6 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
 
         Game.getInstance().gameState.isRunning = true;
         initialTime = System.currentTimeMillis();
-
-        //Player player = new Player(username, id);
 
         instance.gameState.getPlayer().setId(id);
         instance.gameState.getPlayer().setId(username);

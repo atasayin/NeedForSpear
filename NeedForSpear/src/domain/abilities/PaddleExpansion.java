@@ -16,5 +16,6 @@ public class PaddleExpansion implements Runnable{
             e.printStackTrace();
         }
         Game.getInstance().getPaddle().normalizePaddle();
+        Game.getInstance().gameState.getPlayer().setIsMagicalAbilityActive(false);
     }
 }

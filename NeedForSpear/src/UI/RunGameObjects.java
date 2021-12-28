@@ -27,6 +27,11 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
     Timer tm = new Timer(TIMER_SPEED, this);
     private static final int TIMER_SPEED = 50;
     private static final int INFO_REFRESH_PERIOD = 3000;
+    private static final int infoStringHeight = 55;
+    private static int yOffset = 70;
+    private static int xOffset = 175;
+    public static int frame_width;
+    public static int frame_height;
 
     private BufferedImage img; // background
     private String infoString = "";
@@ -35,8 +40,6 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
     private Boolean stop = false;
     private BitSet keyBits = new BitSet(256);
     private Integer chance =3;
-    public static int frame_width;
-    public static int frame_height;
     private JPanel chancePanel;
     private JPanel invPanel;
     private JPanel scorePanel;
@@ -50,14 +53,13 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
 
     private  ImageIcon icon;
     private boolean update = false;
-    private static int yOffset = 70;
-    private static int xOffset = 175;
     private boolean isBoxDropped = false;
     private boolean isRemainFall= false;
     private double boxX;
     private double boxY;
     private double remainX;
     private double remainY;
+
 
     public RunGameObjects(int width, int height) {
         this.frame_width = width;
@@ -159,7 +161,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
 
         g2d.setTransform(old);
         int textWidth = g.getFontMetrics().stringWidth(infoString);
-        g2d.drawString(infoString, this.getWidth() / 2 - textWidth / 2, 20);
+        g2d.drawString(infoString, this.getWidth() / 2 - textWidth / 2, infoStringHeight);
         g2d.drawLine(0, yOffset, frame_width, yOffset);
         g2d.drawLine(frame_width-xOffset, yOffset, frame_width-xOffset, frame_height);
 
@@ -295,12 +297,11 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
     }
 
     public void gameOverCheck() {
-
-        Integer chance = Game.getInstance().gameState.getPlayer().getChance_points();
-
+        Game.getInstance().gameOverCheck();
         Boolean isWin = Game.getInstance().getIsWin();
+        Boolean isRunning =Game.getInstance().gameState.isRunning;
 
-        if (chance <=0){
+        if (!isRunning){
             tm.stop();
 
             JOptionPane.showMessageDialog(PlaygroundScreen.jf,
@@ -407,7 +408,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
             update =false;
         }
         else if(chance == 1){
-            //chancePanel.removeAll();
+            chancePanel.removeAll();
             icon = new ImageIcon(new ImageIcon("src/assets/1heart.png").getImage().getScaledInstance(100,35, Image.SCALE_DEFAULT));
             chancePanel.add(new JLabel(icon));
             chancePanel.setVisible(true);
