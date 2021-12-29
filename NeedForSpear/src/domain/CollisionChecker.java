@@ -164,11 +164,14 @@ public class CollisionChecker {
             }
         }
 
-        if (instance.checkPaddleBallCollision(Game.getInstance().getBall(), Game.getInstance().getPaddle())) {
-            Game.getInstance().getBall().reflectFromPaddle();
+
+        if (instance.checkPaddleBallCollisionAlt(Game.getInstance().getBall(), Game.getInstance().getPaddle())) {
+            double alpha = Math.toRadians(Game.getInstance().getPaddle().getAngle());
+            Game.getInstance().getBall().reflectFromAngle(alpha);
         }
 
-        //if (Game.getInstance().ball.getPosVector().getY() < 0) Game.getInstance().ball.reflectFromHorizontal();
+
+            //if (Game.getInstance().ball.getPosVector().getY() < 0) Game.getInstance().ball.reflectFromHorizontal();
 
         for (Obstacle obs : Layout.obstacle_positions.keySet()) {
             if (instance.checkCollision(Game.getInstance().getBall(), obs)) {

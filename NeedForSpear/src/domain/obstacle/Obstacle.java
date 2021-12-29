@@ -21,14 +21,15 @@ public abstract class Obstacle extends DomainObject {
 	public PosVector pos;
 	protected RemainingPieces pieces;
 
-	
+
 	public Obstacle(int xPos, int yPos) {
 		this.pos = new PosVector(xPos, yPos);
 		this.health = 1;
 		this.is_rotating = false;
-		this.width = FRAME_WIDTH/50;
+		this.width = FRAME_WIDTH / 50;
 		this.height = 20;
 	}
+
 	public String getType() {
 		return type;
 	}
@@ -36,7 +37,7 @@ public abstract class Obstacle extends DomainObject {
 	public PosVector getPosVector() {
 		return this.pos;
 	}
-	
+
 	public boolean getHit() {
 		this.health -= 1;
 		if (this.health == 0) {
@@ -49,7 +50,7 @@ public abstract class Obstacle extends DomainObject {
 			return false;
 		}
 	}
-	
+
 	public void destroy() {
 		this.destroyBehaviour.destroy();
 	}
@@ -79,11 +80,16 @@ public abstract class Obstacle extends DomainObject {
 		return health;
 	}
 
-	public Box getBox(){
+	public Box getBox() {
 		return this.box;
 	}
 
 	public void setPosVector(PosVector pos) {
 		this.pos = pos;
+	}
+
+	public RemainingPieces getRemains() {
+		return this.pieces;
+
 	}
 }

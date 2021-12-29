@@ -148,6 +148,7 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
                     PosVector pos = new PosVector(FRAME_WIDTH/2, yOffset+1);
                     Game.getInstance().ball.setPosVector(pos);
                     Game.getInstance().ball.setyVelocity(0);
+                    Game.getInstance().getBall().setXVelocity(1);
 
                     deathInitTime = -1L;  // and re-initialize deathInitTime
                 }

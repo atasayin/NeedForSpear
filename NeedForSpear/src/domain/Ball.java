@@ -77,7 +77,7 @@ public class Ball extends DomainObject {
         double new_xVel = Math.cos(alpha) * this.xVelocity - Math.sin(alpha) * this.yVelocity;
         double new_yVel = Math.sin(alpha) * this.xVelocity + Math.cos(alpha) * this.yVelocity;
         this.xVelocity = (int) new_xVel;
-        this.yVelocity = (int) (new_yVel * -1.05);
+        this.yVelocity = (int) (new_yVel * -1.1);
     }
 
 
