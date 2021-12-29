@@ -48,7 +48,7 @@ public class BuildModeScreen extends JFrame {
     private Layout layout;
 
     // Layout Controller
-    private LayoutController LC = LayoutController.getInstance();
+    private LayoutController LC = new LayoutController();
 
     // Layout Panel
     // private LayoutPanel layoutPanel;
@@ -223,7 +223,7 @@ public class BuildModeScreen extends JFrame {
 
         for (IRunListener listener : runModeListeners) {
             System.out.println(listener);
-            listener.onClickEvent(this.runSettings, username, id);
+            listener.onRunEvent(this.runSettings, username, id);
         }
         this.setVisible(false);
         this.dispose();

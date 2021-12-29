@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 public class GiftOfUranus extends Obstacle {
 
-	private int width;
 	public GiftOfUranus(int xPos, int yPos) {
 		super(xPos, yPos);
 		this.destroyBehaviour = new GiftObstacleDestroyBehaviour();
@@ -29,4 +28,5 @@ public class GiftOfUranus extends Obstacle {
 	public String toString() {
 		return super.toString() + ", typeVariable=" + getType();
 	}
+
 }

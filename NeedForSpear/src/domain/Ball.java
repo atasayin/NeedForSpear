@@ -37,7 +37,6 @@ public class Ball extends DomainObject {
         this.yVelocity = yVel;
         this.is_unstoppable = false;
         this.outOfScreen = false;
-        //this.gameListeners.add(RunGameObjects);
     }
 
     public void updateVelocity() {
@@ -113,10 +112,6 @@ public class Ball extends DomainObject {
         // EFFECTS: By looking at the boundary conditions of the setup, it updates the velocity and position of the ball.
         // MODIFIES: the velocity and position of the vall
         if (this.checkAlive() != true) {
-
-           /* for (IGameListener listener : autoModeListeners) {
-                listener.onEvent();
-            }*/
             return false;
         }
         if(!this.isAlive){

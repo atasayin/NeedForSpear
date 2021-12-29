@@ -1,6 +1,8 @@
 package domain.controller;
 
 import domain.*;
+import domain.abilities.PaddleExpansion;
+import domain.abilities.UnstoppableBall;
 
 import java.util.BitSet;
 
@@ -14,7 +16,27 @@ public class KeyboardController {
 
     /////////////////////////////////////////////////////////////////////////////////////
 
-    public boolean getInput(BitSet keyBits) {
+    public boolean processKeys(BitSet keyBits) {
+        // REQUIRES: keyBits is not null
+        // EFFECTS: If keyBits_i  = true such that i in {83, 76},
+        //          return false and calls Game methods.
+        //
+        //          else if keyBits_i  = true such that i is 87,
+        //          return false and sets Ball alive.
+        //
+        //          else if isGameRunning is true and keyBits_i = true such that
+        //               i in {37, 39, 65, 68},
+        //          return false and calls paddle.move method
+        //
+        //          else if isGameRunning is true and keyBits_i = true such that
+        //               i in {37 && 40, 39 && 40},
+        //          return false and calls paddle.move method
+        //
+        //           else
+        //           return false
+        //
+        // MODIFIES: Paddle, Game, Ball
+
         Paddle paddle = Game.getInstance().getPaddle();
         this.keyBits = keyBits;
 
@@ -60,7 +82,7 @@ public class KeyboardController {
 
         // First shot (w)
         if(isKeyPressed(87)){
-            Game.getInstance().ball.setisAlive(true);
+            Game.getInstance().getBall().setisAlive(true);
         }
 
         // Save
@@ -73,6 +95,45 @@ public class KeyboardController {
         if (isKeyPressed(76)){
             Game currentGame1 = Game.getInstance();
             currentGame1.loadGame();
+        }
+
+        // Chance giving ability updated
+        if (isKeyPressed(67)) {
+            int chance = Game.getInstance().gameState.getPlayer().getChance_points();
+            if((chance !=3) && (Game.getInstance().gameState.getPlayer().getAbilities().get(1) >0)){
+                Game.getInstance().gameState.setChance(chance + 1);
+                int num = Game.getInstance().gameState.getPlayer().getAbilities().get(1);
+                Game.getInstance().gameState.getPlayer().getAbilities().put(1,num-1);
+                Game.getInstance().gameState.getPlayer().notifyAllInventoryListeners(num-1);
+            }
+            System.out.println(Game.getInstance().gameState.getPlayer());
+            System.out.println(Game.getInstance().gameState.getPlayer().inventoryListeners);
+        }
+
+        //Paddle Expansion
+        if (isKeyPressed(69)) {
+            if (Game.getInstance().gameState.getPlayer().getAbilities().get(2) >0){
+                int num = Game.getInstance().gameState.getPlayer().getAbilities().get(2);
+                Game.getInstance().gameState.getPlayer().getAbilities().put(2,num-1);
+                Game.getInstance().gameState.getPlayer().notifyAllInventoryListeners(num-1);
+                Game.getInstance().gameState.getPlayer().setIsMagicalAbilityActive(true);
+                PaddleExpansion paddleexp = new PaddleExpansion();
+                Thread t = new Thread(paddleexp);
+                t.start();
+            }
+        }
+
+        //Unstoppable ball
+        if(isKeyPressed(85)){
+            if (Game.getInstance().gameState.getPlayer().getAbilities().get(3) >0){
+                int num = Game.getInstance().gameState.getPlayer().getAbilities().get(3);
+                Game.getInstance().gameState.getPlayer().getAbilities().put(3,num-1);
+                Game.getInstance().gameState.getPlayer().notifyAllInventoryListeners(num - 1);
+                Game.getInstance().gameState.getPlayer().setIsMagicalAbilityActive(true);
+                UnstoppableBall unstoppableBall = new UnstoppableBall();
+                Thread t = new Thread(unstoppableBall);
+                t.start();
+            }
         }
 
         return false;
