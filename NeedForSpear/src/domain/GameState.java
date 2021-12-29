@@ -22,7 +22,7 @@ public class GameState {
         this.layout = new Layout();
         domainObjects = new ArrayList<DomainObject>();
         ObstacleCounts = new HashMap<Integer, Integer>();
-        pc = new PaddleController(100,20);
+        //pc = new PaddleController(100,20);
         player = new Player();
     }
 
@@ -32,9 +32,9 @@ public class GameState {
         this.layout = layout;
     }
 
-    public double getTime() {
+   /* public double getTime() {
         return this.time;
-    }
+    }*/
 
     public PosVector getBallPos() {
         return ballPos;

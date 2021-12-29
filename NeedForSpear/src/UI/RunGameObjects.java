@@ -262,7 +262,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
     public void keyTyped(KeyEvent e) {
     }
 
-    @Override
+   /* @Override
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
         keyBits.set(keyCode);
@@ -292,24 +292,20 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
         }
 
 
-        if (kc.getInput(keyBits)) { // when returns true restart
+        if (kc.processKeys(keyBits)) { // when returns true restart
             tm.restart();
             Game.getInstance().gameState.isRunning = true;
 
         }
 
     }
-
+*/
     @Override
     public void keyReleased(KeyEvent e) {
         // TODO Auto-generated method stub
         kc.released(Game.getInstance().gameState.getPaddle());
         int keyCode = e.getKeyCode();
         keyBits.clear(keyCode);
-    }
-
-    public boolean isKeyPressed(int keyCode) {
-        return keyBits.get(keyCode);
     }
 
     private void pauseGame(){
@@ -492,16 +488,16 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
         boxY = y;
     }
 
-    @Override
+    /*@Override
     public void keyTyped(KeyEvent e) {
-    }
+    }*/
 
-    @Override
+  /*  @Override
     public void keyReleased(KeyEvent e) {
         kc.released(Game.getInstance().gameState.getPC().getPaddle());
         int keyCode = e.getKeyCode();
         keyBits.clear(keyCode);
-    }
+    }*/
 
     public boolean isKeyPressed(int keyCode) {
         return keyBits.get(keyCode);

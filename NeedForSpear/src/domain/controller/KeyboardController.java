@@ -16,7 +16,7 @@ public class KeyboardController {
 
     /////////////////////////////////////////////////////////////////////////////////////
 
-    public boolean getInput(BitSet keyBits) {
+    public boolean processKeys(BitSet keyBits) {
         // REQUIRES: keyBits is not null
         // EFFECTS: If keyBits_i  = true such that i in {83, 76},
         //          return false and calls Game methods.
