@@ -9,19 +9,15 @@ public class UnstoppableBall implements Runnable{
 
     public UnstoppableBall() {}
 
-
-    public void activate() {
-        this.run();
-    }
-
     public void run() {
-        Game.getInstance().ball.set_is_unstoppable(true);
+        Game.getInstance().getBall().set_is_unstoppable(true);
         try {
             TimeUnit.SECONDS.sleep(8);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        Game.getInstance().ball.set_is_unstoppable(false);
+        Game.getInstance().getBall().set_is_unstoppable(false);
+        Game.getInstance().gameState.getPlayer().setIsMagicalAbilityActive(false);
 
     }
 

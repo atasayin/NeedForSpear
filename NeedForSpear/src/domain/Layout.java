@@ -39,7 +39,7 @@ public class Layout {
     public int layoutHeight;
 
     // Random Seed number
-    private int SEED_NUMBER = 77;
+    private int SEED_NUMBER = 14;
 
     // Collision Checker for Obstacles
     private CollisionChecker CS;
@@ -111,6 +111,7 @@ public class Layout {
                         obstacle_positions.put(obs, pos);
                         Game.getInstance().getDomainObjectArr().add(obs);
                         Game.getInstance().getDomainObjectArr().add(obs.getBox());
+                        Game.getInstance().getDomainObjectArr().add(obs.getRemains());
                         break;
                     }
 

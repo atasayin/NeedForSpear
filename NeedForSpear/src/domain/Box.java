@@ -1,30 +1,28 @@
 package domain;
 
 import util.PosVector;
+import java.util.Random;
 
 public class Box extends DomainObject {
 
     /////////////////////////////////////////////////////////////////////////////////////
 
-    public static final int FRAME_WIDTH = 1368;
-    public static final int FRAME_HEIGHT = 766;
-    public static final int PADDLE_THICKNESS = 20;
-    protected int length;
-    private int thickness;
-    private int speed;
-    private int width;
-    private static int xOffset = 150;
-
-    private int xVelocity = 10;
     private int yVelocity = 10;
-
+    private int abilityType;
     private PosVector posVector;
+    protected int height = 30;
+    protected int width = 30;
+    private boolean isBoxCatched =true;
+
 
     /////////////////////////////////////////////////////////////////////////////////////
 
     public Box(double x, double y) {
+        Random rnd = new Random();
         this.posVector = new PosVector((int)x,(int)y);
         this.setSpeed(0, 0);
+        this.abilityType = rnd.nextInt(4) + 1;
+
     }
 
     @Override
@@ -39,9 +37,23 @@ public class Box extends DomainObject {
     }
     public PosVector getPosVector() { return this.posVector; }
 
+    public int getHeight() { return this.height; }
+
+    public int getWidth() { return this.width; }
+
     public void setPosVector(PosVector pos) {
         this.posVector = pos;
     }
 
+    public void updateAbility(){
+        if(isBoxCatched){
+            int currentAbilityNum = Game.getInstance().gameState.getPlayer().getAbilities().get(abilityType);
+            currentAbilityNum = currentAbilityNum+1;
+            Game.getInstance().gameState.getPlayer().getAbilities().put(abilityType,currentAbilityNum);
+            isBoxCatched =false;
+        }
+
+
+    }
 
 }

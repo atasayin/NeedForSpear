@@ -13,54 +13,127 @@ import java.util.BitSet;
 import javax.swing.*;
 
 import domain.Box;
-import domain.abilities.PaddleExpansion;
+
 import domain.controller.KeyboardController;
 import domain.* ;
 import domain.obstacle.Obstacle;
 
 
 @SuppressWarnings("serial")
-public class RunGameObjects extends JPanel implements ActionListener, KeyListener, IGameListener,IChanceListener,ILoadListener,IBoxListener {
+public class RunGameObjects extends JPanel implements ActionListener, KeyListener, IGameListener,IChanceListener,ILoadListener,IBoxListener,IRemainsListener {
 
     /////////////////////////////////////////////////////////////////////////////////////
 
     Timer tm = new Timer(TIMER_SPEED, this);
-
-    BufferedImage img; // background
-    String infoString = "";
-    int infoRefreshCount;
-    KeyboardController kc = new KeyboardController();
-    Boolean stop = false;
-    private BitSet keyBits = new BitSet(256);
-    private Integer chance =3;
+    private static final int TIMER_SPEED = 50;
+    private static final int INFO_REFRESH_PERIOD = 3000;
+    private static final int infoStringHeight = 55;
+    private static int yOffset = 70;
+    private static int xOffset = 175;
     public static int frame_width;
     public static int frame_height;
+
+    private BufferedImage img; // background
+    private String infoString = "";
+    private int infoRefreshCount;
+    private KeyboardController kc = new KeyboardController();
+    private Boolean stop = false;
+    private BitSet keyBits = new BitSet(256);
+    private Integer chance =3;
     private JPanel chancePanel;
+    private JPanel invPanel;
     private JPanel scorePanel;
     private JLabel scoreNameLabel;
     private JLabel scoreNumLabel;
+    private JLabel chanceNumberLabel;
+    private JLabel expNumberLabel;
+    private JLabel unstopNumberLabel;
+    private JLabel rocketNumberLabel;
+
 
     private  ImageIcon icon;
     private boolean update = false;
-    private static int yOffset = 70;
-    private static int xOffset = 175;
     private boolean isBoxDropped = false;
+    private boolean isRemainFall= false;
     private double boxX;
     private double boxY;
+    private double remainX;
+    private double remainY;
+
 
     public RunGameObjects(int width, int height) {
         this.frame_width = width;
         this.frame_height = height;
+
         try {
             initializeRunModeScreen();
             Game.getInstance().gameState.addListener(this);
             CollisionChecker.getInstance().addListener(this);
 
+
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
+    }
+
+    public void initializeRunModeScreen() throws IOException {
+        this.setFocusable(true);
+        scorePanel = initializeScorePanel();
+        chancePanel =initializeChancePanel();
+        invPanel = initializeInventoryPanel();
+
+        chancePanel.setVisible(true);
+        scorePanel.setVisible(true);
+        invPanel.setVisible(true);
+
+        this.add(chancePanel);
+        this.add(scorePanel);
+        this.add(invPanel);
+
+        tm.start();
+    }
+
+    private JPanel initializeScorePanel(){
+        JPanel scoreP = new JPanel();
+        scoreNameLabel = new JLabel("Score: ");
+        scoreNumLabel = new JLabel("0");
+
+        scoreP.add(scoreNameLabel);
+        scoreP.add(scoreNumLabel);
+        return scoreP;
+    }
+    private JPanel initializeChancePanel(){
+        JPanel ChanceP = new JPanel();
+        ImageIcon icon = new ImageIcon(new ImageIcon("src/assets/3heart.png").getImage().getScaledInstance(100,35, Image.SCALE_DEFAULT));
+        ChanceP.add(new JLabel(icon));
+
+        return ChanceP;
+    }
+
+    private JPanel initializeInventoryPanel(){
+        JPanel invP = new JPanel();
+        ImageIcon icon = new ImageIcon(new ImageIcon("src/assets/heart.png").getImage().getScaledInstance(30,30, Image.SCALE_DEFAULT));
+        invP.add(new JLabel(icon));
+        chanceNumberLabel = new JLabel("0");
+        invP.add(chanceNumberLabel);
+
+        icon = new ImageIcon(new ImageIcon("src/assets/expansion.png").getImage().getScaledInstance(30,30, Image.SCALE_DEFAULT));
+        invP.add(new JLabel(icon));
+        expNumberLabel = new JLabel("0");
+        invP.add(expNumberLabel);
+
+        icon = new ImageIcon(new ImageIcon("src/assets/unstoppable.png").getImage().getScaledInstance(30,30,Image.SCALE_DEFAULT));
+        invP.add(new JLabel(icon));
+        unstopNumberLabel = new JLabel("0");
+        invP.add(unstopNumberLabel);
+
+        icon = new ImageIcon(new ImageIcon("src/assets/rocket.png").getImage().getScaledInstance(30,30, Image.SCALE_DEFAULT));
+        invP.add(new JLabel(icon));
+        rocketNumberLabel = new JLabel("0");
+        invP.add(rocketNumberLabel);
+
+        return invP;
     }
 
     @Override
@@ -77,7 +150,6 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
                 e.printStackTrace();
             }
             g2d.setTransform(old);
-
         }
 
         try {
@@ -85,11 +157,11 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
         } catch (IOException e) {
             e.printStackTrace();
         }
-        drawBall(g2d, Game.getInstance().ball, frame_width, frame_height);
+        drawBall(g2d, Game.getInstance().getBall(), frame_width, frame_height);
 
         g2d.setTransform(old);
         int textWidth = g.getFontMetrics().stringWidth(infoString);
-        g2d.drawString(infoString, this.getWidth() / 2 - textWidth / 2, 20);
+        g2d.drawString(infoString, this.getWidth() / 2 - textWidth / 2, infoStringHeight);
         g2d.drawLine(0, yOffset, frame_width, yOffset);
         g2d.drawLine(frame_width-xOffset, yOffset, frame_width-xOffset, frame_height);
 
@@ -100,47 +172,42 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
         }
 
         if(isBoxDropped) {
-           /* try {
-                drawBox(g2d,Game.getInstance().creatBox(boxX,boxY),frame_width, frame_height);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            isBoxDropped =false;*/
-            System.out.println("box is dripped");
-            //System.out.println(Game.getInstance().getDomainObjectArr());
             isBoxDropped = false;
+        }
 
-
+        if(isRemainFall) {
+            isRemainFall = false;
         }
     }
 
     private void drawObstacle(Graphics2D g2d, Obstacle d) {
-        // TODO Auto-generated method stub
         ObstacleView.getInstance().draw(g2d, d, frame_width, frame_height);
 
     }
     private void drawPaddle(Graphics2D g2d, Paddle d, int width, int height) throws IOException {
-        // TODO Auto-generated method stub
-        int width_ = Game.getInstance().getPaddle().getWidth();
-        PaddleView.getInstance().draw(g2d, d, width_, height);
+        PaddleView.getInstance().draw(g2d, d, width, height);
     }
 
     private void drawBall(Graphics2D g2d, Ball b, int width, int height) {
-        // TODO Auto-generated method stub
         BallView.getInstance().draw(g2d, b, width, height);
 
     }
 
     private void drawBox(Graphics2D g2d, Box b, int width, int height, boolean isDrop) throws IOException {
-        // TODO Auto-generated method stub
         BoxView boxView = new BoxView();
         if(isDrop) {
             boxView.draw(g2d, b, width, height);
         }
     }
 
+    private void drawRemain(Graphics2D g2d, RemainingPieces r, int width, int height, boolean isFall) throws IOException {
+        RemainView remainView = new RemainView();
+        if(isFall) {
+            remainView.draw(g2d, r, width, height);
+        }
+    }
+
     private void drawComponent(Graphics2D g2d, DomainObject d) throws IOException {
-        // TODO Auto-generated method stub
         if (d instanceof Obstacle) {
             ObstacleView.getInstance().draw(g2d, d, frame_width, frame_height);
         }
@@ -151,28 +218,30 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
                 }
             }
         }
+        if (d instanceof RemainingPieces) {
+            for (RemainingPieces r : CollisionChecker.getInstance().getRemainingPieces()) {
+                if (r.equals(d)){
+                    drawRemain(g2d, (RemainingPieces) d, frame_width, frame_height,true);
+                }
+            }
+        }
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // TODO Auto-generated method stub
-        //Game.getInstance().gameState.checkCollisions();
         gameOverCheck();
-        update();
+        checkDeletedObstacles();
         updateScore();
+        updateInventoryLabels();
         if(update) {
             updateChance();
-            repaint();
         }
-
         repaint();
         try {
             ballChance();
         } catch (InterruptedException ex) {
             ex.printStackTrace();
         }
-
-        //Game.getInstance().gameState.removeObjectsIfOutsideScreen();
         infoRefreshCount += TIMER_SPEED;
         if (infoRefreshCount >= INFO_REFRESH_PERIOD) {
             infoString = "";
@@ -180,9 +249,11 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
         }
     }
 
+    /*EFFECTS: Get rid offs obstacles that has been destroyed.
+       MODIFIES: ObstacleArray
+   */
 
-
-    public void update() {
+    public void checkDeletedObstacles() {
         CollisionChecker.getInstance().ChecktoDelete();
     }
 
@@ -246,7 +317,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
         repaint();
         tm.stop();
         Game.getInstance().gameState.isRunning = false;
-        kc.getInput(keyBits);
+        kc.processKeys(keyBits);
 
     }
 
@@ -259,7 +330,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
     private void saveGame(){
         if (!tm.isRunning()) {
             infoString = "Game Saved.";
-            kc.getInput(keyBits); // only works if game was paused
+            kc.processKeys(keyBits); // only works if game was paused
         } else {
             infoString = "Press \"Pause\" Button before saving.";
         }
@@ -269,7 +340,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
     private void loadGame(){
         if (!tm.isRunning()) {
             infoString = "Game Loaded.";
-            kc.getInput(keyBits);
+            kc.processKeys(keyBits);
             tm.restart();// only works if game was paused
             Game.getInstance().gameState.isRunning = true;
             updateChance();
@@ -280,77 +351,29 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
 
     }
 
-    public void initializeRunModeScreen() throws IOException {
-        this.setFocusable(true);
-        scorePanel = initializeScorePanel();
-        chancePanel =initializeChancePanel();
-        chancePanel.setVisible(true);
-        scorePanel.setVisible(true);
-        this.add(chancePanel);
-        this.add(scorePanel);
-        tm.start();
-
-    }
-
-    private JPanel initializeScorePanel(){
-        JPanel scoreP = new JPanel();
-        scoreNameLabel = new JLabel("Score: ");
-        scoreNumLabel = new JLabel("0");
-
-        scoreP.add(scoreNameLabel);
-        scoreP.add(scoreNumLabel);
-        return scoreP;
-    }
-    private JPanel initializeChancePanel(){
-        JPanel ChanceP = new JPanel();
-        ImageIcon icon = new ImageIcon(new ImageIcon("src/assets/3heart.png").getImage().getScaledInstance(100,35, Image.SCALE_DEFAULT));
-        ChanceP.add(new JLabel(icon));
-
-        return ChanceP;
-    }
-
-    private void updateScore(){
-        int score = (int) Game.getInstance().getOldScore();
-        scoreNumLabel.setText(score+"");
-    }
-
-    private static final int TIMER_SPEED = 50;
-    private static final int INFO_REFRESH_PERIOD = 3000;
-
-    @Override
-    public void onClickEvent() {
-        stop = true;
-    }
-
     public void gameOverCheck() {
-
-        Integer chance = Game.getInstance().gameState.getPlayer().getChance_points();
-
+        Game.getInstance().gameOverCheck();
         Boolean isWin = Game.getInstance().getIsWin();
+        Boolean isRunning =Game.getInstance().gameState.isRunning;
 
-        Object[] options = { "OK" };
-        if (chance <=0){
+        if (!isRunning){
             tm.stop();
-            //Game.getInstance().cancelTime();
 
-
-            JOptionPane.showMessageDialog(Playground.jf,
+            JOptionPane.showMessageDialog(PlaygroundScreen.jf,
                     "You are out of chance." + "Your score is "+(int) Game.getInstance().getOldScore(),
                     "Out of chance",
                     JOptionPane.WARNING_MESSAGE);
-            Playground.jf.dispose();
+            PlaygroundScreen.jf.dispose();
 
         }
         else if (isWin){
             tm.stop();
-            JOptionPane.showMessageDialog(Playground.jf,
+            JOptionPane.showMessageDialog(PlaygroundScreen.jf,
                     "You win the game." + "Your score is "+(int) Game.getInstance().getOldScore());
 
-            Playground.jf.dispose();
+            PlaygroundScreen.jf.dispose();
         }
     }
-
-
 
     public void ballChance() throws InterruptedException {
         if(stop){
@@ -359,12 +382,67 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
         }
     }
 
+    private void updateScore(){
+        int score = (int) Game.getInstance().getOldScore();
+        scoreNumLabel.setText(score+"");
+    }
+
+    private void updateInventoryLabels(){
+        chanceNumberLabel.setText(Game.getInstance().gameState.getPlayer().getAbilities().get(1)+"");
+        expNumberLabel.setText(Game.getInstance().gameState.getPlayer().getAbilities().get(2)+"");
+        unstopNumberLabel.setText(Game.getInstance().gameState.getPlayer().getAbilities().get(3)+"");
+        rocketNumberLabel.setText(Game.getInstance().gameState.getPlayer().getAbilities().get(4)+"");
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        int keyCode = e.getKeyCode();
+        keyBits.set(keyCode);
+
+        // Pause (p)
+        if (isKeyPressed(80)) {
+            pauseGame();
+            return;
+        }
+
+        // Resume (r)
+        if (isKeyPressed(82)) {
+            resumeGame();
+            return;
+        }
+
+        // Save (s)
+        if (isKeyPressed(80)) {
+            saveGame();
+            return;
+        }
+
+        // Load (l)
+        if (isKeyPressed(76)){
+            loadGame();
+            return;
+        }
+
+
+        if (kc.processKeys(keyBits)) { // when returns true restart
+            tm.restart();
+            Game.getInstance().gameState.isRunning = true;
+
+        }
+
+    }
+
+
+    @Override
+    public void onClickEvent() {
+        stop = true;
+    }
+
     @Override
     public void onLoseChance(Integer chance) {
         this.chance = chance;
-        //updateChance();
         update =true;
-        //chancePanel.removeAll();
+
     }
 
     public void updateChance(){
@@ -385,7 +463,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
             update =false;
         }
         else if(chance == 1){
-            //chancePanel.removeAll();
+            chancePanel.removeAll();
             icon = new ImageIcon(new ImageIcon("src/assets/1heart.png").getImage().getScaledInstance(100,35, Image.SCALE_DEFAULT));
             chancePanel.add(new JLabel(icon));
             chancePanel.setVisible(true);
@@ -412,9 +490,30 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
         isBoxDropped =true;
         boxX = x;
         boxY = y;
-
-
     }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        kc.released(Game.getInstance().gameState.getPC().getPaddle());
+        int keyCode = e.getKeyCode();
+        keyBits.clear(keyCode);
+    }
+
+    public boolean isKeyPressed(int keyCode) {
+        return keyBits.get(keyCode);
+    }
+
+    @Override
+    public void dropRemains(double x, double y) {
+        isRemainFall =true;
+        remainX = x;
+        remainY = y;
+    }
+
 }
 
 

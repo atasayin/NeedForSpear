@@ -1,5 +1,6 @@
 package domain.obstacle;
 
+import domain.RemainingPieces;
 import domain.strategy.ExplosiveDestroyBehaviour;
 
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ public class PandorasBox extends Obstacle {
 		this.destroyBehaviour = new ExplosiveDestroyBehaviour();
 		this.is_rotating = true;
 		this.type = "PandorasBox";
+		pieces = new RemainingPieces(xPos, yPos);
 	}
 
 

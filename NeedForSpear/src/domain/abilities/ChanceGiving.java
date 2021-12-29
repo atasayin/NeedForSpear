@@ -7,6 +7,7 @@ public class ChanceGiving {
     public ChanceGiving() {}
 
     public void activate() {
-        Game.getInstance().gameState.getPlayer().incrementChances();
+        int currentChance =  Game.getInstance().gameState.getPlayer().getChance_points();
+        Game.getInstance().gameState.getPlayer().setChance_points(currentChance+1);
     }
 }

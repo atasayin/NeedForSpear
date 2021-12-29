@@ -6,13 +6,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class GameState {
-
     public PosVector ballPos, paddlePos;
     public Layout layout;
     public boolean isRunning;
     private ArrayList<DomainObject> domainObjects;
     public HashMap<Integer, Integer> ObstacleCounts;
-    private double time;
     protected Player player;
     public static Paddle paddle;
     private java.util.List<IChanceListener> ChanceListeners = new ArrayList<>();
@@ -24,7 +22,8 @@ public class GameState {
         this.layout = new Layout();
         domainObjects = new ArrayList<DomainObject>();
         ObstacleCounts = new HashMap<Integer, Integer>();
-        paddle = new Paddle(100,20);
+        pc = new PaddleController(100,20);
+        player = new Player();
     }
 
     public GameState(PosVector ballPos, PosVector paddlePos, Layout layout) {
@@ -77,16 +76,12 @@ public class GameState {
         this.domainObjects = list;
     }
 
-    public void initializeGameState(Layout layout) {
-
-    }
     public void setChance(int chance){
         this.getPlayer().setChance_points(chance);
         for (IChanceListener listener : ChanceListeners) {
             listener.onLoseChance(chance);
         }
     }
-
     public void addListener( IChanceListener listener) {
         ChanceListeners.add(listener);
     }
