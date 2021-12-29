@@ -68,4 +68,15 @@ class BallTest {
         assertNotEquals(yPos, ball.getPosVector().getY());
 
     }
+
+    @Test
+    void movementFeedbackTrue() {
+        ball.setisAlive(true);
+        assertTrue(ball.move());
+    }
+
+    @Test
+    void movementFeedbackFalse() {
+        assertFalse(ball.move());
+    }
 }

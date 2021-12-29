@@ -104,13 +104,14 @@ public class Ball extends DomainObject {
             this.reflectFromTopWall();
         }
     }
-// Gitlab check dummy commit
-    //gitlab check.
+
     public Boolean checkAlive() {
         return (this.posVector.getY() <= (FRAME_HEIGHT));
     }
 
     public Boolean move() {
+        // EFFECTS: By looking at the boundary conditions of the setup, it updates the velocity and position of the ball.
+        // MODIFIES: the velocity and position of the vall
         if (this.checkAlive() != true) {
 
            /* for (IGameListener listener : autoModeListeners) {
