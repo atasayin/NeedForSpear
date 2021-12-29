@@ -221,7 +221,7 @@ public class BuildModeScreen extends JFrame {
 
     // This panel provides an option to load an existing game, and start to game
     private JPanel runGamePanel(JFrame frame) {
-        GridLayout panelLayout = new GridLayout(2, 0);
+        GridLayout panelLayout = new GridLayout(0, 2);
         JPanel runGamePanel = new JPanel(panelLayout);
 
         loadGameButton = new JButton("Load Game");

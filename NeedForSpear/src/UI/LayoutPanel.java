@@ -11,6 +11,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.AffineTransform;
 import java.io.IOException;
+import java.util.BitSet;
 
 @SuppressWarnings("serial")
 public class LayoutPanel extends JPanel implements ActionListener,MouseListener, KeyListener {
@@ -28,8 +29,11 @@ public class LayoutPanel extends JPanel implements ActionListener,MouseListener,
 
     private int PANEL_WIDTH;
     private int PANEL_HEIGHT;
-
     private double C_PANEL_WIDTH = 0.6;
+
+    // Ketbits
+    private BitSet keyBits = new BitSet(256);
+
 
     /////////////////////////////////////////////////////////////////////////////////////
 
@@ -115,22 +119,24 @@ public class LayoutPanel extends JPanel implements ActionListener,MouseListener,
         //this.setSize(frame_width,frame_height);
     }
 
-
-
+    // Mouse Events
     @Override
     public void mouseClicked(MouseEvent e) {
-        System.out.println(e.getXOnScreen());
-        System.out.println(e.getX());
+        // Invoked when the mouse button has been clicked (pressed and released) on a component
+
+        LC.getInput(e.getX(),e.getY());
 
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
+        // Invoked when a mouse button has been pressed on a component
 
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
+        // Invoked when a mouse button has been released on a component
 
     }
 
@@ -144,13 +150,14 @@ public class LayoutPanel extends JPanel implements ActionListener,MouseListener,
 
     }
 
+
+    // Key Events
     @Override
     public void keyTyped(KeyEvent e) {
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
-        System.out.println(e.getKeyCode());
 
     }
 

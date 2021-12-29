@@ -2,6 +2,7 @@ package domain;
 
 import domain.abilities.PaddleExpansion;
 import domain.obstacle.Obstacle;
+import util.PosVector;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -133,6 +134,8 @@ public class CollisionChecker {
         if (toBeDeleted != null) Layout.obstacle_positions.remove(toBeDeleted);
 
     }
+
+
 
     public void addListener( IBoxListener listener) {
         BoxListeners.add(listener);

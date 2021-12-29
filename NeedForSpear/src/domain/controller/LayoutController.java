@@ -2,8 +2,10 @@ package domain.controller;
 
 import domain.Game;
 import domain.Layout;
+import domain.MouseColliderBox;
 import domain.obstacle.Obstacle;
 import domain.obstacle.WallMaria;
+import util.PosVector;
 
 import java.util.HashMap;
 
@@ -20,17 +22,24 @@ public class LayoutController {
     /////////////////////////////////////////////////////////////////////////////////////
 
     public LayoutController() {
-        FRAME_WIDTH = 1368;
+        FRAME_WIDTH = (int) (1368 * 0.6);
         FRAME_HEIGHT = 766;
     }
 
     // For mouse events
-    public void getInput(int input) {
+    public void getInput(int mouseX, int mouseY) {
+        PosVector pos = new PosVector(mouseX,mouseY);
 
-        switch (input) {
+        if (isEmpty(pos)){
+            layout.addNewObstacle(pos);
+        }else{
+
+
 
 
         }
+
+
     }
 
     // Gets random Layout after the obstacle settings
@@ -75,6 +84,13 @@ public class LayoutController {
         }
 
     }
+
+    private boolean isEmpty(PosVector pos){
+        MouseColliderBox mouseColliderBox = new MouseColliderBox(pos);
+        return layout.isAvailable(mouseColliderBox);
+
+    }
+
 
 }
 

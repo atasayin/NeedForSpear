@@ -122,7 +122,7 @@ public class Layout {
 
 
     // Collider check for creating Layout
-    private boolean isAvailable(Obstacle newObs){
+    public boolean isAvailable(DomainObject newObs){
         for (Obstacle obs: obstacle_positions.keySet()){
             if ( CS.checkCollision(newObs, obs)){
                 return false;
@@ -132,30 +132,31 @@ public class Layout {
         return true;
     }
 
-    /*
+
     // Changes type of the obstacle.
 
-    void changeTypeObstacle(Obstacle obstacle, newType){
+    public void changeTypeObstacle(Obstacle obstacle, String newType){
 
     }
 
     // Changes location of an existing obstacle.
-    void changeLocationObstacle(obstacle, location){
+    public void changeLocationObstacle(Obstacle obs, PosVector pos){
 
     }
 
     // Adds new obstacle to the Layout with given type and location.
-    void addNewObstacle(location, type){
-
-
+    public void addNewObstacle(PosVector pos){
+        Obstacle obs = ObstacleFactory.getInstance().getObstacle(3,pos);
+        Game.getInstance().getDomainObjectArr().add(obs);
+        Game.getInstance().getDomainObjectArr().add(obs.getBox());
     }
 
 
     // Removes a obstacle from Layout.
-    void removeObstacle(Obstacle obstacle){
+    public void removeObstacle(Obstacle obstacle){
 
 
     }
-    */
+
 
 }
