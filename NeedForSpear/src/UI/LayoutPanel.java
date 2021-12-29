@@ -1,8 +1,6 @@
 package UI;
 
 import domain.*;
-import domain.Box;
-import domain.controller.KeyboardController;
 import domain.controller.LayoutController;
 import domain.obstacle.Obstacle;
 
@@ -123,9 +121,8 @@ public class LayoutPanel extends JPanel implements ActionListener,MouseListener,
     @Override
     public void mouseClicked(MouseEvent e) {
         // Invoked when the mouse button has been clicked (pressed and released) on a component
-
-        LC.getInput(e.getX(),e.getY());
-
+        LC.setMouseInput(e.getX(),e.getY());
+        LC.control();
     }
 
     @Override
@@ -158,12 +155,16 @@ public class LayoutPanel extends JPanel implements ActionListener,MouseListener,
 
     @Override
     public void keyPressed(KeyEvent e) {
+        int keyCode = e.getKeyCode();
+        LC.setKeyInput(keyCode);
+        LC.control();
 
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-
+        int keyCode = e.getKeyCode();
+        keyBits.clear(keyCode);
     }
 
     @Override

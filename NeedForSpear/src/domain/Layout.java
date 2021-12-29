@@ -132,6 +132,16 @@ public class Layout {
         return true;
     }
 
+    public Obstacle getCollideObstacle(DomainObject mouse){
+        for (Obstacle obs: obstacle_positions.keySet()){
+            if ( CS.checkCollision(mouse, obs)){
+                return obs;
+            }
+        }
+
+        return null;
+    }
+
 
     // Changes type of the obstacle.
 
@@ -153,9 +163,9 @@ public class Layout {
 
 
     // Removes a obstacle from Layout.
-    public void removeObstacle(Obstacle obstacle){
-
-
+    public void removeObstacle(Obstacle obs){
+        obs = null;
+        System.out.println("REMOVE");
     }
 
 
