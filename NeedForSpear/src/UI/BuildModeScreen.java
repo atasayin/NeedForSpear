@@ -4,6 +4,8 @@ package UI;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -97,20 +99,21 @@ public class BuildModeScreen extends JFrame {
     public BuildModeScreen() {
         initializeBuildScreen();
         GridBagConstraints c = new GridBagConstraints();
+        LC = new LayoutController();
 
         obstacleSettingsPanel = initializeObstacleSettingsPanel();
         c.gridx = 3;
         c.gridheight = 2;
         c.gridy = 0;
         c.fill = GridBagConstraints.VERTICAL;
-        c.ipady = 300;
+        c.ipady = 250;
         add(obstacleSettingsPanel, c);
 
         c.gridx = 3;
         c.gridy = 2;
         c.gridheight = 1;
-        c.ipadx = 0;
-        c.fill = GridBagConstraints.CENTER;
+        c.ipady = 0;
+        c.fill = GridBagConstraints.VERTICAL;
         add(runGamePanel(this),c);
 
         viewPanel = initializeLayoutPanel();
@@ -120,6 +123,7 @@ public class BuildModeScreen extends JFrame {
         c.gridx = 0;
         c.gridy = 0;
         add(viewPanel, c);
+
 
     }
 
@@ -213,13 +217,13 @@ public class BuildModeScreen extends JFrame {
 
     }
 
-    private LayoutPanel initializeLayoutPanel() {return new LayoutPanel(FRAME_WIDTH,FRAME_HEIGHT);}
+    private LayoutPanel initializeLayoutPanel() {return new LayoutPanel(LC,FRAME_WIDTH,FRAME_HEIGHT);}
 
     // This panel provides an option to load an existing game, and start to game
     private JPanel runGamePanel(JFrame frame) {
         GridLayout panelLayout = new GridLayout(2, 0);
         JPanel runGamePanel = new JPanel(panelLayout);
-        runGamePanel.setBackground(Color.orange);
+
         loadGameButton = new JButton("Load Game");
         gameStartButton = new JButton("Click to start the game!");
         gameStartButton.setEnabled(false);

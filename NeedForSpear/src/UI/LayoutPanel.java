@@ -1,6 +1,7 @@
 package UI;
 
 import domain.*;
+import domain.Box;
 import domain.controller.KeyboardController;
 import domain.controller.LayoutController;
 import domain.obstacle.Obstacle;
@@ -11,6 +12,7 @@ import java.awt.event.*;
 import java.awt.geom.AffineTransform;
 import java.io.IOException;
 
+@SuppressWarnings("serial")
 public class LayoutPanel extends JPanel implements ActionListener,MouseListener, KeyListener {
 
     /////////////////////////////////////////////////////////////////////////////////////
@@ -22,6 +24,7 @@ public class LayoutPanel extends JPanel implements ActionListener,MouseListener,
 
     // LayoutController
     private LayoutController LC;
+    private Layout layout;
 
     private int PANEL_WIDTH;
     private int PANEL_HEIGHT;
@@ -47,9 +50,9 @@ public class LayoutPanel extends JPanel implements ActionListener,MouseListener,
 
     }
 
-    public LayoutPanel(int frame_width, int frame_height) {
+    public LayoutPanel(LayoutController LC, int frame_width, int frame_height) {
 
-        this.LC = new LayoutController();
+        this.LC = LC;
         this.PANEL_WIDTH = (int) (frame_width * C_PANEL_WIDTH);
         this.PANEL_HEIGHT = frame_height;
 
@@ -72,8 +75,16 @@ public class LayoutPanel extends JPanel implements ActionListener,MouseListener,
         Graphics2D g2d = (Graphics2D) g;
         AffineTransform old = g2d.getTransform();
 
+        for (DomainObject domainObject : Game.getInstance().getDomainObjectArr()) {
+            try {
+                drawComponent(g2d, domainObject);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            g2d.setTransform(old);
 
-        g.drawRect(200, 200, 200 , 200);
+        }
+
         g2d.setTransform(old);
 
     }
@@ -84,12 +95,23 @@ public class LayoutPanel extends JPanel implements ActionListener,MouseListener,
 
     }
 
+    private void drawComponent(Graphics2D g2d, DomainObject d) throws IOException {
+        // TODO Auto-generated method stub
+        if (d instanceof Obstacle) {
+            ObstacleView.getInstance().draw(g2d, d, PANEL_WIDTH, PANEL_HEIGHT);
+        }
+
+    }
+
 
     public void initializeLayoutPanel() throws IOException {
         this.setFocusable(true);
         this.setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
         this.setMinimumSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
         this.setMaximumSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
+        tm.start();
+        addMouseListener(this);
+        addKeyListener(this);
         //this.setSize(frame_width,frame_height);
     }
 
@@ -97,7 +119,8 @@ public class LayoutPanel extends JPanel implements ActionListener,MouseListener,
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
+        System.out.println(e.getXOnScreen());
+        System.out.println(e.getX());
 
     }
 
@@ -113,8 +136,7 @@ public class LayoutPanel extends JPanel implements ActionListener,MouseListener,
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        System.out.println(e.getXOnScreen());
-        System.out.println(e.getX());
+
     }
 
     @Override
@@ -124,11 +146,11 @@ public class LayoutPanel extends JPanel implements ActionListener,MouseListener,
 
     @Override
     public void keyTyped(KeyEvent e) {
-        System.out.println(e.getKeyCode());
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
+        System.out.println(e.getKeyCode());
 
     }
 
@@ -139,6 +161,7 @@ public class LayoutPanel extends JPanel implements ActionListener,MouseListener,
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        repaint();
 
     }
 }

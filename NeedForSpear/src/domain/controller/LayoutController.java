@@ -6,17 +6,16 @@ import domain.obstacle.Obstacle;
 import domain.obstacle.WallMaria;
 
 import java.util.HashMap;
-import java.util.Iterator;
 
 public class LayoutController {
 
     /////////////////////////////////////////////////////////////////////////////////////
 
-    Layout layout;
+    private Layout layout;
     private int FRAME_WIDTH;
     private int FRAME_HEIGHT;
 
-    HashMap<String, Integer> obstacleSettings;
+    private HashMap<String, Integer> obstacleSettings;
 
     /////////////////////////////////////////////////////////////////////////////////////
 
@@ -26,12 +25,11 @@ public class LayoutController {
     }
 
     // For mouse events
-    public boolean getInput(int input) {
+    public void getInput(int input) {
 
         switch (input) {
 
-            default:
-                return false;
+
         }
     }
 
