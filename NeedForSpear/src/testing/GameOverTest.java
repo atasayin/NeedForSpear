@@ -1,5 +1,8 @@
-package domain;
+package testing;
 
+import domain.Ball;
+import domain.Game;
+import domain.Paddle;
 import domain.obstacle.Obstacle;
 import domain.obstacle.WallMaria;
 import util.PosVector;
@@ -10,7 +13,7 @@ import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class GameTest implements ActionListener {
+class GameOverTest implements ActionListener {
     Game g;
     Ball ball;
     Paddle paddle;
@@ -30,10 +33,11 @@ class GameTest implements ActionListener {
         obstacle_positions.put(wm,wm.getPosVector());
         runSettings.put("screenWidth",  FRAME_WIDTH);
         runSettings.put("screenHeight",  FRAME_HEIGHT);
-         g = Game.getInstance();
-         g.onRunEvent(runSettings,"Oya", "99");
-         paddle =g.getPaddle();
-         ball =g.getBall();
+        g = Game.getInstance();
+        g.onRunEvent(runSettings,"Oya", "99",10, 2.0,3.0,4.0);
+        g.gameState.getPlayer().setChance_points(3);
+        paddle =g.getPaddle();
+        ball =g.getBall();
 
 
     }
@@ -43,6 +47,11 @@ class GameTest implements ActionListener {
         System.out.println("Running: Tear Down");
         g.getDomainObjectArr().remove(wm);
 
+    }
+
+    @org.junit.jupiter.api.Test
+    void IsGetChanceWork(){
+        assertEquals(g.gameState.getPlayer().getChance_points(), 3);
     }
 
     @org.junit.jupiter.api.Test
@@ -86,10 +95,7 @@ class GameTest implements ActionListener {
         assertEquals(g.getDomainObjectArr().isEmpty(), true);
     }
 
-    @org.junit.jupiter.api.Test
-    void IsGetChanceWork(){
-        assertEquals(g.gameState.getPlayer().getChance_points(), 3);
-    }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {

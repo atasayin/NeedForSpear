@@ -26,6 +26,11 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
     private long initialTime;
     private int score = 0;
     private static int yOffset = 70;
+    private int Ymirfreq;
+    private Double YmirProb1;
+    private Double YmirProb2;
+    private Double YmirProb3;
+
     private javax.swing.Timer game_Timer;
 
     private Game() {
@@ -73,11 +78,15 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
     }
 
     @Override
-    public void onRunEvent(HashMap<String, Integer> startParameters, String username, String id) {
+    public void onRunEvent(HashMap<String, Integer> startParameters, String username, String id, Integer freq,Double prob1, Double prob2, Double prob3) {
 
         paddle = new Paddle(FRAME_WIDTH,FRAME_HEIGHT);
         this.ball = new Ball();
         this.ball.setisAlive(false);
+        Ymirfreq = freq;
+        YmirProb1 = prob1;
+        YmirProb2 = prob2;
+        YmirProb3 = prob3;
 
         Game.getInstance().gameState.isRunning = true;
         initialTime = System.currentTimeMillis();
@@ -90,6 +99,11 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
         if(isLoad){
             Game.getInstance().loadGame();
         }
+        System.out.println("Yamir freq is "+ Ymirfreq );
+        System.out.println("Yamir prob1 is "+ YmirProb1 );
+        System.out.println("Yamir prob2 is "+ YmirProb2 );
+        System.out.println("Yamir prob3 is "+ YmirProb3 );
+        System.out.println(instance.gameState.getPlayer().getChance_points());
     }
 
 
