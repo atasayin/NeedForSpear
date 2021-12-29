@@ -48,7 +48,7 @@ public class BuildModeScreen extends JFrame {
     private Layout layout;
 
     // Layout Controller
-    private LayoutController LC = new LayoutController();
+    private LayoutController LC;
 
     // Layout Panel
     // private LayoutPanel layoutPanel;
@@ -96,6 +96,37 @@ public class BuildModeScreen extends JFrame {
 
     public BuildModeScreen() {
         initializeBuildScreen();
+        GridBagConstraints c = new GridBagConstraints();
+
+        obstacleSettingsPanel = initializeObstacleSettingsPanel();
+        c.gridx = 3;
+        c.gridheight = 2;
+        c.gridy = 0;
+        c.fill = GridBagConstraints.VERTICAL;
+        c.ipady = 300;
+        add(obstacleSettingsPanel, c);
+
+        c.gridx = 3;
+        c.gridy = 2;
+        c.gridheight = 1;
+        c.ipadx = 0;
+        c.fill = GridBagConstraints.CENTER;
+        add(runGamePanel(this),c);
+
+        viewPanel = initializeLayoutPanel();
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridwidth = 3;
+        c.gridheight = 3;
+        c.gridx = 0;
+        c.gridy = 0;
+        add(viewPanel, c);
+
+    }
+
+
+    /*public BuildModeScreen() {
+        LC = new LayoutController();
+        initializeBuildScreen();
         viewPanel = initializeViewPanel();
         add(viewPanel);
         obstacleSettingsPanel = initializeObstacleSettingsPanel();
@@ -110,10 +141,10 @@ public class BuildModeScreen extends JFrame {
 //        add(layoutPanel,BorderLayout.NORTH);
 //        add(runGamePanel(this),BorderLayout.SOUTH);
     }
-
+*/
     // Initialize the outer JFrame of Build Mode Screen
     private void initializeBuildScreen() {
-        this.setLayout(new GridLayout(3,0));
+        this.setLayout(new GridBagLayout());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(FRAME_WIDTH, FRAME_HEIGHT);
         this.setLocationRelativeTo(null);
@@ -123,7 +154,7 @@ public class BuildModeScreen extends JFrame {
     // TODO: Make this panel interactive (How?)
     private JPanel initializeViewPanel(){
         JPanel viewP = new JPanel();
-        viewP.setBackground(Color.BLACK);
+        viewP.setBackground(Color.orange);
         return viewP;
     }
 
@@ -182,15 +213,13 @@ public class BuildModeScreen extends JFrame {
 
     }
 
-
-    private LayoutPanel initializeLayoutPanel() {
-        return new LayoutPanel(layout,FRAME_WIDTH,FRAME_HEIGHT);
-    }
+    private LayoutPanel initializeLayoutPanel() {return new LayoutPanel(FRAME_WIDTH,FRAME_HEIGHT);}
 
     // This panel provides an option to load an existing game, and start to game
     private JPanel runGamePanel(JFrame frame) {
         GridLayout panelLayout = new GridLayout(2, 0);
         JPanel runGamePanel = new JPanel(panelLayout);
+        runGamePanel.setBackground(Color.orange);
         loadGameButton = new JButton("Load Game");
         gameStartButton = new JButton("Click to start the game!");
         gameStartButton.setEnabled(false);
