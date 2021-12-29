@@ -48,7 +48,7 @@ public class BuildModeScreen extends JFrame {
     private Layout layout;
 
     // Layout Controller
-    private LayoutController LC = LayoutController.getInstance();
+    private LayoutController LC = new LayoutController();
 
     // Layout Panel
     // private LayoutPanel layoutPanel;

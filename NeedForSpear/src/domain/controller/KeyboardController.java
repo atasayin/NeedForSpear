@@ -16,7 +16,27 @@ public class KeyboardController {
 
     /////////////////////////////////////////////////////////////////////////////////////
 
-    public boolean processKeys(BitSet keyBits) {
+    public boolean getInput(BitSet keyBits) {
+        // REQUIRES: keyBits is not null
+        // EFFECTS: If keyBits_i  = true such that i in {83, 76},
+        //          return false and calls Game methods.
+        //
+        //          else if keyBits_i  = true such that i is 87,
+        //          return false and sets Ball alive.
+        //
+        //          else if isGameRunning is true and keyBits_i = true such that
+        //               i in {37, 39, 65, 68},
+        //          return false and calls paddle.move method
+        //
+        //          else if isGameRunning is true and keyBits_i = true such that
+        //               i in {37 && 40, 39 && 40},
+        //          return false and calls paddle.move method
+        //
+        //           else
+        //           return false
+        //
+        // MODIFIES: Paddle, Game, Ball
+
         Paddle paddle = Game.getInstance().getPaddle();
         this.keyBits = keyBits;
 

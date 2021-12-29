@@ -257,6 +257,61 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
         CollisionChecker.getInstance().ChecktoDelete();
     }
 
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        int keyCode = e.getKeyCode();
+        keyBits.set(keyCode);
+
+        // Pause (p)
+        if (isKeyPressed(80)) {
+            pauseGame();
+            return;
+        }
+
+        // Resume (r)
+        if (isKeyPressed(82)) {
+            resumeGame();
+            return;
+        }
+
+        // Save (s)
+        if (isKeyPressed(80)) {
+            saveGame();
+            return;
+        }
+
+        // Load (l)
+        if (isKeyPressed(76)){
+            loadGame();
+            return;
+        }
+
+
+        if (kc.getInput(keyBits)) { // when returns true restart
+            tm.restart();
+            Game.getInstance().gameState.isRunning = true;
+
+        }
+
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        // TODO Auto-generated method stub
+        kc.released(Game.getInstance().gameState.getPaddle());
+        int keyCode = e.getKeyCode();
+        keyBits.clear(keyCode);
+    }
+
+    public boolean isKeyPressed(int keyCode) {
+        return keyBits.get(keyCode);
+    }
+
     private void pauseGame(){
         infoString = "Game Paused.";
         repaint();
