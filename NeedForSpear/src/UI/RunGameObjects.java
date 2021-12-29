@@ -232,7 +232,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
     @Override
     public void keyReleased(KeyEvent e) {
         // TODO Auto-generated method stub
-        kc.released(Game.getInstance().gameState.getPC().getPaddle());
+        kc.released(Game.getInstance().gameState.getPaddle());
         int keyCode = e.getKeyCode();
         keyBits.clear(keyCode);
     }
