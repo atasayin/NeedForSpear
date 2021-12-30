@@ -135,6 +135,21 @@ public class CollisionChecker {
 
     }
     public void ChecktoDelete() {
+        /*
+            EFFECTS: if game instance has boxes or remaining pieces or obstacles, this checks collisions,
+                     deletes or adds corresponding object.
+
+                     if ball hits an obstacle, evokes destroy behavior, is reflected accordingly and
+                     obstacle is deleted from Game.DomainObjectArr, Layout.obstacle_positions.
+                     If object is instance of GiftOfUranus, a box is dropped which is added to
+                     Game.DomainObjectArr. If  object is instance of PandorasBox, a RemainingPieces
+                     is dropped which is added to Game.DomainObjectArr.
+
+
+            MODIFIES: Game, Player, Ball, Game.DomainObjectArr, Layout.obstacle_positions,
+                      Box, Obstacle, Remaining Pieces, this(CollisionChecker)
+
+         */
         Obstacle toBeDeleted = null;
         Box boxToBeDeleted = null;
         RemainingPieces remainsToBeDeleted = null;
@@ -173,7 +188,7 @@ public class CollisionChecker {
 
             //if (Game.getInstance().ball.getPosVector().getY() < 0) Game.getInstance().ball.reflectFromHorizontal();
 
-        for (Obstacle obs : Layout.obstacle_positions.keySet()) {
+        for (Obstacle obs : Layout.getObstaclePositions().keySet()) {
             if (instance.checkCollision(Game.getInstance().getBall(), obs)) {
                 if (obs.getHit()){
                     String typeCheck = obs.getType();
@@ -202,7 +217,7 @@ public class CollisionChecker {
                 }
             }
         }
-        if (toBeDeleted != null) Layout.obstacle_positions.remove(toBeDeleted);
+        if (toBeDeleted != null) Layout.getObstaclePositions().remove(toBeDeleted);
         if (boxToBeDeleted != null) {
             boxes.remove(boxToBeDeleted);
             Game.getInstance().getDomainObjectArr().remove(boxToBeDeleted);

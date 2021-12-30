@@ -109,7 +109,7 @@ public class Paddle extends DomainObject{
 
 	private void goLeft(){
 		setSpeed(-normalSpeed, 0);
-		if ((getPosVector().getX() >= normalSpeed) && (getPosVector().getX() <= FRAME_WIDTH - getLength())) {
+		if ((getPosVector().getX() >= normalSpeed) && (getPosVector().getX()  <= FRAME_WIDTH - getLength())) {
 			updatePosition(getDx(), getDy());
 		} else {
 			updatePosition(0, getDy());
@@ -118,7 +118,7 @@ public class Paddle extends DomainObject{
 
 	private void goRight(){
 		setSpeed(normalSpeed, 0);
-		if ((getPosVector().getX() <= FRAME_WIDTH - getLength() - normalSpeed - xOffset) && (getPosVector().getX() >= 0)) {
+		if ((getPosVector().getX()  <= FRAME_WIDTH - getLength() - normalSpeed - xOffset) && (getPosVector().getX()  >= 0)) {
 			updatePosition(getDx(), getDy());
 		} else {
 			updatePosition(0, getDy());
@@ -126,7 +126,7 @@ public class Paddle extends DomainObject{
 	}
 
 	private void rotateCClockwise(){
-		// | -45 --- 45 |
+		// | -50 --- 50 |
 
 		if (angle > MIN_ANGLE_LIMIT + angleSpeed){
 			setAngle(angle - angleSpeed);
@@ -138,7 +138,7 @@ public class Paddle extends DomainObject{
 	}
 
 	private void rotateClockwise(){
-		// | -45 --- 45 |
+		// | -50 --- 50 |
 
 		if (angle < MAX_ANGLE_LIMIT - angleSpeed){
 			setAngle(angle + angleSpeed);
@@ -152,7 +152,7 @@ public class Paddle extends DomainObject{
 
 	private void goFastLeft(){
 		setSpeed(-fastSpeed, 0);
-		if ((getPosVector().getX() >= fastSpeed) && (getPosVector().getX() <= FRAME_WIDTH - getLength())) {
+		if ((getPosVector().getX()  >= fastSpeed) && (getPosVector().getX() <= FRAME_WIDTH - getLength())) {
 			updatePosition(getDx(), getDy());
 		} else {
 			updatePosition(0, getDy());
@@ -161,7 +161,7 @@ public class Paddle extends DomainObject{
 
 	private void goFastRight(){
 		setSpeed(fastSpeed, 0);
-		if ((getPosVector().getX() <= FRAME_WIDTH - getLength() - fastSpeed) && (getPosVector().getX() >= 0)) {
+		if ((getPosVector().getX()  <= FRAME_WIDTH - getLength() - fastSpeed) && (getPosVector().getX()  >= 0)) {
 			updatePosition(getDx(), getDy());
 		} else {
 			updatePosition(0, getDy());

@@ -35,4 +35,18 @@ public class RemainingPieces extends DomainObject {
         this.posVector.setY(y);
 
     }
+
+    @Override
+    public String toString() {
+        return "RemainingPieces{" +
+                "posVector=" + posVector +
+                ", dx=" + dx +
+                ", dy=" + dy +
+                ", isWidthHeightTaken=" + isWidthHeightTaken +
+                ", yVelocity=" + yVelocity +
+                ", posVector=" + posVector +
+                ", height=" + height +
+                ", width=" + width +
+                '}';
+    }
 }

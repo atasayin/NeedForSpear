@@ -12,7 +12,7 @@ public class KeyboardController {
 
     /////////////////////////////////////////////////////////////////////////////////////
 
-    BitSet keyBits;
+    private BitSet keyBits;
 
     /////////////////////////////////////////////////////////////////////////////////////
 
@@ -80,18 +80,18 @@ public class KeyboardController {
 
         }
 
-        // First shot (w)
+        // First shot (W)
         if(isKeyPressed(87)){
             Game.getInstance().getBall().setisAlive(true);
         }
 
-        // Save
+        // Save (S)
         if (isKeyPressed(83)){
             Game currentGame = Game.getInstance();
             currentGame.saveGame();
         }
 
-        // Load
+        // Load (L)
         if (isKeyPressed(76)){
             Game currentGame1 = Game.getInstance();
             currentGame1.loadGame();
@@ -155,7 +155,7 @@ public class KeyboardController {
 /*
   KeyEvent Code List
 
-  3 -- Cancel
+3 -- Cancel
 8 -- Backspace
 9 -- Tab
 10 -- Enter
