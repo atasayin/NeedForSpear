@@ -14,8 +14,8 @@ public class PosVector {
 		// x <= FRAME_WIDTH
 	*/
 
-	private int x;
-	private int y;
+	public int x;
+	public int y;
 	private final int FRAME_WIDTH = 1368;
 	private final int FRAME_HEIGHT = 766;
 
