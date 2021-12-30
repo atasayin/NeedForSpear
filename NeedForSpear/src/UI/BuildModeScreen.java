@@ -213,6 +213,7 @@ public class BuildModeScreen extends JFrame {
         slider.setMinorTickSpacing(1);
         slider.setMajorTickSpacing(5);
         slider.setPaintTicks(true);
+        slider.setValue(30);
 
         Hashtable<Integer, JLabel> labels = new Hashtable<>();
         labels.put(0, new JLabel("0"));
@@ -222,9 +223,9 @@ public class BuildModeScreen extends JFrame {
         labels.put(100, new JLabel("100"));
         slider.setLabelTable(labels);
 
-        YmirProbability1 = new JTextField("Ymir Probability1", 10);
-        YmirProbability2 = new JTextField("Ymir Probability2", 10);
-        YmirProbability3 = new JTextField("Ymir Probability3", 10);
+        YmirProbability1 = new JTextField("5", 10);
+        YmirProbability2 = new JTextField("5", 10);
+        YmirProbability3 = new JTextField("5", 10);
 
 
         slider.addChangeListener(new ChangeListener() {

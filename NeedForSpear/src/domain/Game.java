@@ -30,13 +30,14 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
     private Double YmirProb1;
     private Double YmirProb2;
     private Double YmirProb3;
+    private Ymir ymir;
 
     private javax.swing.Timer game_Timer;
 
     private Game() {
         gameState = new GameState();
         game_Timer = new javax.swing.Timer(TIMER_SPEED, this);
-
+        ymir = new Ymir();
     }
 
     public static Game getInstance() {
@@ -99,11 +100,12 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
         if(isLoad){
             Game.getInstance().loadGame();
         }
-        System.out.println("Yamir freq is "+ Ymirfreq );
-        System.out.println("Yamir prob1 is "+ YmirProb1 );
-        System.out.println("Yamir prob2 is "+ YmirProb2 );
-        System.out.println("Yamir prob3 is "+ YmirProb3 );
-        System.out.println(instance.gameState.getPlayer().getChance_points());
+        ymir.setPeriod(freq);
+        ymir.setProbabilities(prob1, prob2, prob3);
+
+        Thread ymirThread = new Thread(ymir);
+        ymirThread.start();
+
     }
 
 
@@ -145,6 +147,7 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         gameOverCheck();
+
         if(!Game.getInstance().ball.checkAlive()) {
 
             if (deathInitTime < 0) {
