@@ -14,7 +14,7 @@ public class PlaygroundScreen implements IRunListener, IAuthorizeListener {
     RunGameObjects screen;
 
 
-    public void onRunEvent(HashMap<String, Integer> runSettings, String username, String id) {
+    public void onRunEvent(HashMap<String, Integer> runSettings, String username, String id, Integer freq,Double prob1, Double prob2, Double prob3) {
         int screenWidth = runSettings.get("screenWidth").intValue();
         int screenHeight = runSettings.get("screenHeight").intValue();
         initializeOuterFrameSettings(screenWidth, screenHeight);
