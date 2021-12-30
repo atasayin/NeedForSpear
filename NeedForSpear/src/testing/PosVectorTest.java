@@ -71,9 +71,27 @@ class PosVectorTest {
 
     @Test
     void getTheta() {
-        // true, false , arithmetic exception
-        // ata, yigithan
+
     }
+
+    @Test
+    void getThetaTrue() {
+        pv.getTheta(pv2);
+        assertEquals(pv.getTheta(pv2), 0.7853981633974483);
+        assertTrue(pv.repOK());
+    }
+
+    @Test
+    void getThetaFalse() {
+        int dx = pv.getX();
+        int dy = pv.getY();
+        pv.getTheta(pv2);
+        assertTrue(pv.repOK());
+        assertNotEquals(pv.getTheta(pv2), dy/dx );
+
+    }
+
+
 
     @Test
     void getThetaZeroDivZeroNaN() {
