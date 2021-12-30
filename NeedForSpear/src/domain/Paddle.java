@@ -77,7 +77,14 @@ public class Paddle extends DomainObject{
 		this.length /=2;
 	}
 
+
+
 	public void move(int direction) {
+		// MODIFIES: The position and the velocity of the paddle.
+		/* EFFECTS: by checking at the boundary conditions of the setup, it updates the position and velocity
+		of the paddle.
+		*/
+
 		// Paddle goes left
 		if (direction == GO_LEFT_DIC) { goLeft(); }
 		// Paddle goes right
@@ -92,6 +99,7 @@ public class Paddle extends DomainObject{
 		else if (direction == GO_FAST_RIGHTH_DIC) { goFastRight(); }
 
 	}
+
 
 
 	public void updatePosition(int  x, int  y) {
