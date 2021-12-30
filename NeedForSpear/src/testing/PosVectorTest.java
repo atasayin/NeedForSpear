@@ -69,10 +69,6 @@ class PosVectorTest {
         assertNotEquals(3.5, pv3.getY());
     }
 
-    @Test
-    void getTheta() {
-
-    }
 
     @Test
     void getThetaTrue() {
@@ -92,7 +88,6 @@ class PosVectorTest {
     }
 
 
-
     @Test
     void getThetaZeroDivZeroNaN() {
         pv2.setX(300);
@@ -104,7 +99,6 @@ class PosVectorTest {
     void getX() {
         assertEquals(pv.getX(),300);
         assertEquals(pv2.getX(),100);
-
     }
 
     @Test
@@ -132,7 +126,6 @@ class PosVectorTest {
         assertEquals(pv2.repOK(),false);
         pv.setY(97);
         assertEquals(pv.repOK(),true);
-
     }
 
 }
