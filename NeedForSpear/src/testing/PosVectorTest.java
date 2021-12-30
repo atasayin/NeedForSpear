@@ -44,6 +44,17 @@ class PosVectorTest {
         // ata, yigithan
     }
 
+
+    @Test
+    void getThetaZeroDivZeroNaN() {
+        pv2.setX(300);
+        pv2.setY(300);
+        assertEquals(Double.NaN,pv.getTheta(pv2));
+    }
+
+
+
+
     // getters //oya
 
     @Test
