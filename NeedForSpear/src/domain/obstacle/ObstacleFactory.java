@@ -20,16 +20,16 @@ public class ObstacleFactory {
         Obstacle obs = null;
         switch(type) {
             case 0:
-                obs = new PandorasBox(pos.getX(),pos.getY());
+                obs = new WallMaria(pos.getX(),pos.getY());
                 break;
             case 1:
                 obs = new SteinsGate(pos.getX(),pos.getY());
                 break;
             case 2:
-                obs = new GiftOfUranus(pos.getX(),pos.getY());
+                obs = new PandorasBox(pos.getX(),pos.getY());
                 break;
             case 3:
-                obs = new WallMaria(pos.getX(),pos.getY());
+                obs = new GiftOfUranus(pos.getX(),pos.getY());
                 break;
             default:
         }

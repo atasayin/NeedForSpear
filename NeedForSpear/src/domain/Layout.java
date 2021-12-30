@@ -15,60 +15,60 @@ public class Layout {
     private static int yOffset = 70;
     private static int xOffset = 175;
     // Total number of Simple Obstacles(Wall Maria)
-    public int wallMariaCount;
+    private int wallMariaCount;
 
     // Total number of Firm Obstacles(Steins Gate)
-    public int steinsGateCount;
+    private int steinsGateCount;
 
     // Total number of Explosive Obstacles(Pandora’s Box)
-    public int pandoraBoxCount;
+    private int pandoraBoxCount;
 
     // Total number of Gift Obstacles(Gift of Uranus)
-    public int uranusCount;
+    private int uranusCount;
 
     // Holds positions of all obstacles
-    public static HashMap<Obstacle, PosVector> obstacle_positions;
+    private static HashMap<Obstacle, PosVector> obstacle_positions;
 
     // Holds the center of circles of the paths that some obstacles move in
-    public static HashMap<Obstacle, PosVector> obstacle_centers;
+    private static HashMap<Obstacle, PosVector> obstacle_centers;
 
     // Layout width
-    public int layoutWidth;
+    private int layoutWidth;
 
     // Layout heigth
-    public int layoutHeight;
+    private int layoutHeight;
 
     // Random Seed number
     private int SEED_NUMBER = 14;
 
     // Collision Checker for Obstacles
-    private CollisionChecker CS;
+    private CollisionChecker CC;
 
     // Offset to place the obstacles
-    int obsLen;
-    int layoutHeightOffset = 350;
-
-
+    private int obsLen;
+    private int layoutHeightOffset = 350;
 
     /////////////////////////////////////////////////////////////////////////////////////
 
-    public Layout(int wallMariaCount,int steinsGateCount,int pandoraBoxCount
-            , int uranusCount, int layoutWidth, int layoutHeight){
+    // Constructor
+    public Layout(int wallMariaCount, int steinsGateCount, int pandoraBoxCount, int uranusCount,
+            int layoutWidth, int layoutHeight){
         this.wallMariaCount = wallMariaCount;
         this.steinsGateCount = steinsGateCount;
         this.pandoraBoxCount = pandoraBoxCount;
         this.uranusCount = uranusCount;
 
-        this.CS = CollisionChecker.getInstance();
-        obstacle_positions = new HashMap<Obstacle, PosVector>();
-        obstacle_centers = new HashMap<Obstacle, PosVector>();
+        this.CC = CollisionChecker.getInstance();
+        obstacle_positions = new HashMap<>();
+        obstacle_centers = new HashMap<>();
 
         this.layoutWidth = layoutWidth;
         this.layoutHeight = layoutHeight;
         obsLen = layoutWidth/50;
-        setLayout();
+        //setLayout();
     }
 
+    // Constructor
     public Layout(){
 
     }
@@ -82,25 +82,18 @@ public class Layout {
         }
     }
 
-    // Returns positions of all current obstacles.
-    public static HashMap<Obstacle, PosVector> getObstacle_positions() { return obstacle_positions; }
-
-    public static void setObstacle_positions(HashMap<Obstacle, PosVector> newMap){
-        obstacle_positions = newMap;
-    }
-
-    // Returns center of circles of the paths that some obstacles move in.
-    public HashMap<Obstacle, PosVector> getObstacle_centers() { return obstacle_centers; }
-
-
     // Creates obstacles
     public void setLayout(){
+        /*EFFECTS: It creates obstacles at some locations by looking at the numbers
+        of the obstacle types. It generates the game layout.
+        MODIFIES: HashMap<Obstacle, PosVector> obstacle_positions
+        */
         Random rnd = new Random(SEED_NUMBER);
-        Integer[] counts = { pandoraBoxCount, steinsGateCount, uranusCount, wallMariaCount };
+        Integer[] obsCounts = {wallMariaCount, steinsGateCount, pandoraBoxCount, uranusCount};
         Obstacle obs;
 
-        for(int type = 0; type < counts.length; type++) {
-            for (int i = 0; i < counts[type]; i++) {
+        for(int type = 0; type < obsCounts.length; type++) {
+            for (int i = 0; i < obsCounts[type]; i++) {
                 while (true) {
                     PosVector pos = new PosVector(
                             rnd.nextInt(layoutWidth - obsLen - xOffset - 2),
@@ -109,28 +102,56 @@ public class Layout {
 
                     if (isAvailable(obs)) {
                         obstacle_positions.put(obs, pos);
+                        // domainObjArr = [obs, box if exists, remain if exist]
                         Game.getInstance().getDomainObjectArr().add(obs);
                         Game.getInstance().getDomainObjectArr().add(obs.getBox());
                         Game.getInstance().getDomainObjectArr().add(obs.getRemains());
                         break;
                     }
-
                 }
             }
-
         }
     }
 
 
     // Collider check for creating Layout
     private boolean isAvailable(Obstacle newObs){
+        /*
+        EFFECTS: It compares the newcoming obstacle positions with all the existing obstacles' positions
+                If there is an overlapping, it returns false. Otherwise, it returns true.
+        */
         for (Obstacle obs: obstacle_positions.keySet()){
-            if ( CS.checkCollision(newObs, obs)){
+            if (CC.checkCollision(newObs, obs)){
                 return false;
             }
         }
 
         return true;
+    }
+
+    // Getter method for obstacle_positions
+    public static HashMap<Obstacle, PosVector> getObstaclePositions() {
+        /*
+        EFFECTS: returns a hashmap that keeps the obstacle positions
+        */
+        return obstacle_positions;
+    }
+
+    // Setter method for obstacle_positions
+    public static void setObstaclePositions(HashMap<Obstacle, PosVector> newMap) {
+         /*
+        EFFECTS: assign a new obstacle position array
+        MODIFIES: this.obstacle_positions
+        */
+        obstacle_positions = newMap;
+    }
+
+    // Returns center of circles of the paths that some obstacles move in.
+    public HashMap<Obstacle, PosVector> getObstacleCenters() {
+        /*
+        EFFECTS: returns a hashmap that keeps the obstacle centers
+        */
+        return obstacle_centers;
     }
 
     /*

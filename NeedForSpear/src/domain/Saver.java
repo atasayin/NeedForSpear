@@ -62,7 +62,7 @@ public class Saver {
     public void loadGame(Paddle paddle, Ball ball) {
 
         HashMap<Obstacle, PosVector> loadObsPos = new HashMap<>();
-        Layout.setObstacle_positions(loadObsPos);
+        Layout.setObstaclePositions(loadObsPos);
 
         JSONParser jsonParser = new JSONParser();
         try (FileReader reader = new FileReader(FILEPATH)) {
@@ -125,25 +125,25 @@ public class Saver {
                     WallMaria obs = new WallMaria(p, m);
                     listDO.add(obs);
                     vec = new PosVector(p,m);
-                    Layout.getObstacle_positions().put(obs,vec);
+                    Layout.getObstaclePositions().put(obs,vec);
                 }
                 if(s.contains("GiftOfUranus")){
                     GiftOfUranus obs = new GiftOfUranus(p, m);
                     listDO.add(obs);
                     vec = new PosVector(p,m);
-                    Layout.getObstacle_positions().put(obs,vec);
+                    Layout.getObstaclePositions().put(obs,vec);
                 }
                 if(s.contains("PandorasBox")){
                     PandorasBox obs = new PandorasBox(p, m);
                     listDO.add(obs);
                     vec = new PosVector(p,m);
-                    Layout.getObstacle_positions().put(obs,vec);
+                    Layout.getObstaclePositions().put(obs,vec);
                 }
                 if(s.contains("SteinsGate")){
                     SteinsGate obs = new SteinsGate(p, m);
                     listDO.add(obs);
                     vec = new PosVector(p,m);
-                    Layout.getObstacle_positions().put(obs,vec);
+                    Layout.getObstaclePositions().put(obs,vec);
                 }
             }
 

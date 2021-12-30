@@ -46,6 +46,7 @@ public class LayoutController {
                 FRAME_WIDTH,
                 FRAME_HEIGHT
         );
+        layout.setLayout();
 
         return layout;
     }
@@ -72,7 +73,7 @@ public class LayoutController {
     // Prints layout
     private void printLayout(){
         System.out.println(obstacleSettings);
-        for (Obstacle obs : layout.obstacle_positions.keySet()){
+        for (Obstacle obs : layout.getObstaclePositions().keySet()){
             System.out.println(obs.toString());
         }
 

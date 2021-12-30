@@ -59,7 +59,7 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
 
     public void saveGame() {
         saver = new Saver();
-        saver.saveGame(Layout.getObstacle_positions());
+        saver.saveGame(Layout.getObstaclePositions());
     }
 
     /*EFFECTS: From oldScore value it calculates new value and updates the score attribute.
