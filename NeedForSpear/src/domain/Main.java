@@ -12,6 +12,10 @@ public class Main {
             autoMode = new AuthorizeScreen(nfs);
             autoMode.setVisible(true);
             autoMode.addListener(nfs);
+            // delete after this
+            Ymir ymir = new Ymir();
+            Thread t = new Thread(ymir);
+            t.start();
     }
 
 }

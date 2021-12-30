@@ -54,6 +54,14 @@ public class Ymir implements Runnable{
                 e.printStackTrace();
             }
 
+            if (rollDice()) {
+                YmirAbilities ability = chooseAbility();
+                System.out.println(ability);
+
+
+            } else {
+                System.out.println("No Ymir ability this time!");
+            }
 
         }
 
