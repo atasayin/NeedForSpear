@@ -118,7 +118,7 @@ public class Paddle extends DomainObject{
 	}
 
 	private void rotateCClockwise(){
-		// | -45 --- 45 |
+		// | -50 --- 50 |
 
 		if (angle > MIN_ANGLE_LIMIT + angleSpeed){
 			setAngle(angle - angleSpeed);
@@ -130,7 +130,7 @@ public class Paddle extends DomainObject{
 	}
 
 	private void rotateClockwise(){
-		// | -45 --- 45 |
+		// | -50 --- 50 |
 
 		if (angle < MAX_ANGLE_LIMIT - angleSpeed){
 			setAngle(angle + angleSpeed);
