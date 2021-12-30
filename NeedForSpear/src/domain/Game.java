@@ -142,6 +142,18 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
         isLoad = true;
     }
 
+    public void setPaddle(Paddle paddle) {
+        this.paddle = paddle;
+    }
+
+    public void setBall(Ball ball) {
+        this.ball = ball;
+    }
+
+    public void setGameState(GameState gameState) {
+        this.gameState = gameState;
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         gameOverCheck();

@@ -61,6 +61,8 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
     private double remainY;
 
 
+
+
     public RunGameObjects(int width, int height) {
         this.frame_width = width;
         this.frame_height = height;
@@ -158,7 +160,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
             e.printStackTrace();
         }
         drawBall(g2d, Game.getInstance().getBall(), frame_width, frame_height);
-
+        // NOT ÇİZGİYİ SİL
         g2d.setTransform(old);
         int textWidth = g.getFontMetrics().stringWidth(infoString);
         g2d.drawString(infoString, this.getWidth() / 2 - textWidth / 2, infoStringHeight);
