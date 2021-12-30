@@ -45,8 +45,8 @@ class CheckToDeleteTest{
         remains = new ArrayList<RemainingPieces>();
 
         layout = new Layout();
-        Layout.setObstacle_positions(new HashMap<Obstacle, PosVector>());
-        obsList = Layout.getObstacle_positions();
+        Layout.setObstaclePositions(new HashMap<Obstacle, PosVector>());
+        obsList = Layout.getObstaclePositions();
         CS = CollisionChecker.getInstance();
 
         objList = new ArrayList<>();

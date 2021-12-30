@@ -85,7 +85,6 @@ class PosVectorTest {
         pv.getTheta(pv2);
         assertTrue(pv.repOK());
         assertNotEquals(pv.getTheta(pv2), dy/dx );
-
     }
 
 
