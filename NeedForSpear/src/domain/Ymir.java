@@ -1,5 +1,7 @@
 package domain;
 
+import domain.abilities.DoubleAccel;
+
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -57,6 +59,11 @@ public class Ymir implements Runnable{
             if (rollDice()) {
                 YmirAbilities ability = chooseAbility();
                 System.out.println(ability);
+                if (ability == YmirAbilities.DoubleAccel) {
+                    DoubleAccel da = new DoubleAccel();
+                    Thread t = new Thread(da);
+                    t.start();
+                }
 
 
             } else {
