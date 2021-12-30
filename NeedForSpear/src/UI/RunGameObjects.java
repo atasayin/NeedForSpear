@@ -27,7 +27,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
     Timer tm = new Timer(TIMER_SPEED, this);
     private static final int TIMER_SPEED = 50;
     private static final int INFO_REFRESH_PERIOD = 3000;
-    private static final int infoStringHeight = 55;
+    private static final int infoStringHeight = 60;
     private static int yOffset = 70;
     private static int xOffset = 175;
     public static int frame_width;

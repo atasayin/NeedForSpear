@@ -173,7 +173,7 @@ public class CollisionChecker {
 
             //if (Game.getInstance().ball.getPosVector().getY() < 0) Game.getInstance().ball.reflectFromHorizontal();
 
-        for (Obstacle obs : Layout.obstacle_positions.keySet()) {
+        for (Obstacle obs : Layout.getObstaclePositions().keySet()) {
             if (instance.checkCollision(Game.getInstance().getBall(), obs)) {
                 if (obs.getHit()){
                     String typeCheck = obs.getType();
@@ -202,7 +202,7 @@ public class CollisionChecker {
                 }
             }
         }
-        if (toBeDeleted != null) Layout.obstacle_positions.remove(toBeDeleted);
+        if (toBeDeleted != null) Layout.getObstaclePositions().remove(toBeDeleted);
         if (boxToBeDeleted != null) {
             boxes.remove(boxToBeDeleted);
             Game.getInstance().getDomainObjectArr().remove(boxToBeDeleted);
