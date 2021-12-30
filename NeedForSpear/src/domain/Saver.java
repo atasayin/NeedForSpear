@@ -27,10 +27,10 @@ public class Saver {
         Document doc = new Document();
         ArrayList<String> temp;
         ArrayList<ArrayList<String>> map = new ArrayList<ArrayList<String>>();
-        doc.put("PaddlePositionX", Game.getInstance().getPaddle().getPosVector().x);
-        doc.put("PaddlePositionY", Game.getInstance().getPaddle().getPosVector().y);
-        doc.put("BallPositionX", Game.getInstance().getBall().posVector.x);
-        doc.put("BallPositionY", Game.getInstance().getBall().posVector.y);
+        doc.put("PaddlePositionX", Game.getInstance().getPaddle().getPosVector().getX());
+        doc.put("PaddlePositionY", Game.getInstance().getPaddle().getPosVector().getY());
+        doc.put("BallPositionX", Game.getInstance().getBall().posVector.getX());
+        doc.put("BallPositionY", Game.getInstance().getBall().posVector.getY());
         doc.put("Username", Game.getInstance().gameState.getPlayer().getUserName());
         doc.put("ChancePoints", Game.getInstance().gameState.getPlayer().getChance_points());
         doc.put("Score", Game.getInstance().getOldScore());
