@@ -29,8 +29,8 @@ class PosVectorTest {
     @Test
     void addVectorTrue() {
         pv.addVector(pv2);
-        assertEquals(pv.getX(), 400);
-        assertEquals(pv.getY(), 400);
+        assertEquals(400, pv.getX());
+        assertEquals(400, pv.getY());
         assertTrue(pv.repOK());
     }
 
@@ -48,8 +48,8 @@ class PosVectorTest {
         int old_y = pv.getY();
         pv.addVector(pv2);
         assertTrue(pv.repOK());
-        assertNotEquals(pv2.getX(), old_x);
-        assertNotEquals(pv2.getY(), old_y);
+        assertNotEquals(old_x, pv.getX());
+        assertNotEquals(old_y, pv.getY());
     }
 
     @Test
