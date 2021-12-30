@@ -58,16 +58,24 @@ public class LayoutTest {
 
     // Black Box Test
     @Test
-    void testSetLayout_invalidObsCount(){
+    void testSetLayout_invalidObsCounts(){
         obsCounts = new Integer[]{3, 4, 5, -4};
         layout = new Layout(obsCounts[0], obsCounts[1], obsCounts[2], obsCounts[3], layoutWidth, layoutHeight);
         layout.setLayout();
         assertEquals(12,layout.getObstaclePositions().size());
     }
 
+    // Black Box Test
+    @Test
+    void testSetLayout_emptyLayoutAttributes(){
+        layout = new Layout();
+        layout.setLayout();
+        assertTrue(gameInstance.getDomainObjectArr().isEmpty());
+    }
+
     // Glass Box - 0 iteration
     @Test
-    void testSetLayout_emptyObsCount_emptyDomainObjArr(){
+    void testSetLayout_emptyObsCounts_emptyDomainObjArr(){
         obsCounts = new Integer[]{0,0,0,0};
         layout = new Layout(obsCounts[0], obsCounts[1], obsCounts[2], obsCounts[3], layoutWidth, layoutHeight);
         layout.setLayout();
