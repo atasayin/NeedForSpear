@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class PosVectorTest {
 
-    PosVector pv, pv2;
+    PosVector pv, pv2, pv3;
     private final int FRAME_WIDTH = 1368;
     private final int FRAME_HEIGHT = 766;
 
@@ -18,6 +18,7 @@ class PosVectorTest {
     void setUp() {
         pv = new PosVector(300,300);
         pv2 = new PosVector(100,100);
+        pv3 = new PosVector(11,7);
     }
 
     @AfterEach
@@ -53,9 +54,19 @@ class PosVectorTest {
     }
 
     @Test
-    void halfVelocity() {
-        // true, false
-        // beyza
+    void halfVelocityTrue() {
+        pv.halfVelocity();
+        assertTrue(pv.repOK());
+        assertEquals(150,pv.getX());
+        assertEquals(150, pv.getY());
+    }
+
+    @Test
+    void halfVelocityFalse(){
+        pv3.halfVelocity();
+        assertTrue(pv3.repOK());
+        assertNotEquals(5.5, pv3.getX());
+        assertNotEquals(3.5, pv3.getY());
     }
 
     @Test
@@ -64,7 +75,6 @@ class PosVectorTest {
         // ata, yigithan
     }
 
-
     @Test
     void getThetaZeroDivZeroNaN() {
         pv2.setX(300);
@@ -72,13 +82,8 @@ class PosVectorTest {
         assertEquals(Double.NaN,pv.getTheta(pv2));
     }
 
-
-
-
-    // getters //oya
-
     @Test
-    void  getX() {
+    void getX() {
         assertEquals(pv.getX(),300);
         assertEquals(pv2.getX(),100);
 
@@ -111,7 +116,5 @@ class PosVectorTest {
         assertEquals(pv.repOK(),true);
 
     }
-
-
 
 }
