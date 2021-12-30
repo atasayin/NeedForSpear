@@ -27,9 +27,29 @@ class PosVectorTest {
     }
 
     @Test
-    void addVector() {
-        // true, false, null
-        //deniz
+    void addVectorTrue() {
+        pv.addVector(pv2);
+        assertEquals(pv.getX(), 400);
+        assertEquals(pv.getY(), 400);
+        assertTrue(pv.repOK());
+    }
+
+    @Test
+    void addVectorNull() {
+        pv2 = null;
+        assertThrows(Exception.class, ()-> {
+            pv.addVector(pv2);});
+        assertTrue(pv.repOK());
+    }
+
+    @Test
+    void addVectorFalse() {
+        int old_x = pv.getX();
+        int old_y = pv.getY();
+        pv.addVector(pv2);
+        assertTrue(pv.repOK());
+        assertNotEquals(pv2.getX(), old_x);
+        assertNotEquals(pv2.getY(), old_y);
     }
 
     @Test
