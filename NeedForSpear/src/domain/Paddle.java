@@ -10,8 +10,17 @@ public class Paddle extends DomainObject{
 	public static final int FRAME_HEIGHT = 766;
 	public static final int PADDLE_THICKNESS = 20;
 
+	// angle constants
 	private double MIN_ANGLE_LIMIT = -45;
 	private double MAX_ANGLE_LIMIT = 45;
+
+	// move constants
+	private int GO_LEFT_DIC = 1;
+	private int GO_RIGHT_DIC = 2;
+	private int ROTATE_CCLOKC_DIC = 3;
+	private int ROTATE_CLOCK_DIC = 4;
+	private int GO_FAST_LEFT_DIC = 5;
+	private int GO_FAST_RIGHTH_DIC = 6;
 
 	protected int length;
 	private int thickness;
@@ -68,21 +77,29 @@ public class Paddle extends DomainObject{
 		this.length /=2;
 	}
 
+
+
 	public void move(int direction) {
+		// MODIFIES: The position and the velocity of the paddle.
+		/* EFFECTS: by checking at the boundary conditions of the setup, it updates the position and velocity
+		of the paddle.
+		*/
+
 		// Paddle goes left
-		if (direction == 1) { goLeft(); }
+		if (direction == GO_LEFT_DIC) { goLeft(); }
 		// Paddle goes right
-		else if (direction == 2) { goRight(); }
+		else if (direction == GO_RIGHT_DIC) { goRight(); }
 		// Paddle rotates counter clockwise (A)
-		else if (direction == 3) { rotateCClockwise(); }
+		else if (direction == ROTATE_CCLOKC_DIC) { rotateCClockwise(); }
 		// Paddle rotates clockwise (D)
-		else if (direction == 4) { rotateClockwise(); }
+		else if (direction == ROTATE_CLOCK_DIC) { rotateClockwise(); }
 		// Paddle goes faster left
-		else if (direction == 5) { goFastLeft(); }
+		else if (direction == GO_FAST_LEFT_DIC) { goFastLeft(); }
 		// Paddle goes faster right
-		else if (direction == 6) { goFastRight(); }
+		else if (direction == GO_FAST_RIGHTH_DIC) { goFastRight(); }
 
 	}
+
 
 
 	public void updatePosition(int  x, int  y) {

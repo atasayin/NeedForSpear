@@ -27,11 +27,9 @@ public class paddleMovementTest {
         System.out.println("Running: Set Up");
 
         paddle1 = new Paddle(1368, 766);
-        //paddle2 = new Paddle(1368, 766);
         objList = new ArrayList<>();
-
         objList.add(paddle1);
-        //objList.add(paddle2);
+
 
     }
 
@@ -70,13 +68,10 @@ public class paddleMovementTest {
     @Test
     void checkPaddleRotateCClockwise() {
         // | -45 --- 45 |
-
-       // paddle1.setPosVector(new PosVector(360, 1100));
         paddle1.setAngle(0);
         paddle1.move(3);
         paddle1.getAngle();
         assertTrue(paddle1.getAngle() < 0); //Check Paddle to rotate counterclockwise based on its angle.
-        //assertTrue();
 
     }
 
@@ -87,21 +82,17 @@ public class paddleMovementTest {
         paddle1.move(4);
         paddle1.getAngle();
         assertTrue(paddle1.getAngle() > 0); //Check Paddle to rotate clockwise based on its angle.
-        //paddle1.setPosVector(new PosVector(360, 1100));
-
-        //assertTrue(paddle1.getAngle());
 
     }
 
     @Test
     void checkPaddleGoFastLeft() {
         paddle1.setPosVector(new PosVector(360, 1100));
-
         paddle1.move(5);
         paddle1.getPosVector();
-
         assertTrue(paddle1.getDx() - paddle1.getFastSpeed() < 360 - paddle1.getNormalSpeed());
 
+        //Check paddle to move left with fastspeed based on its location and speed.
 
     }
 
@@ -113,6 +104,7 @@ public class paddleMovementTest {
 
         assertTrue(paddle1.getDx() + paddle1.getFastSpeed() > 360 + paddle1.getNormalSpeed());
 
+        //Check paddle to move right with fastspeed based on its location and speed.
 
     }
 
