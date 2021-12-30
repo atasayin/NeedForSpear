@@ -76,6 +76,22 @@ class GameOverTest implements ActionListener {
         assertEquals(g.getIsWin(), false);
     }
     @org.junit.jupiter.api.Test
+    void GameOverWinCheck(){
+        g.gameState.getPlayer().setChance_points(2);
+        g.getDomainObjectArr().remove(wm);
+        g.gameOverCheck();
+        assertEquals(g.getIsWin(), true);
+    }
+
+    @org.junit.jupiter.api.Test
+    void GameWonIsTimerStopped(){
+        g.gameState.getPlayer().setChance_points(2);
+        g.gameOverCheck();
+        g.getDomainObjectArr().remove(wm);
+        assertEquals(g.getTimer().isRunning(), false);
+    }
+
+    @org.junit.jupiter.api.Test
     void IsTimerStoppedGameLose(){
         g.gameState.getPlayer().setChance_points(0);
         g.gameOverCheck();
