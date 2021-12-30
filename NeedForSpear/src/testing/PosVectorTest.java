@@ -48,19 +48,17 @@ class PosVectorTest {
     @Test
     void getThetaTrue() {
         pv.getTheta(pv2);
-        assertEquals(pv.getX(), Math.atan(300/100));
-        assertEquals(pv.getY(), Math.atan(100/300));
+        assertEquals(pv.getTheta(pv2), 0.7853981633974483);
         assertTrue(pv.repOK());
     }
 
     @Test
     void getThetaFalse() {
-         int x = pv.getX();
-         int y= pv.getY();
+         int dx = pv.getX();
+         int dy = pv.getY();
          pv.getTheta(pv2);
          assertTrue(pv.repOK());
-         assertNotEquals(pv2.getX(), Math.atan(x/y));
-         assertNotEquals(pv2.getY(), Math.atan(y/x));
+         assertNotEquals(pv.getTheta(pv2), dy/dx );
 
     }
 
