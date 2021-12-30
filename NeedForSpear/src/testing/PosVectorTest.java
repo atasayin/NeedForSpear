@@ -21,6 +21,7 @@ class PosVectorTest {
         pv3 = new PosVector(11,7);
     }
 
+
     @AfterEach
     void tearDown() {
         pv = null;
