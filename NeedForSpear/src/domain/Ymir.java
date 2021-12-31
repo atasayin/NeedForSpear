@@ -2,6 +2,7 @@ package domain;
 
 import domain.abilities.DoubleAccel;
 import domain.abilities.HollowPurple;
+import domain.abilities.InfiniteVoid;
 
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -51,7 +52,7 @@ public class Ymir implements Runnable{
         while(true) {
             try {
                 TimeUnit.SECONDS.sleep(this.period + 15);
-                if (rollDice()) {
+                if (true) {
                     YmirAbilities ability = chooseAbility();
                     System.out.println(ability);
                     System.out.println("Before double accel");
@@ -65,7 +66,13 @@ public class Ymir implements Runnable{
                     else if(ability == YmirAbilities.HollowPurple) {
                         System.out.println("HollowPurple");
                         HollowPurple hp = new HollowPurple();
-                        hp.initalizeHollow();
+                        hp.initializeHollow();
+                    }
+                    else {
+                        System.out.println("InfiniteVoid geldi aga");
+                        InfiniteVoid iv = new InfiniteVoid();
+                        Thread t = new Thread(iv);
+                        t.start();
                     }
                 } else {
                     System.out.println("No Ymir ability this time!");

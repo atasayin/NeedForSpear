@@ -174,32 +174,65 @@ public class CollisionChecker {
             //if (Game.getInstance().ball.getPosVector().getY() < 0) Game.getInstance().ball.reflectFromHorizontal();
 
         for (Obstacle obs : Layout.obstacle_positions.keySet()) {
+
             if (instance.checkCollision(Game.getInstance().getBall(), obs)) {
-                if (obs.getHit()){
-                    String typeCheck = obs.getType();
-                    if(typeCheck.equals("GiftOfUranus")){
-                         Game.getInstance().getDomainObjectArr().add(obs.getBox());
-                         boxes.add(obs.getBox());
-                        for (IBoxListener listener : BoxListeners) {
-                            listener.dropBox(obs.getPosVector().getX(), obs.getPosVector().getY());
+
+                // if obs is not frozen
+                if (!obs.isFrozen()) {
+                    if (obs.getHit()) {
+                        String typeCheck = obs.getType();
+                        if (typeCheck.equals("GiftOfUranus")) {
+                            Game.getInstance().getDomainObjectArr().add(obs.getBox());
+                            boxes.add(obs.getBox());
+                            for (IBoxListener listener : BoxListeners) {
+                                listener.dropBox(obs.getPosVector().getX(), obs.getPosVector().getY());
+                            }
+                        }
+                        if (typeCheck.equals("PandorasBox")) {
+                            Game.getInstance().getDomainObjectArr().add(obs.getRemains());
+                            remains.add(obs.getRemains());
+                            for (IRemainsListener listener : RemainListeners) {
+                                listener.dropRemains(obs.getPosVector().getX(), obs.getPosVector().getY());
+                            }
+                        }
+                        Game.getInstance().getDomainObjectArr().remove(obs);
+                        toBeDeleted = obs;
+
+                        if (instance.findCollisionDirection(Game.getInstance().getBall(), obs)) {
+                            Game.getInstance().getBall().reflectFromVertical();
+                        } else {
+                            Game.getInstance().getBall().reflectFromHorizontal();
                         }
                     }
-                    if(typeCheck.equals("PandorasBox")){
-                        Game.getInstance().getDomainObjectArr().add(obs.getRemains());
-                        remains.add(obs.getRemains());
-                        for (IRemainsListener listener : RemainListeners) {
-                            listener.dropRemains(obs.getPosVector().getX(), obs.getPosVector().getY());
+                } // if obstacle is frozen
+                else {
+                    if (obs.getHitWhenFrozen(Game.getInstance().getBall().is_unstoppable())) {
+                        String typeCheck = obs.getType();
+                        if (typeCheck.equals("GiftOfUranus")) {
+                            Game.getInstance().getDomainObjectArr().add(obs.getBox());
+                            boxes.add(obs.getBox());
+                            for (IBoxListener listener : BoxListeners) {
+                                listener.dropBox(obs.getPosVector().getX(), obs.getPosVector().getY());
+                            }
                         }
+                        if (typeCheck.equals("PandorasBox")) {
+                            Game.getInstance().getDomainObjectArr().add(obs.getRemains());
+                            remains.add(obs.getRemains());
+                            for (IRemainsListener listener : RemainListeners) {
+                                listener.dropRemains(obs.getPosVector().getX(), obs.getPosVector().getY());
+                            }
+                        }
+                        Game.getInstance().getDomainObjectArr().remove(obs);
+                        toBeDeleted = obs;
                     }
-                    Game.getInstance().getDomainObjectArr().remove(obs);
-                    toBeDeleted = obs;
+
+                    if (instance.findCollisionDirection(Game.getInstance().getBall(), obs)) {
+                        Game.getInstance().getBall().forceReflectFromVertical();
+                    } else {
+                        Game.getInstance().getBall().forceReflectFromHorizontal();
+                    }
                 }
 
-                if (instance.findCollisionDirection(Game.getInstance().getBall(), obs)) {
-                    Game.getInstance().getBall().reflectFromVertical();
-                } else {
-                    Game.getInstance().getBall().reflectFromHorizontal();
-                }
             }
         }
         if (toBeDeleted != null) Layout.obstacle_positions.remove(toBeDeleted);

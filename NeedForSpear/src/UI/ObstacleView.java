@@ -18,7 +18,7 @@ public class ObstacleView implements Drawable {
     private BufferedImage explosive_obs_img;
     private BufferedImage gift_obs_img;
     private BufferedImage hollow_purple_img;
-
+    private BufferedImage frozen_obstacle_img;
     static ObstacleView instance;
 
     private ObstacleView() {
@@ -43,6 +43,7 @@ public class ObstacleView implements Drawable {
             explosive_obs_img = ImageIO.read(this.getClass().getResource("../assets/explosive_obstacle.png"));
             gift_obs_img = ImageIO.read(this.getClass().getResource("../assets/gift_obstacle.png"));
             hollow_purple_img = ImageIO.read(this.getClass().getResource("../assets/purple.png"));
+            frozen_obstacle_img = ImageIO.read(this.getClass().getResource("../assets/frozen_obstacle.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -57,6 +58,22 @@ public class ObstacleView implements Drawable {
         Image scaled;
         BufferedImage newBuffImage;
         Graphics2D bGr;
+
+        // FROZEN OBSTACLE SCALE
+        scaled = frozen_obstacle_img.getScaledInstance((int) (obsLen/1.4), (int) (obsThick/1.4),
+                BufferedImage.SCALE_SMOOTH);
+        if (scaled instanceof BufferedImage)
+            frozen_obstacle_img = (BufferedImage) scaled;
+
+        // Create a buffered image with transparency
+        newBuffImage = new BufferedImage(scaled.getWidth(null), scaled.getHeight(null),
+                BufferedImage.TYPE_INT_ARGB);
+
+        // Draw the image on to the buffered image
+        bGr = newBuffImage.createGraphics();
+        bGr.drawImage(scaled, 0, 0, null);
+        bGr.dispose();
+        frozen_obstacle_img = newBuffImage;
 
 
         // SIMPLE OBSTACLE SCALE
@@ -144,7 +161,9 @@ public class ObstacleView implements Drawable {
     public void draw(Graphics2D g2d, DomainObject domainObject, int w, int h) {
         Obstacle obs = (Obstacle) domainObject;
 
-        if (obs instanceof WallMaria){
+        if (obs.isFrozen()) {
+            g2d.drawImage(frozen_obstacle_img, obs.getPosVector().getX(), obs.getPosVector().getY(), null);
+        }else if (obs instanceof WallMaria){
             g2d.drawImage(simple_obs_img, obs.getPosVector().getX(), obs.getPosVector().getY(), null);
         } else if (obs instanceof SteinsGate){
             g2d.drawImage(firm_obs_img, obs.getPosVector().getX(), obs.getPosVector().getY(), null);

@@ -2,6 +2,7 @@ package domain;
 
 import UI.AuthorizeScreen;
 import UI.PlaygroundScreen;
+import domain.abilities.InfiniteVoid;
 
 public class Main {
     static AuthorizeScreen autoMode;
@@ -12,10 +13,10 @@ public class Main {
             autoMode = new AuthorizeScreen(nfs);
             autoMode.setVisible(true);
             autoMode.addListener(nfs);
-            // delete after this
-        /*    Ymir ymir = new Ymir();
-            Thread t = new Thread(ymir);
-            t.start();*/
+
+            InfiniteVoid iv = new InfiniteVoid();
+            Thread t = new Thread(iv);
+            //t.start();
     }
 
 }

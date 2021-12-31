@@ -20,7 +20,7 @@ public class HollowPurple {
 
     public  HollowPurple() {}
 
-    public void initalizeHollow() {
+    public void initializeHollow() {
         Random rnd = new Random(SEED_NUMBER);
 
         for (int i=0; i<=7; i++){

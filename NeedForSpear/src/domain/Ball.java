@@ -17,6 +17,7 @@ public class Ball extends DomainObject {
     private boolean isAlive;
     private static int yOffset = 70;
     private static int xOffset = 175;
+    private final int MAX_BALL_VEL = 45;
 
     private boolean outOfScreen;
 
@@ -41,7 +42,7 @@ public class Ball extends DomainObject {
 
     public void updateVelocity() {
         this.yVelocity += this.gravity;
-        this.yVelocity = Math.min(((int) (this.yVelocity + this.gravity)), 40);
+        this.yVelocity = Math.min(((int) (this.yVelocity + this.gravity)), MAX_BALL_VEL);
     }
 
     public void updatePosition(int x, int y) {
@@ -64,12 +65,22 @@ public class Ball extends DomainObject {
         }
     }
 
+    // Used when the obstacle is frozen and ball is unstoppable
+    public void forceReflectFromVertical() {
+            this.xVelocity *= -1;
+    }
+
     // When the ball reflects from a horizontal surface, it reverses its velocity in y-direction.
     // When a collision of this type is detected, the handler will command the ball domain.controller to reverse the y-velocity.
     public void reflectFromHorizontal() {
         if (!this.is_unstoppable) {
-            this.yVelocity *= -1;
+            this.yVelocity *= -1.05;
         }
+    }
+
+    // Used when the obstacle is frozen and ball is unstoppable
+    public void forceReflectFromHorizontal() {
+            this.yVelocity *= -1.1;
     }
 
     public void reflectFromAngle(double alpha) {
@@ -163,4 +174,7 @@ public class Ball extends DomainObject {
     public void set_is_unstoppable(boolean is_unstoppable) {
         this.is_unstoppable = is_unstoppable;
     }
+
+    public boolean is_unstoppable() {
+        return this.is_unstoppable;}
 }

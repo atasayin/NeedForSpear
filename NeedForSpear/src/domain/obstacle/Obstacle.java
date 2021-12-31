@@ -21,6 +21,7 @@ public abstract class Obstacle extends DomainObject {
 	public PosVector pos;
 	protected RemainingPieces pieces;
 	public boolean isEffectScore;
+	protected boolean frozen;
 
 
 	public Obstacle(int xPos, int yPos) {
@@ -30,10 +31,15 @@ public abstract class Obstacle extends DomainObject {
 		this.width = FRAME_WIDTH / 50;
 		this.height = 20;
 		this.isEffectScore =true;
+		this.frozen = false;
 	}
 
 	public String getType() {
 		return type;
+	}
+
+	public boolean isFrozen() {
+		return this.frozen;
 	}
 
 	public PosVector getPosVector() {
@@ -42,6 +48,7 @@ public abstract class Obstacle extends DomainObject {
 
 	public boolean getHit() {
 		this.health -= 1;
+
 		if (this.health == 0 ) {
 			this.destroy();
 			int o = Game.getInstance().getOldScore();
@@ -52,6 +59,13 @@ public abstract class Obstacle extends DomainObject {
 			return true;
 		} else {
 			return false;
+		}
+	}
+
+	public boolean getHitWhenFrozen(boolean unstoppableBall) {
+		if (!unstoppableBall) return false;
+		else {
+			return getHit();
 		}
 	}
 
@@ -94,6 +108,11 @@ public abstract class Obstacle extends DomainObject {
 
 	public RemainingPieces getRemains() {
 		return this.pieces;
-
 	}
+
+	public void setFrozen(boolean frozen) {
+		this.frozen = frozen;
+	}
+
+
 }
