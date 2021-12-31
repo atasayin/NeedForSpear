@@ -31,6 +31,9 @@ public class ObstacleFactory {
             case 3:
                 obs = new WallMaria(pos.getX(),pos.getY());
                 break;
+            case 4:
+                obs = new Hollow(pos.getX(),pos.getY());
+                break;
             default:
         }
 

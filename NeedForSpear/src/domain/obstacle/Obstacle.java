@@ -20,6 +20,7 @@ public abstract class Obstacle extends DomainObject {
 	protected Box box;
 	public PosVector pos;
 	protected RemainingPieces pieces;
+	public boolean isEffectScore;
 
 
 	public Obstacle(int xPos, int yPos) {
@@ -28,6 +29,7 @@ public abstract class Obstacle extends DomainObject {
 		this.is_rotating = false;
 		this.width = FRAME_WIDTH / 50;
 		this.height = 20;
+		this.isEffectScore =true;
 	}
 
 	public String getType() {
@@ -40,11 +42,13 @@ public abstract class Obstacle extends DomainObject {
 
 	public boolean getHit() {
 		this.health -= 1;
-		if (this.health == 0) {
+		if (this.health == 0 ) {
 			this.destroy();
 			int o = Game.getInstance().getOldScore();
-			int neww = Game.getInstance().updateScore(o);
-			Game.getInstance().setScore(neww);
+			if(isEffectScore) {
+				int neww = Game.getInstance().updateScore(o);
+				Game.getInstance().setScore(neww);
+			}
 			return true;
 		} else {
 			return false;

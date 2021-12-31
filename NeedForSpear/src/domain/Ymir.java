@@ -1,6 +1,7 @@
 package domain;
 
 import domain.abilities.DoubleAccel;
+import domain.abilities.HollowPurple;
 
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -60,6 +61,11 @@ public class Ymir implements Runnable{
                         DoubleAccel da = new DoubleAccel();
                         Thread t = new Thread(da);
                         t.start();
+                    }
+                    else if(ability == YmirAbilities.HollowPurple) {
+                        System.out.println("HollowPurple");
+                        HollowPurple hp = new HollowPurple();
+                        hp.initalizeHollow();
                     }
                 } else {
                     System.out.println("No Ymir ability this time!");

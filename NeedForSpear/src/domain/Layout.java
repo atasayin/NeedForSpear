@@ -42,7 +42,7 @@ public class Layout {
     private int SEED_NUMBER = 14;
 
     // Collision Checker for Obstacles
-    private CollisionChecker CS;
+    //private CollisionChecker CS;
 
     // Offset to place the obstacles
     int obsLen;
@@ -59,7 +59,6 @@ public class Layout {
         this.pandoraBoxCount = pandoraBoxCount;
         this.uranusCount = uranusCount;
 
-        this.CS = CollisionChecker.getInstance();
         obstacle_positions = new HashMap<Obstacle, PosVector>();
         obstacle_centers = new HashMap<Obstacle, PosVector>();
 
@@ -123,9 +122,9 @@ public class Layout {
 
 
     // Collider check for creating Layout
-    private boolean isAvailable(Obstacle newObs){
+    public static boolean isAvailable(Obstacle newObs){
         for (Obstacle obs: obstacle_positions.keySet()){
-            if ( CS.checkCollision(newObs, obs)){
+            if ( CollisionChecker.getInstance().checkCollision(newObs, obs)){
                 return false;
             }
         }
