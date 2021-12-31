@@ -42,8 +42,8 @@ public class Ymir implements Runnable{
     public void setProbabilities(double w1, double w2, double w3) {
         double sum = w1 + w2 + w3;
         weights[0] = w1 / sum;
-        weights[1] = w2 / sum;
-        weights[2] = w3 / sum;
+        weights[1] = weights[0] + w2 / sum;
+        weights[2] = weights[1] + w3 / sum;
     }
 
     @Override
