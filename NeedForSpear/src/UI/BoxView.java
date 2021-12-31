@@ -13,12 +13,11 @@ public class BoxView implements Drawable {
     private BufferedImage box_img;
     private int boxWidth = 30;
 
-    public BoxView() throws IOException {
+    public BoxView() {
         this.box_img = fillImgs();
     }
 
-
-    private BufferedImage fillImgs() throws IOException{
+    private BufferedImage fillImgs() {
         // TODO Auto-generated method stub
         try {
             box_img = ImageIO.read(this.getClass().getResource("../assets/box.png"));
@@ -41,7 +40,6 @@ public class BoxView implements Drawable {
         Graphics2D bGr = new_bimage.createGraphics();
         bGr.drawImage(scaled, 0, 0, null);
         bGr.dispose();
-
 
         return new_bimage;
     }

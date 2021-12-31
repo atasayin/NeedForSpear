@@ -47,8 +47,6 @@ public class Layout {
     int obsLen;
     int layoutHeightOffset = 350;
 
-
-
     /////////////////////////////////////////////////////////////////////////////////////
 
     public Layout(int wallMariaCount,int steinsGateCount,int pandoraBoxCount
@@ -58,8 +56,8 @@ public class Layout {
         this.pandoraBoxCount = pandoraBoxCount;
         this.uranusCount = uranusCount;
 
-        obstacle_positions = new HashMap<Obstacle, PosVector>();
-        obstacle_centers = new HashMap<Obstacle, PosVector>();
+        obstacle_positions = new HashMap<>();
+        obstacle_centers = new HashMap<>();
 
         this.layoutWidth = layoutWidth;
         this.layoutHeight = layoutHeight;

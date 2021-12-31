@@ -51,6 +51,7 @@ public class ObstacleView implements Drawable {
         int obsLen = BuildModeScreen.FRAME_WIDTH/40;
         int obsThick = 40;
         int circRadius = 16;
+        int hollowRadius = 13;
 
         // Scale all images
         Image scaled;
@@ -123,7 +124,7 @@ public class ObstacleView implements Drawable {
         gift_obs_img = newBuffImage;
 
         // HOLLOW PURPLE SCALE
-        scaled = hollow_purple_img.getScaledInstance(circRadius*2, circRadius*2,
+        scaled = hollow_purple_img.getScaledInstance(hollowRadius*2, hollowRadius*2,
                 BufferedImage.SCALE_SMOOTH);
         if (scaled instanceof BufferedImage)
             hollow_purple_img = (BufferedImage) scaled;
@@ -155,8 +156,6 @@ public class ObstacleView implements Drawable {
         } else {
             g2d.drawImage(hollow_purple_img, obs.getPosVector().getX(), obs.getPosVector().getY(), null);
         }
-
-
 
     }
 }
