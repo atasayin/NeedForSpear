@@ -26,11 +26,10 @@ public class Ymir implements Runnable{
 
     // A double between 0 and 1 is generated and then compared with the normalized weights of abilities to choose among them.
     public YmirAbilities chooseAbility() {
-//        double threshold = random.nextDouble();
-//        if (threshold < weights[0]) {return YmirAbilities.InfiniteVoid;}
-//        else if (threshold < weights[1]) return YmirAbilities.DoubleAccel;
-//        else return YmirAbilities.HollowPurple;
-        return YmirAbilities.DoubleAccel;
+        double threshold = random.nextDouble();
+        if (threshold < weights[0]) {return YmirAbilities.InfiniteVoid;}
+        else if (threshold < weights[1]) return YmirAbilities.DoubleAccel;
+        else return YmirAbilities.HollowPurple;
 
     }
 
@@ -48,25 +47,26 @@ public class Ymir implements Runnable{
 
     @Override
     public void run() {
-        try {
-            TimeUnit.SECONDS.sleep(this.period+15);
-            if (rollDice()) {
-                YmirAbilities ability = chooseAbility();
-                System.out.println(ability);
-                System.out.println("Before double accel");
-                System.out.println(Game.getInstance().getBall().xVelocity);
-                System.out.println(Game.getInstance().getBall().yVelocity);
-                if (ability == YmirAbilities.DoubleAccel) {
-                    DoubleAccel da = new DoubleAccel();
-                    Thread t = new Thread(da);
-                    t.start();
+        while(true) {
+            try {
+                TimeUnit.SECONDS.sleep(this.period + 15);
+                if (rollDice()) {
+                    YmirAbilities ability = chooseAbility();
+                    System.out.println(ability);
+                    System.out.println("Before double accel");
+                    System.out.println(Game.getInstance().getBall().xVelocity);
+                    System.out.println(Game.getInstance().getBall().yVelocity);
+                    if (ability == YmirAbilities.DoubleAccel) {
+                        DoubleAccel da = new DoubleAccel();
+                        Thread t = new Thread(da);
+                        t.start();
+                    }
+                } else {
+                    System.out.println("No Ymir ability this time!");
                 }
-            } else {
-                System.out.println("No Ymir ability this time!");
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         }
-
     }
 }

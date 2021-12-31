@@ -13,9 +13,9 @@ public class Main {
             autoMode.setVisible(true);
             autoMode.addListener(nfs);
             // delete after this
-            Ymir ymir = new Ymir();
+        /*    Ymir ymir = new Ymir();
             Thread t = new Thread(ymir);
-            t.start();
+            t.start();*/
     }
 
 }
