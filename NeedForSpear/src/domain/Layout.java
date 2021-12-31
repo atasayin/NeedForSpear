@@ -13,7 +13,6 @@ public class Layout {
 
     /////////////////////////////////////////////////////////////////////////////////////
     private static int yOffset = 70;
-    private static int xOffset = 175;
     // Total number of Simple Obstacles(Wall Maria)
     public int wallMariaCount;
 
@@ -102,7 +101,7 @@ public class Layout {
             for (int i = 0; i < counts[type]; i++) {
                 while (true) {
                     PosVector pos = new PosVector(
-                            rnd.nextInt(layoutWidth - obsLen - xOffset - 2),
+                            rnd.nextInt(layoutWidth - obsLen - 2),
                             rnd.nextInt(layoutHeight - layoutHeightOffset - yOffset) + yOffset);
                     obs = ObstacleFactory.getInstance().getObstacle(type, pos);
 

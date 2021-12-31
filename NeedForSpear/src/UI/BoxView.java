@@ -2,7 +2,6 @@ package UI;
 
 import domain.Box;
 import domain.DomainObject;
-import domain.Ball;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -12,12 +11,10 @@ import java.io.IOException;
 public class BoxView implements Drawable {
 
     private BufferedImage box_img;
-    private int boxwidth = 30;
-    protected boolean isDrop = false;
+    private int boxWidth = 30;
 
     public BoxView() throws IOException {
-    this.box_img = fillImgs();
-
+        this.box_img = fillImgs();
     }
 
 
@@ -31,7 +28,7 @@ public class BoxView implements Drawable {
         }
 
         // scale to unit length L
-        Image scaled = box_img.getScaledInstance(boxwidth, boxwidth,
+        Image scaled = box_img.getScaledInstance(boxWidth, boxWidth,
                 BufferedImage.SCALE_SMOOTH);
         if (scaled instanceof BufferedImage)
             box_img = (BufferedImage) scaled;

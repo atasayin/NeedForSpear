@@ -163,13 +163,6 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
         int textWidth = g.getFontMetrics().stringWidth(infoString);
         g2d.drawString(infoString, this.getWidth() / 2 - textWidth / 2, infoStringHeight);
         g2d.drawLine(0, yOffset, frame_width, yOffset);
-        g2d.drawLine(frame_width-xOffset, yOffset, frame_width-xOffset, frame_height);
-
-        try {
-            MagicalAbilityView.getInstance().draw(g2d);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         if(isBoxDropped) {
             isBoxDropped = false;
@@ -182,8 +175,8 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
 
     private void drawObstacle(Graphics2D g2d, Obstacle d) {
         ObstacleView.getInstance().draw(g2d, d, frame_width, frame_height);
-
     }
+
     private void drawPaddle(Graphics2D g2d, Paddle d, int width, int height) throws IOException {
         PaddleView.getInstance().draw(g2d, d, width, height);
     }
@@ -249,11 +242,10 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
         }
     }
 
-    /*EFFECTS: Get rid offs obstacles that has been destroyed.
-       MODIFIES: ObstacleArray
-   */
-
     public void checkDeletedObstacles() {
+        /*EFFECTS: Get rid offs obstacles that has been destroyed.
+         MODIFIES: ObstacleArray
+        */
         CollisionChecker.getInstance().ChecktoDelete();
     }
 
