@@ -138,7 +138,6 @@ public class ObstacleView implements Drawable {
         bGr.drawImage(scaled, 0, 0, null);
         bGr.dispose();
         hollow_purple_img = newBuffImage;
-
     }
 
     @Override
