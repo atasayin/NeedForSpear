@@ -52,7 +52,7 @@ public abstract class Obstacle extends DomainObject {
 		if (this.health == 0 ) {
 			this.destroy();
 			int o = Game.getInstance().getOldScore();
-			if(isEffectScore) {
+			if(isEffectScore && Game.getInstance().isStarted) {
 				int neww = Game.getInstance().updateScore(o);
 				Game.getInstance().setScore(neww);
 			}
