@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.BitSet;
 
 @SuppressWarnings("serial")
-public class LayoutPanel extends JPanel implements ActionListener,MouseListener, KeyListener {
+public class LayoutPanel extends JPanel implements ActionListener,MouseListener, KeyListener,MouseMotionListener{
 
     /////////////////////////////////////////////////////////////////////////////////////
 
@@ -28,6 +28,9 @@ public class LayoutPanel extends JPanel implements ActionListener,MouseListener,
     private int PANEL_WIDTH;
     private int PANEL_HEIGHT;
     private double C_PANEL_WIDTH = 0.6;
+
+    private double C_PADDLE_OFFSET_HEIGHT_LINE = 0.8;
+    private int PADDLE_OFFSET_HEIGHT_LINE;
 
     // Ketbits
     private BitSet keyBits = new BitSet(256);
@@ -57,6 +60,7 @@ public class LayoutPanel extends JPanel implements ActionListener,MouseListener,
         this.LC = LC;
         this.PANEL_WIDTH = (int) (frame_width * C_PANEL_WIDTH);
         this.PANEL_HEIGHT = frame_height;
+        this.PADDLE_OFFSET_HEIGHT_LINE = (int) (C_PADDLE_OFFSET_HEIGHT_LINE * PANEL_HEIGHT);
 
         try {
             initializeLayoutPanel();
@@ -86,6 +90,8 @@ public class LayoutPanel extends JPanel implements ActionListener,MouseListener,
             g2d.setTransform(old);
 
         }
+
+        g2d.drawLine(0,PADDLE_OFFSET_HEIGHT_LINE,PANEL_WIDTH,PADDLE_OFFSET_HEIGHT_LINE);
 
         g2d.setTransform(old);
 
@@ -121,19 +127,54 @@ public class LayoutPanel extends JPanel implements ActionListener,MouseListener,
     @Override
     public void mouseClicked(MouseEvent e) {
         // Invoked when the mouse button has been clicked (pressed and released) on a component
-        LC.setMouseInput(e.getX(),e.getY());
-        LC.control();
+
+        // Deletes obstacle if its present in (X,Y)
+        if (SwingUtilities.isRightMouseButton(e)){
+            LC.deleteObs(e.getX(),e.getY());
+        }
+
+        // Add an obstacle in (X,Y) if its not present
+        // Change type of an obstacle in (X,Y) if its present
+        if (SwingUtilities.isLeftMouseButton(e)){
+            LC.addOrChangeObstacle(e.getX(),e.getY());
+        }
+
+        if (SwingUtilities.isLeftMouseButton(e)){
+            System.out.println("CLICKED " + e.getX() +" "+ e.getY());
+        }
+
+
+
+
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
         // Invoked when a mouse button has been pressed on a component
+        if (SwingUtilities.isLeftMouseButton(e)){
+            System.out.println("Pressed " + e.getX() +" "+ e.getY());
+        }
+
 
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
         // Invoked when a mouse button has been released on a component
+        if (SwingUtilities.isLeftMouseButton(e)){
+            System.out.println("Released " + e.getX() +" "+ e.getY());
+        }
+
+
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
 
     }
 
@@ -148,6 +189,8 @@ public class LayoutPanel extends JPanel implements ActionListener,MouseListener,
     }
 
 
+
+
     // Key Events
     @Override
     public void keyTyped(KeyEvent e) {
@@ -156,8 +199,6 @@ public class LayoutPanel extends JPanel implements ActionListener,MouseListener,
     @Override
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
-        LC.setKeyInput(keyCode);
-        LC.control();
 
     }
 
@@ -172,5 +213,7 @@ public class LayoutPanel extends JPanel implements ActionListener,MouseListener,
         repaint();
 
     }
+
+
 }
 

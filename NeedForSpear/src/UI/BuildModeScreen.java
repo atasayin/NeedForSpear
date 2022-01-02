@@ -126,6 +126,8 @@ public class BuildModeScreen extends JFrame {
         add(viewPanel, c);
 
 
+
+
     }
 
 

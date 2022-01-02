@@ -132,6 +132,7 @@ public class Layout {
         return true;
     }
 
+    // Returns an obstacle which is present in mouse (X,Y)
     public Obstacle getCollideObstacle(DomainObject mouse){
         for (Obstacle obs: obstacle_positions.keySet()){
             if ( CS.checkCollision(mouse, obs)){
@@ -144,9 +145,29 @@ public class Layout {
 
 
     // Changes type of the obstacle.
+    public void changeTypeObstacle(Obstacle obs){
+        Obstacle changeObs;
+        String type = obs.getType();
+        PosVector pos = obs.getPos();
+        removeObstacle(obs);
 
-    public void changeTypeObstacle(Obstacle obstacle, String newType){
-
+        if (type.equals("WallMaria")){
+            this.wallMariaCount--;
+            changeObs = ObstacleFactory.getInstance().getObstacle(0,pos);
+        }else if (type.equals("SteinsGate")){
+            this.steinsGateCount--;
+            changeObs = ObstacleFactory.getInstance().getObstacle(1,pos);
+        }else if (type.equals("PandorasBox")){
+            this.pandoraBoxCount--;
+            changeObs = ObstacleFactory.getInstance().getObstacle(2,pos);
+        }else {
+            this.uranusCount--;
+            changeObs = ObstacleFactory.getInstance().getObstacle(3,pos);
+        }
+        obstacle_positions.put(changeObs,changeObs.getPosVector());
+        Game.getInstance().getDomainObjectArr().add(changeObs);
+        Game.getInstance().getDomainObjectArr().add(changeObs.getBox());
+        System.out.println("CHANGE");
     }
 
     // Changes location of an existing obstacle.
@@ -157,16 +178,34 @@ public class Layout {
     // Adds new obstacle to the Layout with given type and location.
     public void addNewObstacle(PosVector pos){
         Obstacle obs = ObstacleFactory.getInstance().getObstacle(3,pos);
+        obstacle_positions.put(obs,obs.getPosVector());
         Game.getInstance().getDomainObjectArr().add(obs);
         Game.getInstance().getDomainObjectArr().add(obs.getBox());
+        System.out.println("ADD");
     }
 
 
-    // Removes a obstacle from Layout.
+    // Removes an obstacle from Layout.
     public void removeObstacle(Obstacle obs){
-        obs = null;
+        Game.getInstance().getDomainObjectArr().remove(obs);
+        obstacle_positions.remove(obs);
+
+
+        String type = obs.getType();
+        if (type.equals("WallMaria")){
+            this.wallMariaCount--;
+        }else if (type.equals("SteinsGate")){
+            this.steinsGateCount--;
+        }else if (type.equals("PandorasBox")){
+            this.pandoraBoxCount--;
+        }else {
+            this.uranusCount--;
+        }
+
         System.out.println("REMOVE");
     }
+
+
 
 
 }
