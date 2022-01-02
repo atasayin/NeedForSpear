@@ -32,6 +32,7 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
     protected Double YmirProb3;
     private Ymir ymir;
     private String laodgamename;
+    public boolean isStarted = false;
 
     private javax.swing.Timer game_Timer;
 
