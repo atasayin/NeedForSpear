@@ -265,6 +265,7 @@ public class BuildModeScreen extends JFrame {
                     System.out.println("Myload listeners" + listener);
                     getFileOptions();
 
+
                     String[] options = temp.toArray(new String[0]);
                     ImageIcon icon = new ImageIcon("src/assets/sphere.png");
                     String n = (String)JOptionPane.showInputDialog(null, "Which game you want to load "+ username+ "?",
