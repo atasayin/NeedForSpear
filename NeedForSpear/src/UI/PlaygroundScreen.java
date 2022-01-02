@@ -14,7 +14,7 @@ public class PlaygroundScreen implements IRunListener, IAuthorizeListener {
     RunGameObjects screen;
 
 
-    public void onRunEvent(HashMap<String, Integer> runSettings, String username, String id, Integer freq,Double prob1, Double prob2, Double prob3) {
+    public void onRunEvent(HashMap<String, Integer> runSettings, String username, String id, Integer num, Integer freq,Double prob1, Double prob2, Double prob3) {
         int screenWidth = runSettings.get("screenWidth").intValue();
         int screenHeight = runSettings.get("screenHeight").intValue();
         initializeOuterFrameSettings(screenWidth, screenHeight);
@@ -49,7 +49,7 @@ public class PlaygroundScreen implements IRunListener, IAuthorizeListener {
 
 
     @Override
-    public void onClickEvent(PlaygroundScreen nfs, String username, String id) {
+    public void onClickEvent(PlaygroundScreen nfs, String username, String id,Integer gameNum) {
         nfs.bd = new BuildModeScreen();
         nfs.bd.setVisible(true);
         nfs.bd.addListener(nfs);
@@ -57,6 +57,7 @@ public class PlaygroundScreen implements IRunListener, IAuthorizeListener {
         nfs.bd.addLoadListener(Game.getInstance());
         nfs.bd.setUserName(username);
         nfs.bd.setID(id);
+        nfs.bd.setGameNum(gameNum);
         
     }
 

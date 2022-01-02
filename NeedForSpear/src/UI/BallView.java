@@ -23,7 +23,6 @@ public class BallView implements Drawable {
             try {
                 instance.fillImgs();
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
@@ -32,7 +31,6 @@ public class BallView implements Drawable {
 
 
     private void fillImgs() throws IOException{
-        // TODO Auto-generated method stub
         try {
             Ball_img = ImageIO.read(this.getClass().getResource("../assets/Pokeball.png"));
         } catch (Exception e) {
@@ -60,7 +58,6 @@ public class BallView implements Drawable {
 
     @Override
     public void draw(Graphics2D g2d, DomainObject domainObject, int width, int height) {
-        // TODO Auto-generated method stub
         Ball Ball = (Ball) domainObject;
 
         g2d.drawImage(Ball_img, Ball.getPosVector().getX(), Ball.getPosVector().getY(), null);

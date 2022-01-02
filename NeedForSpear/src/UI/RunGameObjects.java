@@ -469,7 +469,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
     }
 
     @Override
-    public void onClickEventDo() {
+    public void onClickEventDo(String n) {
         scoreNumLabel.setText(Game.getInstance().gameState.getPlayer().getScore()+"");
     }
 

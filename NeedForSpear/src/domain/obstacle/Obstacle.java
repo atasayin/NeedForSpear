@@ -42,6 +42,10 @@ public abstract class Obstacle extends DomainObject {
 		return this.frozen;
 	}
 
+	public void setIsFrozen(boolean b) {
+		 this.frozen = b;
+	}
+
 	public PosVector getPosVector() {
 		return this.pos;
 	}

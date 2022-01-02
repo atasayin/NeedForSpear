@@ -40,6 +40,8 @@ public class AuthorizeScreen extends JFrame  {
     private boolean isUsernameExist = false;
     private boolean isLogin = false;
     private boolean isSignup = false;
+    protected int GameNum = 0;
+    protected int GameNumIndex =0;
 
     private java.util.List<IAuthorizeListener> autoModeListeners = new ArrayList<>();
     protected PlaygroundScreen nfs;
@@ -103,9 +105,11 @@ public class AuthorizeScreen extends JFrame  {
                 String username = userName.getText();
                 String id = ID.getText();
                 if(isLogin){
+                    saveNum();
                     for (IAuthorizeListener listener : autoModeListeners) {
-                        listener.onClickEvent(nfs, username, id);
+                        listener.onClickEvent(nfs, username, id,GameNum);
                     }
+                    System.out.println(username +" in autoscreen");
                 }
                 dispose();
             }
@@ -121,7 +125,7 @@ public class AuthorizeScreen extends JFrame  {
                 String id = ID.getText();
                 if(succSign){
                     for (IAuthorizeListener listener : autoModeListeners) {
-                        listener.onClickEvent(nfs,username, id);
+                        listener.onClickEvent(nfs,username, id,GameNum);
                     }
                 }
                 dispose();
@@ -151,15 +155,21 @@ public class AuthorizeScreen extends JFrame  {
 
             JSONArray usernameList = (JSONArray) doc.get("Username");
             JSONArray IDList = (JSONArray) doc.get("ID");
+            JSONArray gameNumList = (JSONArray) doc.get("GameNumber");
 
             for(int i=0; i<usernameList.size(); i++){
                 String s = usernameList.get(i).toString();
                 String m = IDList.get(i).toString();
+                String k = gameNumList.get(i).toString();
 
                 if(s.equals(checking)){
                     isUsernameExist = true;
                     if(m.equals(id)){
                         isLogin = true;
+                        int a = Integer.parseInt(k);
+                        a = a+1;
+                        GameNum=a;
+                        GameNumIndex =i;
                         System.out.println("User is found.");
                         break;
                     }
@@ -187,6 +197,7 @@ public class AuthorizeScreen extends JFrame  {
 
         String signing = userName.getText();
         String id = ID.getText();
+        String gameNumbers = GameNum+"";
 
         JSONParser jsonParser = new JSONParser();
         try (FileReader reader = new FileReader(FILEPATH)) {
@@ -195,23 +206,32 @@ public class AuthorizeScreen extends JFrame  {
 
             JSONArray usernameList = (JSONArray) doc.get("Username");
             JSONArray IDList = (JSONArray) doc.get("ID");
+            JSONArray gameNumList = (JSONArray) doc.get("GameNumber");
 
             Document document = new Document();
             ArrayList<String> temp = new ArrayList<>();
             ArrayList<String> tempID = new ArrayList<>();
+            ArrayList<String> tempNum = new ArrayList<>();
 
             for(int i=0; i<usernameList.size(); i++){
                 String s = usernameList.get(i).toString();
                 String m = IDList.get(i).toString();
-
+                String k = gameNumList.get(i).toString();
                 temp.add(s);
                 tempID.add(m);
+
+                if(i == GameNumIndex){
+                    tempNum.add(gameNumbers);
+                }
+
             }
 
             temp.add(signing);
             tempID.add(id);
+            tempNum.add("0");
             document.put("Username", temp);
             document.put("ID", tempID);
+            document.put("GameNumber", tempNum);
 
             try {
                 FileWriter file = new FileWriter(FILEPATH);
@@ -220,7 +240,6 @@ public class AuthorizeScreen extends JFrame  {
                 System.out.println("Signed up successfully.");
 
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
 
@@ -233,6 +252,59 @@ public class AuthorizeScreen extends JFrame  {
         return true;
     }
 
+    public void saveNum() {
+        String signing = userName.getText();
+        String id = ID.getText();
+        String gameNumbers = GameNum + "";
+
+        JSONParser jsonParser = new JSONParser();
+        try (FileReader reader = new FileReader(FILEPATH)) {
+            Object obj = jsonParser.parse(reader);
+            JSONObject doc = (JSONObject) obj;
+
+            JSONArray usernameList = (JSONArray) doc.get("Username");
+            JSONArray IDList = (JSONArray) doc.get("ID");
+            JSONArray gameNumList = (JSONArray) doc.get("GameNumber");
+
+            Document document = new Document();
+            ArrayList<String> temp = new ArrayList<>();
+            ArrayList<String> tempID = new ArrayList<>();
+            ArrayList<String> tempNum = new ArrayList<>();
+
+            for (int i = 0; i < usernameList.size(); i++) {
+                String s = usernameList.get(i).toString();
+                String m = IDList.get(i).toString();
+                String k = gameNumList.get(i).toString();
+                temp.add(s);
+                tempID.add(m);
+
+                if (i == GameNumIndex) {
+                    tempNum.add(gameNumbers);
+                } else {
+                    tempNum.add(k);
+                }
+
+            }
+            document.put("Username", temp);
+            document.put("ID", tempID);
+            document.put("GameNumber", tempNum);
+
+            try {
+                FileWriter file = new FileWriter(FILEPATH);
+                file.write(document.toJson());
+                file.close();
+                System.out.println("Update num sucessfully.");
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     public void addListener(IAuthorizeListener listener) {
         autoModeListeners.add(listener);
     }

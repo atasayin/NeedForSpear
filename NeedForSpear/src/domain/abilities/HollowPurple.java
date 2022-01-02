@@ -9,7 +9,7 @@ import java.util.Random;
 
 public class HollowPurple {
 
-    private Hollow h;
+
     private int SEED_NUMBER = 14;
     private static int yOffset = 70;
     private static int xOffset = 175;
@@ -29,7 +29,7 @@ public class HollowPurple {
                 PosVector pos = new PosVector(
                         rnd.nextInt(layoutWidth - obsLen - xOffset - 2),
                         rnd.nextInt(layoutHeight - layoutHeightOffset - yOffset) + yOffset);
-                h = (Hollow) ObstacleFactory.getInstance().getObstacle(4, pos);
+                Hollow h = (Hollow) ObstacleFactory.getInstance().getObstacle(4, pos);
 
                 if (Layout.isAvailable(h)) {
                     Layout.obstacle_positions.put(h, pos);
