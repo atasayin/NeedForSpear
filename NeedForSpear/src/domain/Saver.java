@@ -1,5 +1,6 @@
 package domain;
 
+import domain.abilities.HollowPurple;
 import domain.obstacle.*;
 import util.PosVector;
 import org.bson.Document;
@@ -20,7 +21,9 @@ import java.util.Map.Entry;
 
 public class Saver {
 
-    String FILEPATH = "src/saves/Demo1.json";
+    String name = Game.getInstance().gameState.getPlayer().getUserName();
+    String num = Game.getInstance().gameState.getPlayer().GameNum+"";
+    String FILEPATH = "src/saves/"+ name+ "_"+num+".json";
 
 
     public void saveGame(HashMap<Obstacle, PosVector> list) {
@@ -38,15 +41,23 @@ public class Saver {
         doc.put("PaddleExpansionAbility",Game.getInstance().gameState.getPlayer().getAbilities().get(2));
         doc.put("UnstoppableAbility",Game.getInstance().gameState.getPlayer().getAbilities().get(3));
         doc.put("RocketAbility",Game.getInstance().gameState.getPlayer().getAbilities().get(4));
+        doc.put("Ymirfreq",Game.getInstance().Ymirfreq);
+        doc.put("YmirProb1",Game.getInstance().YmirProb1);
+        doc.put("YmirProb2",Game.getInstance().YmirProb2);
+        doc.put("YmirProb3",Game.getInstance().YmirProb3);
 
 
         for (Entry<Obstacle, PosVector> o : list.entrySet()) {
             temp = new ArrayList<String>();
             temp.add(String.valueOf(o.getKey()));
             temp.add(String.valueOf(o.getValue()));
+            temp.add(String.valueOf(o.getKey().isFrozen()));
             map.add(temp);
         }
+
+
         doc.put("ObjectList", map);
+
 
         try {
             FileWriter file = new FileWriter(FILEPATH);
@@ -98,6 +109,18 @@ public class Saver {
             z = (long) doc.get("RocketAbility");
             Game.getInstance().gameState.getPlayer().getAbilities().put(4,(int)z);
 
+            z = (long) doc.get("Ymirfreq");
+            Game.getInstance().Ymirfreq= (int)z;
+
+            double j = (double) doc.get("YmirProb1");
+            Game.getInstance().YmirProb1= j;
+
+            j = (double) doc.get("YmirProb2");
+            Game.getInstance().YmirProb2= j;
+
+            j = (double) doc.get("YmirProb3");
+            Game.getInstance().YmirProb3= j;
+
 
             PosVector ballLoc = new PosVector(x, y);
             ball.setPosVector(ballLoc);
@@ -108,6 +131,7 @@ public class Saver {
             ArrayList<DomainObject> listDO = new ArrayList<DomainObject>();
             int obsLen = Game.getInstance().getPaddle().length/5;
             PosVector vec;
+
 
             for (int i = 0; i < jsonlist.size(); i++) {
 
@@ -123,24 +147,45 @@ public class Saver {
 
                 if(s.contains("WallMaria")){
                     WallMaria obs = new WallMaria(p, m);
+                    if(s.contains("true")){
+                        obs.setIsFrozen(true);
+                    }
                     listDO.add(obs);
                     vec = new PosVector(p,m);
                     Layout.getObstacle_positions().put(obs,vec);
                 }
                 if(s.contains("GiftOfUranus")){
                     GiftOfUranus obs = new GiftOfUranus(p, m);
+                    if(s.contains("true")){
+                        obs.setIsFrozen(true);
+                    }
                     listDO.add(obs);
                     vec = new PosVector(p,m);
                     Layout.getObstacle_positions().put(obs,vec);
                 }
                 if(s.contains("PandorasBox")){
                     PandorasBox obs = new PandorasBox(p, m);
+                    if(s.contains("true")){
+                        obs.setIsFrozen(true);
+                    }
                     listDO.add(obs);
                     vec = new PosVector(p,m);
                     Layout.getObstacle_positions().put(obs,vec);
                 }
                 if(s.contains("SteinsGate")){
                     SteinsGate obs = new SteinsGate(p, m);
+                    if(s.contains("true")){
+                        obs.setIsFrozen(true);
+                    }
+                    listDO.add(obs);
+                    vec = new PosVector(p,m);
+                    Layout.getObstacle_positions().put(obs,vec);
+                }
+                if(s.contains("HollowPurple")){
+                    Hollow obs = new Hollow(p, m);
+                    if(s.contains("true")){
+                        obs.setIsFrozen(true);
+                    }
                     listDO.add(obs);
                     vec = new PosVector(p,m);
                     Layout.getObstacle_positions().put(obs,vec);

@@ -21,7 +21,6 @@ public class RemainView implements Drawable  {
 
 
     private BufferedImage fillImgs() throws IOException{
-        // TODO Auto-generated method stub
         try {
             remain_img = ImageIO.read(this.getClass().getResource("../assets/piece.png"));
         } catch (Exception e) {

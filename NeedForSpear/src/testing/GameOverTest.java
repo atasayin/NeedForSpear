@@ -34,7 +34,7 @@ class GameOverTest implements ActionListener {
         runSettings.put("screenWidth",  FRAME_WIDTH);
         runSettings.put("screenHeight",  FRAME_HEIGHT);
         g = Game.getInstance();
-        g.onRunEvent(runSettings,"Oya", "99",10, 2.0,3.0,4.0);
+        g.onRunEvent(runSettings,"Oya", "99",0,10, 2.0,3.0,4.0);
         g.gameState.getPlayer().setChance_points(3);
         paddle =g.getPaddle();
         ball =g.getBall();

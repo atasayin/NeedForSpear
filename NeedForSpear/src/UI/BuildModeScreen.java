@@ -66,6 +66,7 @@ public class BuildModeScreen extends JFrame {
 
     private String  username;
     private  String id;
+    private Integer gameNum;
     private int YmirFrequency;
     private double YmirProb1;
     private double YmirProb2;
@@ -244,7 +245,7 @@ public class BuildModeScreen extends JFrame {
                 YmirProb2 = Double.parseDouble(YmirProbability2.getText());
                 YmirProb3 = Double.parseDouble(YmirProbability3.getText());
 
-                notifyButtonisClickedListeners(username, id,YmirFrequency,YmirProb1,YmirProb2,YmirProb3);
+                notifyButtonisClickedListeners(username, id,gameNum,YmirFrequency,YmirProb1,YmirProb2,YmirProb3);
 
             }
         });
@@ -269,12 +270,12 @@ public class BuildModeScreen extends JFrame {
         return runGamePanel;
     }
 
-    public void notifyButtonisClickedListeners(String username, String id, Integer freq,Double prob1, Double prob2, Double prob3) {
+    public void notifyButtonisClickedListeners(String username, String id,Integer num, Integer freq,Double prob1, Double prob2, Double prob3) {
         System.out.println("ALL LISTENERS ARE NOTIFIED THAT THE BUTTON IS CLICKED \n\n\n");
 
         for (IRunListener listener : runModeListeners) {
             System.out.println(listener);
-            listener.onRunEvent(this.runSettings, username, id,freq,prob1,prob2,prob3);
+            listener.onRunEvent(this.runSettings, username, id,num,freq,prob1,prob2,prob3);
         }
         this.setVisible(false);
         this.dispose();
@@ -286,6 +287,10 @@ public class BuildModeScreen extends JFrame {
 
     public void setUserName(String  username){
         this.username = username;
+    }
+
+    public void setGameNum(Integer num){
+        this.gameNum = num;
     }
 
 }
