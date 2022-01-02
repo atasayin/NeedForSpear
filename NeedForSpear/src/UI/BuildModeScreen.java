@@ -4,6 +4,9 @@ package UI;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -15,6 +18,12 @@ import javax.swing.event.ChangeListener;
 
 import domain.*;
 import domain.controller.LayoutController;
+import org.bson.Document;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 
 
 @SuppressWarnings("serial")
@@ -51,7 +60,7 @@ public class BuildModeScreen extends JFrame {
     private HashMap<String, Integer> runSettings;
     private List<IRunListener> runModeListeners = new ArrayList<>();
     private List<ILoadListener> loadModeListeners = new ArrayList<>();
-
+    private String LOADPATH = "src/saves/loadfilenames.json";
     // Layout
     private Layout layout;
 
@@ -71,7 +80,7 @@ public class BuildModeScreen extends JFrame {
     private double YmirProb1;
     private double YmirProb2;
     private double YmirProb3;
-
+    private ArrayList<String> temp = new ArrayList<>();
 
     /////////////////////////////////////////////////////////////////////////////////////
 
@@ -254,7 +263,14 @@ public class BuildModeScreen extends JFrame {
             public void actionPerformed(ActionEvent ev) {
                 for (ILoadListener listener : loadModeListeners) {
                     System.out.println("Myload listeners" + listener);
-                    listener.onClickEventDo();
+                    getFileOptions();
+
+                    String[] options = temp.toArray(new String[0]);
+                    ImageIcon icon = new ImageIcon("src/assets/sphere.png");
+                    String n = (String)JOptionPane.showInputDialog(null, "Which game you want to load "+ username+ "?",
+                            "GameLoadOptions", JOptionPane.QUESTION_MESSAGE, icon, options, options[0]);
+                    System.out.println(n);
+                    listener.onClickEventDo(n);
                     gameStartButton.setEnabled(true);
                 }
 
@@ -293,4 +309,27 @@ public class BuildModeScreen extends JFrame {
         this.gameNum = num;
     }
 
+    public void getFileOptions() {
+
+        JSONParser jsonParser = new JSONParser();
+
+        try (FileReader reader = new FileReader(LOADPATH)) {
+            Object obj = jsonParser.parse(reader);
+            JSONObject doc = (JSONObject) obj;
+
+            JSONArray filenameList = (JSONArray) doc.get("FileNames");
+
+            for (int i = 0; i < filenameList.size(); i++) {
+                String s = filenameList.get(i).toString();
+                temp.add(s);
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
 }

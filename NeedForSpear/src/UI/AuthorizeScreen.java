@@ -222,8 +222,6 @@ public class AuthorizeScreen extends JFrame  {
 
                 if(i == GameNumIndex){
                     tempNum.add(gameNumbers);
-                }else{
-                    tempNum.add(k);
                 }
 
             }

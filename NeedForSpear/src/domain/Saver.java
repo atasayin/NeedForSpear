@@ -9,10 +9,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,9 +18,10 @@ import java.util.Map.Entry;
 
 public class Saver {
 
-    String name = Game.getInstance().gameState.getPlayer().getUserName();
-    String num = Game.getInstance().gameState.getPlayer().GameNum+"";
-    String FILEPATH = "src/saves/"+ name+ "_"+num+".json";
+    private String name = Game.getInstance().gameState.getPlayer().getUserName();
+    private String num = Game.getInstance().gameState.getPlayer().GameNum + "";
+    private String FILEPATH = "src/saves/" + name + "_" + num + ".json";
+    private String LOADPATH = "src/saves/loadfilenames.json";
 
 
     public void saveGame(HashMap<Obstacle, PosVector> list) {
@@ -37,32 +35,33 @@ public class Saver {
         doc.put("Username", Game.getInstance().gameState.getPlayer().getUserName());
         doc.put("ChancePoints", Game.getInstance().gameState.getPlayer().getChance_points());
         doc.put("Score", Game.getInstance().getOldScore());
-        doc.put("ChanceGivingAbility",Game.getInstance().gameState.getPlayer().getAbilities().get(1));
-        doc.put("PaddleExpansionAbility",Game.getInstance().gameState.getPlayer().getAbilities().get(2));
-        doc.put("UnstoppableAbility",Game.getInstance().gameState.getPlayer().getAbilities().get(3));
-        doc.put("RocketAbility",Game.getInstance().gameState.getPlayer().getAbilities().get(4));
-        doc.put("Ymirfreq",Game.getInstance().Ymirfreq);
-        doc.put("YmirProb1",Game.getInstance().YmirProb1);
-        doc.put("YmirProb2",Game.getInstance().YmirProb2);
-        doc.put("YmirProb3",Game.getInstance().YmirProb3);
+        doc.put("ChanceGivingAbility", Game.getInstance().gameState.getPlayer().getAbilities().get(1));
+        doc.put("PaddleExpansionAbility", Game.getInstance().gameState.getPlayer().getAbilities().get(2));
+        doc.put("UnstoppableAbility", Game.getInstance().gameState.getPlayer().getAbilities().get(3));
+        doc.put("RocketAbility", Game.getInstance().gameState.getPlayer().getAbilities().get(4));
+        doc.put("Ymirfreq", Game.getInstance().Ymirfreq);
+        doc.put("YmirProb1", Game.getInstance().YmirProb1);
+        doc.put("YmirProb2", Game.getInstance().YmirProb2);
+        doc.put("YmirProb3", Game.getInstance().YmirProb3);
 
 
         for (Entry<Obstacle, PosVector> o : list.entrySet()) {
-            temp = new ArrayList<String>();
+            temp = new ArrayList<>();
             temp.add(String.valueOf(o.getKey()));
             temp.add(String.valueOf(o.getValue()));
             temp.add(String.valueOf(o.getKey().isFrozen()));
             map.add(temp);
         }
 
-
         doc.put("ObjectList", map);
-
 
         try {
             FileWriter file = new FileWriter(FILEPATH);
             file.write(doc.toJson());
             file.close();
+
+            updateLoadNames();
+
             System.out.println("Saved to local directory successfully.");
 
         } catch (IOException e) {
@@ -70,27 +69,27 @@ public class Saver {
         }
     }
 
-    public void loadGame(Paddle paddle, Ball ball) {
+    public void loadGame(Paddle paddle, Ball ball, String loadgameName) {
 
         HashMap<Obstacle, PosVector> loadObsPos = new HashMap<>();
         Layout.setObstacle_positions(loadObsPos);
 
         JSONParser jsonParser = new JSONParser();
-        try (FileReader reader = new FileReader(FILEPATH)) {
+        try (FileReader reader = new FileReader(loadgameName)) {
             Object obj = jsonParser.parse(reader);
             JSONObject doc = (JSONObject) obj;
             long z = (long) doc.get("PaddlePositionX");
             int x = ((int) z);
-            long t = (long)  doc.get("PaddlePositionY");
+            long t = (long) doc.get("PaddlePositionY");
             int y = ((int) t);
             PosVector paddleLoc = new PosVector(x, y);
             long c = (long) doc.get("ChancePoints");
             String user = (String) doc.get("Username");
-            Game.getInstance().gameState.setChance((int)c);
+            Game.getInstance().gameState.setChance((int) c);
             long f = (long) doc.get("Score");
             Game.getInstance().gameState.getPlayer().setUserName(user);
-            Game.getInstance().gameState.getPlayer().setScore((int)f);
-            Game.getInstance().setScore((int)f);
+            Game.getInstance().gameState.getPlayer().setScore((int) f);
+            Game.getInstance().setScore((int) f);
             Game.getInstance().getPaddle().setPosVector(paddleLoc);
             z = (long) doc.get("BallPositionX");
             t = (long) doc.get("BallPositionY");
@@ -98,28 +97,28 @@ public class Saver {
             y = ((int) t);
 
             z = (long) doc.get("ChanceGivingAbility");
-            Game.getInstance().gameState.getPlayer().getAbilities().put(1,(int)z);
+            Game.getInstance().gameState.getPlayer().getAbilities().put(1, (int) z);
 
             z = (long) doc.get("PaddleExpansionAbility");
-            Game.getInstance().gameState.getPlayer().getAbilities().put(2,(int)z);
+            Game.getInstance().gameState.getPlayer().getAbilities().put(2, (int) z);
 
             z = (long) doc.get("UnstoppableAbility");
-            Game.getInstance().gameState.getPlayer().getAbilities().put(3,(int)z);
+            Game.getInstance().gameState.getPlayer().getAbilities().put(3, (int) z);
 
             z = (long) doc.get("RocketAbility");
-            Game.getInstance().gameState.getPlayer().getAbilities().put(4,(int)z);
+            Game.getInstance().gameState.getPlayer().getAbilities().put(4, (int) z);
 
             z = (long) doc.get("Ymirfreq");
-            Game.getInstance().Ymirfreq= (int)z;
+            Game.getInstance().Ymirfreq = (int) z;
 
             double j = (double) doc.get("YmirProb1");
-            Game.getInstance().YmirProb1= j;
+            Game.getInstance().YmirProb1 = j;
 
             j = (double) doc.get("YmirProb2");
-            Game.getInstance().YmirProb2= j;
+            Game.getInstance().YmirProb2 = j;
 
             j = (double) doc.get("YmirProb3");
-            Game.getInstance().YmirProb3= j;
+            Game.getInstance().YmirProb3 = j;
 
 
             PosVector ballLoc = new PosVector(x, y);
@@ -129,7 +128,7 @@ public class Saver {
 
             Map<Obstacle, PosVector> list = new HashMap<>();
             ArrayList<DomainObject> listDO = new ArrayList<DomainObject>();
-            int obsLen = Game.getInstance().getPaddle().length/5;
+            int obsLen = Game.getInstance().getPaddle().length / 5;
             PosVector vec;
 
 
@@ -145,50 +144,50 @@ public class Saver {
                 int l = s.indexOf("}");
                 int m = (Integer.parseInt(s.substring(k + 2, l)));
 
-                if(s.contains("WallMaria")){
+                if (s.contains("WallMaria")) {
                     WallMaria obs = new WallMaria(p, m);
-                    if(s.contains("true")){
+                    if (s.contains("true")) {
                         obs.setIsFrozen(true);
                     }
                     listDO.add(obs);
-                    vec = new PosVector(p,m);
-                    Layout.getObstacle_positions().put(obs,vec);
+                    vec = new PosVector(p, m);
+                    Layout.getObstacle_positions().put(obs, vec);
                 }
-                if(s.contains("GiftOfUranus")){
+                if (s.contains("GiftOfUranus")) {
                     GiftOfUranus obs = new GiftOfUranus(p, m);
-                    if(s.contains("true")){
+                    if (s.contains("true")) {
                         obs.setIsFrozen(true);
                     }
                     listDO.add(obs);
-                    vec = new PosVector(p,m);
-                    Layout.getObstacle_positions().put(obs,vec);
+                    vec = new PosVector(p, m);
+                    Layout.getObstacle_positions().put(obs, vec);
                 }
-                if(s.contains("PandorasBox")){
+                if (s.contains("PandorasBox")) {
                     PandorasBox obs = new PandorasBox(p, m);
-                    if(s.contains("true")){
+                    if (s.contains("true")) {
                         obs.setIsFrozen(true);
                     }
                     listDO.add(obs);
-                    vec = new PosVector(p,m);
-                    Layout.getObstacle_positions().put(obs,vec);
+                    vec = new PosVector(p, m);
+                    Layout.getObstacle_positions().put(obs, vec);
                 }
-                if(s.contains("SteinsGate")){
+                if (s.contains("SteinsGate")) {
                     SteinsGate obs = new SteinsGate(p, m);
-                    if(s.contains("true")){
+                    if (s.contains("true")) {
                         obs.setIsFrozen(true);
                     }
                     listDO.add(obs);
-                    vec = new PosVector(p,m);
-                    Layout.getObstacle_positions().put(obs,vec);
+                    vec = new PosVector(p, m);
+                    Layout.getObstacle_positions().put(obs, vec);
                 }
-                if(s.contains("HollowPurple")){
+                if (s.contains("HollowPurple")) {
                     Hollow obs = new Hollow(p, m);
-                    if(s.contains("true")){
+                    if (s.contains("true")) {
                         obs.setIsFrozen(true);
                     }
                     listDO.add(obs);
-                    vec = new PosVector(p,m);
-                    Layout.getObstacle_positions().put(obs,vec);
+                    vec = new PosVector(p, m);
+                    Layout.getObstacle_positions().put(obs, vec);
                 }
             }
 
@@ -204,6 +203,47 @@ public class Saver {
             e.printStackTrace();
         }
 
+    }
+
+    private void updateLoadNames() {
+        Document doc2 = new Document();
+        JSONParser jsonParser = new JSONParser();
+        ArrayList<String> temp = new ArrayList<>();
+        //temp.add(FILEPATH);
+        //doc2.put("FileNames", temp);
+
+        try (FileReader reader = new FileReader(LOADPATH)) {
+            Object obj = jsonParser.parse(reader);
+            JSONObject doc = (JSONObject) obj;
+
+            JSONArray filenameList = (JSONArray)doc.get("FileNames");
+
+            for(int i=0; i<filenameList.size(); i++) {
+                String s = filenameList.get(i).toString();
+                temp.add(s);
+            }
+            temp.add(FILEPATH);
+            doc2.put("FileNames", temp);
+
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            FileWriter file = new FileWriter(LOADPATH);
+            file.write(doc2.toJson());
+            file.close();
+
+            System.out.println("Saved to filenamelist successfully.");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
 

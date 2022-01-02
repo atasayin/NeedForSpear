@@ -31,6 +31,7 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
     protected Double YmirProb2;
     protected Double YmirProb3;
     private Ymir ymir;
+    private String laodgamename;
 
     private javax.swing.Timer game_Timer;
 
@@ -54,7 +55,7 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
 
     public void loadGame() {
         saver = new Saver();
-        saver.loadGame(Game.getInstance().getPaddle(), Game.getInstance().ball);
+        saver.loadGame(Game.getInstance().getPaddle(), Game.getInstance().ball,laodgamename);
 
     }
 
@@ -142,8 +143,9 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
 
 
     @Override
-    public void onClickEventDo() {
+    public void onClickEventDo(String n) {
         isLoad = true;
+        laodgamename =n;
     }
 
     @Override
