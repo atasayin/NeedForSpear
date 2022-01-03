@@ -11,8 +11,8 @@ public class Paddle extends DomainObject{
 	public static final int PADDLE_THICKNESS = 20;
 
 	// angle constants
-	private double MIN_ANGLE_LIMIT = -45;
-	private double MAX_ANGLE_LIMIT = 45;
+	private double MIN_ANGLE_LIMIT = -50;
+	private double MAX_ANGLE_LIMIT = 50;
 
 	// move constants
 	private int GO_LEFT_DIC = 1;

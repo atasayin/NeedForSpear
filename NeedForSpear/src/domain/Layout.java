@@ -157,27 +157,69 @@ public class Layout {
     /*
     // Changes type of the obstacle.
 
-    void changeTypeObstacle(Obstacle obstacle, newType){
 
+    // Changes type of the obstacle.
+    public void changeTypeObstacle(Obstacle obs){
+        Obstacle changeObs;
+        String type = obs.getType();
+        PosVector pos = obs.getPos();
+        removeObstacle(obs);
+
+        if (type.equals("WallMaria")){
+            this.wallMariaCount--;
+            changeObs = ObstacleFactory.getInstance().getObstacle(0,pos);
+        }else if (type.equals("SteinsGate")){
+            this.steinsGateCount--;
+            changeObs = ObstacleFactory.getInstance().getObstacle(1,pos);
+        }else if (type.equals("PandorasBox")){
+            this.pandoraBoxCount--;
+            changeObs = ObstacleFactory.getInstance().getObstacle(2,pos);
+        }else {
+            this.uranusCount--;
+            changeObs = ObstacleFactory.getInstance().getObstacle(3,pos);
+        }
+        obstacle_positions.put(changeObs,changeObs.getPosVector());
+        Game.getInstance().getDomainObjectArr().add(changeObs);
+        Game.getInstance().getDomainObjectArr().add(changeObs.getBox());
+        System.out.println("CHANGE");
     }
 
     // Changes location of an existing obstacle.
-    void changeLocationObstacle(obstacle, location){
+    public void changeLocationObstacle(Obstacle obs, PosVector pos){
 
     }
 
     // Adds new obstacle to the Layout with given type and location.
-    void addNewObstacle(location, type){
-
-
+    public void addNewObstacle(PosVector pos){
+        Obstacle obs = ObstacleFactory.getInstance().getObstacle(3,pos);
+        obstacle_positions.put(obs,obs.getPosVector());
+        Game.getInstance().getDomainObjectArr().add(obs);
+        Game.getInstance().getDomainObjectArr().add(obs.getBox());
+        System.out.println("ADD");
     }
 
 
-    // Removes a obstacle from Layout.
-    void removeObstacle(Obstacle obstacle){
+    // Removes an obstacle from Layout.
+    public void removeObstacle(Obstacle obs){
+        Game.getInstance().getDomainObjectArr().remove(obs);
+        obstacle_positions.remove(obs);
 
 
+        String type = obs.getType();
+        if (type.equals("WallMaria")){
+            this.wallMariaCount--;
+        }else if (type.equals("SteinsGate")){
+            this.steinsGateCount--;
+        }else if (type.equals("PandorasBox")){
+            this.pandoraBoxCount--;
+        }else {
+            this.uranusCount--;
+        }
+
+        System.out.println("REMOVE");
     }
-    */
+
+
+
 
 }

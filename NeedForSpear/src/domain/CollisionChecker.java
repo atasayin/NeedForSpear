@@ -2,6 +2,7 @@ package domain;
 
 import domain.abilities.PaddleExpansion;
 import domain.obstacle.Obstacle;
+import util.PosVector;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -228,6 +229,8 @@ public class CollisionChecker {
         }
 
     }
+
+
 
     public void addListener( IBoxListener listener) {
         BoxListeners.add(listener);

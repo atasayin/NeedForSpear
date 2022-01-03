@@ -8,9 +8,9 @@ public abstract class DomainObject {
     protected int dx;
     protected int dy;
     protected boolean isWidthHeightTaken = false;
-    private int width;
-    private int height;
-    private double angle;
+    protected int width;
+    protected int height;
+    protected double angle;
 
     public double getAngle() {
         return angle;
