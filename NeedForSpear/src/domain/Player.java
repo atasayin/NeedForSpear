@@ -8,6 +8,7 @@ public class Player{
     // Player attributes
     private String id;
     private String userName;
+    protected Integer GameNum;
 
     // Attributes that this player has
     private int chance_points;
@@ -49,6 +50,10 @@ public class Player{
          this.id = id;
     }
 
+    public void setGameNum(Integer num) {
+        this.GameNum = num;
+    }
+
     public String getUserName() {
         return userName;
     }
@@ -80,8 +85,8 @@ public class Player{
     public void initializeInventory() {
         this.abilities = new HashMap<>();
         abilities.put(1,0);
-        abilities.put(2,0);
-        abilities.put(3,0);
+        abilities.put(2,5);
+        abilities.put(3,5);
         abilities.put(4,0);
     }
 

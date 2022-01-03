@@ -1,6 +1,8 @@
 package domain;
 
 import domain.abilities.DoubleAccel;
+import domain.abilities.HollowPurple;
+import domain.abilities.InfiniteVoid;
 
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -33,8 +35,6 @@ public class Ymir implements Runnable{
 
     }
 
-
-
     public void setPeriod(int period) {
         this.period = period;
     }
@@ -42,36 +42,44 @@ public class Ymir implements Runnable{
     // Weights are doubles which will be normalized
     public void setProbabilities(double w1, double w2, double w3) {
         double sum = w1 + w2 + w3;
-       weights[0] = w1 / sum;
+        weights[0] = w1 / sum;
         weights[1] = weights[0] + w2 / sum;
-        weights[2] = weights[3] / sum;
+        weights[2] = weights[1] + w3 / sum;
     }
 
     @Override
     public void run() {
-        while (true) {
+        while(true) {
             try {
-                TimeUnit.SECONDS.sleep(10);
+                TimeUnit.SECONDS.sleep(this.period + 15);
+                if (true) {
+                    YmirAbilities ability = chooseAbility();
+                    System.out.println(ability);
+                    System.out.println("Before double accel");
+                    System.out.println(Game.getInstance().getBall().xVelocity);
+                    System.out.println(Game.getInstance().getBall().yVelocity);
+                    if (ability == YmirAbilities.DoubleAccel) {
+                        DoubleAccel da = new DoubleAccel();
+                        Thread t = new Thread(da);
+                        t.start();
+                    }
+                    else if(ability == YmirAbilities.HollowPurple) {
+                        System.out.println("HollowPurple");
+                        HollowPurple hp = new HollowPurple();
+                        hp.initializeHollow();
+                    }
+                    else {
+                        System.out.println("InfiniteVoid geldi aga");
+                        InfiniteVoid iv = new InfiniteVoid();
+                        Thread t = new Thread(iv);
+                        t.start();
+                    }
+                } else {
+                    System.out.println("No Ymir ability this time!");
+                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
-            if (rollDice()) {
-                YmirAbilities ability = chooseAbility();
-                System.out.println(ability);
-                if (ability == YmirAbilities.DoubleAccel) {
-                    DoubleAccel da = new DoubleAccel();
-                    Thread t = new Thread(da);
-                    t.start();
-                }
-
-
-            } else {
-                System.out.println("No Ymir ability this time!");
-            }
-
         }
-
-
     }
 }

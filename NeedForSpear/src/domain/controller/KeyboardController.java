@@ -82,6 +82,7 @@ public class KeyboardController {
 
         // First shot (W)
         if(isKeyPressed(87)){
+            Game.getInstance().isStarted = true;
             Game.getInstance().getBall().setisAlive(true);
         }
 

@@ -47,7 +47,6 @@ public class LayoutPanel extends JPanel implements ActionListener,MouseListener,
             initializeLayoutPanel();
 
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -97,17 +96,12 @@ public class LayoutPanel extends JPanel implements ActionListener,MouseListener,
 
     }
 
-    private void drawPaddle(Graphics2D g2d, Paddle d, int width, int height) throws IOException {
-        // TODO Auto-generated method stub
-        PaddleView.getInstance().draw(g2d, d, width, height);
+    private void drawObstacle(Graphics2D g2d, Obstacle d) {
+        ObstacleView.getInstance().draw(g2d, d, frame_width, frame_height);
 
     }
-
-    private void drawComponent(Graphics2D g2d, DomainObject d) throws IOException {
-        // TODO Auto-generated method stub
-        if (d instanceof Obstacle) {
-            ObstacleView.getInstance().draw(g2d, d, PANEL_WIDTH, PANEL_HEIGHT);
-        }
+    private void drawPaddle(Graphics2D g2d, Paddle d, int width, int height) throws IOException {
+        PaddleView.getInstance().draw(g2d, d, width, height);
 
     }
 

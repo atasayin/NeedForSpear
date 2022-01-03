@@ -26,17 +26,20 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
     private long initialTime;
     private int score = 0;
     private static int yOffset = 70;
-    private int Ymirfreq;
-    private Double YmirProb1;
-    private Double YmirProb2;
-    private Double YmirProb3;
+    protected int Ymirfreq;
+    protected Double YmirProb1;
+    protected Double YmirProb2;
+    protected Double YmirProb3;
+    private Ymir ymir;
+    private String laodgamename;
+    public boolean isStarted = false;
 
     private javax.swing.Timer game_Timer;
 
     private Game() {
         gameState = new GameState();
         game_Timer = new javax.swing.Timer(TIMER_SPEED, this);
-
+        ymir = new Ymir();
     }
 
     public static Game getInstance() {
@@ -53,7 +56,7 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
 
     public void loadGame() {
         saver = new Saver();
-        saver.loadGame(Game.getInstance().getPaddle(), Game.getInstance().ball);
+        saver.loadGame(Game.getInstance().getPaddle(), Game.getInstance().ball,laodgamename);
 
     }
 
@@ -78,7 +81,7 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
     }
 
     @Override
-    public void onRunEvent(HashMap<String, Integer> startParameters, String username, String id, Integer freq,Double prob1, Double prob2, Double prob3) {
+    public void onRunEvent(HashMap<String, Integer> startParameters, String username, String id,Integer num, Integer freq,Double prob1, Double prob2, Double prob3) {
 
         paddle = new Paddle(FRAME_WIDTH,FRAME_HEIGHT);
         this.ball = new Ball();
@@ -92,18 +95,21 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
         initialTime = System.currentTimeMillis();
 
         instance.gameState.getPlayer().setId(id);
-        instance.gameState.getPlayer().setId(username);
+        instance.gameState.getPlayer().setUserName(username);
+        instance.gameState.getPlayer().setGameNum(num);
         instance.gameState.getPlayer().initializeInventory();
         game_Timer.start();
 
         if(isLoad){
             Game.getInstance().loadGame();
         }
-        System.out.println("Yamir freq is "+ Ymirfreq );
-        System.out.println("Yamir prob1 is "+ YmirProb1 );
-        System.out.println("Yamir prob2 is "+ YmirProb2 );
-        System.out.println("Yamir prob3 is "+ YmirProb3 );
-        System.out.println(instance.gameState.getPlayer().getChance_points());
+        System.out.println("Yamir freq in game"+ Game.getInstance().Ymirfreq);
+        ymir.setPeriod(Ymirfreq);
+        ymir.setProbabilities(YmirProb1, YmirProb2, YmirProb3);
+
+        Thread ymirThread = new Thread(ymir);
+        ymirThread.start();
+
     }
 
 
@@ -138,8 +144,9 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
 
 
     @Override
-    public void onClickEventDo() {
+    public void onClickEventDo(String n) {
         isLoad = true;
+        laodgamename =n;
     }
 
     public void setPaddle(Paddle paddle) {
@@ -157,6 +164,7 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         gameOverCheck();
+
         if(!Game.getInstance().ball.checkAlive()) {
 
             if (deathInitTime < 0) {
