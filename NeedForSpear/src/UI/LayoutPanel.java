@@ -139,20 +139,13 @@ public class LayoutPanel extends JPanel implements ActionListener,MouseListener,
             LC.addOrChangeObstacle(e.getX(),e.getY());
         }
 
-        if (SwingUtilities.isLeftMouseButton(e)){
-            System.out.println("CLICKED " + e.getX() +" "+ e.getY());
-        }
-
-
-
-
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
         // Invoked when a mouse button has been pressed on a component
         if (SwingUtilities.isLeftMouseButton(e)){
-            System.out.println("Pressed " + e.getX() +" "+ e.getY());
+            LC.holdObstacle(e.getX(),e.getY());
         }
 
 
@@ -162,7 +155,7 @@ public class LayoutPanel extends JPanel implements ActionListener,MouseListener,
     public void mouseReleased(MouseEvent e) {
         // Invoked when a mouse button has been released on a component
         if (SwingUtilities.isLeftMouseButton(e)){
-            System.out.println("Released " + e.getX() +" "+ e.getY());
+            LC.releaseObstacle(e.getX(),e.getY());
         }
 
 

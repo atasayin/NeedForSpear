@@ -8,7 +8,7 @@ public class MouseColliderBox extends DomainObject {
 
 
     public MouseColliderBox(PosVector pos){
-        this.posVector=pos;
+        this.posVector = pos;
         this.width = MOUSE_WIDTH;
         this.height = MOUSE_HEIGHT;
 

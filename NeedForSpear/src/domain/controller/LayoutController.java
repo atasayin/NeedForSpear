@@ -28,6 +28,8 @@ public class LayoutController {
     private PosVector mousePos;
     private BitSet keyBits;
 
+    private Obstacle dragObstacle;
+
 
     /////////////////////////////////////////////////////////////////////////////////////
 
@@ -42,10 +44,7 @@ public class LayoutController {
 
     // Deletes an obstacle in (X,Y) if its present
     public void deleteObs(int x, int y) {
-        setMouseInput(x, y);
-        MouseColliderBox mouseColliderBox = new MouseColliderBox(mousePos);
-        Obstacle obsCol = layout.getCollideObstacle(mouseColliderBox);
-
+        Obstacle obsCol = collideWithMouse(x,y);
         if (obsCol != null) {
             layout.removeObstacle(obsCol);
         }
@@ -54,9 +53,7 @@ public class LayoutController {
     // Add an obstacle in (X,Y) if its not present
     // Change type of an obstacle in (X,Y) if its present
     public void addOrChangeObstacle(int x, int y){
-        setMouseInput(x, y);
-        MouseColliderBox mouseColliderBox = new MouseColliderBox(mousePos);
-        Obstacle obsCol = layout.getCollideObstacle(mouseColliderBox);
+        Obstacle obsCol = collideWithMouse(x,y);
 
         if ( isInRange(x, y) ){
             if (obsCol == null) {
@@ -65,6 +62,30 @@ public class LayoutController {
             }else{
                 layout.changeTypeObstacle(obsCol);
             }
+        }
+
+    }
+
+    // First part of dragging operator which holds an obstacle
+    public void holdObstacle(int x, int y){
+        Obstacle obsCol = collideWithMouse(x,y);
+
+        if (obsCol != null){
+            dragObstacle = obsCol;
+        }else{
+            dragObstacle = null;
+        }
+    }
+
+    // Second part of dragging operator which relases the hold obstacle
+    public void releaseObstacle(int x, int y){
+        Obstacle obsCol = collideWithMouse(x,y);
+
+        if (obsCol == null && isDrag() && isInRange(x,y)){
+            dragObstacle.getPosVector().setX(x);
+            dragObstacle.getPosVector().setY(y);
+        }else{
+            dragObstacle = null;
         }
 
     }
@@ -94,16 +115,6 @@ public class LayoutController {
 
     }
 
-//    public void addObstaclesToGame(HashMap<String, Integer> obstacleSettings){
-//        Game game = Game.getInstance();
-//
-//        for (String key : obstacleSettings.keySet()){
-//            if (key.equals("simpleObstacleCount")){
-//                game.getDomainObjectArr().add(new WallMaria())
-//            }
-//        }
-//    }
-
     // Prints layout
     private void printLayout(){
         System.out.println(obstacleSettings);
@@ -111,12 +122,6 @@ public class LayoutController {
             System.out.println(obs.toString());
         }
 
-    }
-
-
-
-    private boolean isKeyPressed(int keyCode) {
-        return keyBits.get(keyCode);
     }
 
     // Set mousePos for mouseCollider
@@ -134,12 +139,19 @@ public class LayoutController {
                 && y < (PANEL_HEIGHT * C_PADDLE_OFFSET_HEIGHT_LINE - OBS_OFFSET);
     }
 
-    public void setKeyInput(int keycode){
-        this.keyBits.set(keycode);
+
+    // Returns an obstacle which is present in mouses location
+    private Obstacle collideWithMouse(int x, int y){
+        setMouseInput(x, y);
+        MouseColliderBox mouseColliderBox = new MouseColliderBox(mousePos);
+        return layout.getCollideObstacle(mouseColliderBox);
+
     }
 
-
-
+    // Is some obstacle being draged.
+    private boolean isDrag(){
+        return dragObstacle != null;
+    }
 
 }
 
