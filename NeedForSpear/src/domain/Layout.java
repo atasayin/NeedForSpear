@@ -48,6 +48,13 @@ public class Layout {
     private int obsLen;
     private int layoutHeightOffset = 350;
 
+    // Obstacle type constants
+    private int WALLMARIA_TYPE = 0;
+    private int STEINSGATE_TYPE = 1;
+    private int PANDORASBOX_TYPE = 2;
+    private int GIFTOFURANUS_TYPE = 3;
+
+
     /////////////////////////////////////////////////////////////////////////////////////
 
     // Constructor
@@ -154,9 +161,16 @@ public class Layout {
         return obstacle_centers;
     }
 
-    /*
-    // Changes type of the obstacle.
+    // Returns an obstacle which is present in mouse (X,Y)
+    public Obstacle getCollideObstacle(DomainObject mouse){
+        for (Obstacle obs: obstacle_positions.keySet()){
+            if ( CC.checkCollision(mouse, obs)){
+                return obs;
+            }
+        }
 
+        return null;
+    }
 
     // Changes type of the obstacle.
     public void changeTypeObstacle(Obstacle obs){
@@ -167,16 +181,16 @@ public class Layout {
 
         if (type.equals("WallMaria")){
             this.wallMariaCount--;
-            changeObs = ObstacleFactory.getInstance().getObstacle(0,pos);
+            changeObs = ObstacleFactory.getInstance().getObstacle(STEINSGATE_TYPE,pos);
         }else if (type.equals("SteinsGate")){
             this.steinsGateCount--;
-            changeObs = ObstacleFactory.getInstance().getObstacle(1,pos);
+            changeObs = ObstacleFactory.getInstance().getObstacle(PANDORASBOX_TYPE,pos);
         }else if (type.equals("PandorasBox")){
             this.pandoraBoxCount--;
-            changeObs = ObstacleFactory.getInstance().getObstacle(2,pos);
+            changeObs = ObstacleFactory.getInstance().getObstacle(GIFTOFURANUS_TYPE,pos);
         }else {
             this.uranusCount--;
-            changeObs = ObstacleFactory.getInstance().getObstacle(3,pos);
+            changeObs = ObstacleFactory.getInstance().getObstacle(WALLMARIA_TYPE,pos);
         }
         obstacle_positions.put(changeObs,changeObs.getPosVector());
         Game.getInstance().getDomainObjectArr().add(changeObs);
@@ -184,14 +198,11 @@ public class Layout {
         System.out.println("CHANGE");
     }
 
-    // Changes location of an existing obstacle.
-    public void changeLocationObstacle(Obstacle obs, PosVector pos){
-
-    }
 
     // Adds new obstacle to the Layout with given type and location.
     public void addNewObstacle(PosVector pos){
-        Obstacle obs = ObstacleFactory.getInstance().getObstacle(3,pos);
+        Obstacle obs = ObstacleFactory.getInstance().getObstacle(WALLMARIA_TYPE,pos);
+        this.wallMariaCount++;
         obstacle_positions.put(obs,obs.getPosVector());
         Game.getInstance().getDomainObjectArr().add(obs);
         Game.getInstance().getDomainObjectArr().add(obs.getBox());

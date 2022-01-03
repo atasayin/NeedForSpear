@@ -14,9 +14,6 @@ import java.util.BitSet;
 @SuppressWarnings("serial")
 public class LayoutPanel extends JPanel implements ActionListener,MouseListener, KeyListener,MouseMotionListener{
 
-    BufferedImage img; // background
-    String infoString = "";
-    KeyboardController kc = new KeyboardController();
 
 
     // Timer
