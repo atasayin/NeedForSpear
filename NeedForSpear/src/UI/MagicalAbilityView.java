@@ -34,7 +34,6 @@ public class MagicalAbilityView implements DrawableMagical {
             try {
                 instance.fillImgs();
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
@@ -42,7 +41,6 @@ public class MagicalAbilityView implements DrawableMagical {
     }
 
     private void fillImgs() throws IOException{
-        // TODO Auto-generated method stub
         try {
             unstop_img = ImageIO.read(this.getClass().getResource("../assets/paddle1.png"));
             rocket_img = ImageIO.read(this.getClass().getResource("../assets/paddle1.png"));

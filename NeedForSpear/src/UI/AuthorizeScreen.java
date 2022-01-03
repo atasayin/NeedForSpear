@@ -42,11 +42,11 @@ public class AuthorizeScreen extends JFrame  {
     private boolean isSignup = false;
 
     private java.util.List<IAuthorizeListener> autoModeListeners = new ArrayList<>();
-    protected Playground nfs;
+    protected PlaygroundScreen nfs;
 
     /////////////////////////////////////////////////////////////////////////////////////
 
-    public AuthorizeScreen(Playground nfs){
+    public AuthorizeScreen(PlaygroundScreen nfs){
         this.nfs = nfs;
         initializeAuthorizeScreen();
         info = initializeInfoPanel();

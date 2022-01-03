@@ -1,7 +1,7 @@
 package domain;
 
-import UI.Playground;
+import UI.PlaygroundScreen;
 
 public interface IAuthorizeListener {
-    void onClickEvent(Playground nfs,String username, String id);
+    void onClickEvent(PlaygroundScreen nfs, String username, String id);
 }

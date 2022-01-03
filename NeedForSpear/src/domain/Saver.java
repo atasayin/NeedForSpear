@@ -23,18 +23,22 @@ public class Saver {
     String FILEPATH = "src/saves/Demo1.json";
 
 
-    public void saveGame(Paddle paddle, Ball ball, HashMap<Obstacle, PosVector> list) {
+    public void saveGame(HashMap<Obstacle, PosVector> list) {
         Document doc = new Document();
         ArrayList<String> temp;
         ArrayList<ArrayList<String>> map = new ArrayList<ArrayList<String>>();
-        doc.put("PaddlePositionX", paddle.getPosVector().x);
-        doc.put("PaddlePositionY", paddle.getPosVector().y);
-        doc.put("BallPositionX", ball.posVector.x);
-        doc.put("BallPositionY", ball.posVector.y);
+        doc.put("PaddlePositionX", Game.getInstance().getPaddle().getPosVector().getX());
+        doc.put("PaddlePositionY", Game.getInstance().getPaddle().getPosVector().getY());
+        doc.put("BallPositionX", Game.getInstance().getBall().posVector.getX() );
+        doc.put("BallPositionY", Game.getInstance().getBall().posVector.getY());
         doc.put("Username", Game.getInstance().gameState.getPlayer().getUserName());
         doc.put("ChancePoints", Game.getInstance().gameState.getPlayer().getChance_points());
         doc.put("Score", Game.getInstance().getOldScore());
-        //doc.put(" Object List: ", list);
+        doc.put("ChanceGivingAbility",Game.getInstance().gameState.getPlayer().getAbilities().get(1));
+        doc.put("PaddleExpansionAbility",Game.getInstance().gameState.getPlayer().getAbilities().get(2));
+        doc.put("UnstoppableAbility",Game.getInstance().gameState.getPlayer().getAbilities().get(3));
+        doc.put("RocketAbility",Game.getInstance().gameState.getPlayer().getAbilities().get(4));
+
 
         for (Entry<Obstacle, PosVector> o : list.entrySet()) {
             temp = new ArrayList<String>();
@@ -51,7 +55,6 @@ public class Saver {
             System.out.println("Saved to local directory successfully.");
 
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -59,7 +62,7 @@ public class Saver {
     public void loadGame(Paddle paddle, Ball ball) {
 
         HashMap<Obstacle, PosVector> loadObsPos = new HashMap<>();
-        Layout.setObstacle_positions(loadObsPos);
+        Layout.setObstaclePositions(loadObsPos);
 
         JSONParser jsonParser = new JSONParser();
         try (FileReader reader = new FileReader(FILEPATH)) {
@@ -82,6 +85,19 @@ public class Saver {
             t = (long) doc.get("BallPositionY");
             x = ((int) z);
             y = ((int) t);
+
+            z = (long) doc.get("ChanceGivingAbility");
+            Game.getInstance().gameState.getPlayer().getAbilities().put(1,(int)z);
+
+            z = (long) doc.get("PaddleExpansionAbility");
+            Game.getInstance().gameState.getPlayer().getAbilities().put(2,(int)z);
+
+            z = (long) doc.get("UnstoppableAbility");
+            Game.getInstance().gameState.getPlayer().getAbilities().put(3,(int)z);
+
+            z = (long) doc.get("RocketAbility");
+            Game.getInstance().gameState.getPlayer().getAbilities().put(4,(int)z);
+
 
             PosVector ballLoc = new PosVector(x, y);
             ball.setPosVector(ballLoc);
@@ -109,31 +125,26 @@ public class Saver {
                     WallMaria obs = new WallMaria(p, m);
                     listDO.add(obs);
                     vec = new PosVector(p,m);
-                    Layout.getObstacle_positions().put(obs,vec);
+                    Layout.getObstaclePositions().put(obs,vec);
                 }
                 if(s.contains("GiftOfUranus")){
                     GiftOfUranus obs = new GiftOfUranus(p, m);
                     listDO.add(obs);
                     vec = new PosVector(p,m);
-                    Layout.getObstacle_positions().put(obs,vec);
+                    Layout.getObstaclePositions().put(obs,vec);
                 }
                 if(s.contains("PandorasBox")){
                     PandorasBox obs = new PandorasBox(p, m);
                     listDO.add(obs);
                     vec = new PosVector(p,m);
-                    Layout.getObstacle_positions().put(obs,vec);
+                    Layout.getObstaclePositions().put(obs,vec);
                 }
                 if(s.contains("SteinsGate")){
                     SteinsGate obs = new SteinsGate(p, m);
                     listDO.add(obs);
                     vec = new PosVector(p,m);
-                    Layout.getObstacle_positions().put(obs,vec);
+                    Layout.getObstaclePositions().put(obs,vec);
                 }
-                //System.out.println(jsonlist.get(i)[0]);
-                //System.out.println(jsonlist.get(i).getClass());
-                //Obstacle o = (Obstacle)jsonlist.get(i) ;
-                //PosVector pos = ((Obstacle) (jsonlist.get(i))).posVector ;
-                //list.put(o, pos);
             }
 
             Game.getInstance().setDomainObjectArr(listDO);

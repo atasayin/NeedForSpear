@@ -9,9 +9,12 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import domain.*;
 import domain.controller.LayoutController;
@@ -37,6 +40,11 @@ public class BuildModeScreen extends JFrame {
     private JTextField explosiveObstacle;
     private JTextField giftObstacle;
 
+    private JTextField YmirProbability1;
+    private JTextField YmirProbability2;
+    private JTextField YmirProbability3;
+
+
     private JButton gameStartButton;
     private JButton obstacleButton;
     private JButton loadGameButton;
@@ -61,6 +69,11 @@ public class BuildModeScreen extends JFrame {
 
     private String  username;
     private  String id;
+    private int YmirFrequency;
+    private double YmirProb1;
+    private double YmirProb2;
+    private double YmirProb3;
+
 
     /////////////////////////////////////////////////////////////////////////////////////
 
@@ -209,6 +222,7 @@ public class BuildModeScreen extends JFrame {
                 layout = LC.getRandomLayout();
                 gameStartButton.setEnabled(true);
                 obstacleButton.setEnabled(false);
+                loadGameButton.setEnabled(false);
             }
         });
 
@@ -229,12 +243,45 @@ public class BuildModeScreen extends JFrame {
 
         loadGameButton = new JButton("Load Game");
         gameStartButton = new JButton("Click to start the game!");
+        JLabel headerLabel = new JLabel("", JLabel.CENTER);
+        headerLabel.setText("Set frequency for Ymir: ");
+        headerLabel.setVisible(true);
+        JSlider slider = new JSlider(JSlider.HORIZONTAL, 0, 100, 0);
+        slider.setMinorTickSpacing(1);
+        slider.setMajorTickSpacing(5);
+        slider.setPaintTicks(true);
+
+        Hashtable<Integer, JLabel> labels = new Hashtable<>();
+        labels.put(0, new JLabel("0"));
+        labels.put(25, new JLabel("25"));
+        labels.put(50, new JLabel("50"));
+        labels.put(75, new JLabel("75"));
+        labels.put(100, new JLabel("100"));
+        slider.setLabelTable(labels);
+
+        YmirProbability1 = new JTextField("Ymir Probability1", 10);
+        YmirProbability2 = new JTextField("Ymir Probability2", 10);
+        YmirProbability3 = new JTextField("Ymir Probability3", 10);
+
+
+        slider.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent e) {
+                YmirFrequency = ((JSlider)e.getSource()).getValue();
+            }
+        });
+
+
         gameStartButton.setEnabled(false);
 
         gameStartButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
                 setRunSettings();
-                notifyButtonisClickedListeners(username, id);
+                YmirProb1 = Double.parseDouble(YmirProbability1.getText());
+                YmirProb2 = Double.parseDouble(YmirProbability2.getText());
+                YmirProb3 = Double.parseDouble(YmirProbability3.getText());
+
+                notifyButtonisClickedListeners(username, id,YmirFrequency,YmirProb1,YmirProb2,YmirProb3);
+
             }
         });
 
@@ -251,15 +298,19 @@ public class BuildModeScreen extends JFrame {
 
         runGamePanel.add(loadGameButton);
         runGamePanel.add(gameStartButton);
+        runGamePanel.add(slider);
+        runGamePanel.add(YmirProbability1);
+        runGamePanel.add(YmirProbability2);
+        runGamePanel.add(YmirProbability3);
         return runGamePanel;
     }
 
-    public void notifyButtonisClickedListeners(String username, String id) {
+    public void notifyButtonisClickedListeners(String username, String id, Integer freq,Double prob1, Double prob2, Double prob3) {
         System.out.println("ALL LISTENERS ARE NOTIFIED THAT THE BUTTON IS CLICKED \n\n\n");
 
         for (IRunListener listener : runModeListeners) {
             System.out.println(listener);
-            listener.onClickEvent(this.runSettings, username, id);
+            listener.onRunEvent(this.runSettings, username, id,freq,prob1,prob2,prob3);
         }
         this.setVisible(false);
         this.dispose();

@@ -8,14 +8,14 @@ import javax.swing.*;
 import domain.*;
 
 
-public class Playground implements IRunListener, IAuthorizeListener {
+public class PlaygroundScreen implements IRunListener, IAuthorizeListener {
     protected static JFrame jf;
     protected BuildModeScreen bd;
 
     RunGameObjects screen;
 
 
-    public void onClickEvent(HashMap<String, Integer> runSettings, String username, String id) {
+    public void onRunEvent(HashMap<String, Integer> runSettings, String username, String id, Integer freq,Double prob1, Double prob2, Double prob3) {
         int screenWidth = runSettings.get("screenWidth").intValue();
         int screenHeight = runSettings.get("screenHeight").intValue();
         initializeOuterFrameSettings(screenWidth, screenHeight);
@@ -23,7 +23,7 @@ public class Playground implements IRunListener, IAuthorizeListener {
 
     }
 
-    public Playground() {
+    public PlaygroundScreen() {
 
 
     }
@@ -50,7 +50,7 @@ public class Playground implements IRunListener, IAuthorizeListener {
 
 
     @Override
-    public void onClickEvent(Playground nfs, String username, String id) {
+    public void onClickEvent(PlaygroundScreen nfs, String username, String id) {
         nfs.bd = new BuildModeScreen();
         nfs.bd.setVisible(true);
         nfs.bd.addListener(nfs);

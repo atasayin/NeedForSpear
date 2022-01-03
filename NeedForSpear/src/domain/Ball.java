@@ -21,7 +21,7 @@ public class Ball extends DomainObject {
     private boolean outOfScreen;
 
     public Ball() {
-        this.posVector = new PosVector(800, 400);
+        this.posVector = new PosVector(600, 600);
         this.gravity = 1;
         this.xVelocity = 3;
         this.yVelocity = -40;
@@ -37,7 +37,6 @@ public class Ball extends DomainObject {
         this.yVelocity = yVel;
         this.is_unstoppable = false;
         this.outOfScreen = false;
-        //this.gameListeners.add(RunGameObjects);
     }
 
     public void updateVelocity() {
@@ -73,6 +72,14 @@ public class Ball extends DomainObject {
         }
     }
 
+    public void reflectFromAngle(double alpha) {
+        alpha *= -1;
+        double new_xVel = Math.cos(alpha) * this.xVelocity - Math.sin(alpha) * this.yVelocity;
+        double new_yVel = Math.sin(alpha) * this.xVelocity + Math.cos(alpha) * this.yVelocity;
+        this.xVelocity = (int) new_xVel;
+        this.yVelocity = (int) (new_yVel * -1.1);
+    }
+
 
     public void reflectFromPaddle() {
         this.yVelocity *= -1.25;
@@ -102,11 +109,9 @@ public class Ball extends DomainObject {
     }
 
     public Boolean move() {
+        // EFFECTS: By looking at the boundary conditions of the setup, it updates the velocity and position of the ball.
+        // MODIFIES: the velocity and position of the vall
         if (this.checkAlive() != true) {
-
-           /* for (IGameListener listener : autoModeListeners) {
-                listener.onEvent();
-            }*/
             return false;
         }
         if(!this.isAlive){
