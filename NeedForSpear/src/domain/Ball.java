@@ -20,6 +20,8 @@ public class Ball extends DomainObject {
 
     private boolean outOfScreen;
 
+
+    // Overloaded constructors
     public Ball() {
         this.posVector = new PosVector(600, 600);
         this.gravity = 1;
@@ -72,6 +74,7 @@ public class Ball extends DomainObject {
         }
     }
 
+    // This method is used to bounce from an inclined paddle using linear transformations
     public void reflectFromAngle(double alpha) {
         alpha *= -1;
         double new_xVel = Math.cos(alpha) * this.xVelocity - Math.sin(alpha) * this.yVelocity;

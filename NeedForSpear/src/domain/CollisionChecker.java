@@ -28,7 +28,7 @@ public class CollisionChecker {
         return instance;
     }
 
-
+    // Method used to check collision between the ball and the paddle
     public Boolean checkPaddleBallCollision(Ball ball, Paddle paddle) {
         int ball_x = ball.getPosVector().getX();
         int paddle_x = paddle.getPosVector().getX();
@@ -45,6 +45,9 @@ public class CollisionChecker {
         return false;
     }
 
+    // This is the new paddle ball collision method that takes the rotation of the paddle into account.
+    // It applies a linear transformation and measures dy, the distance between the ball and the closest point of
+    // the paddle.
     public Boolean checkPaddleBallCollisionAlt(Ball ball, Paddle paddle) {
         int ball_x = ball.getPosVector().getX();
         int ball_y = ball.getPosVector().getY();
@@ -74,6 +77,9 @@ public class CollisionChecker {
         return false;
     }
 
+
+    // Collision checker for domain objects
+    // Mostly used for obstacle-ball collisions
     public Boolean checkCollision(DomainObject object1, DomainObject object2){
         try {
             int object1_x = object1.getPosVector().getX();
@@ -135,6 +141,8 @@ public class CollisionChecker {
 
 
     }
+
+
     public void ChecktoDelete() {
         /*
             EFFECTS: if game instance has boxes or remaining pieces or obstacles, this checks collisions,
