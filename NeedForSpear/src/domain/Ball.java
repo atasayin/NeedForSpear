@@ -21,6 +21,8 @@ public class Ball extends DomainObject {
 
     private boolean outOfScreen;
 
+
+    // Overloaded constructors
     public Ball() {
         this.posVector = new PosVector(600, 600);
         this.gravity = 1;

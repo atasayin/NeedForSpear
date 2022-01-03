@@ -62,7 +62,7 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
 
     public void saveGame() {
         saver = new Saver();
-        saver.saveGame(Layout.getObstacle_positions());
+        saver.saveGame(Layout.getObstaclePositions());
     }
 
     /*EFFECTS: From oldScore value it calculates new value and updates the score attribute.
@@ -147,6 +147,18 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
     public void onClickEventDo(String n) {
         isLoad = true;
         laodgamename =n;
+    }
+
+    public void setPaddle(Paddle paddle) {
+        this.paddle = paddle;
+    }
+
+    public void setBall(Ball ball) {
+        this.ball = ball;
+    }
+
+    public void setGameState(GameState gameState) {
+        this.gameState = gameState;
     }
 
     @Override

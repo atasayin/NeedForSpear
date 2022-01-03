@@ -30,7 +30,7 @@ public class Saver {
         ArrayList<ArrayList<String>> map = new ArrayList<ArrayList<String>>();
         doc.put("PaddlePositionX", Game.getInstance().getPaddle().getPosVector().getX());
         doc.put("PaddlePositionY", Game.getInstance().getPaddle().getPosVector().getY());
-        doc.put("BallPositionX", Game.getInstance().getBall().posVector.getX());
+        doc.put("BallPositionX", Game.getInstance().getBall().posVector.getX() );
         doc.put("BallPositionY", Game.getInstance().getBall().posVector.getY());
         doc.put("Username", Game.getInstance().gameState.getPlayer().getUserName());
         doc.put("ChancePoints", Game.getInstance().gameState.getPlayer().getChance_points());
@@ -72,7 +72,7 @@ public class Saver {
     public void loadGame(Paddle paddle, Ball ball, String loadgameName) {
 
         HashMap<Obstacle, PosVector> loadObsPos = new HashMap<>();
-        Layout.setObstacle_positions(loadObsPos);
+        Layout.setObstaclePositions(loadObsPos);
 
         JSONParser jsonParser = new JSONParser();
         try (FileReader reader = new FileReader(loadgameName)) {

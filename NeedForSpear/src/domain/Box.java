@@ -6,7 +6,8 @@ import java.util.Random;
 public class Box extends DomainObject {
 
     /////////////////////////////////////////////////////////////////////////////////////
-
+    /// This is the artifact dropped from the gift obstacle and can be collected by the player
+    ////////////////////////////////////////////////////////////////////////////////////
     private int yVelocity = 10;
     private int abilityType;
     private PosVector posVector;

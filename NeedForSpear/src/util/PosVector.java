@@ -6,16 +6,17 @@ public class PosVector {
 
 	/*
 	// The abstraction function is
-		// AF(x,y) = {x,y >= 0 |x <= FRAME_WIDTH, y <= FRAME_HEIGHT}
+		// AF(x,y) = {x,y >= 0 |x <= FRAME_WIDTH}
 
 		// The rep invariant is
+		// x and y are integers
 		// x >= 0 &&
 		// y >= 0 &&
 		// x <= FRAME_WIDTH
 	*/
 
-	private int x;
-	private int y;
+	public int x;
+	public int y;
 	private final int FRAME_WIDTH = 1368;
 	private final int FRAME_HEIGHT = 766;
 
@@ -65,6 +66,7 @@ public class PosVector {
 		 */
 		if (this.x < 0 || this.x > FRAME_WIDTH) return false;
 		if (this.y < 0) return false;
+		if (this.x % 1 != 0 || this.y % 1 != 0) return false;
 
 		return true;
 	}

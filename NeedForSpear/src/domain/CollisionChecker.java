@@ -2,6 +2,7 @@ package domain;
 
 import domain.abilities.PaddleExpansion;
 import domain.obstacle.Obstacle;
+import util.PosVector;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,7 +28,7 @@ public class CollisionChecker {
         return instance;
     }
 
-
+    // Method used to check collision between the ball and the paddle
     public Boolean checkPaddleBallCollision(Ball ball, Paddle paddle) {
         int ball_x = ball.getPosVector().getX();
         int paddle_x = paddle.getPosVector().getX();
@@ -44,6 +45,9 @@ public class CollisionChecker {
         return false;
     }
 
+    // This is the new paddle ball collision method that takes the rotation of the paddle into account.
+    // It applies a linear transformation and measures dy, the distance between the ball and the closest point of
+    // the paddle.
     public Boolean checkPaddleBallCollisionAlt(Ball ball, Paddle paddle) {
         int ball_x = ball.getPosVector().getX();
         int ball_y = ball.getPosVector().getY();
@@ -73,6 +77,9 @@ public class CollisionChecker {
         return false;
     }
 
+
+    // Collision checker for domain objects
+    // Mostly used for obstacle-ball collisions
     public Boolean checkCollision(DomainObject object1, DomainObject object2){
         try {
             int object1_x = object1.getPosVector().getX();
@@ -134,7 +141,24 @@ public class CollisionChecker {
 
 
     }
+
+
     public void ChecktoDelete() {
+        /*
+            EFFECTS: if game instance has boxes or remaining pieces or obstacles, this checks collisions,
+                     deletes or adds corresponding object.
+
+                     if ball hits an obstacle, evokes destroy behavior, is reflected accordingly and
+                     obstacle is deleted from Game.DomainObjectArr, Layout.obstacle_positions.
+                     If object is instance of GiftOfUranus, a box is dropped which is added to
+                     Game.DomainObjectArr. If  object is instance of PandorasBox, a RemainingPieces
+                     is dropped which is added to Game.DomainObjectArr.
+
+
+            MODIFIES: Game, Player, Ball, Game.DomainObjectArr, Layout.obstacle_positions,
+                      Box, Obstacle, Remaining Pieces, this(CollisionChecker)
+
+         */
         Obstacle toBeDeleted = null;
         Box boxToBeDeleted = null;
         RemainingPieces remainsToBeDeleted = null;
@@ -235,7 +259,7 @@ public class CollisionChecker {
 
             }
         }
-        if (toBeDeleted != null) Layout.obstacle_positions.remove(toBeDeleted);
+        if (toBeDeleted != null) Layout.getObstaclePositions().remove(toBeDeleted);
         if (boxToBeDeleted != null) {
             boxes.remove(boxToBeDeleted);
             Game.getInstance().getDomainObjectArr().remove(boxToBeDeleted);
@@ -246,6 +270,8 @@ public class CollisionChecker {
         }
 
     }
+
+
 
     public void addListener( IBoxListener listener) {
         BoxListeners.add(listener);

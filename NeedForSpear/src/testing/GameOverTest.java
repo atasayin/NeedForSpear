@@ -49,18 +49,20 @@ class GameOverTest implements ActionListener {
         g.getDomainObjectArr().remove(wm);
 
     }
-
+    //Glass box test
     @org.junit.jupiter.api.Test
     void IsGetChanceWork(){
         assertEquals(g.gameState.getPlayer().getChance_points(), 3);
     }
 
+    //Glass box and blackbox together
     @org.junit.jupiter.api.Test
     void IsGameOver(){
         g.gameState.getPlayer().setChance_points(0);
         g.gameOverCheck();
         assertEquals(g.gameState.getIsRunning(), false);
     }
+    //Glass box and blackbox together
     @org.junit.jupiter.api.Test
     void GameNotOver(){
         g.gameState.getPlayer().setChance_points(2);
@@ -68,20 +70,30 @@ class GameOverTest implements ActionListener {
         assertEquals(g.gameState.getIsRunning(), true);
     }
 
+    //Glass box testing
     @org.junit.jupiter.api.Test
-    void GameNotOverIsNotWinCheck(){
+    void GameOverWinCheck(){
         g.gameState.getPlayer().setChance_points(2);
-        g.getDomainObjectArr().add(wm);
+        g.getDomainObjectArr().remove(wm);
         g.gameOverCheck();
-        assertEquals(g.getIsWin(), false);
+        assertEquals(g.getIsWin(), true);
     }
+    //Glass box testing
+    @org.junit.jupiter.api.Test
+    void GameWonIsTimerStopped(){
+        g.gameState.getPlayer().setChance_points(2);
+        g.gameOverCheck();
+        g.getDomainObjectArr().remove(wm);
+        assertEquals(g.getTimer().isRunning(), false);
+    }
+    //Glass box testing
     @org.junit.jupiter.api.Test
     void IsTimerStoppedGameLose(){
         g.gameState.getPlayer().setChance_points(0);
         g.gameOverCheck();
         assertEquals(g.getTimer().isRunning(), false);
     }
-
+    //Glass box testing
     @org.junit.jupiter.api.Test
     void TimerRunningObstacleLeft(){
         g.gameState.getPlayer().setChance_points(2);
@@ -89,7 +101,7 @@ class GameOverTest implements ActionListener {
         g.gameOverCheck();
         assertEquals(g.getTimer().isRunning(), true);
     }
-
+    //Glass box testing
     @org.junit.jupiter.api.Test
     void IsObjectArrayNull(){
         g.gameState.getPlayer().setChance_points(2);
