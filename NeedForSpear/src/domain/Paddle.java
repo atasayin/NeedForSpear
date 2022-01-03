@@ -88,7 +88,7 @@ public class Paddle extends DomainObject{
 		if (direction == GO_LEFT_DIC) { goLeft(); }
 		// Paddle goes right
 		else if (direction == GO_RIGHT_DIC) { goRight(); }
-		// Paddle rotates counter clockwise (A)
+		// Paddle rotates counterclockwise (A)
 		else if (direction == ROTATE_CCLOKC_DIC) { rotateCClockwise(); }
 		// Paddle rotates clockwise (D)
 		else if (direction == ROTATE_CLOCK_DIC) { rotateClockwise(); }
@@ -100,12 +100,13 @@ public class Paddle extends DomainObject{
 	}
 
 
-
+	//update the positions
 	public void updatePosition(int  x, int  y) {
 		this.posVector.setX(posVector.getX() + x);
 		this.posVector.setY(posVector.getY() + y);
 	}
 
+	//make paddle go left
 	private void goLeft(){
 		setSpeed(-normalSpeed, 0);
 		if ((getPosVector().getX() >= normalSpeed) && (getPosVector().getX()  <= FRAME_WIDTH - getLength())) {
@@ -115,6 +116,7 @@ public class Paddle extends DomainObject{
 		}
 	}
 
+	//make paddle go right
 	private void goRight(){
 		setSpeed(normalSpeed, 0);
 		if ((getPosVector().getX() <= FRAME_WIDTH - getLength() - normalSpeed) && (getPosVector().getX() >= 0)) {
@@ -124,6 +126,7 @@ public class Paddle extends DomainObject{
 		}
 	}
 
+	//rotate paddle counterclockwise between | -50 --- 50 |
 	private void rotateCClockwise(){
 		// | -50 --- 50 |
 
@@ -135,7 +138,7 @@ public class Paddle extends DomainObject{
 
 
 	}
-
+	//rotate paddle clockwise between | -50 --- 50 |
 	private void rotateClockwise(){
 		// | -50 --- 50 |
 
@@ -149,6 +152,7 @@ public class Paddle extends DomainObject{
 
 	}
 
+	//make paddle go left with fast speed
 	private void goFastLeft(){
 		setSpeed(-fastSpeed, 0);
 		if ((getPosVector().getX()  >= fastSpeed) && (getPosVector().getX() <= FRAME_WIDTH - getLength())) {
@@ -158,6 +162,7 @@ public class Paddle extends DomainObject{
 		}
 	}
 
+	//make paddle go right with fast speed
 	private void goFastRight(){
 		setSpeed(fastSpeed, 0);
 		if ((getPosVector().getX()  <= FRAME_WIDTH - getLength() - fastSpeed) && (getPosVector().getX()  >= 0)) {
