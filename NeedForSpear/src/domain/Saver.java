@@ -151,7 +151,7 @@ public class Saver {
                     }
                     listDO.add(obs);
                     vec = new PosVector(p, m);
-                    Layout.getObstacle_positions().put(obs, vec);
+                    Layout.getObstaclePositions().put(obs, vec);
                 }
                 if (s.contains("GiftOfUranus")) {
                     GiftOfUranus obs = new GiftOfUranus(p, m);
@@ -160,7 +160,7 @@ public class Saver {
                     }
                     listDO.add(obs);
                     vec = new PosVector(p, m);
-                    Layout.getObstacle_positions().put(obs, vec);
+                    Layout.getObstaclePositions().put(obs, vec);
                 }
                 if (s.contains("PandorasBox")) {
                     PandorasBox obs = new PandorasBox(p, m);
@@ -169,7 +169,7 @@ public class Saver {
                     }
                     listDO.add(obs);
                     vec = new PosVector(p, m);
-                    Layout.getObstacle_positions().put(obs, vec);
+                    Layout.getObstaclePositions().put(obs, vec);
                 }
                 if (s.contains("SteinsGate")) {
                     SteinsGate obs = new SteinsGate(p, m);
@@ -178,7 +178,7 @@ public class Saver {
                     }
                     listDO.add(obs);
                     vec = new PosVector(p, m);
-                    Layout.getObstacle_positions().put(obs, vec);
+                    Layout.getObstaclePositions().put(obs, vec);
                 }
                 if (s.contains("HollowPurple")) {
                     Hollow obs = new Hollow(p, m);
@@ -187,7 +187,7 @@ public class Saver {
                     }
                     listDO.add(obs);
                     vec = new PosVector(p, m);
-                    Layout.getObstacle_positions().put(obs, vec);
+                    Layout.getObstaclePositions().put(obs, vec);
                 }
             }
 

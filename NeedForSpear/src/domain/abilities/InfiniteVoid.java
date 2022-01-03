@@ -21,7 +21,7 @@ public class InfiniteVoid implements Runnable{
 
 
     public void chooseAndFreezeObstacles() {
-        ArrayList<Obstacle> layoutObsList = new ArrayList<Obstacle>(Layout.obstacle_positions.keySet());
+        ArrayList<Obstacle> layoutObsList = new ArrayList<Obstacle>(Layout.getObstaclePositions().keySet());
         int numberOfObstaclesToChoose = Math.min(8, layoutObsList.size());
         int index;
         for (int i=0; i<numberOfObstaclesToChoose; i++) {

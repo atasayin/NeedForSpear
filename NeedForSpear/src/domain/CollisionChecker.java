@@ -197,7 +197,7 @@ public class CollisionChecker {
 
             //if (Game.getInstance().ball.getPosVector().getY() < 0) Game.getInstance().ball.reflectFromHorizontal();
 
-        for (Obstacle obs : Layout.obstacle_positions.keySet()) {
+        for (Obstacle obs : Layout.getObstaclePositions().keySet()) {
 
             if (instance.checkCollision(Game.getInstance().getBall(), obs)) {
 

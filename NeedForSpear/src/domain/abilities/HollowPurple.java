@@ -32,7 +32,7 @@ public class HollowPurple {
                 Hollow h = (Hollow) ObstacleFactory.getInstance().getObstacle(4, pos);
 
                 if (Layout.isAvailable(h)) {
-                    Layout.obstacle_positions.put(h, pos);
+                    Layout.getObstaclePositions().put(h, pos);
                     Game.getInstance().getDomainObjectArr().add(h);
                     System.out.println("Hollow "+ i+ " "+ h.getPosVector().getX()+ " "+ h.getPosVector().getY());
                     break;

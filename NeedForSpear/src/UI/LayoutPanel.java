@@ -1,6 +1,7 @@
 package UI;
 
 import domain.*;
+import domain.controller.KeyboardController;
 import domain.controller.LayoutController;
 import domain.obstacle.Obstacle;
 
@@ -8,12 +9,16 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.BitSet;
 
 @SuppressWarnings("serial")
 public class LayoutPanel extends JPanel implements ActionListener,MouseListener, KeyListener,MouseMotionListener{
 
+    BufferedImage img; // background
+    String infoString = "";
+    KeyboardController kc = new KeyboardController();
 
 
     // Timer
@@ -47,6 +52,7 @@ public class LayoutPanel extends JPanel implements ActionListener,MouseListener,
             initializeLayoutPanel();
 
         } catch (IOException e) {
+            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -96,12 +102,17 @@ public class LayoutPanel extends JPanel implements ActionListener,MouseListener,
 
     }
 
-    private void drawObstacle(Graphics2D g2d, Obstacle d) {
-        ObstacleView.getInstance().draw(g2d, d, frame_width, frame_height);
+    private void drawPaddle(Graphics2D g2d, Paddle d, int width, int height) throws IOException {
+        // TODO Auto-generated method stub
+        PaddleView.getInstance().draw(g2d, d, width, height);
 
     }
-    private void drawPaddle(Graphics2D g2d, Paddle d, int width, int height) throws IOException {
-        PaddleView.getInstance().draw(g2d, d, width, height);
+
+    private void drawComponent(Graphics2D g2d, DomainObject d) throws IOException {
+        // TODO Auto-generated method stub
+        if (d instanceof Obstacle) {
+            ObstacleView.getInstance().draw(g2d, d, PANEL_WIDTH, PANEL_HEIGHT);
+        }
 
     }
 

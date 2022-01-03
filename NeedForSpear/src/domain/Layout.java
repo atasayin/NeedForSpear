@@ -41,7 +41,7 @@ public class Layout {
     private int SEED_NUMBER = 14;
 
     // Collision Checker for Obstacles
-    private CollisionChecker CC;
+    private static CollisionChecker CC;
 
     // Offset to place the obstacles
     private int obsLen;
@@ -121,7 +121,7 @@ public class Layout {
 
 
     // Collider check for creating Layout
-    private boolean isAvailable(Obstacle newObs){
+    public static boolean isAvailable(Obstacle newObs){
         /*
         EFFECTS: It compares the newcoming obstacle positions with all the existing obstacles' positions
                 If there is an overlapping, it returns false. Otherwise, it returns true.
