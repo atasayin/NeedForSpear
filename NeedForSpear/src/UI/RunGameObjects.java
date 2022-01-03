@@ -408,10 +408,10 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
         }
 
         // Load (l)
-        if (isKeyPressed(76)){
+       /* if (isKeyPressed(76)){
             loadGame();
             return;
-        }
+        }*/
 
 
         if (kc.processKeys(keyBits)) { // when returns true restart

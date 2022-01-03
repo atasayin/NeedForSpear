@@ -93,10 +93,10 @@ public class KeyboardController {
         }
 
         // Load (L)
-        if (isKeyPressed(76)){
+       /* if (isKeyPressed(76)){
             Game currentGame1 = Game.getInstance();
             currentGame1.loadGame();
-        }
+        }*/
 
         // Chance giving ability updated
         if (isKeyPressed(67)) {

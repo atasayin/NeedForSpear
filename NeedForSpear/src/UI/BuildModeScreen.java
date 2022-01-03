@@ -4,13 +4,10 @@ package UI;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseListener;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.BitSet;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
@@ -21,7 +18,6 @@ import javax.swing.event.ChangeListener;
 
 import domain.*;
 import domain.controller.LayoutController;
-import org.bson.Document;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -303,7 +299,8 @@ public class BuildModeScreen extends JFrame {
                     getFileOptions();
 
 
-                    String[] options = temp.toArray(new String[0]);
+                    //String[] options = temp.toArray(new String[0]);
+                    String[] options= getUserFileOptions();
                     ImageIcon icon = new ImageIcon("src/assets/sphere.png");
                     String n = (String)JOptionPane.showInputDialog(null, "Which game you want to load "+ username+ "?",
                             "GameLoadOptions", JOptionPane.QUESTION_MESSAGE, icon, options, options[0]);
@@ -347,6 +344,22 @@ public class BuildModeScreen extends JFrame {
         this.gameNum = num;
     }
 
+    public String[] getUserFileOptions(){
+        String[] temp2 = temp.toArray(new String[0]);
+
+        String[] temp3 = new String[temp2.length];
+        int i =0;
+
+        for(String name : temp2){
+            if(name.contains(username)){
+                temp3[i] = name;
+                i++;
+
+            }
+        }
+        return temp3;
+
+    }
     public void getFileOptions() {
 
         JSONParser jsonParser = new JSONParser();

@@ -127,7 +127,7 @@ public class Layout {
                 If there is an overlapping, it returns false. Otherwise, it returns true.
         */
         for (Obstacle obs: obstacle_positions.keySet()){
-            if (CC.checkCollision(newObs, obs)){
+            if (CollisionChecker.getInstance().checkCollision(newObs, obs)){
                 return false;
             }
         }
