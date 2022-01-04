@@ -167,10 +167,24 @@ public class CollisionChecker {
 
         if(Game.getInstance().getPaddle().getHasCannon()){
 
-            Game.getInstance().getPaddle().c1.updatePosition(0,0);
-            Game.getInstance().getPaddle().c2.updatePosition(0,0);
-            Game.getInstance().getPaddle().c1.bullet.updatePosition();
-            Game.getInstance().getPaddle().c2.bullet.updatePosition();
+            Game.getInstance().getPaddle().getCannon1().updatePosition(0,0);
+            Game.getInstance().getPaddle().getCannon2().updatePosition(0,0);
+            Game.getInstance().getPaddle().getCannon1().getBullet().updatePosition();
+            Game.getInstance().getPaddle().getCannon2().getBullet().updatePosition();
+
+            if(Game.getInstance().getPaddle().getCannon1().getBullet().getPosVector().getY()<=0){
+                Game.getInstance().getPaddle().getCannon2().getBullet().setOutOfScreen(true);
+                Game.getInstance().getPaddle().getCannon1().getBullet().setOutOfScreen(true);
+            }
+            if(Game.getInstance().getPaddle().getCannon1().getBullet().outOfScreen){
+                Integer X =  Game.getInstance().getPaddle().getPosVector().getX();
+                Integer Y =  Game.getInstance().getPaddle().getPosVector().getY();
+                PosVector pos = new PosVector(X,Y);
+                PosVector pos2 = new PosVector(X-Game.getInstance().getPaddle().getLength(),Y);
+                Game.getInstance().getPaddle().getCannon1().getBullet().setPosVector(pos);
+                Game.getInstance().getPaddle().getCannon2().getBullet().setPosVector(pos2);
+                Game.getInstance().getPaddle().getCannon1().getBullet().outOfScreen =false;
+            }
             System.out.println(Game.getInstance().getPaddle().getPosVector().getX()+ " Paddle LOCATIONN");
             System.out.println(Game.getInstance().getPaddle().c1.getPosVector().getX()+ " CANNON 1 LOCATIONN");
             System.out.println(Game.getInstance().getPaddle().c2.getPosVector().getX()+ " CANNON 2 LOCATIONN");

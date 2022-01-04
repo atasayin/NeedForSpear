@@ -8,7 +8,7 @@ public class Bullet extends DomainObject {
     public int yVelocity =10;
     private int width = 20;
     private int height = 20;
-    private boolean outOfScreen;
+    protected boolean outOfScreen;
 
     public Bullet(int x, int y){
         this.posVector = new PosVector(x, y);
@@ -19,7 +19,11 @@ public class Bullet extends DomainObject {
     protected void updatePosition(int x, int y) {
 
     }
+    public PosVector getPosVector() { return this.posVector; }
 
+    public void setPosVector(PosVector pos) {
+        this.posVector = pos;
+    }
     @Override
     public void updatePosition() {
         this.posVector.setX(this.posVector.getX());
