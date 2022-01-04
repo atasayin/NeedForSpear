@@ -64,6 +64,7 @@ public class Paddle extends DomainObject{
 	}
 
 	public int getNormalSpeed(){ return this.normalSpeed; }
+
 	public int getFastSpeed() { return this.fastSpeed; }
 
 	// Used for Paddle Expansion ability
