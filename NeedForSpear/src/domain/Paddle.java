@@ -71,12 +71,14 @@ public class Paddle extends DomainObject{
 
 	// Used for Paddle Expansion ability
 	public void expandPaddle() {
-		this.length *=2;
+		this.length *= 2;
+		this.width *= 2;
 	}
 
 	// Normalize paddle after ability
 	public void normalizePaddle() {
 		this.length /=2;
+		this.width *=2;
 	}
 
 
