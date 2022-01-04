@@ -26,6 +26,7 @@ public class Box extends DomainObject {
 
     }
 
+    //update position.
     @Override
     public void updatePosition() {
         this.posVector.setX(this.posVector.getX());
@@ -46,6 +47,7 @@ public class Box extends DomainObject {
         this.posVector = pos;
     }
 
+    //update the current ability if the box is catched by player(paddle), otherwise false.
     public void updateAbility(){
         if(isBoxCatched){
             int currentAbilityNum = Game.getInstance().gameState.getPlayer().getAbilities().get(abilityType);

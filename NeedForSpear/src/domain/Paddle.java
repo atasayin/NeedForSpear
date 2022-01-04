@@ -30,6 +30,9 @@ public class Paddle extends DomainObject{
 	private int fastSpeed;
 	private int width;
 	private int height = PADDLE_THICKNESS;
+	private boolean hasCannon =false;
+	protected Cannon leftCannon;
+	protected Cannon rightCannon;
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
@@ -69,12 +72,14 @@ public class Paddle extends DomainObject{
 
 	// Used for Paddle Expansion ability
 	public void expandPaddle() {
-		this.length *=2;
+		this.length *= 2;
+		this.width *= 2;
 	}
 
 	// Normalize paddle after ability
 	public void normalizePaddle() {
 		this.length /=2;
+		this.width *=2;
 	}
 
 
@@ -89,7 +94,7 @@ public class Paddle extends DomainObject{
 		if (direction == GO_LEFT_DIC) { goLeft(); }
 		// Paddle goes right
 		else if (direction == GO_RIGHT_DIC) { goRight(); }
-		// Paddle rotates counter clockwise (A)
+		// Paddle rotates counterclockwise (A)
 		else if (direction == ROTATE_CCLOKC_DIC) { rotateCClockwise(); }
 		// Paddle rotates clockwise (D)
 		else if (direction == ROTATE_CLOCK_DIC) { rotateClockwise(); }
@@ -101,12 +106,13 @@ public class Paddle extends DomainObject{
 	}
 
 
-
+	//update the positions
 	public void updatePosition(int  x, int  y) {
 		this.posVector.setX(posVector.getX() + x);
 		this.posVector.setY(posVector.getY() + y);
 	}
 
+	//make paddle go left
 	private void goLeft(){
 		setSpeed(-normalSpeed, 0);
 		if ((getPosVector().getX() >= normalSpeed) && (getPosVector().getX()  <= FRAME_WIDTH - getLength())) {
@@ -116,6 +122,7 @@ public class Paddle extends DomainObject{
 		}
 	}
 
+	//make paddle go right
 	private void goRight(){
 		setSpeed(normalSpeed, 0);
 		if ((getPosVector().getX() <= FRAME_WIDTH - getLength() - normalSpeed) && (getPosVector().getX() >= 0)) {
@@ -125,6 +132,7 @@ public class Paddle extends DomainObject{
 		}
 	}
 
+	//rotate paddle counterclockwise between | -50 --- 50 |
 	private void rotateCClockwise(){
 		// | -50 --- 50 |
 
@@ -136,7 +144,7 @@ public class Paddle extends DomainObject{
 
 
 	}
-
+	//rotate paddle clockwise between | -50 --- 50 |
 	private void rotateClockwise(){
 		// | -50 --- 50 |
 
@@ -150,6 +158,7 @@ public class Paddle extends DomainObject{
 
 	}
 
+	//make paddle go left with fast speed
 	private void goFastLeft(){
 		setSpeed(-fastSpeed, 0);
 		if ((getPosVector().getX()  >= fastSpeed) && (getPosVector().getX() <= FRAME_WIDTH - getLength())) {
@@ -159,6 +168,7 @@ public class Paddle extends DomainObject{
 		}
 	}
 
+	//make paddle go right with fast speed
 	private void goFastRight(){
 		setSpeed(fastSpeed, 0);
 		if ((getPosVector().getX()  <= FRAME_WIDTH - getLength() - fastSpeed) && (getPosVector().getX()  >= 0)) {
@@ -168,6 +178,45 @@ public class Paddle extends DomainObject{
 		}
 	}
 
+	public boolean getHasCannon(){
+		return this.hasCannon;
+	}
+
+	public void setHasCannon(boolean b){
+		this.hasCannon =b;
+	}
+
+	public void setCannons(Cannon c, Cannon cc){
+		this.leftCannon =c;
+		this.rightCannon =cc;
+	}
+
+	public Cannon getLeftCannon(){
+		return this.leftCannon;
+
+	}
+
+	public Cannon getRightCannon(){
+		return this.rightCannon;
+
+	}
+
+	public double getCenterX() {
+		return this.getPosVector().getX() + this.length/2;
+	}
+
+
+	public PosVector getLeftCornerPos() {
+		int x_coordinate = (int) (this.getCenterX() - (this.length/2 * Math.cos((Math.toRadians(this.angle)))));
+		int y_coordinate = (int) (this.getPosVector().getY() - (this.length/2 * Math.sin(Math.toRadians(this.angle))));
+		return new PosVector(x_coordinate - 27, y_coordinate);
+	}
+
+	public PosVector getRightCornerPos() {
+		int x_coordinate = (int) (this.getCenterX() + (this.length/2 * Math.cos((Math.toRadians(this.angle)))));
+		int y_coordinate = (int) (this.getPosVector().getY() + (this.length/2 * Math.sin(Math.toRadians(this.angle))));
+		return new PosVector(x_coordinate -7, y_coordinate);
+	}
 
 
 	// Needed for collision check calculations

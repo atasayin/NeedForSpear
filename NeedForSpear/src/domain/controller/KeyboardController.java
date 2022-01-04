@@ -1,8 +1,10 @@
 package domain.controller;
 
 import domain.*;
+import domain.abilities.Hex;
 import domain.abilities.PaddleExpansion;
 import domain.abilities.UnstoppableBall;
+import util.PosVector;
 
 import java.util.BitSet;
 
@@ -39,6 +41,9 @@ public class KeyboardController {
 
         Paddle paddle = Game.getInstance().getPaddle();
         this.keyBits = keyBits;
+        PosVector pos;
+        PosVector pos2;
+
 
         // returns a boolean indicating whether to restart timer
         // Movements
@@ -49,8 +54,16 @@ public class KeyboardController {
                 // Fast
                 if(isKeyPressed(40)){
                     paddle.move(5);
+                    if(paddle.getHasCannon()){
+                        paddle.getLeftCannon().setPosVector(paddle.getLeftCornerPos());
+                        paddle.getRightCannon().setPosVector(paddle.getRightCornerPos());
+                    }
                 }else {
                     paddle.move(1);
+                    if(paddle.getHasCannon()){
+                        paddle.getLeftCannon().setPosVector(paddle.getLeftCornerPos());
+                        paddle.getRightCannon().setPosVector(paddle.getRightCornerPos());
+                    }
 
                 }
 
@@ -61,8 +74,16 @@ public class KeyboardController {
                 // Fast
                 if(isKeyPressed(40)){
                     paddle.move(6);
+                    if(paddle.getHasCannon()){
+                        paddle.getLeftCannon().setPosVector(paddle.getLeftCornerPos());
+                        paddle.getRightCannon().setPosVector(paddle.getRightCornerPos());
+                    }
                 }else {
                     paddle.move(2);
+                    if(paddle.getHasCannon()){
+                        paddle.getLeftCannon().setPosVector(paddle.getLeftCornerPos());
+                        paddle.getRightCannon().setPosVector(paddle.getRightCornerPos());
+                    }
 
                 }
 
@@ -71,11 +92,19 @@ public class KeyboardController {
             // Rotate counter-clockwise (A)
             if (isKeyPressed(65)){
                 paddle.move(3);
+                if(paddle.getHasCannon()){
+                    paddle.getLeftCannon().setPosVector(paddle.getLeftCornerPos());
+                    paddle.getRightCannon().setPosVector(paddle.getRightCornerPos());
+                }
             }
 
             // Rotate clockwise (D)
             if (isKeyPressed(68)){
                 paddle.move(4);
+                if(paddle.getHasCannon()){
+                    paddle.getLeftCannon().setPosVector(paddle.getLeftCornerPos());
+                    paddle.getRightCannon().setPosVector(paddle.getRightCornerPos());
+                }
             }
 
         }
@@ -133,6 +162,18 @@ public class KeyboardController {
                 Game.getInstance().gameState.getPlayer().setIsMagicalAbilityActive(true);
                 UnstoppableBall unstoppableBall = new UnstoppableBall();
                 Thread t = new Thread(unstoppableBall);
+                t.start();
+            }
+        }
+        //Hex Ability activated
+        if (isKeyPressed(72)) {
+            if (Game.getInstance().gameState.getPlayer().getAbilities().get(4) >0){
+                int num = Game.getInstance().gameState.getPlayer().getAbilities().get(4);
+                Game.getInstance().gameState.getPlayer().getAbilities().put(4,num-1);
+                Game.getInstance().gameState.getPlayer().notifyAllInventoryListeners(num-1);
+                Game.getInstance().gameState.getPlayer().setIsMagicalAbilityActive(true);
+                Hex hex = new Hex();
+                Thread t = new Thread(hex);
                 t.start();
             }
         }

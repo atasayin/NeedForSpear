@@ -33,6 +33,7 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
     private Ymir ymir;
     private String laodgamename;
     public boolean isStarted = false;
+    private Thread ymirThread;
 
     private javax.swing.Timer game_Timer;
 
@@ -107,7 +108,7 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
         ymir.setPeriod(Ymirfreq);
         ymir.setProbabilities(YmirProb1, YmirProb2, YmirProb3);
 
-        Thread ymirThread = new Thread(ymir);
+        ymirThread = new Thread(ymir);
         ymirThread.start();
 
     }
@@ -130,10 +131,12 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
         if( chancePoint <= 0 ){
             instance.gameState.isRunning = false;
             game_Timer.stop();
+            ymir.terminate();
         }
         else if(instance.getDomainObjectArr().size() == 0){
             this.isWin= true;
             game_Timer.stop();
+            ymir.terminate();
         }
     }
     public Paddle getPaddle() {return paddle;}

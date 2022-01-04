@@ -1,13 +1,10 @@
 package domain;
 
-import domain.abilities.PaddleExpansion;
 import domain.obstacle.Obstacle;
 import util.PosVector;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 public class CollisionChecker {
     static CollisionChecker instance;
@@ -15,6 +12,7 @@ public class CollisionChecker {
     private ArrayList<IRemainsListener> RemainListeners = new ArrayList<>();
     private  ArrayList<Box> boxes = new ArrayList<>();
     private  ArrayList<RemainingPieces> remains = new ArrayList<>();
+    boolean bulletsHit;
 
 
     private CollisionChecker(){
@@ -164,6 +162,33 @@ public class CollisionChecker {
         RemainingPieces remainsToBeDeleted = null;
         Game.getInstance().getPaddle().updatePosition(0, 0);
         Game.getInstance().getBall().move();
+
+        if(Game.getInstance().getPaddle().getHasCannon()){
+
+            Game.getInstance().getPaddle().getLeftCannon().updatePosition(0,0);
+            Game.getInstance().getPaddle().getRightCannon().updatePosition(0,0);
+            Game.getInstance().getPaddle().getLeftCannon().getBullet().updatePosition();
+            Game.getInstance().getPaddle().getRightCannon().getBullet().updatePosition();
+
+            if(Game.getInstance().getPaddle().getLeftCannon().getBullet().getPosVector().getY()<=70){
+                Game.getInstance().getPaddle().getRightCannon().getBullet().setOutOfScreen(true);
+                Game.getInstance().getPaddle().getLeftCannon().getBullet().setOutOfScreen(true);
+            }
+            if(Game.getInstance().getPaddle().getLeftCannon().getBullet().outOfScreen){
+                Integer X =  Game.getInstance().getPaddle().getPosVector().getX();
+                Integer Y =  Game.getInstance().getPaddle().getPosVector().getY();
+                PosVector pos = new PosVector(X,Y);
+                PosVector pos2 = new PosVector(X-Game.getInstance().getPaddle().getLength(),Y);
+                Game.getInstance().getPaddle().getLeftCannon().getBullet().setPosVector(pos);
+                Game.getInstance().getPaddle().getRightCannon().getBullet().setPosVector(pos2);
+                Game.getInstance().getPaddle().getLeftCannon().getBullet().outOfScreen =false;
+            }
+            System.out.println(Game.getInstance().getPaddle().getPosVector().getX()+ " Paddle LOCATIONN");
+            System.out.println(Game.getInstance().getPaddle().leftCannon.getPosVector().getX()+ " CANNON 1 LOCATIONN");
+            System.out.println(Game.getInstance().getPaddle().rightCannon.getPosVector().getX()+ " CANNON 2 LOCATIONN");
+            System.out.println(Game.getInstance().getPaddle().leftCannon.bullet.getPosVector().getY()+ " Bullet 1 LOCATIONN");
+            System.out.println(Game.getInstance().getPaddle().rightCannon.bullet.getPosVector().getY()+ " Bullet 2 LOCATIONN");
+        }
         if (boxes != null) {
             for (Box box : boxes) {
                 box.updatePosition();
@@ -198,8 +223,23 @@ public class CollisionChecker {
             //if (Game.getInstance().ball.getPosVector().getY() < 0) Game.getInstance().ball.reflectFromHorizontal();
 
         for (Obstacle obs : Layout.getObstaclePositions().keySet()) {
+            bulletsHit = false;
 
-            if (instance.checkCollision(Game.getInstance().getBall(), obs)) {
+            if (Game.getInstance().getPaddle().getHasCannon()) {
+                if (checkCollision(Game.getInstance().getPaddle().getLeftCannon().getBullet(), obs)) {
+                    bulletsHit = true;
+                    Game.getInstance().getPaddle().getLeftCannon().getBullet().updatePosition(Game.getInstance().getPaddle().getLeftCannon().getPosVector().getX(),
+                            Game.getInstance().getPaddle().getLeftCannon().getPosVector().getY());
+                }
+                else if (checkCollision(Game.getInstance().getPaddle().getRightCannon().getBullet(), obs)) {
+                    bulletsHit = true;
+                    Game.getInstance().getPaddle().getRightCannon().getBullet().updatePosition(Game.getInstance().getPaddle().getRightCannon().getPosVector().getX(),
+                            Game.getInstance().getPaddle().getRightCannon().getPosVector().getY());
+                }
+            }
+
+
+            if (instance.checkCollision(Game.getInstance().getBall(), obs) || bulletsHit) {
 
                 // if obs is not frozen
                 if (!obs.isFrozen()) {

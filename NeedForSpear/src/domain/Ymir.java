@@ -11,6 +11,7 @@ public class Ymir implements Runnable{
     private int period;
     private double[] weights;
     private Random random;
+    private boolean running;
 
 
 
@@ -19,6 +20,7 @@ public class Ymir implements Runnable{
         this.weights = new double[]{0.33, 0.33, 0.34};
         long currentTime = System.currentTimeMillis();
         random = new Random(currentTime);
+        this.running = true;
     }
 
     // Dice roll every <period> seconds to decide whether an ability will be used or not
@@ -47,9 +49,13 @@ public class Ymir implements Runnable{
         weights[2] = weights[1] + w3 / sum;
     }
 
+    public void terminate() {
+        this.running = false;
+    }
+
     @Override
     public void run() {
-        while(true) {
+        while(running) {
             try {
                 TimeUnit.SECONDS.sleep(this.period + 15);
                 if (true) {
