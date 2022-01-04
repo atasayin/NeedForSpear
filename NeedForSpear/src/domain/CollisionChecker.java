@@ -164,6 +164,19 @@ public class CollisionChecker {
         RemainingPieces remainsToBeDeleted = null;
         Game.getInstance().getPaddle().updatePosition(0, 0);
         Game.getInstance().getBall().move();
+
+        if(Game.getInstance().getPaddle().getHasCannon()){
+
+            Game.getInstance().getPaddle().c1.updatePosition(0,0);
+            Game.getInstance().getPaddle().c2.updatePosition(0,0);
+            Game.getInstance().getPaddle().c1.bullet.updatePosition();
+            Game.getInstance().getPaddle().c2.bullet.updatePosition();
+            System.out.println(Game.getInstance().getPaddle().getPosVector().getX()+ " Paddle LOCATIONN");
+            System.out.println(Game.getInstance().getPaddle().c1.getPosVector().getX()+ " CANNON 1 LOCATIONN");
+            System.out.println(Game.getInstance().getPaddle().c2.getPosVector().getX()+ " CANNON 2 LOCATIONN");
+            System.out.println(Game.getInstance().getPaddle().c1.bullet.getPosVector().getY()+ " Bullet 1 LOCATIONN");
+            System.out.println(Game.getInstance().getPaddle().c2.bullet.getPosVector().getY()+ " Bullet 2 LOCATIONN");
+        }
         if (boxes != null) {
             for (Box box : boxes) {
                 box.updatePosition();

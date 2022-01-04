@@ -30,6 +30,9 @@ public class Paddle extends DomainObject{
 	private int fastSpeed;
 	private int width;
 	private int height = PADDLE_THICKNESS;
+	private boolean hasCannon =false;
+	protected Cannon c1;
+	protected Cannon c2;
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
@@ -167,6 +170,28 @@ public class Paddle extends DomainObject{
 		}
 	}
 
+	public boolean getHasCannon(){
+		return this.hasCannon;
+	}
+
+	public void setHasCannon(boolean b){
+		this.hasCannon =b;
+	}
+
+	public void setCannons(Cannon c, Cannon cc){
+		this.c1 =c;
+		this.c2 =cc;
+	}
+
+	public Cannon getCannon1(){
+		return this.c1;
+
+	}
+
+	public Cannon getCannon2(){
+		return this.c2;
+
+	}
 
 
 	// Needed for collision check calculations

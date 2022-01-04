@@ -166,6 +166,20 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
         g2d.drawString(infoString, this.getWidth() / 2 - textWidth / 2, infoStringHeight);
         g2d.drawLine(0, yOffset, frame_width, yOffset);
 
+        if(Game.getInstance().getPaddle().getHasCannon()){
+            try {
+                drawCannon(g2d, Game.getInstance().getPaddle().getCannon1(), frame_width, frame_height);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                drawCannon(g2d, Game.getInstance().getPaddle().getCannon2(), frame_width, frame_height);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            drawBullet(g2d, Game.getInstance().getPaddle().getCannon1().getBullet(), frame_width, frame_height);
+            drawBullet(g2d, Game.getInstance().getPaddle().getCannon2().getBullet(), frame_width, frame_height);
+        }
         if(isBoxDropped) {
             isBoxDropped = false;
         }
@@ -183,8 +197,16 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
         PaddleView.getInstance().draw(g2d, d, width, height);
     }
 
+    private void drawCannon(Graphics2D g2d, Cannon c, int width, int height) throws IOException {
+        CannonView.getInstance().draw(g2d, c, width, height);
+    }
+
     private void drawBall(Graphics2D g2d, Ball b, int width, int height) {
         BallView.getInstance().draw(g2d, b, width, height);
+
+    }
+    private void drawBullet(Graphics2D g2d, Bullet b, int width, int height) {
+        BulletView.getInstance().draw(g2d, b, width, height);
 
     }
 
