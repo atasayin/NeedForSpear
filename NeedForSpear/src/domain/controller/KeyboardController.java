@@ -41,8 +41,9 @@ public class KeyboardController {
 
         Paddle paddle = Game.getInstance().getPaddle();
         this.keyBits = keyBits;
-        PosVector pos = new PosVector(paddle.getPosVector().getX()+5,paddle.getPosVector().getY());
-        PosVector pos2 = new PosVector(paddle.getPosVector().getX()- (paddle.getLength()+5),paddle.getPosVector().getY());
+        PosVector pos;
+        PosVector pos2;
+
 
         // returns a boolean indicating whether to restart timer
         // Movements
@@ -54,14 +55,14 @@ public class KeyboardController {
                 if(isKeyPressed(40)){
                     paddle.move(5);
                     if(paddle.getHasCannon()){
-                        paddle.getCannon1().setPosVector(pos);
-                        paddle.getCannon2().setPosVector(pos2);
+                        paddle.getLeftCannon().setPosVector(paddle.getLeftCornerPos());
+                        paddle.getRightCannon().setPosVector(paddle.getRightCornerPos());
                     }
                 }else {
                     paddle.move(1);
                     if(paddle.getHasCannon()){
-                        paddle.getCannon1().setPosVector(pos);
-                        paddle.getCannon2().setPosVector(pos2);
+                        paddle.getLeftCannon().setPosVector(paddle.getLeftCornerPos());
+                        paddle.getRightCannon().setPosVector(paddle.getRightCornerPos());
                     }
 
                 }
@@ -74,14 +75,14 @@ public class KeyboardController {
                 if(isKeyPressed(40)){
                     paddle.move(6);
                     if(paddle.getHasCannon()){
-                        paddle.getCannon1().setPosVector(pos);
-                        paddle.getCannon2().setPosVector(pos2);
+                        paddle.getLeftCannon().setPosVector(paddle.getLeftCornerPos());
+                        paddle.getRightCannon().setPosVector(paddle.getRightCornerPos());
                     }
                 }else {
                     paddle.move(2);
                     if(paddle.getHasCannon()){
-                        paddle.getCannon1().setPosVector(pos);
-                        paddle.getCannon2().setPosVector(pos2);
+                        paddle.getLeftCannon().setPosVector(paddle.getLeftCornerPos());
+                        paddle.getRightCannon().setPosVector(paddle.getRightCornerPos());
                     }
 
                 }
@@ -92,8 +93,8 @@ public class KeyboardController {
             if (isKeyPressed(65)){
                 paddle.move(3);
                 if(paddle.getHasCannon()){
-                    paddle.getCannon1().setPosVector(pos);
-                    paddle.getCannon2().setPosVector(pos2);
+                    paddle.getLeftCannon().setPosVector(paddle.getLeftCornerPos());
+                    paddle.getRightCannon().setPosVector(paddle.getRightCornerPos());
                 }
             }
 
@@ -101,8 +102,8 @@ public class KeyboardController {
             if (isKeyPressed(68)){
                 paddle.move(4);
                 if(paddle.getHasCannon()){
-                    paddle.getCannon1().setPosVector(pos);
-                    paddle.getCannon2().setPosVector(pos2);
+                    paddle.getLeftCannon().setPosVector(paddle.getLeftCornerPos());
+                    paddle.getRightCannon().setPosVector(paddle.getRightCornerPos());
                 }
             }
 

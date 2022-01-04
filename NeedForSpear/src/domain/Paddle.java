@@ -31,8 +31,8 @@ public class Paddle extends DomainObject{
 	private int width;
 	private int height = PADDLE_THICKNESS;
 	private boolean hasCannon =false;
-	protected Cannon c1;
-	protected Cannon c2;
+	protected Cannon leftCannon;
+	protected Cannon rightCannon;
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
@@ -186,18 +186,35 @@ public class Paddle extends DomainObject{
 	}
 
 	public void setCannons(Cannon c, Cannon cc){
-		this.c1 =c;
-		this.c2 =cc;
+		this.leftCannon =c;
+		this.rightCannon =cc;
 	}
 
-	public Cannon getCannon1(){
-		return this.c1;
+	public Cannon getLeftCannon(){
+		return this.leftCannon;
 
 	}
 
-	public Cannon getCannon2(){
-		return this.c2;
+	public Cannon getRightCannon(){
+		return this.rightCannon;
 
+	}
+
+	public double getCenterX() {
+		return this.getPosVector().getX() + this.length/2;
+	}
+
+
+	public PosVector getLeftCornerPos() {
+		int x_coordinate = (int) (this.getCenterX() - (this.length/2 * Math.cos((Math.toRadians(this.angle)))));
+		int y_coordinate = (int) (this.getPosVector().getY() - (this.length/2 * Math.sin(Math.toRadians(this.angle))));
+		return new PosVector(x_coordinate - 27, y_coordinate);
+	}
+
+	public PosVector getRightCornerPos() {
+		int x_coordinate = (int) (this.getCenterX() + (this.length/2 * Math.cos((Math.toRadians(this.angle)))));
+		int y_coordinate = (int) (this.getPosVector().getY() + (this.length/2 * Math.sin(Math.toRadians(this.angle))));
+		return new PosVector(x_coordinate -7, y_coordinate);
 	}
 
 

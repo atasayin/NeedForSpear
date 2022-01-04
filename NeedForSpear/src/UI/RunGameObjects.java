@@ -168,17 +168,17 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
 
         if(Game.getInstance().getPaddle().getHasCannon()){
             try {
-                drawCannon(g2d, Game.getInstance().getPaddle().getCannon1(), frame_width, frame_height);
+                drawCannon(g2d, Game.getInstance().getPaddle().getLeftCannon(), frame_width, frame_height);
             } catch (IOException e) {
                 e.printStackTrace();
             }
             try {
-                drawCannon(g2d, Game.getInstance().getPaddle().getCannon2(), frame_width, frame_height);
+                drawCannon(g2d, Game.getInstance().getPaddle().getRightCannon(), frame_width, frame_height);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            drawBullet(g2d, Game.getInstance().getPaddle().getCannon1().getBullet(), frame_width, frame_height);
-            drawBullet(g2d, Game.getInstance().getPaddle().getCannon2().getBullet(), frame_width, frame_height);
+            drawBullet(g2d, Game.getInstance().getPaddle().getLeftCannon().getBullet(), frame_width, frame_height);
+            drawBullet(g2d, Game.getInstance().getPaddle().getRightCannon().getBullet(), frame_width, frame_height);
         }
         if(isBoxDropped) {
             isBoxDropped = false;

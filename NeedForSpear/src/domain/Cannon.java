@@ -30,7 +30,7 @@ public class Cannon extends DomainObject{
     protected Bullet bullet;
 
     public Cannon(int X, int Y){
-        this.length = 15;
+        this.length = 5;
         this.width = this.length;
         this.thickness = PADDLE_THICKNESS;
         this.posVector = new PosVector(X, Y);

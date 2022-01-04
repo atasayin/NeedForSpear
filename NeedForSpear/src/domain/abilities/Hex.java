@@ -14,10 +14,10 @@ public class Hex  implements Runnable{
         int x = Game.getInstance().getPaddle().getPosVector().getX();
         int y = Game.getInstance().getPaddle().getPosVector().getY();
 
-        Cannon c1 = new Cannon(x+5,y);
-        Cannon c2 = new Cannon(x-(Game.getInstance().getPaddle().getLength()+5),y);
+        Cannon left = new Cannon(x-5,y);
+        Cannon right = new Cannon(x+(Game.getInstance().getPaddle().getLength()+5),y);
         Game.getInstance().getPaddle().setHasCannon(true);
-        Game.getInstance().getPaddle().setCannons(c1,c2);
+        Game.getInstance().getPaddle().setCannons(left,right);
 
         try {
             TimeUnit.SECONDS.sleep(30);

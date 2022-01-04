@@ -41,7 +41,7 @@ public class CannonView implements Drawable {
 
         // scale to unit length L
         //int paddleLen = BuildModeScreen.FRAME_WIDTH/10;
-        int paddleLen = Game.getInstance().getPaddle().getLength();
+        int paddleLen = 30;
         int paddleThick = 20;
         Image scaled = paddle_img.getScaledInstance(paddleLen, paddleThick,
                 BufferedImage.SCALE_SMOOTH);
