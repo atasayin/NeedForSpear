@@ -16,8 +16,9 @@ public class Bullet extends DomainObject {
     }
 
     @Override
-    protected void updatePosition(int x, int y) {
-
+    public void updatePosition(int x, int y) {
+        this.posVector.setX(x);
+        this.posVector.setY(y);
     }
     public PosVector getPosVector() { return this.posVector; }
 
@@ -29,6 +30,7 @@ public class Bullet extends DomainObject {
         this.posVector.setX(this.posVector.getX());
         this.posVector.setY(this.posVector.getY() - this.yVelocity);
     }
+
     public void setOutOfScreen(Boolean b){
         this.outOfScreen = b;
     }

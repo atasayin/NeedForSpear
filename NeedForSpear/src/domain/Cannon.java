@@ -42,26 +42,6 @@ public class Cannon extends DomainObject{
         this.bullet = new Bullet(X,Y);
     }
 
-    public void move(int direction) {
-        // MODIFIES: The position and the velocity of the paddle.
-		/* EFFECTS: by checking at the boundary conditions of the setup, it updates the position and velocity
-		of the paddle.
-		*/
-
-        // Paddle goes left
-        if (direction == GO_LEFT_DIC) { goLeft(); }
-        // Paddle goes right
-        else if (direction == GO_RIGHT_DIC) { goRight(); }
-        // Paddle rotates counter clockwise (A)
-        else if (direction == ROTATE_CCLOKC_DIC) { rotateCClockwise(); }
-        // Paddle rotates clockwise (D)
-        else if (direction == ROTATE_CLOCK_DIC) { rotateClockwise(); }
-        // Paddle goes faster left
-        else if (direction == GO_FAST_LEFT_DIC) { goFastLeft(); }
-        // Paddle goes faster right
-        else if (direction == GO_FAST_RIGHTH_DIC) { goFastRight(); }
-
-    }
     public Bullet getBullet(){
         return this.bullet;
     }
@@ -80,66 +60,6 @@ public class Cannon extends DomainObject{
         this.posVector.setY(posVector.getY() + y);
     }
 
-    private void goLeft(){
-        setSpeed(-normalSpeed, 0);
-        if ((getPosVector().getX() >= normalSpeed) && (getPosVector().getX()  <= FRAME_WIDTH - getLength())) {
-            updatePosition(getDx(), getDy());
-        } else {
-            updatePosition(0, getDy());
-        }
-    }
-
-    private void goRight(){
-        setSpeed(normalSpeed, 0);
-        if ((getPosVector().getX() <= FRAME_WIDTH - getLength() - normalSpeed) && (getPosVector().getX() >= 0)) {
-            updatePosition(getDx(), getDy());
-        } else {
-            updatePosition(0, getDy());
-        }
-    }
-
-    private void rotateCClockwise(){
-        // | -50 --- 50 |
-
-        if (angle > MIN_ANGLE_LIMIT + angleSpeed){
-            setAngle(angle - angleSpeed);
-        }else{
-            setAngle(MIN_ANGLE_LIMIT);
-        }
-
-
-    }
-
-    private void rotateClockwise(){
-        // | -50 --- 50 |
-
-        if (angle < MAX_ANGLE_LIMIT - angleSpeed){
-            setAngle(angle + angleSpeed);
-        }else{
-            setAngle(MAX_ANGLE_LIMIT);
-        }
-
-
-
-    }
-
-    private void goFastLeft(){
-        setSpeed(-fastSpeed, 0);
-        if ((getPosVector().getX()  >= fastSpeed) && (getPosVector().getX() <= FRAME_WIDTH - getLength())) {
-            updatePosition(getDx(), getDy());
-        } else {
-            updatePosition(0, getDy());
-        }
-    }
-
-    private void goFastRight(){
-        setSpeed(fastSpeed, 0);
-        if ((getPosVector().getX()  <= FRAME_WIDTH - getLength() - fastSpeed) && (getPosVector().getX()  >= 0)) {
-            updatePosition(getDx(), getDy());
-        } else {
-            updatePosition(0, getDy());
-        }
-    }
     public int getLength() { return this.length; }
 
 }

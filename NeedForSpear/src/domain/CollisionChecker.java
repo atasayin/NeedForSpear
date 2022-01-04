@@ -15,6 +15,7 @@ public class CollisionChecker {
     private ArrayList<IRemainsListener> RemainListeners = new ArrayList<>();
     private  ArrayList<Box> boxes = new ArrayList<>();
     private  ArrayList<RemainingPieces> remains = new ArrayList<>();
+    boolean bulletsHit;
 
 
     private CollisionChecker(){
@@ -225,8 +226,23 @@ public class CollisionChecker {
             //if (Game.getInstance().ball.getPosVector().getY() < 0) Game.getInstance().ball.reflectFromHorizontal();
 
         for (Obstacle obs : Layout.getObstaclePositions().keySet()) {
+            bulletsHit = false;
 
-            if (instance.checkCollision(Game.getInstance().getBall(), obs)) {
+            if (Game.getInstance().getPaddle().getHasCannon()) {
+                if (checkCollision(Game.getInstance().getPaddle().getCannon1().getBullet(), obs)) {
+                    bulletsHit = true;
+                    Game.getInstance().getPaddle().getCannon1().getBullet().updatePosition(Game.getInstance().getPaddle().getCannon1().getPosVector().getX(),
+                            Game.getInstance().getPaddle().getCannon1().getPosVector().getY());
+                }
+                else if (checkCollision(Game.getInstance().getPaddle().getCannon2().getBullet(), obs)) {
+                    bulletsHit = true;
+                    Game.getInstance().getPaddle().getCannon2().getBullet().updatePosition(Game.getInstance().getPaddle().getCannon2().getPosVector().getX(),
+                            Game.getInstance().getPaddle().getCannon2().getPosVector().getY());
+                }
+            }
+
+
+            if (instance.checkCollision(Game.getInstance().getBall(), obs) || bulletsHit) {
 
                 // if obs is not frozen
                 if (!obs.isFrozen()) {
