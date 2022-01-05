@@ -2,6 +2,7 @@ package domain;
 
 import domain.obstacle.ObstacleFactory;
 import domain.obstacle.*;
+import domain.path.CircularPath;
 import domain.path.StraightVerticalBFPath;
 import util.PosVector;
 //import javafx.geometry.Pos;
@@ -119,15 +120,23 @@ public class Layout {
                     obs = ObstacleFactory.getInstance().getObstacle(type, pos);
 
                     if (isAvailable(obs)) {
-                        //|| type == STEINSGATE_TYPE
-                        if (type == WALLMARIA_TYPE ){
+                        // Horizatanl Movement
+                        if (type == WALLMARIA_TYPE || type == STEINSGATE_TYPE){
                             double probs = rnd.nextDouble();
-                            if(probs <= MOVING_PROBS){
+                            if (probs <= MOVING_PROBS){
                                 obstacle_moving.put(obs,pos);
-                                ((WallMaria) obs).setPathBehaviour(
+                                obs.setPathBehaviour(
                                         new StraightVerticalBFPath(pos.getX(),pos.getY(),5));
                             }
 
+                        // Circular Movememnt
+                        }else if (type == PANDORASBOX_TYPE){
+                            double probs = rnd.nextDouble();
+                            if (probs <= MOVING_PROBS){
+                                obstacle_moving.put(obs,pos);
+                                obs.setPathBehaviour(
+                                        new CircularPath(pos.getX(),pos.getY(),5));
+                            }
 
                         }
                         obstacle_positions.put(obs, pos);

@@ -224,7 +224,7 @@ public class CollisionChecker {
             //if (Game.getInstance().ball.getPosVector().getY() < 0) Game.getInstance().ball.reflectFromHorizontal();
 
         for(Obstacle obs : Layout.getObstacleMoving().keySet()){
-            ((WallMaria) obs).move();
+            obs.move();
         }
 
 

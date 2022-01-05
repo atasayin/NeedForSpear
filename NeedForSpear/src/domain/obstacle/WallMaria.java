@@ -28,18 +28,10 @@ public class WallMaria extends Obstacle {
 
 	}
 
-	public void setPathBehaviour(IPathBehaviour pb){
-		this.pathBehaviour = pb;
-		pb.initialPath(this);
-	}
-
 	@Override
 	public String toString() {
 		return super.toString() + ", typeVariable=" + getType();
 	}
 
-	public void move(){
-		PosVector pos = pathBehaviour.nextPosition();
-		setPosVector(pos);
-	}
+
 }

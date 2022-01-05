@@ -65,6 +65,11 @@ public abstract class Obstacle extends DomainObject {
 		}
 	}
 
+	public void setPathBehaviour(IPathBehaviour pb){
+		this.pathBehaviour = pb;
+		pb.initialPath(this);
+	}
+
 	public boolean getHitWhenFrozen(boolean unstoppableBall) {
 		if (!unstoppableBall) return false;
 		else {
@@ -117,5 +122,8 @@ public abstract class Obstacle extends DomainObject {
 		this.frozen = frozen;
 	}
 
-
+	public void move(){
+		PosVector pos = pathBehaviour.nextPosition();
+		setPosVector(pos);
+	}
 }

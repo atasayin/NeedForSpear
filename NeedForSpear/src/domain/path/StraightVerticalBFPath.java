@@ -31,6 +31,7 @@ public class StraightVerticalBFPath implements IPathBehaviour {
         HashMap<Obstacle, PosVector> obstacle_positions = Layout.getObstaclePositions();
         CollisionChecker CC = CollisionChecker.getInstance();
         int tempX = currentX;
+        int tempVelocity = velocity;
         System.out.println("Obstacle " + thisObs.toString());
 
         // Find the right limit
@@ -41,7 +42,7 @@ public class StraightVerticalBFPath implements IPathBehaviour {
                     break;
                 }
             }
-            tempX += velocity;
+            tempX += tempVelocity/2;
             thisObs.setPosVector(new PosVector(tempX,Y));
 
             if (tempX >= endRight){
@@ -51,18 +52,18 @@ public class StraightVerticalBFPath implements IPathBehaviour {
         }
 
         // Find the left limit
-        velocity *= - 1;
+        tempVelocity *= - 1;
         tempX = startX;
         thisObs.setPosVector(new PosVector(tempX,Y));
 
         while(true){
             for (Obstacle obs: obstacle_positions.keySet()){
                 if (!obs.equals(thisObs) && CC.checkCollision(thisObs, obs)){
-                    endLeft = tempX + thisObs.getWidth() / 5;
+                    endLeft = tempX + thisObs.getWidth();
                     break;
                 }
             }
-            tempX += velocity;
+            tempX += tempVelocity;
             thisObs.setPosVector(new PosVector(tempX,Y));
 
             if (tempX <= endLeft){
