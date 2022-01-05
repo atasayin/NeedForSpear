@@ -225,7 +225,8 @@ public class BuildModeScreen extends JFrame {
         obstacleButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
                 setObstacleSettings();
-                layout = LC.getRandomLayout();
+                LC.setFramePanelWidthHeight(FRAME_WIDTH,FRAME_HEIGHT);
+                LC.craftRandomLayout();
                 gameStartButton.setEnabled(true);
                 obstacleButton.setEnabled(false);
                 loadGameButton.setEnabled(false);

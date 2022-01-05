@@ -34,11 +34,6 @@ public class LayoutController {
     /////////////////////////////////////////////////////////////////////////////////////
 
     public LayoutController() {
-        FRAME_WIDTH = (int) (1368 * C_PANEL_WIDTH);
-        FRAME_HEIGHT = 766;
-        PANEL_WIDTH = (int) (1368 * C_PANEL_WIDTH);
-        PANEL_HEIGHT = 766;
-
         mousePos = new PosVector(0,0);
     }
 
@@ -92,19 +87,19 @@ public class LayoutController {
 
 
     // Gets random Layout after the obstacle settings
-    public Layout getRandomLayout(){
+    public void craftRandomLayout(){
 
         layout = new Layout(
                 obstacleSettings.get("simpleObstacleCount"),
                 obstacleSettings.get("firmObstacleCount"),
                 obstacleSettings.get("explosiveObstacleCount"),
                 obstacleSettings.get("giftObstacleCount"),
-                FRAME_WIDTH,
-                FRAME_HEIGHT
+                PANEL_WIDTH,
+                PANEL_HEIGHT,
+                C_PANEL_WIDTH
         );
         layout.setLayout();
 
-        return layout;
     }
 
     public Layout getLayout(){
@@ -115,6 +110,17 @@ public class LayoutController {
         this.obstacleSettings = obstacleSettings;
 
     }
+
+    public void setFramePanelWidthHeight(int FRAME_WIDTH, int FRAME_HEIGHT) {
+        this.FRAME_WIDTH = FRAME_WIDTH;
+        this.FRAME_HEIGHT = FRAME_HEIGHT;
+
+        PANEL_WIDTH = (int) (FRAME_WIDTH * C_PANEL_WIDTH);
+        PANEL_HEIGHT = FRAME_HEIGHT;
+
+    }
+
+
 
     // Prints layout
     private void printLayout(){

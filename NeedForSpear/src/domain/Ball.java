@@ -109,7 +109,7 @@ public class Ball extends DomainObject {
     public void checkWallCollision() {
         if (this.posVector.getX() < 8) {
             this.reflectFromSideWall();
-        } else if (this.posVector.getX() > (FRAME_WIDTH - xOffset - 20)) {
+        } else if (this.posVector.getX() > (FRAME_WIDTH  - 20)) {
             this.reflectFromSideWall();
         }
         else if (this.posVector.getY()<yOffset) {

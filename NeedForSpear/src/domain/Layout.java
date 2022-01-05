@@ -42,7 +42,7 @@ public class Layout {
     private int layoutHeight;
 
     // Random Seed number
-    private int SEED_NUMBER = 14;
+    private int SEED_NUMBER =10; //14;
 
     // Collision Checker for Obstacles
     private static CollisionChecker CC;
@@ -57,14 +57,18 @@ public class Layout {
     private int PANDORASBOX_TYPE = 2;
     private int GIFTOFURANUS_TYPE = 3;
 
+    // Probs of WallMaria and SteinsGate moving
     private double MOVING_PROBS = 0.2;
+
+    // Scale factor for run mode
+    private static double SCALE_TO_RUN_MODE;
 
 
     /////////////////////////////////////////////////////////////////////////////////////
 
     // Constructor
     public Layout(int wallMariaCount, int steinsGateCount, int pandoraBoxCount, int uranusCount,
-            int layoutWidth, int layoutHeight){
+            int layoutWidth, int layoutHeight, double scaleToRunMode){
         this.wallMariaCount = wallMariaCount;
         this.steinsGateCount = steinsGateCount;
         this.pandoraBoxCount = pandoraBoxCount;
@@ -78,6 +82,7 @@ public class Layout {
         this.layoutWidth = layoutWidth;
         this.layoutHeight = layoutHeight;
         obsLen = layoutWidth/50;
+        SCALE_TO_RUN_MODE = scaleToRunMode;
         //setLayout();
     }
 
@@ -184,6 +189,14 @@ public class Layout {
         EFFECTS: returns a hashmap that keeps the obstacle positions
         */
         return obstacle_moving;
+    }
+
+    // Scales obstacle x for run mode screen
+    public static void scaleObstaclesPosX(){
+        for (Obstacle obs: obstacle_positions.keySet()){
+            obs.setPosVector(new PosVector((int) (obs.getPos().getX() * 1/SCALE_TO_RUN_MODE),obs.getPos().getY()));
+        }
+
     }
 
     // Returns an obstacle which is present in mouse (X,Y)
