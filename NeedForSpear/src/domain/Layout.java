@@ -2,6 +2,7 @@ package domain;
 
 import domain.obstacle.ObstacleFactory;
 import domain.obstacle.*;
+import domain.path.StraightVerticalBFPath;
 import util.PosVector;
 //import javafx.geometry.Pos;
 
@@ -31,6 +32,9 @@ public class Layout {
     // Holds the center of circles of the paths that some obstacles move in
     private static HashMap<Obstacle, PosVector> obstacle_centers;
 
+    // Moving obstacle map
+    private static HashMap<Obstacle, PosVector> obstacle_moving;
+
     // Layout width
     private int layoutWidth;
 
@@ -53,6 +57,8 @@ public class Layout {
     private int PANDORASBOX_TYPE = 2;
     private int GIFTOFURANUS_TYPE = 3;
 
+    private double MOVING_PROBS = 0.2;
+
 
     /////////////////////////////////////////////////////////////////////////////////////
 
@@ -67,6 +73,7 @@ public class Layout {
         this.CC = CollisionChecker.getInstance();
         obstacle_positions = new HashMap<>();
         obstacle_centers = new HashMap<>();
+        obstacle_moving = new HashMap<>();
 
         this.layoutWidth = layoutWidth;
         this.layoutHeight = layoutHeight;
@@ -107,6 +114,17 @@ public class Layout {
                     obs = ObstacleFactory.getInstance().getObstacle(type, pos);
 
                     if (isAvailable(obs)) {
+                        //|| type == STEINSGATE_TYPE
+                        if (type == WALLMARIA_TYPE ){
+                            double probs = rnd.nextDouble();
+                            if(probs <= MOVING_PROBS){
+                                obstacle_moving.put(obs,pos);
+                                ((WallMaria) obs).setPathBehaviour(
+                                        new StraightVerticalBFPath(pos.getX(),pos.getY(),5));
+                            }
+
+
+                        }
                         obstacle_positions.put(obs, pos);
                         // domainObjArr = [obs, box if exists, remain if exist]
                         Game.getInstance().getDomainObjectArr().add(obs);
@@ -158,6 +176,14 @@ public class Layout {
         EFFECTS: returns a hashmap that keeps the obstacle centers
         */
         return obstacle_centers;
+    }
+
+    // Getter method for obstacle_positions
+    public static HashMap<Obstacle, PosVector> getObstacleMoving() {
+        /*
+        EFFECTS: returns a hashmap that keeps the obstacle positions
+        */
+        return obstacle_moving;
     }
 
     // Returns an obstacle which is present in mouse (X,Y)

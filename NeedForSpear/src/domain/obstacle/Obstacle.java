@@ -1,9 +1,7 @@
 package domain.obstacle;
 
-import domain.Box;
-import domain.DomainObject;
-import domain.Game;
-import domain.RemainingPieces;
+import domain.*;
+import domain.path.IPathBehaviour;
 import domain.strategy.DestroyBehaviour;
 import util.PosVector;
 
@@ -15,6 +13,7 @@ public abstract class Obstacle extends DomainObject {
 	public boolean is_rotating;
 	protected int health;
 	protected DestroyBehaviour destroyBehaviour;
+	protected IPathBehaviour pathBehaviour;
 	protected String type;
 	private int height, width;
 	protected Box box;

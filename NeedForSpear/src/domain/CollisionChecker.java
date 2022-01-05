@@ -1,6 +1,7 @@
 package domain;
 
 import domain.obstacle.Obstacle;
+import domain.obstacle.WallMaria;
 import util.PosVector;
 
 import java.util.ArrayList;
@@ -221,6 +222,11 @@ public class CollisionChecker {
 
 
             //if (Game.getInstance().ball.getPosVector().getY() < 0) Game.getInstance().ball.reflectFromHorizontal();
+
+        for(Obstacle obs : Layout.getObstacleMoving().keySet()){
+            ((WallMaria) obs).move();
+        }
+
 
         for (Obstacle obs : Layout.getObstaclePositions().keySet()) {
             bulletsHit = false;
