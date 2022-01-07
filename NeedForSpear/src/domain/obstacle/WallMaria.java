@@ -28,6 +28,7 @@ public class WallMaria extends Obstacle {
 
 	}
 
+
 	@Override
 	public String toString() {
 		return super.toString() + ", typeVariable=" + getType();

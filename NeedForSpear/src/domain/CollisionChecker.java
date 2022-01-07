@@ -101,8 +101,8 @@ public class CollisionChecker {
             System.out.println("Null object in checkCollision");
         }
 
-
         return null;
+
     }
 
 
@@ -223,14 +223,10 @@ public class CollisionChecker {
 
             //if (Game.getInstance().ball.getPosVector().getY() < 0) Game.getInstance().ball.reflectFromHorizontal();
 
-        for(Obstacle obs : Layout.getObstacleMoving().keySet()){
-            obs.move();
-        }
-
-
         for (Obstacle obs : Layout.getObstaclePositions().keySet()) {
             bulletsHit = false;
-
+            if(obs.is_moving)
+                obs.move();
             if (Game.getInstance().getPaddle().getHasCannon()) {
                 if (checkCollision(Game.getInstance().getPaddle().getLeftCannon().getBullet(), obs)) {
                     bulletsHit = true;
@@ -243,7 +239,6 @@ public class CollisionChecker {
                             Game.getInstance().getPaddle().getRightCannon().getPosVector().getY());
                 }
             }
-
 
             if (instance.checkCollision(Game.getInstance().getBall(), obs) || bulletsHit) {
 

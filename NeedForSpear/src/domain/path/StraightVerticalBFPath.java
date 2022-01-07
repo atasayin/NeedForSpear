@@ -32,12 +32,12 @@ public class StraightVerticalBFPath implements IPathBehaviour {
         CollisionChecker CC = CollisionChecker.getInstance();
         int tempX = currentX;
         int tempVelocity = velocity;
-        System.out.println("Obstacle " + thisObs.toString());
 
         // Find the right limit
         while(true){
             for (Obstacle obs: obstacle_positions.keySet()){
-                if (!obs.equals(thisObs) && CC.checkCollision(thisObs, obs)){
+                if ( (thisObs.getPos().manhattanDist(obs.getPos())) != 0
+                        && CC.checkCollision(thisObs, obs)){
                     endRight = tempX- thisObs.getWidth() / 2;
                     break;
                 }
@@ -58,7 +58,8 @@ public class StraightVerticalBFPath implements IPathBehaviour {
 
         while(true){
             for (Obstacle obs: obstacle_positions.keySet()){
-                if (!obs.equals(thisObs) && CC.checkCollision(thisObs, obs)){
+                if ( (thisObs.getPos().manhattanDist(obs.getPos())) != 0
+                        && CC.checkCollision(thisObs, obs)){
                     endLeft = tempX + thisObs.getWidth();
                     break;
                 }
@@ -71,16 +72,28 @@ public class StraightVerticalBFPath implements IPathBehaviour {
             }
 
         }
-        System.out.println("ENDLEFT " + endLeft);
-        System.out.println("ENDRIGHT " + endRight);
+
 
         // Reset obstacle
         thisObs.setPosVector(new PosVector(startX,Y));
 
+        // Check Boundries
+        if( endLeft <= 0 ){
+            endLeft = 0;
+        }else if (endLeft >= startX) {
+            endLeft = startX;
+        }
+
+        if(endRight >= 1368 - thisObs.getWidth()){
+            endRight = 1368 - thisObs.getWidth();
+
+        }
+
         // Delete if the path is too small
         if (endRight - endLeft <= MIN_PATH_LONG){
-            Layout.getObstacleMoving().remove(thisObs);
+            thisObs.is_moving = false;
         }
+
 
     }
 
@@ -94,6 +107,8 @@ public class StraightVerticalBFPath implements IPathBehaviour {
 
         return new PosVector(currentX,Y);
     }
+
+
 
 
 }

@@ -43,7 +43,7 @@ public class Layout {
     private int layoutHeight;
 
     // Random Seed number
-    private int SEED_NUMBER =10; //14;
+    private int SEED_NUMBER =14;
 
     // Collision Checker for Obstacles
     private static CollisionChecker CC;
@@ -59,7 +59,7 @@ public class Layout {
     private int GIFTOFURANUS_TYPE = 3;
 
     // Probs of WallMaria and SteinsGate moving
-    private double MOVING_PROBS = 0.2;
+    private static double MOVING_PROBS = 0.2;
 
     // Scale factor for run mode
     private static double SCALE_TO_RUN_MODE;
@@ -120,25 +120,6 @@ public class Layout {
                     obs = ObstacleFactory.getInstance().getObstacle(type, pos);
 
                     if (isAvailable(obs)) {
-                        // Horizatanl Movement
-                        if (type == WALLMARIA_TYPE || type == STEINSGATE_TYPE){
-                            double probs = rnd.nextDouble();
-                            if (probs <= MOVING_PROBS){
-                                obstacle_moving.put(obs,pos);
-                                obs.setPathBehaviour(
-                                        new StraightVerticalBFPath(pos.getX(),pos.getY(),5));
-                            }
-
-                        // Circular Movememnt
-                        }else if (type == PANDORASBOX_TYPE){
-                            double probs = rnd.nextDouble();
-                            if (probs <= MOVING_PROBS){
-                                obstacle_moving.put(obs,pos);
-                                obs.setPathBehaviour(
-                                        new CircularPath(pos.getX(),pos.getY(),5));
-                            }
-
-                        }
                         obstacle_positions.put(obs, pos);
                         // domainObjArr = [obs, box if exists, remain if exist]
                         Game.getInstance().getDomainObjectArr().add(obs);
@@ -165,6 +146,36 @@ public class Layout {
         }
 
         return true;
+    }
+
+    // Sets the movements of the obstacles
+    public static void setMovesObstacle(){
+        Random rnd = new Random(6);
+
+        for (Obstacle obs: obstacle_positions.keySet()) {
+            String type = obs.getType();
+            PosVector pos = obs.getPos();
+
+            // Horizantal Movement
+            if (type.equals("WallMaria") || type.equals("SteinsGate")) {
+                double probs = rnd.nextDouble();
+                if (probs <= MOVING_PROBS) {
+                    obs.is_moving = true;
+                    obs.setPathBehaviour(
+                            new StraightVerticalBFPath(pos.getX(), pos.getY(), 5));
+                }
+
+                // Circular Movement
+            } else if (type.equals("PandorasBox")) {
+                double probs = rnd.nextDouble();
+                if (probs <= 1) {
+                    obs.is_moving = true;
+                    obs.setPathBehaviour(
+                            new CircularPath(obs, 0.2));
+                }
+            }
+
+        }
     }
 
     // Getter method for obstacle_positions
@@ -200,10 +211,18 @@ public class Layout {
         return obstacle_moving;
     }
 
-    // Scales obstacle x for run mode screen
+    // Scales object x for run mode screen
     public static void scaleObstaclesPosX(){
         for (Obstacle obs: obstacle_positions.keySet()){
             obs.setPosVector(new PosVector((int) (obs.getPos().getX() * 1/SCALE_TO_RUN_MODE),obs.getPos().getY()));
+            RemainingPieces remainingPieces = obs.getRemains();
+
+            if(remainingPieces!=null){
+                remainingPieces.setPosVector(
+                        new PosVector(
+                                (int) (remainingPieces.getPosVector().getX() * 1/SCALE_TO_RUN_MODE),
+                                remainingPieces.getPosVector().getY()));
+            }
         }
 
     }

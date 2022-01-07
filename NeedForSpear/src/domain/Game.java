@@ -86,6 +86,7 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
 
         paddle = new Paddle(FRAME_WIDTH,FRAME_HEIGHT);
         Layout.scaleObstaclesPosX();
+        Layout.setMovesObstacle();
         this.ball = new Ball();
         this.ball.setisAlive(false);
         Ymirfreq = freq;

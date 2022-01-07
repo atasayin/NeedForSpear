@@ -13,6 +13,7 @@ public class SteinsGate extends Obstacle {
 		this.destroyBehaviour = new RegularDestroyBehaviour();
 		this.type = "SteinsGate";
 		setRandomHealth();
+
 	}
 
 	public ArrayList<String> makeList() {
@@ -23,6 +24,7 @@ public class SteinsGate extends Obstacle {
 	protected void updatePosition(int x, int y) {
 
 	}
+
 
 	private void setRandomHealth(){
 		Random rnd = new Random();

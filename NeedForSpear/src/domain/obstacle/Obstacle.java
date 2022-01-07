@@ -11,6 +11,7 @@ public abstract class Obstacle extends DomainObject {
 
 
 	public boolean is_rotating;
+	public boolean is_moving;
 	protected int health;
 	protected DestroyBehaviour destroyBehaviour;
 	protected IPathBehaviour pathBehaviour;
@@ -27,6 +28,7 @@ public abstract class Obstacle extends DomainObject {
 		this.pos = new PosVector(xPos, yPos);
 		this.health = 1;
 		this.is_rotating = false;
+		this.is_moving = false;
 		this.width = FRAME_WIDTH / 50;
 		this.height = 20;
 		this.isEffectScore =true;
