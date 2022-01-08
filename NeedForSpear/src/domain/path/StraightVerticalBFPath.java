@@ -109,6 +109,19 @@ public class StraightVerticalBFPath implements IPathBehaviour {
     }
 
 
+    public int getEndLeft() {
+        return endLeft;
+    }
 
+    public int getEndRight() {
+        return endRight;
+    }
 
+    public void setEndLeft(int endLeft) {
+        this.endLeft = endLeft;
+    }
+
+    public void setEndRight(int endRight) {
+        this.endRight = endRight;
+    }
 }

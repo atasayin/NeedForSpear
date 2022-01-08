@@ -1,7 +1,9 @@
 package domain.obstacle;
 
 import domain.*;
+import domain.path.CircularPath;
 import domain.path.IPathBehaviour;
+import domain.path.StraightVerticalBFPath;
 import domain.strategy.DestroyBehaviour;
 import util.PosVector;
 
@@ -22,7 +24,8 @@ public abstract class Obstacle extends DomainObject {
 	protected RemainingPieces pieces;
 	public boolean isEffectScore;
 	protected boolean frozen;
-
+	protected int endLeft = -1;
+	protected int endRight = -1;
 
 	public Obstacle(int xPos, int yPos) {
 		this.pos = new PosVector(xPos, yPos);
@@ -70,6 +73,17 @@ public abstract class Obstacle extends DomainObject {
 	public void setPathBehaviour(IPathBehaviour pb){
 		this.pathBehaviour = pb;
 		pb.initialPath(this);
+
+		if (pb instanceof StraightVerticalBFPath){
+			endLeft = ((StraightVerticalBFPath) pb).getEndLeft();
+			endRight = ((StraightVerticalBFPath) pb).getEndRight();
+
+		}
+
+	}
+
+	public IPathBehaviour getPathBehaviour() {
+		return pathBehaviour;
 	}
 
 	public boolean getHitWhenFrozen(boolean unstoppableBall) {
@@ -127,5 +141,13 @@ public abstract class Obstacle extends DomainObject {
 	public void move(){
 		PosVector pos = pathBehaviour.nextPosition();
 		setPosVector(pos);
+	}
+
+	public int getEndLeft() {
+		return endLeft;
+	}
+
+	public int getEndRight() {
+		return endRight;
 	}
 }

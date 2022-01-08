@@ -2,6 +2,8 @@ package domain;
 
 import domain.abilities.HollowPurple;
 import domain.obstacle.*;
+import domain.path.CircularPath;
+import domain.path.StraightVerticalBFPath;
 import util.PosVector;
 import org.bson.Document;
 import org.json.simple.JSONArray;
@@ -22,7 +24,8 @@ public class Saver {
     private String num = Game.getInstance().gameState.getPlayer().GameNum + "";
     private String FILEPATH = "src/saves/" + name + "_" + num + ".json";
     private String LOADPATH = "src/saves/loadfilenames.json";
-
+    private int WALLMARIASTEINS_VEL = 5;
+    private double PANDORAS_VEL = 0.2;
 
     public void saveGame(HashMap<Obstacle, PosVector> list) {
         Document doc = new Document();
@@ -44,13 +47,22 @@ public class Saver {
         doc.put("YmirProb2", Game.getInstance().YmirProb2);
         doc.put("YmirProb3", Game.getInstance().YmirProb3);
 
-
         for (Entry<Obstacle, PosVector> o : list.entrySet()) {
             temp = new ArrayList<>();
             temp.add(String.valueOf(o.getKey()));
             temp.add(String.valueOf(o.getValue()));
             temp.add(String.valueOf(o.getKey().isFrozen()));
             temp.add(String.valueOf("ealth " +o.getKey().getHealth()));
+
+            if(o.getKey().is_moving) {
+                temp.add(String.valueOf("vmoving1"));
+            }else{
+                temp.add(String.valueOf("vmoving0"));
+
+            }
+
+            temp.add(String.valueOf("Qeft" + o.getKey().getEndLeft() + "<"));
+            temp.add(String.valueOf("righT" + o.getKey().getEndRight() + ">"));
             map.add(temp);
         }
 
@@ -146,12 +158,37 @@ public class Saver {
                 int m = (Integer.parseInt(s.substring(k + 2, l)));
                 int h = s.indexOf("h");
                 int health = (Integer.parseInt(s.substring(h + 2, h+3)));
-                System.out.println("health is "+ health);
+                int v = s.indexOf("v");
+                int wismoving =(Integer.parseInt(s.substring(v + 7, v + 8)));
+                int index_cap_q = s.indexOf("Q");
+                int index_lesser = s.indexOf("<");
+                int index_greater = s.indexOf(">");
+                int index_cap_T = s.indexOf("T");
+                int pathEndLeft = (Integer.parseInt(s.substring(index_cap_q + 4, index_lesser)));
+                int pathEndRight = (Integer.parseInt(s.substring(index_cap_T + 1, index_greater)));
+                //System.out.println("health is "+ health);
+                //System.out.println("moving is "+ wismoving);
+                System.out.println("lef is "+ pathEndLeft);
+                System.out.println("right is "+ pathEndRight);
+
                 if (s.contains("WallMaria")) {
                     WallMaria obs = new WallMaria(p, m);
                     if (s.contains("true")) {
                         obs.setIsFrozen(true);
                     }
+                    if(wismoving == 1){
+                        obs.is_moving = true;
+                        StraightVerticalBFPath path = new StraightVerticalBFPath(p, m, WALLMARIASTEINS_VEL);
+                        path.setEndLeft(pathEndLeft);
+                        path.setEndRight(pathEndRight);
+                        obs.setPathBehaviour(path);
+
+
+                    }else{
+                        obs.is_moving = false;
+                    }
+
+
                     listDO.add(obs);
                     vec = new PosVector(p, m);
                     Layout.getObstaclePositions().put(obs, vec);
@@ -170,6 +207,17 @@ public class Saver {
                     if (s.contains("true")) {
                         obs.setIsFrozen(true);
                     }
+                    if(wismoving == 1){
+                        obs.is_moving = true;
+                        CircularPath path = new CircularPath(obs, PANDORAS_VEL);
+
+                        obs.setPathBehaviour(path);
+
+                    }else{
+                        obs.is_moving = false;
+                    }
+
+
                     listDO.add(obs);
                     vec = new PosVector(p, m);
                     Layout.getObstaclePositions().put(obs, vec);
@@ -178,6 +226,16 @@ public class Saver {
                     SteinsGate obs = new SteinsGate(p, m);
                     if (s.contains("true")) {
                         obs.setIsFrozen(true);
+                    }
+                    if(wismoving == 1){
+                        obs.is_moving = true;
+                        StraightVerticalBFPath path = new StraightVerticalBFPath(p, m, WALLMARIASTEINS_VEL);
+                        path.setEndLeft(pathEndLeft);
+                        path.setEndRight(pathEndRight);
+                        obs.setPathBehaviour(path);
+
+                    }else{
+                        obs.is_moving = false;
                     }
                     listDO.add(obs);
                     vec = new PosVector(p, m);

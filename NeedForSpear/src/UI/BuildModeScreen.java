@@ -81,6 +81,9 @@ public class BuildModeScreen extends JFrame {
     private double YmirProb3;
     private ArrayList<String> temp = new ArrayList<>();
 
+    // Load bool
+    private boolean isLoad = false;
+
     /////////////////////////////////////////////////////////////////////////////////////
 
     public void addListener(IRunListener listener) {
@@ -256,7 +259,7 @@ public class BuildModeScreen extends JFrame {
 
         gameStartButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
-                if (LC.isLayoutSatisfies()) {
+                if (LC.isLayoutSatisfies() || isLoad) {
                     setRunSettings();
                     YmirProb1 = Double.parseDouble(YmirProbability1.getText());
                     YmirProb2 = Double.parseDouble(YmirProbability2.getText());
@@ -272,11 +275,15 @@ public class BuildModeScreen extends JFrame {
                             "Minimum criteria is not satisfied",
                             JOptionPane.INFORMATION_MESSAGE);
                 }
+
+
             }
         });
 
         loadGameButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
+                LC.craftEmptyLayout();
+                isLoad = true;
                 for (ILoadListener listener : loadModeListeners) {
                     System.out.println("Myload listeners" + listener);
                     getFileOptions();

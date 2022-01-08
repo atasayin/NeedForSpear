@@ -103,6 +103,16 @@ public class LayoutController {
 
     }
 
+    public void craftEmptyLayout(){
+
+        layout = new Layout(0,0,0,0,
+                PANEL_WIDTH,
+                PANEL_HEIGHT,
+                C_PANEL_WIDTH
+        );
+
+    }
+
     public Layout getLayout(){
         return layout;
     }
