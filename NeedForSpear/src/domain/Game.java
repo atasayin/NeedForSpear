@@ -85,6 +85,8 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
     public void onRunEvent(HashMap<String, Integer> startParameters, String username, String id,Integer num, Integer freq,Double prob1, Double prob2, Double prob3) {
 
         paddle = new Paddle(FRAME_WIDTH,FRAME_HEIGHT);
+        Layout.scaleObstaclesPosX();
+        Layout.setMovesObstacle();
         this.ball = new Ball();
         this.ball.setisAlive(false);
         Ymirfreq = freq;

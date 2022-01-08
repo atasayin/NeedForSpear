@@ -23,6 +23,7 @@ public class LayoutTest {
     private Layout layout;
     private Box box;
     private RemainingPieces remain;
+    private double scaleToRunMode = 1;
     public static int layoutWidth;
     public static int layoutHeight;
 
@@ -51,7 +52,7 @@ public class LayoutTest {
     @Test
     void testSetLayout_validObsCounts(){
         obsCounts = new Integer[]{3, 4, 5, 6};
-        layout = new Layout(obsCounts[0], obsCounts[1], obsCounts[2], obsCounts[3], layoutWidth, layoutHeight);
+        layout = new Layout(obsCounts[0], obsCounts[1], obsCounts[2], obsCounts[3], layoutWidth, layoutHeight,scaleToRunMode);
         layout.setLayout();
         assertEquals(18,layout.getObstaclePositions().size());
     }
@@ -60,7 +61,7 @@ public class LayoutTest {
     @Test
     void testSetLayout_invalidObsCounts(){
         obsCounts = new Integer[]{3, 4, 5, -4};
-        layout = new Layout(obsCounts[0], obsCounts[1], obsCounts[2], obsCounts[3], layoutWidth, layoutHeight);
+        layout = new Layout(obsCounts[0], obsCounts[1], obsCounts[2], obsCounts[3], layoutWidth, layoutHeight,scaleToRunMode);
         layout.setLayout();
         assertEquals(12,layout.getObstaclePositions().size());
     }
@@ -77,7 +78,7 @@ public class LayoutTest {
     @Test
     void testSetLayout_emptyObsCounts_emptyDomainObjArr(){
         obsCounts = new Integer[]{0,0,0,0};
-        layout = new Layout(obsCounts[0], obsCounts[1], obsCounts[2], obsCounts[3], layoutWidth, layoutHeight);
+        layout = new Layout(obsCounts[0], obsCounts[1], obsCounts[2], obsCounts[3], layoutWidth, layoutHeight,scaleToRunMode);
         layout.setLayout();
         assertTrue(gameInstance.getDomainObjectArr().isEmpty());
     }
@@ -86,7 +87,7 @@ public class LayoutTest {
     @Test
     void testSetLayout_oneObs(){
         obsCounts = new Integer[]{0,0,0,1}; // gift obstacle only
-        layout = new Layout(obsCounts[0], obsCounts[1], obsCounts[2], obsCounts[3], layoutWidth, layoutHeight);
+        layout = new Layout(obsCounts[0], obsCounts[1], obsCounts[2], obsCounts[3], layoutWidth, layoutHeight,scaleToRunMode);
         layout.setLayout();
         // Visual After SetLayout: DomainObjArr = [giftObs, box, null]
         obstacle = (Obstacle) gameInstance.getDomainObjectArr().get(0);
@@ -98,7 +99,7 @@ public class LayoutTest {
     @Test
     void testSetLayout_twoObs(){
         obsCounts = new Integer[]{0,0,1,1}; // 1 explosive and 1 gift obstacle
-        layout = new Layout(obsCounts[0], obsCounts[1], obsCounts[2], obsCounts[3], layoutWidth, layoutHeight);
+        layout = new Layout(obsCounts[0], obsCounts[1], obsCounts[2], obsCounts[3], layoutWidth, layoutHeight,1);
         layout.setLayout();
         // Visual After SetLayout: DomainObjArr = [pandoraObs, null, remain, giftObs, box, null]
         obstacle = (Obstacle) gameInstance.getDomainObjectArr().get(0);

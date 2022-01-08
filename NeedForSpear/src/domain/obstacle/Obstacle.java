@@ -1,9 +1,7 @@
 package domain.obstacle;
 
-import domain.Box;
-import domain.DomainObject;
-import domain.Game;
-import domain.RemainingPieces;
+import domain.*;
+import domain.path.IPathBehaviour;
 import domain.strategy.DestroyBehaviour;
 import util.PosVector;
 
@@ -13,8 +11,10 @@ public abstract class Obstacle extends DomainObject {
 
 
 	public boolean is_rotating;
+	public boolean is_moving;
 	protected int health;
 	protected DestroyBehaviour destroyBehaviour;
+	protected IPathBehaviour pathBehaviour;
 	protected String type;
 	private int height, width;
 	protected Box box;
@@ -28,6 +28,7 @@ public abstract class Obstacle extends DomainObject {
 		this.pos = new PosVector(xPos, yPos);
 		this.health = 1;
 		this.is_rotating = false;
+		this.is_moving = false;
 		this.width = FRAME_WIDTH / 50;
 		this.height = 20;
 		this.isEffectScore =true;
@@ -64,6 +65,11 @@ public abstract class Obstacle extends DomainObject {
 		} else {
 			return false;
 		}
+	}
+
+	public void setPathBehaviour(IPathBehaviour pb){
+		this.pathBehaviour = pb;
+		pb.initialPath(this);
 	}
 
 	public boolean getHitWhenFrozen(boolean unstoppableBall) {
@@ -118,5 +124,8 @@ public abstract class Obstacle extends DomainObject {
 		this.frozen = frozen;
 	}
 
-
+	public void move(){
+		PosVector pos = pathBehaviour.nextPosition();
+		setPosVector(pos);
+	}
 }

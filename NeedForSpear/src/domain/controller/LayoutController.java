@@ -34,11 +34,6 @@ public class LayoutController {
     /////////////////////////////////////////////////////////////////////////////////////
 
     public LayoutController() {
-        FRAME_WIDTH = (int) (1368 * C_PANEL_WIDTH);
-        FRAME_HEIGHT = 766;
-        PANEL_WIDTH = (int) (1368 * C_PANEL_WIDTH);
-        PANEL_HEIGHT = 766;
-
         mousePos = new PosVector(0,0);
     }
 
@@ -92,19 +87,20 @@ public class LayoutController {
 
 
     // Gets random Layout after the obstacle settings
-    public Layout getRandomLayout(){
+    public void craftRandomLayout(){
+        if (layout!=null) layout.cleanLayout();
 
         layout = new Layout(
                 obstacleSettings.get("simpleObstacleCount"),
                 obstacleSettings.get("firmObstacleCount"),
                 obstacleSettings.get("explosiveObstacleCount"),
                 obstacleSettings.get("giftObstacleCount"),
-                FRAME_WIDTH,
-                FRAME_HEIGHT
+                PANEL_WIDTH,
+                PANEL_HEIGHT,
+                C_PANEL_WIDTH
         );
         layout.setLayout();
 
-        return layout;
     }
 
     public Layout getLayout(){
@@ -112,8 +108,23 @@ public class LayoutController {
     }
 
     public void setObstacleSettings(HashMap<String, Integer> obstacleSettings){
+        checkObstacleSettings(obstacleSettings);
         this.obstacleSettings = obstacleSettings;
 
+    }
+
+    public void setFramePanelWidthHeight(int FRAME_WIDTH, int FRAME_HEIGHT) {
+        this.FRAME_WIDTH = FRAME_WIDTH;
+        this.FRAME_HEIGHT = FRAME_HEIGHT;
+
+        PANEL_WIDTH = (int) (FRAME_WIDTH * C_PANEL_WIDTH);
+        PANEL_HEIGHT = FRAME_HEIGHT;
+
+    }
+
+    // Is minimum criteria satisfies
+    public boolean isLayoutSatisfies(){
+        return Layout.isLayoutSatisfies();
     }
 
     // Prints layout
@@ -152,6 +163,43 @@ public class LayoutController {
     // Is some obstacle being draged.
     private boolean isDrag(){
         return dragObstacle != null;
+    }
+
+    // Check Obstacle Settings
+    private void checkObstacleSettings(HashMap<String, Integer> obstacleSettings){
+        int simpleObstacleCount = obstacleSettings.get("simpleObstacleCount");
+        int firmObstacleCount = obstacleSettings.get("firmObstacleCount");
+        int explosiveObstacleCount = obstacleSettings.get("explosiveObstacleCount");
+        int giftObstacleCount = obstacleSettings.get("giftObstacleCount");
+
+         // Simple obstacle limits
+        if (simpleObstacleCount < 0){
+            obstacleSettings.replace("simpleObstacleCount",simpleObstacleCount,0);
+        }else if (simpleObstacleCount > 100){
+            obstacleSettings.replace("simpleObstacleCount",simpleObstacleCount,100);
+        }
+
+        // Firm obstacle limits
+        if (firmObstacleCount < 0){
+            obstacleSettings.replace("firmObstacleCount",firmObstacleCount,0);
+        }else if (firmObstacleCount > 50){
+            obstacleSettings.replace("firmObstacleCount",firmObstacleCount,50);
+        }
+
+        // Explosive Obstacle limits
+        if (explosiveObstacleCount < 0){
+            obstacleSettings.replace("explosiveObstacleCount",explosiveObstacleCount,0);
+        } else if (explosiveObstacleCount > 50){
+            obstacleSettings.replace("explosiveObstacleCount",explosiveObstacleCount,50);
+        }
+
+        // Gift Obstacle limilts
+        if (giftObstacleCount < 0){
+            obstacleSettings.replace("giftObstacleCount",explosiveObstacleCount,0);
+        } else if (giftObstacleCount > 20){
+            obstacleSettings.replace("giftObstacleCount",explosiveObstacleCount,20);
+        }
+
     }
 
 }

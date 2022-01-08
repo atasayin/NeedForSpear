@@ -19,7 +19,6 @@ public class GameState {
     public GameState() {
         this.paddlePos = new PosVector(200,800);
         this.ballPos = new PosVector(200, 750);
-        this.layout = new Layout();
         domainObjects = new ArrayList<DomainObject>();
         ObstacleCounts = new HashMap<Integer, Integer>();
         //pc = new PaddleController(100,20);

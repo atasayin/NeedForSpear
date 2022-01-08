@@ -1,6 +1,7 @@
 package domain;
 
 import domain.obstacle.Obstacle;
+import domain.obstacle.WallMaria;
 import util.PosVector;
 
 import java.util.ArrayList;
@@ -100,8 +101,8 @@ public class CollisionChecker {
             System.out.println("Null object in checkCollision");
         }
 
-
         return null;
+
     }
 
 
@@ -204,7 +205,8 @@ public class CollisionChecker {
 
         for (Obstacle obs : Layout.getObstaclePositions().keySet()) {
             bulletsHit = false;
-
+            if(obs.is_moving)
+                obs.move();
             if (Game.getInstance().getPaddle().getHasCannon()) {
                 if (checkCollision(Game.getInstance().getPaddle().getLeftCannon().getBullet(), obs)) {
                     bulletsHit = true;
@@ -217,7 +219,6 @@ public class CollisionChecker {
                             Game.getInstance().getPaddle().getRightCannon().getPosVector().getY());
                 }
             }
-
 
             if (instance.checkCollision(Game.getInstance().getBall(), obs) || bulletsHit) {
 

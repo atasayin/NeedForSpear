@@ -2,7 +2,7 @@ package util;
 import java.beans.beancontext.BeanContext;
 import java.lang.Math;
 
-public class PosVector {
+public class PosVector{
 
 	/*
 	// The abstraction function is
@@ -109,5 +109,12 @@ public class PosVector {
 				"x=" + x +
 				", y=" + y +
 				'}';
+	}
+
+	// Manhattan Distance between 2 PosVector's
+	public int manhattanDist(PosVector pos){
+		return Math.abs(this.x - pos.getX())
+				+ Math.abs(this.y - pos.getY());
+
 	}
 }
