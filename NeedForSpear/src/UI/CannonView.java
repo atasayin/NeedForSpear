@@ -34,16 +34,16 @@ public class CannonView implements Drawable {
 
     private void fillImgs() throws IOException{
         try {
-            paddle_img = ImageIO.read(this.getClass().getResource("../assets/sphere.png"));
+            paddle_img = ImageIO.read(this.getClass().getResource("../assets/balba.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         // scale to unit length L
         //int paddleLen = BuildModeScreen.FRAME_WIDTH/10;
-        int paddleLen = 30;
-        int paddleThick = 20;
-        Image scaled = paddle_img.getScaledInstance(paddleLen, paddleThick,
+        int cannonLen = 50;
+        int cannonThick = 30;
+        Image scaled = paddle_img.getScaledInstance(cannonLen, cannonThick,
                 BufferedImage.SCALE_SMOOTH);
         if (scaled instanceof BufferedImage)
             paddle_img = (BufferedImage) scaled;

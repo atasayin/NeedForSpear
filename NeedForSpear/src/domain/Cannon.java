@@ -8,15 +8,8 @@ public class Cannon extends DomainObject{
     public static final int FRAME_HEIGHT = 766;
     private double MIN_ANGLE_LIMIT = -50;
     private double MAX_ANGLE_LIMIT = 50;
-    public static final int PADDLE_THICKNESS = 20;
+    public static final int PADDLE_THICKNESS = 30;
 
-    // move constants
-    private int GO_LEFT_DIC = 1;
-    private int GO_RIGHT_DIC = 2;
-    private int ROTATE_CCLOKC_DIC = 3;
-    private int ROTATE_CLOCK_DIC = 4;
-    private int GO_FAST_LEFT_DIC = 5;
-    private int GO_FAST_RIGHTH_DIC = 6;
 
     protected int length;
     private int thickness;
@@ -30,14 +23,10 @@ public class Cannon extends DomainObject{
     protected Bullet bullet;
 
     public Cannon(int X, int Y){
-        this.length = 5;
+        this.length = 50;
         this.width = this.length;
         this.thickness = PADDLE_THICKNESS;
         this.posVector = new PosVector(X, Y);
-        this.angle = 0;
-        this.angleSpeed = 10;
-        normalSpeed = length/2;
-        fastSpeed = 2*length;
         this.setSpeed(0,0);
         this.bullet = new Bullet(X,Y);
     }

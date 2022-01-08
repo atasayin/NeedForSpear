@@ -50,6 +50,7 @@ public class Saver {
             temp.add(String.valueOf(o.getKey()));
             temp.add(String.valueOf(o.getValue()));
             temp.add(String.valueOf(o.getKey().isFrozen()));
+            temp.add(String.valueOf("ealth " +o.getKey().getHealth()));
             map.add(temp);
         }
 
@@ -143,7 +144,9 @@ public class Saver {
                 int k = s.indexOf("y");
                 int l = s.indexOf("}");
                 int m = (Integer.parseInt(s.substring(k + 2, l)));
-
+                int h = s.indexOf("h");
+                int health = (Integer.parseInt(s.substring(h + 2, h+3)));
+                System.out.println("health is "+ health);
                 if (s.contains("WallMaria")) {
                     WallMaria obs = new WallMaria(p, m);
                     if (s.contains("true")) {

@@ -29,6 +29,8 @@ public class Paddle extends DomainObject{
 	private int normalSpeed;
 	private int fastSpeed;
 	private int width;
+	private int cannonofSetLeft =37;
+	private int cannonofSetRight =12;
 	private int height = PADDLE_THICKNESS;
 	private boolean hasCannon =false;
 	protected Cannon leftCannon;
@@ -208,13 +210,13 @@ public class Paddle extends DomainObject{
 	public PosVector getLeftCornerPos() {
 		int x_coordinate = (int) (this.getCenterX() - (this.length/2 * Math.cos((Math.toRadians(this.angle)))));
 		int y_coordinate = (int) (this.getPosVector().getY() - (this.length/2 * Math.sin(Math.toRadians(this.angle))));
-		return new PosVector(x_coordinate - 27, y_coordinate);
+		return new PosVector(x_coordinate - cannonofSetLeft, y_coordinate);
 	}
 
 	public PosVector getRightCornerPos() {
 		int x_coordinate = (int) (this.getCenterX() + (this.length/2 * Math.cos((Math.toRadians(this.angle)))));
 		int y_coordinate = (int) (this.getPosVector().getY() + (this.length/2 * Math.sin(Math.toRadians(this.angle))));
-		return new PosVector(x_coordinate -7, y_coordinate);
+		return new PosVector(x_coordinate-cannonofSetRight , y_coordinate);
 	}
 
 

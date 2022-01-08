@@ -53,7 +53,7 @@ public abstract class Obstacle extends DomainObject {
 	public boolean getHit() {
 		this.health -= 1;
 
-		if (this.health == 0 ) {
+		if (this.health <= 0 ) {
 			this.destroy();
 			int o = Game.getInstance().getOldScore();
 			if(isEffectScore && Game.getInstance().isStarted) {

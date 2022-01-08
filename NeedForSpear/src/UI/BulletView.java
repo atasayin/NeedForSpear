@@ -12,9 +12,9 @@ import java.io.IOException;
 
 public class BulletView implements Drawable {
 
-    private BufferedImage Ball_img;
+    private BufferedImage Bullet_img;
     private static BulletView instance;
-    private int ballRadius = 20;
+    private int bulletradius = 20;
 
     private BulletView() {
     }
@@ -34,17 +34,17 @@ public class BulletView implements Drawable {
 
     private void fillImgs() throws IOException{
         try {
-            Ball_img = ImageIO.read(this.getClass().getResource("../assets/simpleball.png"));
+            Bullet_img = ImageIO.read(this.getClass().getResource("../assets/lily.png"));
         } catch (Exception e) {
             e.printStackTrace();
 
         }
 
         // scale to unit length L
-        Image scaled = Ball_img.getScaledInstance(ballRadius, ballRadius,
+        Image scaled = Bullet_img.getScaledInstance(bulletradius, bulletradius,
                 BufferedImage.SCALE_SMOOTH);
         if (scaled instanceof BufferedImage)
-            Ball_img = (BufferedImage) scaled;
+            Bullet_img = (BufferedImage) scaled;
 
         // Create a buffered image with transparency
         BufferedImage new_bimage = new BufferedImage(scaled.getWidth(null), scaled.getHeight(null),
@@ -55,14 +55,14 @@ public class BulletView implements Drawable {
         bGr.drawImage(scaled, 0, 0, null);
         bGr.dispose();
 
-        Ball_img = new_bimage;
+        Bullet_img = new_bimage;
     }
 
     @Override
     public void draw(Graphics2D g2d, DomainObject domainObject, int width, int height) {
         Bullet bullet = (Bullet) domainObject;
 
-        g2d.drawImage(Ball_img, bullet.getPosVector().getX(), bullet.getPosVector().getY(), null);
+        g2d.drawImage(Bullet_img, bullet.getPosVector().getX(), bullet.getPosVector().getY(), null);
 
     }
 
