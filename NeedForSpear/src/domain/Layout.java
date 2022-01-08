@@ -8,6 +8,7 @@ import util.PosVector;
 //import javafx.geometry.Pos;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Random;
 
 public class Layout {
@@ -16,16 +17,19 @@ public class Layout {
     /////////////////////////////////////////////////////////////////////////////////////
     private static int yOffset = 70;
     // Total number of Simple Obstacles(Wall Maria)
-    private int wallMariaCount;
+    private static int wallMariaCount;
 
     // Total number of Firm Obstacles(Steins Gate)
-    private int steinsGateCount;
+    private static int steinsGateCount;
 
     // Total number of Explosive Obstacles(Pandora’s Box)
-    private int pandoraBoxCount;
+    private static int pandoraBoxCount;
 
     // Total number of Gift Obstacles(Gift of Uranus)
-    private int uranusCount;
+    private static int uranusCount;
+
+    // Minimum criteria limits
+    private static int WALLMARIA_LIMIT= 75, STEINGSGATE_LIMIT = 10, PANDORABOX_LIMIT = 5, URANUS_LIMIT = 10;
 
     // Holds positions of all obstacles
     private static HashMap<Obstacle, PosVector> obstacle_positions;
@@ -83,13 +87,30 @@ public class Layout {
         this.layoutWidth = layoutWidth;
         this.layoutHeight = layoutHeight;
         obsLen = layoutWidth/50;
-        SCALE_TO_RUN_MODE = scaleToRunMode;
+        SCALE_TO_RUN_MODE = 1/scaleToRunMode - 0.4;
         //setLayout();
     }
 
     // Constructor
     public Layout(){
 
+    }
+
+    // Getters
+    public static int getWallMariaCount() {
+        return wallMariaCount;
+    }
+
+    public static int getSteinsGateCount() {
+        return steinsGateCount;
+    }
+
+    public static int getPandoraBoxCount() {
+        return pandoraBoxCount;
+    }
+
+    public static int getUranusCount() {
+        return uranusCount;
     }
 
     // This method is called once the map is build to save the centers of the obstacles.
@@ -214,17 +235,65 @@ public class Layout {
     // Scales object x for run mode screen
     public static void scaleObstaclesPosX(){
         for (Obstacle obs: obstacle_positions.keySet()){
-            obs.setPosVector(new PosVector((int) (obs.getPos().getX() * 1/SCALE_TO_RUN_MODE),obs.getPos().getY()));
+            obs.setPosVector(new PosVector((int) (obs.getPos().getX() * SCALE_TO_RUN_MODE),obs.getPos().getY()));
             RemainingPieces remainingPieces = obs.getRemains();
+            Box box = obs.getBox();
 
             if(remainingPieces!=null){
                 remainingPieces.setPosVector(
                         new PosVector(
-                                (int) (remainingPieces.getPosVector().getX() * 1/SCALE_TO_RUN_MODE),
+                                (int) (remainingPieces.getPosVector().getX() * SCALE_TO_RUN_MODE),
                                 remainingPieces.getPosVector().getY()));
+            }
+
+            if(box!=null){
+                box.setPosVector(
+                        new PosVector(
+                                (int) (box.getPosVector().getX() * SCALE_TO_RUN_MODE),
+                                box.getPosVector().getY()));
+            }
+
+        }
+
+        for (DomainObject domainObject: Game.getInstance().getDomainObjectArr()) {
+            if (domainObject instanceof Obstacle){
+                Obstacle obs = (Obstacle) domainObject;
+                obs.setPosVector(new PosVector((int) (obs.getPos().getX() * SCALE_TO_RUN_MODE), obs.getPos().getY()));
+                RemainingPieces remainingPieces = obs.getRemains();
+                Box box = obs.getBox();
+
+                if (remainingPieces != null) {
+                    remainingPieces.setPosVector(
+                            new PosVector(
+                                    (int) (remainingPieces.getPosVector().getX() * SCALE_TO_RUN_MODE),
+                                    remainingPieces.getPosVector().getY()));
+                }
+
+                if (box != null) {
+                    box.setPosVector(
+                            new PosVector(
+                                    (int) (box.getPosVector().getX() * SCALE_TO_RUN_MODE),
+                                    box.getPosVector().getY()));
+                }
+
             }
         }
 
+    }
+
+    // Is minimum criteria satisfies
+    public static boolean isLayoutSatisfies(){
+
+        return (wallMariaCount >= WALLMARIA_LIMIT)
+                && (steinsGateCount >= STEINGSGATE_LIMIT)
+                && (pandoraBoxCount >= PANDORABOX_LIMIT)
+                && (uranusCount >= URANUS_LIMIT);
+    }
+
+    // Deletes all Layout
+    public void cleanLayout(){
+        obstacle_positions.clear();
+        Game.getInstance().getDomainObjectArr().clear();
     }
 
     // Returns an obstacle which is present in mouse (X,Y)
@@ -248,19 +317,24 @@ public class Layout {
         if (type.equals("WallMaria")){
             this.wallMariaCount--;
             changeObs = ObstacleFactory.getInstance().getObstacle(STEINSGATE_TYPE,pos);
+            this.steinsGateCount++;
         }else if (type.equals("SteinsGate")){
             this.steinsGateCount--;
             changeObs = ObstacleFactory.getInstance().getObstacle(PANDORASBOX_TYPE,pos);
+            this.pandoraBoxCount++;
         }else if (type.equals("PandorasBox")){
             this.pandoraBoxCount--;
             changeObs = ObstacleFactory.getInstance().getObstacle(GIFTOFURANUS_TYPE,pos);
+            this.uranusCount++;
         }else {
             this.uranusCount--;
             changeObs = ObstacleFactory.getInstance().getObstacle(WALLMARIA_TYPE,pos);
+            this.wallMariaCount++;
         }
         obstacle_positions.put(changeObs,changeObs.getPosVector());
         Game.getInstance().getDomainObjectArr().add(changeObs);
         Game.getInstance().getDomainObjectArr().add(changeObs.getBox());
+        Game.getInstance().getDomainObjectArr().add(changeObs.getRemains());
         System.out.println("CHANGE");
     }
 
@@ -272,12 +346,15 @@ public class Layout {
         obstacle_positions.put(obs,obs.getPosVector());
         Game.getInstance().getDomainObjectArr().add(obs);
         Game.getInstance().getDomainObjectArr().add(obs.getBox());
+        Game.getInstance().getDomainObjectArr().add(obs.getRemains());
         System.out.println("ADD");
     }
 
 
     // Removes an obstacle from Layout.
     public void removeObstacle(Obstacle obs){
+        Game.getInstance().getDomainObjectArr().remove(obs.getRemains());
+        Game.getInstance().getDomainObjectArr().remove(obs.getBox());
         Game.getInstance().getDomainObjectArr().remove(obs);
         obstacle_positions.remove(obs);
 

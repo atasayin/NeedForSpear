@@ -111,9 +111,10 @@ public class BuildModeScreen extends JFrame {
         obstacleSettings.put("explosiveObstacleCount", Integer.parseInt(explosiveObstacle.getText()));
         obstacleSettings.put("giftObstacleCount", Integer.parseInt(giftObstacle.getText()));
 
+        LC.setObstacleSettings(obstacleSettings);
         this.obstacleSettings = obstacleSettings;
 
-        LC.setObstacleSettings(obstacleSettings);
+
     }
 
     public BuildModeScreen() {
@@ -145,43 +146,15 @@ public class BuildModeScreen extends JFrame {
         add(viewPanel, c);
 
 
-
-
     }
 
 
-    /*public BuildModeScreen() {
-        LC = new LayoutController();
-        initializeBuildScreen();
-        viewPanel = initializeViewPanel();
-        add(viewPanel);
-        obstacleSettingsPanel = initializeObstacleSettingsPanel();
-        add(obstacleSettingsPanel);
-        add(runGamePanel(this));
-
-
-//        initializeBuildScreen();
-//        obstacleSettingsPanel = initializeObstacleSettingsPanel();
-//        add(obstacleSettingsPanel,BorderLayout.CENTER);
-//        layoutPanel = initializeLayoutPanel();
-//        add(layoutPanel,BorderLayout.NORTH);
-//        add(runGamePanel(this),BorderLayout.SOUTH);
-    }
-*/
     // Initialize the outer JFrame of Build Mode Screen
     private void initializeBuildScreen() {
         this.setLayout(new GridBagLayout());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(FRAME_WIDTH, FRAME_HEIGHT);
         this.setLocationRelativeTo(null);
-    }
-
-    // This will be the interactive Build Mode Panel in the future
-    // TODO: Make this panel interactive (How?)
-    private JPanel initializeViewPanel(){
-        JPanel viewP = new JPanel();
-        viewP.setBackground(Color.orange);
-        return viewP;
     }
 
     // This provides a panel that the player can set the obstacle numbers (Orange Panel)
@@ -228,7 +201,7 @@ public class BuildModeScreen extends JFrame {
                 LC.setFramePanelWidthHeight(FRAME_WIDTH,FRAME_HEIGHT);
                 LC.craftRandomLayout();
                 gameStartButton.setEnabled(true);
-                obstacleButton.setEnabled(false);
+                //obstacleButton.setEnabled(false);
                 loadGameButton.setEnabled(false);
             }
         });
@@ -283,13 +256,22 @@ public class BuildModeScreen extends JFrame {
 
         gameStartButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
-                setRunSettings();
-                YmirProb1 = Double.parseDouble(YmirProbability1.getText());
-                YmirProb2 = Double.parseDouble(YmirProbability2.getText());
-                YmirProb3 = Double.parseDouble(YmirProbability3.getText());
+                if (LC.isLayoutSatisfies()) {
+                    setRunSettings();
+                    YmirProb1 = Double.parseDouble(YmirProbability1.getText());
+                    YmirProb2 = Double.parseDouble(YmirProbability2.getText());
+                    YmirProb3 = Double.parseDouble(YmirProbability3.getText());
 
-                notifyButtonisClickedListeners(username, id,gameNum,YmirFrequency,YmirProb1,YmirProb2,YmirProb3);
-
+                    notifyButtonisClickedListeners(username, id, gameNum, YmirFrequency, YmirProb1, YmirProb2, YmirProb3);
+                }else{
+                    JOptionPane.showMessageDialog(PlaygroundScreen.jf,
+                            "Enter 75("+ Layout.getWallMariaCount()+")at least for Wall Maria\n" +
+                                    "Enter 10("+ Layout.getSteinsGateCount()+") at least for Steins Gate\n" +
+                                    "Enter 5("+ Layout.getPandoraBoxCount()+") at least for Pandoras Box\n" +
+                                    "Enter 10("+ Layout.getUranusCount()+")at least for Gift of Uranus\n",
+                            "Minimum criteria is not satisfied",
+                            JOptionPane.INFORMATION_MESSAGE);
+                }
             }
         });
 

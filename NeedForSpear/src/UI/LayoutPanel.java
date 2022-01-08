@@ -102,12 +102,6 @@ public class LayoutPanel extends JPanel implements ActionListener,MouseListener,
 
     }
 
-    private void drawPaddle(Graphics2D g2d, Paddle d, int width, int height) throws IOException {
-        // TODO Auto-generated method stub
-        PaddleView.getInstance().draw(g2d, d, width, height);
-
-    }
-
     private void drawComponent(Graphics2D g2d, DomainObject d) throws IOException {
         // TODO Auto-generated method stub
         if (d instanceof Obstacle) {
@@ -115,7 +109,6 @@ public class LayoutPanel extends JPanel implements ActionListener,MouseListener,
         }
 
     }
-
 
     public void initializeLayoutPanel() throws IOException {
         this.setFocusable(true);

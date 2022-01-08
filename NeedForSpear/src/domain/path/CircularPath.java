@@ -69,6 +69,7 @@ public class CircularPath implements IPathBehaviour{
         }
         // Reset Obstacle
         thisObs.setPosVector(new PosVector(initialX,initialY));
+        thisObs.getRemains().setPosVector(new PosVector(initialX,initialY));
 
     }
 
