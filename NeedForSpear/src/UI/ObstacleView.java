@@ -252,8 +252,8 @@ public class ObstacleView implements Drawable {
                 g2d.drawImage(firm_obs_5_img, obs.getPosVector().getX(), obs.getPosVector().getY(), null);
             }
             else{
-                    g2d.drawImage(firm_obs_1_img, obs.getPosVector().getX(), obs.getPosVector().getY(), null);
-                }
+                g2d.drawImage(firm_obs_1_img, obs.getPosVector().getX(), obs.getPosVector().getY(), null);
+            }
             }
         else if (obs instanceof PandorasBox){
             g2d.drawImage(explosive_obs_img, obs.getPosVector().getX(), obs.getPosVector().getY(), null);

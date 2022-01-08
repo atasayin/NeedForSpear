@@ -4,6 +4,7 @@ package UI;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -49,6 +50,10 @@ public class BuildModeScreen extends JFrame {
     private JTextField YmirProbability2;
     private JTextField YmirProbability3;
 
+    private JLabel ymirProb1 = new JLabel("Infinite Void Prob.");
+    private JLabel ymirProb2 = new JLabel("Double Acceleration Prob.");
+    private JLabel ymirProb3 = new JLabel("Hollow Purple Prob.");
+    private JLabel ymirFreqLabel = new JLabel("Ymir Frequency");
 
     private JButton gameStartButton;
     private JButton obstacleButton;
@@ -60,14 +65,9 @@ public class BuildModeScreen extends JFrame {
     private List<IRunListener> runModeListeners = new ArrayList<>();
     private List<ILoadListener> loadModeListeners = new ArrayList<>();
     private String LOADPATH = "src/saves/loadfilenames.json";
-    // Layout
-    private Layout layout;
 
     // Layout Controller
     private LayoutController LC;
-
-    // Layout Panel
-    // private LayoutPanel layoutPanel;
 
     private JPanel obstacleSettingsPanel;
     private JPanel viewPanel;
@@ -116,8 +116,6 @@ public class BuildModeScreen extends JFrame {
 
         LC.setObstacleSettings(obstacleSettings);
         this.obstacleSettings = obstacleSettings;
-
-
     }
 
     public BuildModeScreen() {
@@ -127,15 +125,16 @@ public class BuildModeScreen extends JFrame {
 
         obstacleSettingsPanel = initializeObstacleSettingsPanel();
         c.gridx = 3;
-        c.gridheight = 2;
         c.gridy = 0;
+        c.gridheight = 1;
         c.fill = GridBagConstraints.VERTICAL;
-        c.ipady = 250;
+        c.ipady = 100;
+        c.ipadx = 0;
         add(obstacleSettingsPanel, c);
 
         c.gridx = 3;
-        c.gridy = 2;
-        c.gridheight = 1;
+        c.gridy = 1;
+        c.gridheight = 2;
         c.ipady = 0;
         c.fill = GridBagConstraints.VERTICAL;
         add(runGamePanel(this),c);
@@ -221,7 +220,7 @@ public class BuildModeScreen extends JFrame {
 
     // This panel provides an option to load an existing game, and start to game
     private JPanel runGamePanel(JFrame frame) {
-        GridLayout panelLayout = new GridLayout(0, 2);
+        GridLayout panelLayout = new GridLayout(5, 2);
         JPanel runGamePanel = new JPanel(panelLayout);
 
         loadGameButton = new JButton("Load Game");
@@ -242,6 +241,7 @@ public class BuildModeScreen extends JFrame {
         labels.put(75, new JLabel("75"));
         labels.put(100, new JLabel("100"));
         slider.setLabelTable(labels);
+        slider.setPaintLabels(true);
 
         YmirProbability1 = new JTextField("5", 10);
         YmirProbability2 = new JTextField("5", 10);
@@ -304,9 +304,13 @@ public class BuildModeScreen extends JFrame {
 
         runGamePanel.add(loadGameButton);
         runGamePanel.add(gameStartButton);
+        runGamePanel.add(ymirFreqLabel);
         runGamePanel.add(slider);
+        runGamePanel.add(ymirProb1);
         runGamePanel.add(YmirProbability1);
+        runGamePanel.add(ymirProb2);
         runGamePanel.add(YmirProbability2);
+        runGamePanel.add(ymirProb3);
         runGamePanel.add(YmirProbability3);
         return runGamePanel;
     }

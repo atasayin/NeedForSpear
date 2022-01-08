@@ -46,7 +46,6 @@ public class BoxView implements Drawable {
 
     @Override
     public void draw(Graphics2D g2d, DomainObject domainObject, int width, int height) {
-        // TODO Auto-generated method stub
         Box box = (Box) domainObject;
 
         g2d.drawImage(box_img, box.getPosVector().getX(), box.getPosVector().getY(), null);

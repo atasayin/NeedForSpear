@@ -49,7 +49,6 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
     private JLabel expNumberLabel;
     private JLabel unstopNumberLabel;
     private JLabel rocketNumberLabel;
-    private JLabel helpLabel;
     private JButton helpButton;
 
 
@@ -61,9 +60,6 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
     private double boxY;
     private double remainX;
     private double remainY;
-
-
-
 
     public RunGameObjects(int width, int height) {
         this.frame_width = width;
@@ -140,14 +136,10 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
 
         icon = new ImageIcon(new ImageIcon("src/assets/empty.png").getImage().getScaledInstance(200,50, Image.SCALE_DEFAULT));
         invP.add(new JLabel(icon));
-        //emptyLabel = new JLabel("0");
-        //invP.add(emptyLabel);
 
-        //icon = new ImageIcon(new ImageIcon("src/assets/help.png").getImage().getScaledInstance(45,45, Image.SCALE_DEFAULT));
-        //invP.add(new JLabel(icon));
-        //helpLabel = new JLabel("Help");
-        //invP.add(helpLabel);
-        /*
+        icon = new ImageIcon(new ImageIcon("src/assets/help.png").getImage().getScaledInstance(30,45, Image.SCALE_DEFAULT));
+        invP.add(new JLabel(icon));
+
         helpButton = new JButton("Help!");
         helpButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
@@ -156,27 +148,25 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
                         "Need for Spear is an easy and competitive game to play. It combines fun and challenge. \n" +
                                 "Two brave warriors are racing to obtain the Spear of Power that will enable its owner to rule the world given its powerful capabilities. \n" +
                                 "Its creator, Shazam, the legendary wise magician, has created several obstacles to protect the spear in a way that only a worthy warrior shall be able to reach.\n" +
-                                " In this game, two players will compete representing each of the warriors, and try to reach the Spear of Power before the other does.\n" +
-                                " There are several types of obstacles that they shall face. The warrior can obtain magical abilities during their quest.\n" +
-                                " Some of the magical abilities can be used to enhance one’s attacking power and status (Useful Magical Abilities), \n" +
+                                "In this game, two players will compete representing each of the warriors, and try to reach the Spear of Power before the other does.\n" +
+                                "There are several types of obstacles that they shall face. The warrior can obtain magical abilities during their quest.\n" +
+                                "Some of the magical abilities can be used to enhance one’s attacking power and status (Useful Magical Abilities), \n" +
                                 "and others can be used to obstruct the other player from reaching the Spear of Power fast. \n" +
                                 "The warrior who finishes all the obstacles first, is deemed the winner and the one worthy of this treasure. \n" +
                                 "Each warrior is represented by their noble phantasm and enchanted sphere. A noble phantasm is a paddle-like object\n" +
-                                " that is used to deflect the enchanted sphere from falling to the ground.\n" +
-                                " The enchanted sphere is the object that is sent around to destroy obstacles, but it is affected by gravity,\n" +
-                                " therefore the noble phantasm is used to set its track towards the target obstacles to destroy them.\n" +
-                                " If the enchanted sphere falls below the noble phantasm, the warrior loses a chance. Each warrior has 3 chances only.\n" +
-                                " Once the warrior runs out of chances, they are considered unworthy and therefore lose the game. \n" +
+                                "that is used to deflect the enchanted sphere from falling to the ground.\n" +
+                                "The enchanted sphere is the object that is sent around to destroy obstacles, but it is affected by gravity,\n" +
+                                "therefore the noble phantasm is used to set its track towards the target obstacles to destroy them.\n" +
+                                "If the enchanted sphere falls below the noble phantasm, the warrior loses a chance. Each warrior has 3 chances only.\n" +
+                                "Once the warrior runs out of chances, they are considered unworthy and therefore lose the game. \n" +
                                 "If a player is deemed unworthy, then the other player automatically wins.",
-                        "Help !",
+                        "HELP!",
                         JOptionPane.WARNING_MESSAGE, helpIcon);
             }
 
         });
 
         invP.add(helpButton);
-
-         */
 
         return invP;
     }
@@ -203,10 +193,9 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
             e.printStackTrace();
         }
         drawBall(g2d, Game.getInstance().getBall(), frame_width, frame_height);
-        // NOT ÇİZGİYİ SİL
+
         g2d.setTransform(old);
         int textWidth = g.getFontMetrics().stringWidth(infoString);
-        //g2d.drawString(infoString, this.getWidth() / 2 - textWidth / 2, infoStringHeight);
         g2d.drawString(infoString,  textWidth / 2, infoStringHeight);
         g2d.drawLine(0, yOffset, frame_width, yOffset);
 
@@ -547,9 +536,6 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
         boxY = y;
     }
 
-    /*@Override
-    public void keyTyped(KeyEvent e) {
-    }*/
 
   /*  @Override
     public void keyReleased(KeyEvent e) {
