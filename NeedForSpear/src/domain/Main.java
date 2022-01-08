@@ -14,9 +14,6 @@ public class Main {
             autoMode.setVisible(true);
             autoMode.addListener(nfs);
 
-            InfiniteVoid iv = new InfiniteVoid();
-            Thread t = new Thread(iv);
-            //t.start();
     }
 
 }

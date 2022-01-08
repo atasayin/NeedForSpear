@@ -2,6 +2,7 @@ package domain.abilities;
 
 import domain.Game;
 import domain.Layout;
+import domain.Ymir;
 import domain.obstacle.Obstacle;
 
 import java.awt.event.FocusEvent;
@@ -10,11 +11,13 @@ import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 public class InfiniteVoid implements Runnable{
-    ArrayList<Integer> indexes;
-    ArrayList<Obstacle> obstacles;
+    private ArrayList<Integer> indexes;
+    private ArrayList<Obstacle> obstacles;
+
 
 
     public InfiniteVoid() {
+
          indexes = new ArrayList<>();
          obstacles = new ArrayList<Obstacle>();
     }
@@ -52,11 +55,13 @@ public class InfiniteVoid implements Runnable{
     @Override
     public void run() {
         chooseAndFreezeObstacles();
-        try {
-            TimeUnit.SECONDS.sleep(15);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+
+            try {
+                TimeUnit.SECONDS.sleep(15);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            unfreezeObstacles();
         }
-        unfreezeObstacles();
     }
-}
+
