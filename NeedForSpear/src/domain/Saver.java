@@ -270,8 +270,6 @@ public class Saver {
         Document doc2 = new Document();
         JSONParser jsonParser = new JSONParser();
         ArrayList<String> temp = new ArrayList<>();
-        //temp.add(FILEPATH);
-        //doc2.put("FileNames", temp);
 
         try (FileReader reader = new FileReader(LOADPATH)) {
             Object obj = jsonParser.parse(reader);
