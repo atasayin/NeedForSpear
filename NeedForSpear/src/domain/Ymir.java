@@ -27,7 +27,7 @@ public class Ymir implements Runnable{
     public Boolean rollDice(){
         return random.nextBoolean();
     }
-
+    public Boolean getRunning(){return this.running; }
     // A double between 0 and 1 is generated and then compared with the normalized weights of abilities to choose among them.
     public YmirAbilities chooseAbility() {
         double threshold = random.nextDouble();
@@ -57,13 +57,10 @@ public class Ymir implements Runnable{
     public void run() {
         while(running) {
             try {
-                TimeUnit.SECONDS.sleep(this.period + 15);
-                if (true) {
+                TimeUnit.SECONDS.sleep(this.period +15);
+                if (rollDice()) {
                     YmirAbilities ability = chooseAbility();
                     System.out.println(ability);
-                    System.out.println("Before double accel");
-                    System.out.println(Game.getInstance().getBall().xVelocity);
-                    System.out.println(Game.getInstance().getBall().yVelocity);
                     if (ability == YmirAbilities.DoubleAccel) {
                         DoubleAccel da = new DoubleAccel();
                         Thread t = new Thread(da);

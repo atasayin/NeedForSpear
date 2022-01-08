@@ -27,7 +27,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
     Timer tm = new Timer(TIMER_SPEED, this);
     private static final int TIMER_SPEED = 50;
     private static final int INFO_REFRESH_PERIOD = 3000;
-    private static final int infoStringHeight = 60;
+    private static final int infoStringHeight = 30;
     private static int yOffset = 70;
     private static int xOffset = 175;
     public static int frame_width;
@@ -49,6 +49,8 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
     private JLabel expNumberLabel;
     private JLabel unstopNumberLabel;
     private JLabel rocketNumberLabel;
+    private JLabel helpLabel;
+    private JButton helpButton;
 
 
     private  ImageIcon icon;
@@ -115,6 +117,7 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
 
     private JPanel initializeInventoryPanel(){
         JPanel invP = new JPanel();
+
         ImageIcon icon = new ImageIcon(new ImageIcon("src/assets/heart.png").getImage().getScaledInstance(30,30, Image.SCALE_DEFAULT));
         invP.add(new JLabel(icon));
         chanceNumberLabel = new JLabel("0");
@@ -134,6 +137,46 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
         invP.add(new JLabel(icon));
         rocketNumberLabel = new JLabel("0");
         invP.add(rocketNumberLabel);
+
+        icon = new ImageIcon(new ImageIcon("src/assets/empty.png").getImage().getScaledInstance(200,50, Image.SCALE_DEFAULT));
+        invP.add(new JLabel(icon));
+        //emptyLabel = new JLabel("0");
+        //invP.add(emptyLabel);
+
+        //icon = new ImageIcon(new ImageIcon("src/assets/help.png").getImage().getScaledInstance(45,45, Image.SCALE_DEFAULT));
+        //invP.add(new JLabel(icon));
+        //helpLabel = new JLabel("Help");
+        //invP.add(helpLabel);
+        /*
+        helpButton = new JButton("Help!");
+        helpButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
+                ImageIcon helpIcon = new ImageIcon((new ImageIcon("src/assets/help.png").getImage().getScaledInstance(65,120, Image.SCALE_DEFAULT)));
+                JOptionPane.showMessageDialog(PlaygroundScreen.jf,
+                        "Need for Spear is an easy and competitive game to play. It combines fun and challenge. \n" +
+                                "Two brave warriors are racing to obtain the Spear of Power that will enable its owner to rule the world given its powerful capabilities. \n" +
+                                "Its creator, Shazam, the legendary wise magician, has created several obstacles to protect the spear in a way that only a worthy warrior shall be able to reach.\n" +
+                                " In this game, two players will compete representing each of the warriors, and try to reach the Spear of Power before the other does.\n" +
+                                " There are several types of obstacles that they shall face. The warrior can obtain magical abilities during their quest.\n" +
+                                " Some of the magical abilities can be used to enhance one’s attacking power and status (Useful Magical Abilities), \n" +
+                                "and others can be used to obstruct the other player from reaching the Spear of Power fast. \n" +
+                                "The warrior who finishes all the obstacles first, is deemed the winner and the one worthy of this treasure. \n" +
+                                "Each warrior is represented by their noble phantasm and enchanted sphere. A noble phantasm is a paddle-like object\n" +
+                                " that is used to deflect the enchanted sphere from falling to the ground.\n" +
+                                " The enchanted sphere is the object that is sent around to destroy obstacles, but it is affected by gravity,\n" +
+                                " therefore the noble phantasm is used to set its track towards the target obstacles to destroy them.\n" +
+                                " If the enchanted sphere falls below the noble phantasm, the warrior loses a chance. Each warrior has 3 chances only.\n" +
+                                " Once the warrior runs out of chances, they are considered unworthy and therefore lose the game. \n" +
+                                "If a player is deemed unworthy, then the other player automatically wins.",
+                        "Help !",
+                        JOptionPane.WARNING_MESSAGE, helpIcon);
+            }
+
+        });
+
+        invP.add(helpButton);
+
+         */
 
         return invP;
     }
@@ -163,7 +206,8 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
         // NOT ÇİZGİYİ SİL
         g2d.setTransform(old);
         int textWidth = g.getFontMetrics().stringWidth(infoString);
-        g2d.drawString(infoString, this.getWidth() / 2 - textWidth / 2, infoStringHeight);
+        //g2d.drawString(infoString, this.getWidth() / 2 - textWidth / 2, infoStringHeight);
+        g2d.drawString(infoString,  textWidth / 2, infoStringHeight);
         g2d.drawLine(0, yOffset, frame_width, yOffset);
 
         if(Game.getInstance().getPaddle().getHasCannon()){
@@ -187,10 +231,6 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
         if(isRemainFall) {
             isRemainFall = false;
         }
-    }
-
-    private void drawObstacle(Graphics2D g2d, Obstacle d) {
-        ObstacleView.getInstance().draw(g2d, d, frame_width, frame_height);
     }
 
     private void drawPaddle(Graphics2D g2d, Paddle d, int width, int height) throws IOException {
@@ -367,21 +407,24 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
         Game.getInstance().gameOverCheck();
         Boolean isWin = Game.getInstance().getIsWin();
         Boolean isRunning =Game.getInstance().gameState.isRunning;
+        ImageIcon attilaIcon = new ImageIcon("src/assets/attila.jpeg");
 
         if (!isRunning){
             tm.stop();
 
             JOptionPane.showMessageDialog(PlaygroundScreen.jf,
-                    "You are out of chance." + "Your score is "+(int) Game.getInstance().getOldScore(),
-                    "Out of chance",
-                    JOptionPane.WARNING_MESSAGE);
+                    "You are out of chance! \n" + "Your Score: "+(int) Game.getInstance().getOldScore(),
+                    "LOSER :(",
+                    JOptionPane.WARNING_MESSAGE, attilaIcon);
             PlaygroundScreen.jf.dispose();
 
         }
         else if (isWin){
             tm.stop();
             JOptionPane.showMessageDialog(PlaygroundScreen.jf,
-                    "You win the game." + "Your score is "+(int) Game.getInstance().getOldScore());
+                    "You win the game! \n" + "Your Score: "+(int) Game.getInstance().getOldScore(),
+                    "WINNER :)",
+                    JOptionPane.WARNING_MESSAGE, attilaIcon);
 
             PlaygroundScreen.jf.dispose();
         }

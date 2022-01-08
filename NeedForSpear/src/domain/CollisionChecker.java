@@ -166,29 +166,14 @@ public class CollisionChecker {
 
         if(Game.getInstance().getPaddle().getHasCannon()){
 
-            Game.getInstance().getPaddle().getLeftCannon().updatePosition(0,0);
-            Game.getInstance().getPaddle().getRightCannon().updatePosition(0,0);
-            Game.getInstance().getPaddle().getLeftCannon().getBullet().updatePosition();
-            Game.getInstance().getPaddle().getRightCannon().getBullet().updatePosition();
-
+            updateCannonAndBullets();
             if(Game.getInstance().getPaddle().getLeftCannon().getBullet().getPosVector().getY()<=70){
                 Game.getInstance().getPaddle().getRightCannon().getBullet().setOutOfScreen(true);
                 Game.getInstance().getPaddle().getLeftCannon().getBullet().setOutOfScreen(true);
             }
             if(Game.getInstance().getPaddle().getLeftCannon().getBullet().outOfScreen){
-                Integer X =  Game.getInstance().getPaddle().getPosVector().getX();
-                Integer Y =  Game.getInstance().getPaddle().getPosVector().getY();
-                PosVector pos = new PosVector(X,Y);
-                PosVector pos2 = new PosVector(X-Game.getInstance().getPaddle().getLength(),Y);
-                Game.getInstance().getPaddle().getLeftCannon().getBullet().setPosVector(pos);
-                Game.getInstance().getPaddle().getRightCannon().getBullet().setPosVector(pos2);
-                Game.getInstance().getPaddle().getLeftCannon().getBullet().outOfScreen =false;
+                bringBackBullets();
             }
-            System.out.println(Game.getInstance().getPaddle().getPosVector().getX()+ " Paddle LOCATIONN");
-            System.out.println(Game.getInstance().getPaddle().leftCannon.getPosVector().getX()+ " CANNON 1 LOCATIONN");
-            System.out.println(Game.getInstance().getPaddle().rightCannon.getPosVector().getX()+ " CANNON 2 LOCATIONN");
-            System.out.println(Game.getInstance().getPaddle().leftCannon.bullet.getPosVector().getY()+ " Bullet 1 LOCATIONN");
-            System.out.println(Game.getInstance().getPaddle().rightCannon.bullet.getPosVector().getY()+ " Bullet 2 LOCATIONN");
         }
         if (boxes != null) {
             for (Box box : boxes) {
@@ -213,15 +198,10 @@ public class CollisionChecker {
 
             }
         }
-
-
         if (instance.checkPaddleBallCollisionAlt(Game.getInstance().getBall(), Game.getInstance().getPaddle())) {
             double alpha = Math.toRadians(Game.getInstance().getPaddle().getAngle());
             Game.getInstance().getBall().reflectFromAngle(alpha);
         }
-
-
-            //if (Game.getInstance().ball.getPosVector().getY() < 0) Game.getInstance().ball.reflectFromHorizontal();
 
         for (Obstacle obs : Layout.getObstaclePositions().keySet()) {
             bulletsHit = false;
@@ -246,6 +226,7 @@ public class CollisionChecker {
                 if (!obs.isFrozen()) {
                     if (obs.getHit()) {
                         String typeCheck = obs.getType();
+
                         if (typeCheck.equals("GiftOfUranus")) {
                             Game.getInstance().getDomainObjectArr().add(obs.getBox());
                             boxes.add(obs.getBox());
@@ -324,5 +305,22 @@ public class CollisionChecker {
 
     public ArrayList<RemainingPieces> getRemainingPieces() {
         return this.remains;
+    }
+
+    private void updateCannonAndBullets(){
+        Game.getInstance().getPaddle().getLeftCannon().updatePosition(0,0);
+        Game.getInstance().getPaddle().getRightCannon().updatePosition(0,0);
+        Game.getInstance().getPaddle().getLeftCannon().getBullet().updatePosition();
+        Game.getInstance().getPaddle().getRightCannon().getBullet().updatePosition();
+    }
+
+    private void bringBackBullets(){
+        Integer X =  Game.getInstance().getPaddle().getPosVector().getX();
+        Integer Y =  Game.getInstance().getPaddle().getPosVector().getY();
+        PosVector pos = new PosVector(X,Y);
+        PosVector pos2 = new PosVector(X-Game.getInstance().getPaddle().getLength(),Y);
+        Game.getInstance().getPaddle().getLeftCannon().getBullet().setPosVector(pos);
+        Game.getInstance().getPaddle().getRightCannon().getBullet().setPosVector(pos2);
+        Game.getInstance().getPaddle().getLeftCannon().getBullet().outOfScreen =false;
     }
 }
