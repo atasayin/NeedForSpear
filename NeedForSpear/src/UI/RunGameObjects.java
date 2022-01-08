@@ -407,21 +407,24 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
         Game.getInstance().gameOverCheck();
         Boolean isWin = Game.getInstance().getIsWin();
         Boolean isRunning =Game.getInstance().gameState.isRunning;
+        ImageIcon attilaIcon = new ImageIcon("src/assets/attila.jpeg");
 
         if (!isRunning){
             tm.stop();
 
             JOptionPane.showMessageDialog(PlaygroundScreen.jf,
-                    "You are out of chance." + "Your score is "+(int) Game.getInstance().getOldScore(),
-                    "Out of chance",
-                    JOptionPane.WARNING_MESSAGE);
+                    "You are out of chance! \n" + "Your Score: "+(int) Game.getInstance().getOldScore(),
+                    "LOSER :(",
+                    JOptionPane.WARNING_MESSAGE, attilaIcon);
             PlaygroundScreen.jf.dispose();
 
         }
         else if (isWin){
             tm.stop();
             JOptionPane.showMessageDialog(PlaygroundScreen.jf,
-                    "You win the game." + "Your score is "+(int) Game.getInstance().getOldScore());
+                    "You win the game! \n" + "Your Score: "+(int) Game.getInstance().getOldScore(),
+                    "WINNER :)",
+                    JOptionPane.WARNING_MESSAGE, attilaIcon);
 
             PlaygroundScreen.jf.dispose();
         }
