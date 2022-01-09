@@ -84,10 +84,10 @@ public class Player{
 
     public void initializeInventory() {
         this.abilities = new HashMap<>();
-        abilities.put(1,5);
-        abilities.put(2,5);
-        abilities.put(3,5);
-        abilities.put(4,5);
+        abilities.put(1,0);
+        abilities.put(2,0);
+        abilities.put(3,0);
+        abilities.put(4,0);
     }
 
     public void notifyAllInventoryListeners(Integer toUpdate) {
