@@ -106,7 +106,7 @@ public class Game implements IRunListener, ILoadListener, ActionListener {
         if(isLoad){
             Game.getInstance().loadGame();
         }
-        System.out.println("Yamir freq in game"+ Game.getInstance().Ymirfreq);
+        System.out.println("Ymir freq in game is "+ Game.getInstance().Ymirfreq + "\n");
         ymir.setPeriod(Ymirfreq);
         ymir.setProbabilities(YmirProb1, YmirProb2, YmirProb3);
 

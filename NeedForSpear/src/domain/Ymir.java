@@ -67,12 +67,12 @@ public class Ymir implements Runnable{
                         t.start();
                     }
                     else if(ability == YmirAbilities.HollowPurple) {
-                        System.out.println("HollowPurple");
+                        System.out.println("Hollow Purple by Ymir");
                         HollowPurple hp = new HollowPurple();
                         hp.initializeHollow();
                     }
                     else {
-                        System.out.println("InfiniteVoid geldi aga");
+                        System.out.println("Infinite Void by Ymir");
                         InfiniteVoid iv = new InfiniteVoid();
                         Thread t = new Thread(iv);
                         t.start();
