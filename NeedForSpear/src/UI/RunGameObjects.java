@@ -162,8 +162,9 @@ public class RunGameObjects extends JPanel implements ActionListener, KeyListene
                                 "If a player is deemed unworthy, then the other player automatically wins.",
                         "HELP!",
                         JOptionPane.WARNING_MESSAGE, helpIcon);
-            }
 
+                PlaygroundScreen.jf.requestFocusInWindow();
+            }
         });
 
         invP.add(helpButton);
