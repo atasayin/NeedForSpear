@@ -47,8 +47,12 @@ public class Box extends DomainObject {
         this.posVector = pos;
     }
 
-    //update the current ability if the box is catched by player(paddle), otherwise false.
+
+    // MODIFIES: The current ability of the box.
+		/* EFFECTS: by checking at the box cough of the setup, it updates the currentAbility.
+		*/
     public void updateAbility(){
+        //update the current ability if the box is cough by player(paddle), otherwise false.
         if(isBoxCatched){
             int currentAbilityNum = Game.getInstance().gameState.getPlayer().getAbilities().get(abilityType);
             currentAbilityNum = currentAbilityNum+1;

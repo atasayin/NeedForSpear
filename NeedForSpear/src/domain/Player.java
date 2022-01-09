@@ -95,6 +95,10 @@ public class Player{
             listener.onInventoryChange(toUpdate);
         }
     }
+
+    /* EFFECTS: by checking at the currentCount of updateAbilitiesInventory, it updates the currentCount
+    and changeInPowerUpCount
+     */
     public void updateAbilitiesInventory(int powerupType, int changeInPowerupCount) {
         int currentCount = abilities.get(powerupType);
         abilities.put(powerupType, currentCount + changeInPowerupCount);
