@@ -1,10 +1,10 @@
-# 2021_302_noncompers
+# Need For Spear Game
 
-This is our GitLab repository for our COMP302 project.
+COMP302-Software Engineering course project.
 
 Our group consists of:
 - Oya Suran
-- Ata Sayin
-- Deniz Erdogan
-- Beyzanur Coban
-- Yigithan Sanlik
+- Ata Sayın
+- Deniz Erdoğan
+- Beyzanur Çoban
+- Yiğithan Şanlık
